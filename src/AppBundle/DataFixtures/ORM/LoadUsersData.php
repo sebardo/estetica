@@ -71,6 +71,11 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 			$entity->setTagLine('Lorem ipsum dolor sit amet');
 			$entity->setTechnology('Sed pharetra commodo efficitur. Aliquam dictum nisl ut sem faucibus ultricies. Curabitur porttitor dui interdum maximus mollis. Curabitur a dignissim enim, vel congue mauris. Etiam vitae ultrices augue. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In hac habitasse platea dictumst. Pellentesque quis commodo augue, a suscipit felis. Phasellus non elementum magna. Maecenas consectetur sodales accumsan. Curabitur ultricies faucibus tortor, sed sagittis sapien laoreet quis. Nulla molestie, neque eu placerat malesuada, eros nisi tincidunt nisi, sed pretium neque lorem vel massa. Maecenas dignissim dapibus libero, nec consequat diam blandit quis.');
 			$entity->setTradeName('tradeName_client_example_' . $i);
+			//Plan
+			$planCollection = $this->container->get('webapp.manager.plan_manager')->getBy(array());
+			$planCollectionSize = (count($planCollection) - 1);
+			$randValue = rand(0, $planCollectionSize);
+			$entity->setPlan($planCollection[$randValue]);
 
 			//Password
 			$this->container->get('webapp.manager.client_manager')->encodePassword($entity);
@@ -89,6 +94,6 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 	 */
 	public function getOrder()
 	{
-		return 1;
+		return 15;
 	}
 }

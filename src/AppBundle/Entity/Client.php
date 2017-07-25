@@ -107,7 +107,7 @@ class Client extends User
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Plan", inversedBy="clients")
+     * @ORM\ManyToOne(targetEntity="Plan", inversedBy="clients", cascade={"persist"})
      * @ORM\JoinColumn(name="plan_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $plan;
@@ -404,7 +404,7 @@ class Client extends User
     }
 
     /**
-     * @return Plans
+     * @return Plan
      */
     public function getPlan()
     {
@@ -412,7 +412,7 @@ class Client extends User
     }
 
     /**
-     * @param Plans $plan
+     * @param Plan $plan
      */
     public function setPlan($plan)
     {

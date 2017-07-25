@@ -53,7 +53,7 @@ class Plan extends Timestampable
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Client", mappedBy="plan")
+     * @ORM\OneToMany(targetEntity="Client", mappedBy="plan", cascade={"persist"})
      */
     private $clients;
 
