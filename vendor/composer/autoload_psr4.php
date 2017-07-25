@@ -38,6 +38,5 @@ return array(
     'Doctrine\\Bundle\\FixturesBundle\\' => array($vendorDir . '/doctrine/doctrine-fixtures-bundle'),
     'Doctrine\\Bundle\\DoctrineCacheBundle\\' => array($vendorDir . '/doctrine/doctrine-cache-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle'),
-    'Avanzu\\AdminThemeBundle\\' => array($vendorDir . '/avanzu/admin-theme-bundle'),
     '' => array($baseDir . '/src'),
 );

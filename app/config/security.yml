@@ -3,9 +3,9 @@
 security:
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN: [ROLE_CLIENT, ROLE_ALLOWED_TO_SWITCH]
     encoders:
-        AppBundle\Entity\User: { algorithm: sha512, iterations: 10 }
+        AppBundle\Entity\Client: { algorithm: bcrypt, iterations: 10 }
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
@@ -35,7 +35,5 @@ security:
                 domain: ~ # Defaults to the current domain from $_SERVER
     access_control:
           - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-          - { path: ^/api/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-          - { path: ^/import, roles: ROLE_USER }
-          - { path: ^/, roles: ROLE_ADMIN } #TODO: Check if is not necessary add ROLE_USER to this route
+          - { path: ^/, roles: ROLE_CLIENT }
             # activate different ways to authenticate%

@@ -82,10 +82,6 @@ class ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44
             'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 36,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
         ),
-        'A' => 
-        array (
-            'Avanzu\\AdminThemeBundle\\' => 24,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -216,10 +212,6 @@ class ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44
         'Doctrine\\Bundle\\DoctrineBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-bundle',
-        ),
-        'Avanzu\\AdminThemeBundle\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/avanzu/admin-theme-bundle',
         ),
     );
 

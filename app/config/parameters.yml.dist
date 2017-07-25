@@ -19,5 +19,4 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     # Custom
-    admin_skin: skin-blue
     app.path.images: /uploads/images/

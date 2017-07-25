@@ -1,0 +1,4 @@
+services:
+    webapp.manager.client_manager:
+        class: AppBundle\Model\ClientModel
+        arguments: ["@service_container"]
