@@ -38,6 +38,7 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         currency: '%currency%'
+        site_title: '%site_title%'
 
 
 # Doctrine Configuration

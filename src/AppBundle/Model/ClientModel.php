@@ -4,7 +4,7 @@
 namespace AppBundle\Model;
 
 
-use AppBundle\Entity\User;
+use AppBundle\Entity\Client;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
@@ -23,29 +23,29 @@ class ClientModel extends ObjectManager
 	}
 
 	/**
-	 * @param User $user
+	 * @param Client $client
 	 */
-	public function encodePassword(User $user)
+	public function encodePassword(Client $client)
 	{
-		$encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+		$encoder = $this->container->get('security.encoder_factory')->getEncoder($client);
 		$passwordCoded = $encoder->encodePassword(
-			$user->getPassword(),
-			$user->getSalt()
+			$client->getPassword(),
+			$client->getSalt()
 		);
-		$user->setPassword($passwordCoded);
+		$client->setPassword($passwordCoded);
 	}
 
 	/**
-	 * @param User $user
+	 * @param Client $client
 	 * @param      $plaintextPassword
 	 *
 	 * @return bool
 	 */
-	public function checkPassword(User $user, $plaintextPassword)
+	public function checkPassword(Client $client, $plaintextPassword)
 	{
-		$encoder = $this->encoderFactory->getEncoder($user);
+		$encoder = $this->encoderFactory->getEncoder($client);
 
-		return $encoder->isPasswordValid($user->getPassword(), $plaintextPassword, $user->getSalt());
+		return $encoder->isPasswordValid($client->getPassword(), $plaintextPassword, $client->getSalt());
 	}
 
 	/**

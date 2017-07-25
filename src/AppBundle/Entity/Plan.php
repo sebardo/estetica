@@ -77,7 +77,7 @@ class Plan extends Timestampable
      * Set name
      *
      * @param string $name
-     * @return Plans
+     * @return Plan
      */
     public function setName($name)
     {
@@ -100,7 +100,7 @@ class Plan extends Timestampable
      * Set description
      *
      * @param string $description
-     * @return Plans
+     * @return Plan
      */
     public function setDescription($description)
     {
@@ -123,7 +123,7 @@ class Plan extends Timestampable
      * Set monthlyPrize
      *
      * @param float $monthlyPrize
-     * @return Plans
+     * @return Plan
      */
     public function setMonthlyPrize($monthlyPrize)
     {
@@ -146,7 +146,7 @@ class Plan extends Timestampable
      * Set otherPrize
      *
      * @param string $otherPrize
-     * @return Plans
+     * @return Plan
      */
     public function setOtherPrize($otherPrize)
     {

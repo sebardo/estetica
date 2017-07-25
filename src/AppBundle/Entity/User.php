@@ -14,18 +14,17 @@ class User extends Timestampable implements UserInterface
 	const ROLE_CLIENT = "ROLE_CLIENT";
 
 	/**
-	 * @var string
+	 * @var int
 	 *
-	 * @ORM\Column(name="id", type="string")
+	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="UUID")
+	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	protected $id;
 
 	/**
 	 * @var string
 	 *
-	 * @Assert\NotBlank()
 	 * @ORM\Column(name="username", type="string", length=255, unique=true)
 	 */
 	protected $username;
@@ -38,6 +37,13 @@ class User extends Timestampable implements UserInterface
 	protected $password;
 
 	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="salt", type="string", length=255)
+	 */
+	protected $salt;
+
+	/**
 	 * @var boolean
 	 *
 	 * @ORM\Column(name="active", type="boolean")
@@ -47,19 +53,20 @@ class User extends Timestampable implements UserInterface
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="role", type="string", length=20)
+	 * @ORM\Column(name="role", type="string", length=255)
 	 */
 	protected $role;
 
 	public function __construct()
 	{
 	    parent::__construct();
+		$this->salt = md5(time());
 		$this->active = true;
 		$this->role = self::ROLE_CLIENT;
 	}
 
 	/**
-	 * @return string
+	 * @return integer
 	 */
 	public function getId()
 	{
@@ -115,14 +122,6 @@ class User extends Timestampable implements UserInterface
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getRole()
-	{
-		return $this->role;
-	}
-
-	/**
 	 * @param string $role
 	 */
 	public function setRole($role)
@@ -168,7 +167,15 @@ class User extends Timestampable implements UserInterface
 	 */
 	public function getSalt()
 	{
-		// TODO: Implement getSalt() method.
+		return $this->salt;
+	}
+
+	/**
+	 * @param string $salt
+	 */
+	public function setSalt($salt)
+	{
+		$this->salt = $salt;
 	}
 
 	/**
@@ -185,5 +192,9 @@ class User extends Timestampable implements UserInterface
 	public function __toString()
 	{
 		return $this->username;
+	}
+
+	static public function generateRandomString($length = 10) {
+		return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
 	}
 }

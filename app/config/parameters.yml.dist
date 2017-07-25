@@ -20,4 +20,5 @@ parameters:
 
     # Custom
     currency: €
+    site_title: "Club de Estética"
     app.path.images: /uploads/images/

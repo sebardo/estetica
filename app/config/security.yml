@@ -5,12 +5,12 @@ security:
     role_hierarchy:
         ROLE_ADMIN: [ROLE_CLIENT, ROLE_ALLOWED_TO_SWITCH]
     encoders:
-        AppBundle\Entity\Client: { algorithm: bcrypt, iterations: 10 }
+        AppBundle\Entity\Client: { algorithm: sha512, iterations: 10 }
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         main:
-            entity: { class: AppBundle\Entity\User, property: username }
+            entity: { class: AppBundle\Entity\Client, property: username }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

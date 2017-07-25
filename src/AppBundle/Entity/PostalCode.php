@@ -81,14 +81,14 @@ class PostalCode extends Timestampable
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Client", mappedBy="postalCode", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="postalCode", cascade={"persist"})
      */
-    private $clients;
+    private $addresses;
 
     public function __construct()
     {
         parent::__construct();
-        $this->clients = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
 
     /**
@@ -288,40 +288,40 @@ class PostalCode extends Timestampable
     /**
      * @return ArrayCollection
      */
-    public function getClients()
+    public function getAddresses()
     {
-        return $this->clients;
+        return $this->addresses;
     }
 
     /**
-     * @param ArrayCollection $clients
+     * @param ArrayCollection $addresses
      */
-    public function setClients($clients)
+    public function setAddresses($addresses)
     {
-        $this->clients = $clients;
+        $this->addresses = $addresses;
     }
 
     /**
-     * @param Client $client
+     * @param Address $address
      */
-    public function addClient(Client $client)
+    public function addAddress(Address $address)
     {
-        if ($this->clients->contains($client)){
+        if ($this->addresses->contains($address)){
             return;
         }
 
-        $this->clients->add($client);
+        $this->addresses->add($address);
     }
 
     /**
-     * @param Client $client
+     * @param Address $address
      */
-    public function removeClient(Client $client)
+    public function removeAddress(Address $address)
     {
-        if (!$this->clients->contains($client)){
+        if (!$this->addresses->contains($address)){
             return;
         }
 
-        $this->clients->remove($client);
+        $this->addresses->remove($address);
     }
 }

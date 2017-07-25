@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,16 +13,54 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="client")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClientRepository")
  */
-class Client extends User
+class Client extends Timestampable implements UserInterface
 {
+    const ROLE_ADMIN = "ROLE_ADMIN";
+    const ROLE_CLIENT = "ROLE_CLIENT";
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
     /**
      * @var string
      *
-     * @ORM\Column(name="id", type="string")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
-    protected $id;
+    protected $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    protected $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    protected $salt;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    protected $active;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    protected $role;
 
     /**
      * @var string
@@ -79,48 +119,25 @@ class Client extends User
     private $nif;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=255)
-     */
-    private $address;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="phone", type="string", length=255)
-     */
-    private $phone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="contact", type="string", length=255)
-     */
-    private $contact;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Plan", inversedBy="clients", cascade={"persist"})
      * @ORM\JoinColumn(name="plan_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $plan;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PostalCode", inversedBy="clients", cascade={"persist"})
-     * @ORM\JoinColumn(name="postal_code_id", referencedColumnName="id", onDelete="CASCADE")
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="client", cascade={"persist"})
      */
-    private $postalCode;
+    private $addresses;
 
     public function __construct()
     {
         parent::__construct();
+        $this->salt = md5(time());
+        $this->active = true;
+        $this->role = self::ROLE_CLIENT;
+        $this->addresses = new ArrayCollection();
     }
 
     /**
@@ -131,6 +148,122 @@ class Client extends User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param boolean $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return explode(',', $this->role);
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRoles($role)
+    {
+        $this->role = $role;
+    }
+
+    public function addRole($role)
+    {
+        $this->role .= ",".$role;
+    }
+
+    public function hasRole($role)
+    {
+        if(in_array($role, $this->getRoles())){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 
     /**
@@ -318,98 +451,6 @@ class Client extends User
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     * @return User
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string 
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     * @return User
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string 
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set contact
-     *
-     * @param string $contact
-     * @return User
-     */
-    public function setContact($contact)
-    {
-        $this->contact = $contact;
-
-        return $this;
-    }
-
-    /**
-     * Get contact
-     *
-     * @return string 
-     */
-    public function getContact()
-    {
-        return $this->contact;
-    }
-
-    /**
      * @return Plan
      */
     public function getPlan()
@@ -426,18 +467,51 @@ class Client extends User
     }
 
     /**
-     * @return PostalCode
+     * @return ArrayCollection
      */
-    public function getPostalCode()
+    public function getAddresses()
     {
-        return $this->postalCode;
+        return $this->addresses;
     }
 
     /**
-     * @param PostalCode $postalCode
+     * @param ArrayCollection $addresses
      */
-    public function setPostalCode($postalCode)
+    public function setAddresses($addresses)
     {
-        $this->postalCode = $postalCode;
+        $this->addresses = $addresses;
+    }
+
+    /**
+     * @param $address
+     */
+    public function addAddress($address)
+    {
+        if ($this->addresses->contains($address)){
+            return;
+        }
+
+        $this->addresses->add($address);
+    }
+
+    /**
+     * @param $address
+     */
+    public function removeAddress($address)
+    {
+        if (!$this->addresses->contains($address)){
+            return;
+        }
+
+        $this->addresses->remove($address);
+    }
+
+    public function __toString()
+    {
+        return $this->username;
+    }
+
+    static public function generateRandomString($length = 10) {
+        return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
     }
 }
