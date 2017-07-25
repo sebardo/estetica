@@ -106,6 +106,12 @@ class Client extends User
      */
     private $contact;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Plan", inversedBy="clients")
+     * @ORM\JoinColumn(name="plan_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $plan;
+
     public function __construct()
     {
         parent::__construct();
@@ -395,5 +401,21 @@ class Client extends User
     public function getContact()
     {
         return $this->contact;
+    }
+
+    /**
+     * @return Plans
+     */
+    public function getPlan()
+    {
+        return $this->plan;
+    }
+
+    /**
+     * @param Plans $plan
+     */
+    public function setPlan($plan)
+    {
+        $this->plan = $plan;
     }
 }

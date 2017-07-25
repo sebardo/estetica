@@ -19,4 +19,5 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
 
     # Custom
+    currency: €
     app.path.images: /uploads/images/
