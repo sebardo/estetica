@@ -1,0 +1,21 @@
+{% block date_picker_type_widget %}
+    {% spaceless %}
+        <div class="form-group">
+            <div class='input-group date date_picker_type' id="{{ form.vars.id~'date_picker_type' }}">
+                {% set value= value?value|isDateTime?value|date('d/m/Y'):value:'now'|date('d/m/Y') %}
+                {{ block('form_widget_simple') }}
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+            </div>
+        </div>
+    {% endspaceless %}
+    <script>
+        $(function ($) {
+            $('{{'#'~form.vars.id~'date_picker_type' }}').datepicker({
+                language: 'es',
+                format: 'dd/mm/yyyy'
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,7 @@
+services:
+    filter_twig_backend:
+        class: BackendBundle\Twig\AppExtension
+        public: false
+        arguments: [ "@service_container" ]
+        tags:
+            - { name: twig.extension }

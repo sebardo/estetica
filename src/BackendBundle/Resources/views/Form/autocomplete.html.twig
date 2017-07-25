@@ -1,0 +1,24 @@
+{% block autocomplete_widget %}
+    {% spaceless %}
+            {{form_widget(form) }}
+
+
+    {% endspaceless %}
+    <script>
+        $(function(){
+            var options = {
+                url: '{{ path(url) }}',
+                adjustWidth: false,
+                getValue: "name",
+                cssClasses: 'autocomplete_humanababy',
+                minCharNumber: 3,
+                list: {
+                    match: {
+                        enabled: true
+                    }
+                }
+            };
+            $('{{ '#'~form.vars.id }}').easyAutocomplete(options);
+        });
+    </script>
+{% endblock %}

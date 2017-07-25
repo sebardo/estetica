@@ -1,0 +1,66 @@
+{% extends "BackendBundle::layout.html.twig" %}
+
+{% block description_status 'backend.list'|trans~' '~'backend.of'|trans  %}
+{% block content %}
+    {% block content_list %}
+            {% block create_action_list %}<a href="{% block create_new_path %}{% endblock %}" class="btn btn-info flat margin-bottom">{% block create_new_title %}{% endblock %}</a>{% endblock %}
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3>{% block list_title %}{% endblock %}{{' '~ 'backend.list'|trans }}</h3>
+                {#<select name="limit" id="maxItemPerPage">#}
+                    {#<option id="10">10</option>#}
+                    {#<option id="20">20</option>#}
+                    {#<option id="50">50</option>#}
+                    {#<option id="100">100</option>#}
+                {#</select>#}
+            </div>
+            <div class="box-body">
+               {% block list_body %}
+               {% endblock %}
+            </div>
+        </div>
+        {% block footer_content %}{% endblock %}
+    {% endblock %}
+        <script>
+            //on select change, you navigate to indexAction and send the parameter maxItemPerPage
+            $('#maxItemPerPage').change(function(){
+
+                var url = '?limit=_itemNum';
+                var item = $('#maxItemPerPage').find(":selected").text();
+
+                window.location.href = url.replace('_itemNum',item );
+            });
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
+            };
+            $(function(){
+                var limit = getUrlParameter('limit');
+                $('option[id='+limit+']').prop('selected',true);
+                $('.sortable').table_sortable();
+            });
+        </script>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.dataTable').DataTable({
+
+            });
+        });
+    </script>
+{% endblock %}

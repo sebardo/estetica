@@ -85,7 +85,6 @@ class ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44
         'A' => 
         array (
             'Avanzu\\AdminThemeBundle\\' => 24,
-            'AppBundle\\' => 10,
         ),
     );
 
@@ -222,10 +221,10 @@ class ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44
         array (
             0 => __DIR__ . '/..' . '/avanzu/admin-theme-bundle',
         ),
-        'AppBundle\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src/AppBundle',
-        ),
+    );
+
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/../..' . '/src',
     );
 
     public static $prefixesPsr0 = array (
@@ -336,6 +335,7 @@ class ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitf621f814f6bc9f4c976cab225a9b4a44::$classMap;
 

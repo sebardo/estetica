@@ -1,0 +1,45 @@
+{#{% extends 'AvanzuAdminThemeBundle:layout:base-layout.html.twig' %}#}
+
+{#{% block avanzu_logo %}#}
+    {#<a href="#" class="logo">#}
+        {#{{ site_title }}#}
+    {#</a>#}
+{#{% endblock %}#}
+
+{#{% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}#}
+    {#<div class="navbar-custom-menu">#}
+        {#<ul class="nav navbar-nav">#}
+            {#{% block avanzu_navbar %}#}
+                {#{{ render(controller('AvanzuAdminThemeBundle:Navbar:messages')) }}#}
+                {#{{ render(controller('AvanzuAdminThemeBundle:Navbar:notifications')) }}#}
+                {#{{ render(controller('AvanzuAdminThemeBundle:Navbar:tasks')) }}#}
+                {#{{ render(controller('AvanzuAdminThemeBundle:Navbar:user')) }}#}
+            {#{% endblock %}#}
+        {#</ul>#}
+    {#</div>#}
+{#{% endif %}#}
+
+{#{% block avanzu_sidebar %}#}
+    {#{% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}#}
+        {#{{ render(controller('AvanzuAdminThemeBundle:Sidebar:userPanel')) }}#}
+        {#{{ render(controller('AvanzuAdminThemeBundle:Sidebar:searchForm')) }}#}
+    {#{% endif %}#}
+    {#{{ render(controller('AvanzuAdminThemeBundle:Sidebar:menu', {'request':app.request})) }}#}
+{#{% endblock %}#}
+
+{#{% block page_title %}{{ 'Example Page'|trans() }}{% endblock %}#}
+{#{% block page_subtitle %}{{ 'Subtitle'|trans() }}{% endblock %}#}
+
+{#{% block avanzu_breadcrumb %}#}
+    {#{{ render(controller('AvanzuAdminThemeBundle:Breadcrumb:breadcrumb', {'request': app.request, 'title' : block('page_title')})) }}#}
+{#{% endblock %}#}
+
+{#{% block avanzu_admin_footer %}#}
+    {#<footer class="main-footer">#}
+        {#<div class="pull-right hidden-xs">#}
+            {#<b>Version</b> 2.0#}
+        {#</div>#}
+        {#<strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.#}
+    {#</footer>#}
+{#{% endblock %}#}
+

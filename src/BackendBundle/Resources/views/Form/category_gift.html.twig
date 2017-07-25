@@ -1,0 +1,61 @@
+{% block category_gift_widget %}
+{{ form_widget(form)}}
+<script>
+    $(function ($) {
+
+        //get expense select widget
+        var select=$('{{ '#'~form.vars.id }}');
+
+        //get people widget
+        var points=$('{{ '#'~form.parent.children[widget_name].vars.id }}');
+
+        //subscription event change select
+        select.change(function(){
+            updateWidget(select.val());
+        });
+
+        //show all widget
+        function trigerShowElement(fadein,val) {
+            trigerHiddenElement();
+            if(val==0) {
+                if (fadein) {
+                    points.parent('.form-group').show();
+                }
+                else {
+                    points.parent('.form-group').toggle("bounce", {times: 3}, "slow");
+                }
+            }
+            if(val==1) {
+                if (fadein) {
+                    points.parent('.form-group').show();
+                }
+                else {
+                    points.parent('.form-group').toggle("bounce", {times: 3}, "slow");
+                }
+            }
+        }
+
+
+
+        //hidden all widget
+        function trigerHiddenElement() {
+            points.parent('.form-group').hide();
+        }
+
+
+        //update all widget
+        function updateWidget(val,fadeIn) {
+            var fadeIn=fadeIn ||false;
+            var array_categories={{ trigger_select|json_encode|raw }};
+            if($.inArray(parseInt(val),array_categories)!=-1)
+                trigerShowElement(fadeIn,0);
+            else
+                trigerHiddenElement();
+
+        }
+
+        //update widget first time
+        updateWidget(select.val(),true)
+    });
+</script>
+{% endblock %}

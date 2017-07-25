@@ -1,0 +1,16 @@
+code:
+    code_error: 'Código repetido.'
+backend:
+    no_blank: 'Este campo no puede estar vacío.'
+    negative: 'La cantidad no debe ser un número menor que cero.'
+question:
+    not_answer: 'La pregunta debe tener al menos dos respuestas.'
+location:
+    county_error: 'Ya existe una provincia con este nombre.'
+gift:
+    error_mother_gift: 'La madre ya dispone de este regalo.'
+rangeage:
+    error_range: 'Ya existe un rango con estos valores.'
+    not_range: 'Los valores no son correctos. Deben estar correctamente ordenados.'
+answer:
+    error: 'Una madre no debe tener más de una respuesta a la misma pregunta.'

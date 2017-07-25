@@ -1,0 +1,47 @@
+.user-panel img{
+    width: 45px;
+}
+
+.sidebar-collapse .user-panel img{
+    width: 30px;
+}
+.alertify .ajs-commands {
+    margin: -24px 2px 0 0;
+}
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+.logo-lg img{
+    width: 70px;
+}
+.logo-mini img{
+    width: 50px;
+}
+
+.checkbox label{
+    padding: 0;
+}
+.badge.answers{
+    top: -1px!important;
+    background-color: #fff;
+    color: #00c0ef;
+}
+
+.image-list{
+    max-width: 200px;
+}
+.add-files{
+    margin-bottom: 10px;
+}
+
+.margin-top{
+    margin-top: 15px;
+}
+.points-mother{
+    padding: 10px;
+}
+
+select[name="limit"]{
+    padding: 5px;
+}

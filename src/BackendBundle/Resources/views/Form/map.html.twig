@@ -1,0 +1,43 @@
+{% block map_widget %}
+    {% spaceless %}
+        {#Widget Map Tomas#}
+        <div id="{{ form.vars.id }}"
+             data-lat-field="{{ form.parent.children[lat_field].vars.id }}"
+             data-lng-field="{{ form.parent.children[lng_field].vars.id }}"
+             data-map-id="{{ map_id }}"
+             data-token="{{ token }}"
+             data-url="{{ url }}"
+             data-soon="{{ soon }}"
+             data-imagePath="{{ asset(imagePath) }}"
+             data-heigth="{{ height }}"
+             data-marker-color="{{ marker.color }}"
+             data-marker-icon="{{ marker.icon }}"
+
+                >
+            <div class="row margin-bottom">
+                <div class="col-sm-6">
+                    <div class="form-group no-margin">
+                        <label class="text-muted" for="map-lat">{{ 'backend.map.lat'|trans }}</label>
+                        <input type="text" class="form-control" id="map-lat" placeholder="{{ 'backend.map.lat'|trans }}">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group no-margin">
+                        <label class="text-muted" for="map-lat">{{ 'backend.map.lng'|trans }}</label>
+                        <input type="text" class="form-control" id="map-lng" placeholder="{{ 'backend.map.lng'|trans }}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12" id="container-map">
+
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function(){
+                $('#{{ form.vars.id }}').addMap();
+            });
+        </script>
+    {% endspaceless %}
+{% endblock %}

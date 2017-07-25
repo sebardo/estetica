@@ -1,0 +1,60 @@
+{% block collection_type_widget %}
+     {% spaceless %}
+         <button class="btn btn-info btn-xs flat" id="{{ form.vars.id ~'_add'}}"><i class="fa fa-{{ icon_add }}"></i></button>
+             <div class="col-xs-12" id="{{ form.vars.id }}" data-prototype="{{ form_widget(form.vars.prototype)|e('html_attr') }}">
+                {% for children in form.children %}
+                 <div class="alert alert-info alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    {{ form_widget(children) }}
+                 </div>
+                {% endfor %}
+             </div>
+
+     {% endspaceless %}
+    <script>
+        $(function() {
+            // Get the ul that holds the collection of tags
+            var $collectionHolder = $('{{'#'~form.vars.id }}');
+
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $('{{'#'~form.vars.id ~'_add'}}').on('click', function (e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder);
+
+                //enable iCheck form
+                $('input[type=checkbox],input[type=radio]').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                });
+            });
+        });
+
+        function addTagForm($collectionHolder) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<div class="alert alert-info alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>').append(newForm);
+
+            $collectionHolder.append($newFormLi);
+        }
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,33 @@
+.ui-sortable-helper {
+    position: absolute;
+    top: 0;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+.ui-sortable-placeholder {
+    display: block;
+    background: #933f40;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+    visibility: visible !important;
+    height: 0 !important;
+}
+
+.sortable .ui-sortable-placeholder:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-left-color: #933f40;
+    margin-top: -5px;
+    left: -5px;
+    border-right: none;
+}
+
+.sortable tbody tr {
+    cursor: move;
+}

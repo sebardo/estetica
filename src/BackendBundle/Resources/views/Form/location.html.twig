@@ -1,0 +1,78 @@
+{% block location_widget %}
+
+    {% set select_county_default= '------'~'county.select_county'|trans~'------' %}
+    {% set select_city_default= '------'~'city.select_city'|trans~'------' %}
+    {% set select_location_default= '------'~'location.select_location'|trans~'------' %}
+    {# Select county #}
+    <label class="control-label {% if form.vars.required %}required{% endif %}" for="{{ form.vars.id~'_county' }}">{{ 'location.name_county'|trans }}</label>
+    <select name="{{ form.vars.full_name~'_county' }}" id="{{ form.vars.id~'_county' }}" class="form-control">
+        <option class="text-center">{{ select_county_default }}</option>
+        {% for c in county %}
+            <option {% if county_select==c.id %}selected{% endif %} value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+
+    {# Select city #}
+    <label class="margin-top control-label {% if form.vars.required %}required{% endif %}" for="{{ form.vars.id~'_city' }}">{{ 'location.name_city'|trans }}</label>
+    <select name="{{ form.vars.full_name~'_city' }}" id="{{ form.vars.id~'_city' }}" class="form-control">
+        <option>{{ select_city_default }}</option>
+        {% for c in city %}
+            <option {% if city_select==c.id %}selected{% endif %} value="{{ c.id }}">{{ c }}</option>
+        {% endfor %}
+    </select>
+
+    {# Select location #}
+    <label class="margin-top control-label {% if form.vars.required %}required{% endif %}" for="{{ form.vars.id }}">{{ 'location.name'|trans }}</label>
+    <select name="{{ form.vars.full_name }}" id="{{ form.vars.id }}" class="form-control">
+        <option>{{ select_location_default }}</option>
+        {% for l in location %}
+            <option {% if value==l.id %}selected{% endif %} value="{{ l.id }}">{{ l }}</option>
+        {% endfor %}
+    </select>
+    <script>
+        $(function(){
+            var get_county='{{ path(get_city)}}';
+            var get_location='{{ path(get_location)}}';
+            var county=$('#{{ form.vars.id~'_county' }}');
+            var city=$('#{{ form.vars.id~'_city' }}');
+            var location=$('#{{ form.vars.id }}');
+            var select_location_default='{{ select_location_default }}';
+            var select_city_default='{{ select_city_default }}';
+            var cityChange=function(){
+                if(city.val()) {
+                    location.attr('disabled', 'disabled');
+                    $.getJSON(get_location, {id_city: city.val()}).done(function (options) {
+                                location.html('<option>'+select_location_default+'</option>');
+                                $.each(options, function (key, val) {
+                                    var option = '<option value="' + val.value + '">' + val.name + '</option>';
+                                    location.append(option);
+                                });
+                                location.removeAttr('disabled');
+                            }
+                    );
+                }
+            }
+            var countyChange=function(){
+
+                if(county.attr('id')) {
+                    city.attr('disabled','disabled');
+                    location.attr('disabled', 'disabled');
+                    $.getJSON(get_county, {id_county:county.val()}).done(function (options) {
+                        city.html('<option>'+select_city_default+'</option>');
+                        location.html('<option>'+select_location_default+'</option>');
+                        $.each(options, function (key, val) {
+                            var option='<option value="'+val.value+'">'+val.name+'</option>';
+                            city.append(option);
+                        });
+                        city.removeAttr('disabled');
+                        location.removeAttr('disabled');
+                        city.on('change',cityChange)
+                    });
+
+                }
+            }
+            city.on('change',cityChange)
+            county.on('change',countyChange);
+        });
+    </script>
+{% endblock %}

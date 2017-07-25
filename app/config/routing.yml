@@ -1,3 +1,11 @@
-app:
+backend:
+    resource: "@BackendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+web_app:
     resource: '@AppBundle/Controller/'
     type: annotation
