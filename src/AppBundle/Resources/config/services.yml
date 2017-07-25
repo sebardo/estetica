@@ -5,3 +5,6 @@ services:
     webapp.manager.plan_manager:
         class: AppBundle\Model\PlanModel
         arguments: ["@service_container"]
+    webapp.manager.postalcode_manager:
+        class: AppBundle\Model\PostalCodeModel
+        arguments: ["@service_container"]

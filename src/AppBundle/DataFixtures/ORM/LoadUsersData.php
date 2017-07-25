@@ -76,6 +76,11 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 			$planCollectionSize = (count($planCollection) - 1);
 			$randValue = rand(0, $planCollectionSize);
 			$entity->setPlan($planCollection[$randValue]);
+			//PostalCode
+			$postalCodeCollection = $this->container->get('webapp.manager.postalcode_manager')->getBy(array());
+			$postalCodeCollectionSize = (count($postalCodeCollection) - 1);
+			$randValue = rand(0, $postalCodeCollectionSize);
+			$entity->setPostalCode($postalCodeCollection[$randValue]);
 
 			//Password
 			$this->container->get('webapp.manager.client_manager')->encodePassword($entity);

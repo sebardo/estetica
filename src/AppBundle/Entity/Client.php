@@ -112,6 +112,12 @@ class Client extends User
      */
     private $plan;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="PostalCode", inversedBy="clients", cascade={"persist"})
+     * @ORM\JoinColumn(name="postal_code_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $postalCode;
+
     public function __construct()
     {
         parent::__construct();
@@ -417,5 +423,21 @@ class Client extends User
     public function setPlan($plan)
     {
         $this->plan = $plan;
+    }
+
+    /**
+     * @return PostalCode
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param PostalCode $postalCode
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
     }
 }
