@@ -3,10 +3,10 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use BackendBundle\Controller\DefaultController as BackendBundleController;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class DefaultController extends BackendBundleController
 {
     /**
      * @Route("/", name="homepage")
@@ -14,8 +14,9 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+        return $this->render('@App/index.html.twig', array(
+            'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.homepage")),
+            'active_side_bar' => $this->getActiveSidebar()
         ));
     }
 }

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    protected $activeSideBar;
+    protected $activeSideBar = null;
 
     /**
      * @Route("/json/flash_bag", name="flash_bag", defaults={"_format"="json"})
@@ -42,7 +42,7 @@ class DefaultController extends Controller
         return $this->activeSideBar;
     }
 
-    protected function getBreadCrumbs($url = null)
+    protected function getBreadCrumbs($url = null, $data = array())
     {
         $breadcrumbs = array(
             array(
