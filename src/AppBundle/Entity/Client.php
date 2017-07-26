@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="client")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClientRepository")
+ * @Vich\Uploadable
  */
 class Client extends Timestampable implements UserInterface
 {
@@ -130,6 +133,20 @@ class Client extends Timestampable implements UserInterface
      * @ORM\OneToMany(targetEntity="Address", mappedBy="client", cascade={"persist"})
      */
     private $addresses;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", length=255)
+     */
+    private $logo;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="images", fileNameProperty="logo")
+     */
+    private $logoFile;
 
     public function __construct()
     {
@@ -270,7 +287,7 @@ class Client extends Timestampable implements UserInterface
      * Set tradeName
      *
      * @param string $tradeName
-     * @return User
+     * @return Client
      */
     public function setTradeName($tradeName)
     {
@@ -293,7 +310,7 @@ class Client extends Timestampable implements UserInterface
      * Set tagLine
      *
      * @param string $tagLine
-     * @return User
+     * @return Client
      */
     public function setTagLine($tagLine)
     {
@@ -316,7 +333,7 @@ class Client extends Timestampable implements UserInterface
      * Set description
      *
      * @param string $description
-     * @return User
+     * @return Client
      */
     public function setDescription($description)
     {
@@ -339,7 +356,7 @@ class Client extends Timestampable implements UserInterface
      * Set technology
      *
      * @param string $technology
-     * @return User
+     * @return Client
      */
     public function setTechnology($technology)
     {
@@ -362,7 +379,7 @@ class Client extends Timestampable implements UserInterface
      * Set shortDescription
      *
      * @param string $shortDescription
-     * @return User
+     * @return Client
      */
     public function setShortDescription($shortDescription)
     {
@@ -385,7 +402,7 @@ class Client extends Timestampable implements UserInterface
      * Set societyName
      *
      * @param string $societyName
-     * @return User
+     * @return Client
      */
     public function setSocietyName($societyName)
     {
@@ -408,7 +425,7 @@ class Client extends Timestampable implements UserInterface
      * Set socialNumber
      *
      * @param string $socialNumber
-     * @return User
+     * @return Client
      */
     public function setSocialNumber($socialNumber)
     {
@@ -431,7 +448,7 @@ class Client extends Timestampable implements UserInterface
      * Set nif
      *
      * @param string $nif
-     * @return User
+     * @return Client
      */
     public function setNif($nif)
     {
@@ -513,5 +530,41 @@ class Client extends Timestampable implements UserInterface
 
     static public function generateRandomString($length = 10) {
         return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param string $logo
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    }
+
+    /**
+     * @return File
+     */
+    public function getLogoFile()
+    {
+        return $this->logoFile;
+    }
+
+    /**
+     * @param File|null $logoFile
+     */
+    public function setLogoFile(File $logoFile = null)
+    {
+        $this->logoFile = $logoFile;
+
+        if ($logoFile) {
+           $this->updatedAt = new \DateTime('now');
+        }
     }
 }
