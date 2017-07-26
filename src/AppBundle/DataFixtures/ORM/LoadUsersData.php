@@ -4,7 +4,6 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Address;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use AppBundle\Entity\User;
 use AppBundle\Entity\Client;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -100,9 +99,9 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 			$entity->setPlan($planCollection[$randValue]);
 
 			//Password
-			$_password = User::generateRandomString(10);
+			$_password = Client::generateRandomString(10);
 			$entity->setPassword($_password);
-			$_username = User::generateRandomString(6);
+			$_username = Client::generateRandomString(6);
 			$entity->setUsername($_username);
 			$this->container->get('webapp.manager.client_manager')->encodePassword($entity);
 

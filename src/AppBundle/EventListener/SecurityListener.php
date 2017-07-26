@@ -27,9 +27,6 @@ class SecurityListener
 	 */
 	public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
 	{
-		echo '<pre>';
-		print_r("Hola");
-		echo '</pre>';die();
 		/** @var Client $client */
 		$client = $event->getAuthenticationToken()->getUser();
 		/** @var Request $request  */
