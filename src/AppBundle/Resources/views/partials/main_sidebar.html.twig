@@ -17,13 +17,24 @@
         <li class="header"></li>
         {% if is_granted("ROLE_ADMIN") %}
             <li id="user" class="treeview">
-                <a href="https://clubdeestetica.freshdesk.com/helpdesk" target="_blank"><i class="fa fa-user"></i> <span>{{ 'ticket.title_nav'|trans|title }}</span>
+                <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-user"></i> <span>{{ 'ticket.title_nav'|trans|title }}</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+                </a>
+                <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-user"></i> <span>{{ 'flowwwer.title_nav'|trans|title }}</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li id="admin"><a href="{{ path('#') }}"><i
+                    <li id="admin">
+                        <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-circle-o"></i> <span>{{ 'flowwwer.title_nav'|trans|title }}</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <a href="{{ path('#') }}"><i
                                     class="fa fa-circle-o"></i>{{ 'backend.list'|trans~' '~'backend.of'|trans~' '~'user.title_admin_nav'|trans }}
                         </a>
                     </li>

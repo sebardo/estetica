@@ -39,6 +39,8 @@ twig:
     globals:
         currency: '%currency%'
         site_title: '%site_title%'
+        ticket_link: '%ticket_link%'
+        flowww_link: '%flowww_link%'
 
 
 # Doctrine Configuration
