@@ -148,6 +148,13 @@ class Client extends Timestampable implements UserInterface
      */
     private $logoFile;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="FileDoc", mappedBy="client", cascade={"persist"})
+     */
+    private $fileDocs;
+
     public function __construct()
     {
         parent::__construct();
@@ -155,6 +162,7 @@ class Client extends Timestampable implements UserInterface
         $this->active = true;
         $this->role = self::ROLE_CLIENT;
         $this->addresses = new ArrayCollection();
+        $this->fileDocs = new ArrayCollection();
     }
 
     /**
@@ -566,5 +574,45 @@ class Client extends Timestampable implements UserInterface
         if ($logoFile) {
            $this->updatedAt = new \DateTime('now');
         }
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFileDocs()
+    {
+        return $this->fileDocs;
+    }
+
+    /**
+     * @param ArrayCollection $fileDocs
+     */
+    public function setFileDocs($fileDocs)
+    {
+        $this->fileDocs = $fileDocs;
+    }
+
+    /**
+     * @param $fileDoc
+     */
+    public function addFileDoc($fileDoc)
+    {
+        if ($this->fileDocs->contains($fileDoc)){
+            return;
+        }
+
+        $this->fileDocs->add($fileDoc);
+    }
+
+    /**
+     * @param $fileDoc
+     */
+    public function removeFileDoc($fileDoc)
+    {
+        if (!$this->fileDocs->contains($fileDoc)){
+            return;
+        }
+
+        $this->fileDocs->remove($fileDoc);
     }
 }
