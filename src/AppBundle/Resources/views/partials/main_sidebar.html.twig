@@ -1,7 +1,7 @@
 <section class="sidebar">
     <div class="user-panel">
         <div class="pull-left">
-            <img class="img-circle" src="{{ asset('bundles/backend/img/avatar_default.png') }}">
+            <img class="img-circle" src="{{ asset('bundles/backend/img/avatar_default_wo_bg.png') }}">
             {# {% if app.user.image %}
                  <img class="img-circle" src="{{ asset(getAvatar(app.user.email)) }}">
                  {% else %}
@@ -17,25 +17,21 @@
         <li class="header"></li>
         {% if is_granted("ROLE_ADMIN") %}
             <li id="user" class="treeview">
-                <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-user"></i> <span>{{ 'ticket.title_nav'|trans|title }}</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
+                <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'ticket.title_nav'|trans|title }}</span>
                 </a>
-                <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-user"></i> <span>{{ 'flowwwer.title_nav'|trans|title }}</span>
+                <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'flowwwer.title_nav'|trans|title }}</span>
+                </a>
+                <a href="" target="_blank"><i class="fa fa-bars"></i> <span>{{ 'video.title_nav'|trans|title }}</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
                 </a>
                 <ul class="treeview-menu">
                     <li id="admin">
-                        <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-circle-o"></i> <span>{{ 'flowwwer.title_nav'|trans|title }}</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
+                        <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'video.title_nav'|trans|title }}</span>
                         </a>
                         <a href=""><i
-                                    class="fa fa-circle-o"></i>{{ 'backend.list'|trans~' '~'backend.of'|trans~' '~'user.title_admin_nav'|trans }}
+                                    class="fa fa-circle-o"></i>{{ 'backend.list'|trans~' '~'backend.of'|trans~' '~'video.title_admin_nav'|trans }}
                         </a>
                     </li>
                     {#<li id="viewer"><a href="{{ path('user_viewer_index') }}"><i#}
