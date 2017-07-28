@@ -122,17 +122,57 @@ class Client extends Timestampable implements UserInterface
     private $nif;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="url_web", type="string", length=255)
+     */
+    private $urlWeb;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook", type="string", length=255)
+     */
+    private $facebook;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="instagram", type="string", length=255)
+     */
+    private $instagram;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="blog", type="string", length=255)
+     */
+    private $blog;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Plan", inversedBy="clients", cascade={"persist"})
      * @ORM\JoinColumn(name="plan_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $plan;
 
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Address", mappedBy="client", cascade={"persist"})
+//     */
+//    private $addresses;
+
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="client", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
      */
-    private $addresses;
+    private $billingAddress;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\JoinColumn(name="local_address_id", referencedColumnName="id")
+     */
+    private $localAddress;
 
     /**
      * @var string
@@ -161,7 +201,7 @@ class Client extends Timestampable implements UserInterface
         $this->salt = md5(time());
         $this->active = true;
         $this->role = self::ROLE_CLIENT;
-        $this->addresses = new ArrayCollection();
+//        $this->addresses = new ArrayCollection();
         $this->fileDocs = new ArrayCollection();
     }
 
@@ -476,6 +516,70 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
+     * @return mixed
+     */
+    public function getUrlWeb()
+    {
+        return $this->urlWeb;
+    }
+
+    /**
+     * @param mixed $urlWeb
+     */
+    public function setUrlWeb($urlWeb)
+    {
+        $this->urlWeb = $urlWeb;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * @param string $facebook
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInstagram()
+    {
+        return $this->instagram;
+    }
+
+    /**
+     * @param string $instagram
+     */
+    public function setInstagram($instagram)
+    {
+        $this->instagram = $instagram;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBlog()
+    {
+        return $this->blog;
+    }
+
+    /**
+     * @param mixed $blog
+     */
+    public function setBlog($blog)
+    {
+        $this->blog = $blog;
+    }
+
+    /**
      * @return Plan
      */
     public function getPlan()
@@ -492,44 +596,76 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getAddresses()
+    public function getBillingAddress()
     {
-        return $this->addresses;
+        return $this->billingAddress;
     }
 
     /**
-     * @param ArrayCollection $addresses
+     * @param mixed $billingAddress
      */
-    public function setAddresses($addresses)
+    public function setBillingAddress($billingAddress)
     {
-        $this->addresses = $addresses;
+        $this->billingAddress = $billingAddress;
     }
 
     /**
-     * @param $address
+     * @return mixed
      */
-    public function addAddress($address)
+    public function getLocalAddress()
     {
-        if ($this->addresses->contains($address)){
-            return;
-        }
-
-        $this->addresses->add($address);
+        return $this->localAddress;
     }
 
     /**
-     * @param $address
+     * @param mixed $localAddress
      */
-    public function removeAddress($address)
+    public function setLocalAddress($localAddress)
     {
-        if (!$this->addresses->contains($address)){
-            return;
-        }
-
-        $this->addresses->remove($address);
+        $this->localAddress = $localAddress;
     }
+
+//    /**
+//     * @return ArrayCollection
+//     */
+//    public function getAddresses()
+//    {
+//        return $this->addresses;
+//    }
+//
+//    /**
+//     * @param ArrayCollection $addresses
+//     */
+//    public function setAddresses($addresses)
+//    {
+//        $this->addresses = $addresses;
+//    }
+//
+//    /**
+//     * @param $address
+//     */
+//    public function addAddress($address)
+//    {
+//        if ($this->addresses->contains($address)){
+//            return;
+//        }
+//
+//        $this->addresses->add($address);
+//    }
+//
+//    /**
+//     * @param $address
+//     */
+//    public function removeAddress($address)
+//    {
+//        if (!$this->addresses->contains($address)){
+//            return;
+//        }
+//
+//        $this->addresses->remove($address);
+//    }
 
     public function __toString()
     {

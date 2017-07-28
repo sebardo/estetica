@@ -1,0 +1,22 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+{% block page_title %}{{ 'app.client.new.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'app.client.new.subtitle'|trans() }}{% endblock %}
+{% block create_title 'client.create_new'|trans|capitalize %}
+{% block create_body %}
+    {{ form_start(form) }}
+    {{ form_row(form.tradeName) }}
+    {{ form_row(form.tagLine) }}
+    {{ form_row(form.shortDescription) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.technology) }}
+    {{ form_row(form.societyName) }}
+    {{ form_row(form.socialNumber) }}
+    {{ form_row(form.nif) }}
+    {{ form_row(form.logoFile) }}
+    {{ form_row(form.plan) }}
+    {{ form_row(form.fileDocs) }}
+    {{ form_row(form.addresses) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -4,7 +4,11 @@
 namespace AppBundle\DataFixtures\ORM;
 
 
+use AppBundle\Entity\City;
+use AppBundle\Entity\Country;
 use AppBundle\Entity\PostalCode;
+use AppBundle\Entity\Province;
+use AppBundle\Services\Slugify;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -59,17 +63,45 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			fclose($file);
 		}
 
+		$countryCollection = array();
+		$provinceCollection = array();
+		$cityCollection = array();
 		foreach ($postalCodeCollection as $item) {
-			$entity = new PostalCode();
-			$entity->setCp($item["cp"]);
-			$entity->setCountry($item["country"]);
-			$entity->setPlace($item["place"]);
-			$entity->setState($item["state"]);
-			$entity->setCity($item["city"]);
-			$entity->setCityIso($item["city_iso"]);
-			$entity->setLatitude($item["latitude"]);
-			$entity->setLongitude($item["longitude"]);
-			$manager->persist($entity);
+			//Country
+			$countrySlug = Slugify::slug($item["country"]);
+			if(!in_array($countrySlug, $countryCollection)){
+				$countryCollection[] = $countrySlug;
+				$country = new Country();
+				$country->setName($item["country"]);
+				$country->setSlug($countrySlug);
+				$manager->persist($country);
+			}else{
+				$country = $this->container->get('webapp.manager.country_manager')->getOneBy(array('slug' => $countrySlug));
+			}
+			//Province
+			$provinceSlug = Slugify::slug($item["city"]);
+			if(!in_array($provinceSlug, $provinceCollection)){
+				$provinceCollection[] = $provinceSlug;
+				$province = new Province();
+				$province->setName($item["city"]);
+				$province->setSlug($provinceSlug);
+				$province->setCountry($country);
+				$manager->persist($province);
+			}else{
+				$province = $this->container->get('webapp.manager.province_manager')->getOneBy(array('slug' => $provinceSlug));
+			}
+			//City
+			$citySlug = Slugify::slug($item["place"]);
+			if(!in_array($citySlug, $cityCollection)){
+				$cityCollection[] = $citySlug;
+				$city = new City();
+				$city->setName($item["place"]);
+				$city->setSlug($citySlug);
+				$city->setProvince($province);
+				$manager->persist($city);
+			}else{
+				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
+			}
 		}
 
 		$manager->flush();

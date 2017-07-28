@@ -78,17 +78,17 @@ class PostalCode extends Timestampable
      */
     private $longitude;
 
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="postalCode", cascade={"persist"})
-     */
-    private $addresses;
+//    /**
+//     * @var ArrayCollection
+//     *
+//     * @ORM\OneToMany(targetEntity="Address", mappedBy="postalCode", cascade={"persist"})
+//     */
+//    private $addresses;
 
     public function __construct()
     {
         parent::__construct();
-        $this->addresses = new ArrayCollection();
+//        $this->addresses = new ArrayCollection();
     }
 
     /**
@@ -285,43 +285,43 @@ class PostalCode extends Timestampable
         return $this->longitude;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getAddresses()
-    {
-        return $this->addresses;
-    }
-
-    /**
-     * @param ArrayCollection $addresses
-     */
-    public function setAddresses($addresses)
-    {
-        $this->addresses = $addresses;
-    }
-
-    /**
-     * @param Address $address
-     */
-    public function addAddress(Address $address)
-    {
-        if ($this->addresses->contains($address)){
-            return;
-        }
-
-        $this->addresses->add($address);
-    }
-
-    /**
-     * @param Address $address
-     */
-    public function removeAddress(Address $address)
-    {
-        if (!$this->addresses->contains($address)){
-            return;
-        }
-
-        $this->addresses->remove($address);
-    }
+//    /**
+//     * @return ArrayCollection
+//     */
+//    public function getAddresses()
+//    {
+//        return $this->addresses;
+//    }
+//
+//    /**
+//     * @param ArrayCollection $addresses
+//     */
+//    public function setAddresses($addresses)
+//    {
+//        $this->addresses = $addresses;
+//    }
+//
+//    /**
+//     * @param Address $address
+//     */
+//    public function addAddress(Address $address)
+//    {
+//        if ($this->addresses->contains($address)){
+//            return;
+//        }
+//
+//        $this->addresses->add($address);
+//    }
+//
+//    /**
+//     * @param Address $address
+//     */
+//    public function removeAddress(Address $address)
+//    {
+//        if (!$this->addresses->contains($address)){
+//            return;
+//        }
+//
+//        $this->addresses->remove($address);
+//    }
 }

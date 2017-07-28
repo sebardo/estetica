@@ -1,0 +1,120 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+{% block page_title %}{{ 'app.client.edit.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'app.client.edit.subtitle'|trans() }}{% endblock %}
+{% block create_title 'client.edit_description'|trans|capitalize %}
+    {% block create_body %}
+        {{ form_start(form) }}
+        {{ form_row(form.tradeName) }}
+        {{ form_row(form.tagLine) }}
+        {{ form_row(form.shortDescription) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.technology) }}
+        {{ form_row(form.societyName) }}
+        {{ form_row(form.socialNumber) }}
+        {{ form_row(form.nif) }}
+        {{ form_row(form.urlWeb) }}
+        {{ form_row(form.facebook) }}
+        {{ form_row(form.instagram) }}
+        {{ form_row(form.blog) }}
+        {{ form_row(form.logoFile) }}
+        {{ form_row(form.plan) }}
+        {# Start #}
+        {#{{ form_row(form.fileDocs) }}#}
+        <div class="form-group">
+            <ul class="filedocs" id="filedoc-fields-list" data-prototype="{{ form_widget(form.fileDocs.vars.prototype)|e }}">
+                {% for fileField in form.fileDocs %}
+                    <li class="wrapper-field">
+                        {{ form_errors(fileField) }}
+                        {{ form_widget(fileField) }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="#" id="add-another-filedoc">{{ 'add another image'|trans() }}</a>
+        </div>
+        {# END #}
+        {# Start #}
+        {{ form_row(form.billingAddress) }}
+        {{ form_row(form.localAddress) }}
+        {{ form_row(form.submit) }}
+        {{ form_end(form) }}
+    {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var fileDocCount = '{{ form.fileDocs|length }}';
+
+        jQuery(document).ready(function() {
+            jQuery('#add-another-filedoc').click(function(e) {
+                e.preventDefault();
+                var objectList = jQuery('#filedoc-fields-list');
+                var newWidget = objectList.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, fileDocCount);
+                fileDocCount++;
+
+                var newLi = jQuery('<li></li>').html(newWidget);
+                var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close').html('&times;');
+                removeButton.appendTo(newLi);
+                newLi.appendTo(objectList);
+            });
+        });
+        //Remove Button
+        jQuery(document).on('click', '.close', function(){
+            $(this).closest('li').fadeOut(500, function() {
+                $(this).remove();
+                fileDocCount--;
+            });
+        });
+        //Ajax Country
+        $(document).on('change', '.country_selector', function(){
+            var $this = $(this);
+            var $typeCollection = $this.attr('id').split("_");
+            var $type = $typeCollection[2] || 'billingAddress';
+            var data = {
+                country_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_provinces") }}',
+                data: data,
+                success: function(data) {
+                    var $province_selector = $('#appbundle_client_' + $type + '_province');
+
+                    $province_selector.html('<option>Provincia</option>');
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $province_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+
+                    var $city_selector = $('#appbundle_client_' + $type + '_city');
+                    $city_selector.html("<option>Ciudad</option>");
+                }
+            });
+        });
+
+        // Ajax Province
+        $(document).on('change', '.province_selector', function(){
+            var $this = $(this);
+            var data = {
+                province_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_cities") }}',
+                data: data,
+                success: function(data) {
+                    var $city_selector = $('#appbundle_client_' + $type + '_city');
+
+                    $city_selector.html('<option>Ciudad</option>');
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $city_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

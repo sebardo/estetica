@@ -57,16 +57,30 @@ class Address extends Timestampable
     private $isBilling;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PostalCode", inversedBy="addresses", cascade={"persist"})
-     * @ORM\JoinColumn(name="postal_code_id", referencedColumnName="id", onDelete="CASCADE")
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=5)
      */
     private $postalCode;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="Client", inversedBy="addresses", cascade={"persist"})
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="addresses", cascade={"persist"})
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $client;
+    private $city;
+
+//    /**
+//     * @ORM\ManyToOne(targetEntity="PostalCode", inversedBy="addresses", cascade={"persist"})
+//     * @ORM\JoinColumn(name="postal_code_id", referencedColumnName="id", onDelete="CASCADE")
+//     */
+//    private $postalCode;
+
+//    /**
+//     * @ORM\ManyToOne(targetEntity="Client", inversedBy="addresses", cascade={"persist"})
+//     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
+//     */
+//    private $client;
 
     public function __construct()
     {
@@ -176,21 +190,21 @@ class Address extends Timestampable
         return $this->contact;
     }
 
-    /**
-     * @return PostalCode
-     */
-    public function getPostalCode()
-    {
-        return $this->postalCode;
-    }
-
-    /**
-     * @param PostalCode $postalCode
-     */
-    public function setPostalCode($postalCode)
-    {
-        $this->postalCode = $postalCode;
-    }
+//    /**
+//     * @return PostalCode
+//     */
+//    public function getPostalCode()
+//    {
+//        return $this->postalCode;
+//    }
+//
+//    /**
+//     * @param PostalCode $postalCode
+//     */
+//    public function setPostalCode($postalCode)
+//    {
+//        $this->postalCode = $postalCode;
+//    }
 
     /**
      * @return boolean
@@ -209,18 +223,50 @@ class Address extends Timestampable
     }
 
     /**
-     * @return Client
+     * @return mixed
      */
-    public function getClient()
+    public function getPostalCode()
     {
-        return $this->client;
+        return $this->postalCode;
     }
 
     /**
-     * @param Client $client
+     * @param mixed $postalCode
      */
-    public function setClient($client)
+    public function setPostalCode($postalCode)
     {
-        $this->client = $client;
+        $this->postalCode = $postalCode;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+//    /**
+//     * @return Client
+//     */
+//    public function getClient()
+//    {
+//        return $this->client;
+//    }
+//
+//    /**
+//     * @param Client $client
+//     */
+//    public function setClient($client)
+//    {
+//        $this->client = $client;
+//    }
 }
