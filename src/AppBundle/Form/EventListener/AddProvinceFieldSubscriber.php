@@ -14,10 +14,12 @@ use Symfony\Component\Form\FormInterface;
 class AddProvinceFieldSubscriber implements EventSubscriberInterface
 {
 	private $factory;
+	private $options;
 
-	public function __construct(FormFactoryInterface $factory)
+	public function __construct(FormFactoryInterface $factory, $options = array())
 	{
 		$this->factory = $factory;
+		$this->options = $options;
 	}
 
 	public static function getSubscribedEvents()
@@ -33,7 +35,7 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 		$form->add($this->factory->createNamed('province','entity', $province, array(
 			'class'         => 'AppBundle\Entity\Province',
 			'auto_initialize' => false,
-			'empty_value'   => 'Provincia',
+			'empty_value'   => 'province.form.empty_value',
 			'mapped'        => false,
 			'query_builder' => function (EntityRepository $repository) use ($country) {
 				$qb = $repository->createQueryBuilder('province')
@@ -51,7 +53,10 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 
 				return $qb;
 			},
-			'attr' => array('class' => 'province_selector')
+			'attr' => array('class' => 'province_selector'),
+			'label' => 'province.form.name',
+			'label_attr' => array('class' => ''),
+			'required' => (array_key_exists('required_form', $this->options)) ? $this->options['required_form'] : true,
 		)));
 	}
 

@@ -16,11 +16,15 @@
     <ul data-active-menu="true" class="sidebar-menu" data-active="{{ active }}">
         <li class="header"></li>
         {% if is_granted("ROLE_ADMIN") %}
-            <li id="user" class="treeview">
+            <li id="ticket" class="treeview">
                 <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'ticket.title_nav'|trans|title }}</span>
                 </a>
+            </li>
+            <li id="flowwwer" class="treeview">
                 <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'flowwwer.title_nav'|trans|title }}</span>
                 </a>
+            </li>
+            <li id="video" class="treeview">
                 <a href=""><i class="fa fa-bars"></i> <span>{{ 'video.title_nav'|trans|title }}</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
@@ -28,33 +32,24 @@
                 </a>
                 <ul class="treeview-menu">
                     <li id="admin">
-                        <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'video.title_nav'|trans|title }}</span>
+                        <a id="video-link" href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'video.title_nav'|trans|title }}</span>
                         </a>
-                        <a href=""><i
+                        <a id="video-list" href=""><i
                                     class="fa fa-circle-o"></i>{{ 'backend.list'|trans~' '~'backend.of'|trans~' '~'video.title_admin_nav'|trans }}
                         </a>
                     </li>
-                    {#<li id="viewer"><a href="{{ path('user_viewer_index') }}"><i#}
-                    {#class="fa fa-circle-o"></i>{{ 'backend.list'|trans~' '~'backend.of'|trans~' '~'user.title_viewer_nav'|trans }}#}
-                    {#</a>#}
-                    {#</li>#}
-                    {#<li id="mother"><a href="{{ path('usermother_index') }}"><i#}
-                    {#class="fa fa-circle-o"></i>{{ 'backend.list'|trans~' '~'backend.of'|trans~' '~'user.title_mother_nav'|trans }}#}
-                    {#</a>#}
-                    {#</li>#}
                 </ul>
+            </li>
+            <li id="client" class="treeview">
                 <a href=""><i class="fa fa-bars"></i> <span>{{ 'client.title_nav'|trans|title }}</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
                 <ul class="treeview-menu">
                     <li id="admin">
-                        <a href="{{ path('admin_client_list') }}"><i class="fa fa-user"></i> <span>{{ 'client.title_nav'|trans|title }}</span>
+                        <a id="client-create" href="{{ path('admin_client_list') }}"><i class="fa fa-user"></i> <span>{{ 'client.list'|trans|title }}</span>
                         </a>
-                        {#<a href=""><i#}
-                                    {#class="fa fa-circle-o"></i>{{ 'backend.list'|trans~' '~'backend.of'|trans~' '~'video.title_admin_nav'|trans }}#}
-                        {#</a>#}
                     </li>
                 </ul>
             </li>

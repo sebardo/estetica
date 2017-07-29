@@ -1,0 +1,15 @@
+{% block color_type_widget %}
+    {% spaceless %}
+        <div class="input-group color_type">
+            {{ block('form_widget_simple') }}
+            <div class="input-group-addon">
+                <i></i>
+            </div>
+        </div>
+    {% endspaceless %}
+    <script>
+        $(function ($) {
+            $('.color_type').colorpicker({format: 'hex'});
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% block amount_type_widget %}
+    {% spaceless %}
+        <div class="input-group">
+            <span class="input-group-addon">€</span>
+            {{ block('form_widget_simple') }}
+            <span class="input-group-addon">.00</span>
+        </div>
+    {% endspaceless %}
+{% endblock %}

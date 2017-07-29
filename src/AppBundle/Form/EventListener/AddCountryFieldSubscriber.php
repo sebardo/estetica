@@ -14,10 +14,12 @@ use Symfony\Component\Form\FormInterface;
 class AddCountryFieldSubscriber implements EventSubscriberInterface
 {
 	private $factory;
+	private $options;
 
-	public function __construct(FormFactoryInterface $factory)
+	public function __construct(FormFactoryInterface $factory, $options = array())
 	{
 		$this->factory = $factory;
+		$this->options = $options;
 	}
 
 	public static function getSubscribedEvents()
@@ -34,13 +36,16 @@ class AddCountryFieldSubscriber implements EventSubscriberInterface
 			'class'         => 'AppBundle\Entity\Country',
 			'auto_initialize' => false,
 			'mapped'        => false,
-			'empty_value'   => 'País',
+			'empty_value'   => 'country.form.empty_value',
 			'query_builder' => function (EntityRepository $repository) {
 				$qb = $repository->createQueryBuilder('country');
 
 				return $qb;
 			},
-			'attr' => array('class' => 'country_selector')
+			'attr' => array('class' => 'country_selector'),
+			'label' => 'country.form.name',
+			'label_attr' => array('class' => ''),
+			'required' => (array_key_exists('required_form', $this->options)) ? $this->options['required_form'] : true,
 		)));
 	}
 

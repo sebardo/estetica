@@ -1,0 +1,52 @@
+{% block avatar_type_widget %}
+    <div id="{{ form.vars.id~'_avatar_type' }}" class="avatar_type">
+        <input name="file_avatar" type="file" class="hidden" id="{{ form.vars.id~'_file_avatar' }}">
+        {{form_widget(form)}}
+        <a href="#" class="hidden"><i class="fa fa-pencil text-success"></i></a>
+        {% if not value %}
+            <img src="{{ asset('bundles/app/img/avatar_default.png') }}" class="img-circle img-thumbnail"/>
+        {% else %}
+            <img src="{{ asset(url_show~value) }}" class="img-circle img-thumbnail">
+        {% endif %}
+    </div>
+    <script>
+        $(function(){
+            var loading={
+                start:function(){
+                    $.showLoading({name: 'line-pulse'});
+                },
+                stop:function(){
+                    $.hideLoading();
+                }
+            };
+            var avatar=$('{{ '#'~form.vars.id~'_avatar_type' }}');
+            var btn= avatar.find('a');
+            avatar.mouseover(function(){
+                btn.removeClass('hidden');
+            });
+            avatar.mouseout(function(){
+                btn.addClass('hidden');
+            });
+
+            btn.on('click',function(e){
+                $('{{ '#'~form.vars.id ~'_file_avatar'}}').click();
+                e.preventDefault();
+            });
+            $('{{ '#'~form.vars.id ~'_file_avatar'}}').fileupload({
+                url:'{{path(url_upload) }}',
+                done:function(e,parameters){
+                    loading.stop();
+                    avatar.find('img').attr('src','{{ asset(url_show) }}'+parameters.result);
+                    $('{{'#'~ form.vars.id }}').val(parameters.result);
+                },
+                error:function(){
+                    loading.stop();
+                },
+                progressall:function(){
+                    loading.start();
+                }
+
+            });
+        });
+    </script>
+{% endblock %}

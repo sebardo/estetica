@@ -1,0 +1,44 @@
+client:
+  title_nav: 'Cliente'
+  list: 'Listado Cliente'
+  create_edit: 'Editar Cliente'
+  create_new: 'Nuevo Cliente'
+  create_btn: 'Crear una entidad'
+  form:
+    logo: 'Logo'
+    plan: 'Planes'
+    trade_name: 'Nombre comercial'
+    tag_line: 'Slogan'
+    short_description: 'Descripción corta'
+    description: 'Descripción'
+    technology: 'Tecnología'
+    social_number: 'Número social'
+    nif: 'Nif'
+    file_doc: 'Imágenes'
+    file_doc_add_file_doc: 'Añade otra imagen'
+    billing_address: 'Dirección fiscal'
+    local_address: 'Dirección local'
+    local_address_checkbox: 'La dirección local es distinta de la dirección fiscal'
+    url_web: 'Url de la web'
+    facebook: 'Facebook'
+    instagram: 'Instragram'
+    blog: 'Blog'
+address:
+  form:
+    address: 'Dirección'
+    phone: 'Teléfono'
+    email: 'Email'
+    contact: 'Persona de contacto'
+    postal_code: 'Código postal'
+country:
+  form:
+    name: 'País'
+    empty_value: 'Selecciona un País'
+province:
+  form:
+    name: 'Provincia'
+    empty_value: 'Selecciona una Provincia'
+city:
+  form:
+    name: 'Ciudad'
+    empty_value: 'Selecciona una Ciudad'

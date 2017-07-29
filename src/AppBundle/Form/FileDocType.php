@@ -17,7 +17,10 @@ class FileDocType extends AbstractType
         $builder
             ->add('fileVich', VichFileType::class, array(
                 'required' => true,
-                'allow_delete' => true
+                'allow_delete' => true,
+                'label' => 'file.form.name',
+                'label_attr' => array('class' => ''),
+                'attr' => array('class' => '')
             ))
         ;
     }

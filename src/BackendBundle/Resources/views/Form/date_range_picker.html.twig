@@ -1,0 +1,64 @@
+{% block date_range_picker_type_widget %}
+    {% spaceless %}
+        <div class="form-group">
+            <div class='input-group date date_picker_type' id="{{ form.vars.id~'date_picker_type' }}">
+                {{ block('form_widget_simple') }}
+                <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+            </div>
+        </div>
+    {% endspaceless %}
+    <script>
+        $(function ($) {
+
+
+            //get start & end row
+            var start=$('{{ '#'~form.parent.children[start].vars.id}}');
+            var end=$('{{ '#'~form.parent.children[end].vars.id}}');
+
+
+            //start field is hidden
+            start.parent('.form-group').addClass('hidden');
+
+            //end field is hidden
+            end.parent('.form-group').addClass('hidden');
+
+            //get value from true date selct widget
+            var getValueSelect=function(parent,part_name)
+            {
+                return parent.find('select[name*="'+part_name+'"]').val();
+            }
+
+            //set value from true date selct widget
+            var setValueSelect=function(parent,part_name,value)
+            {
+                parent.find('select[name*="'+part_name+'"]').val(value);
+            }
+
+            moment.locale('es');
+
+            //build daterangepicker
+            $('{{'#'~form.vars.id }}').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    applyLabel: 'Aplicar',
+                    cancelLabel: 'Cancelar',
+                },
+                startDate: '"' + getValueSelect(start, 'day') + '/' + getValueSelect(start, 'month') + '/' + getValueSelect(start, 'year') + '"',
+                endDate: '"' + getValueSelect(end, 'day') + '/' + getValueSelect(end, 'month') + '/' + getValueSelect(end, 'year') + '"'
+            }).on('apply.daterangepicker',function(e,picker){
+
+                //set all values true start date
+                setValueSelect(start,'[year]',picker.startDate.format('YYYY'));
+                setValueSelect(start,'[month]',picker.startDate.format('M'));
+                setValueSelect(start,'[day]',picker.startDate.format('D'));
+
+                //set all values true end date
+                setValueSelect(end,'[year]',picker.endDate.format('YYYY'));
+                setValueSelect(end,'[month]',picker.endDate.format('M'));
+                setValueSelect(end,'[day]',picker.endDate.format('D'));
+            });
+        });
+    </script>
+{% endblock %}
