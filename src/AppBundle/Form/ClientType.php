@@ -16,10 +16,6 @@ class ClientType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-//			->add('password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', array(
-//				'label' => 'user.password',
-//				'required' => $options['required_password']
-//			))
 			->add('tradeName', null, array(
 				'label' => 'client.form.trade_name',
 				'required' => true,
@@ -81,7 +77,7 @@ class ClientType extends AbstractType
 				'attr' => array('class' => '')
 			))
 			->add('instagram', null, array(
-				'label' => 'client.form.instragram',
+				'label' => 'client.form.instagram',
 				'required' => true,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
@@ -92,7 +88,17 @@ class ClientType extends AbstractType
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
-			->add('logoFile', VichFileType::class, array(
+//			->add('logoFile', 'BackendBundle\Form\Type\DocumentType', array(
+//				'required' => true,
+//				//'allow_delete' => false,
+//				'url_upload' => 'client_upload_image',
+//				'url_show' => '',
+//				'acceptFileTypes' => array('jpg','png','gif','jpeg'),
+//				'label' => 'client.form.logo',
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => '')
+//			))
+			->add('logoFile', 'Vich\UploaderBundle\Form\Type\VichImageType', array(
 				'required' => true,
 				'allow_delete' => true,
 				'label' => 'client.form.logo',
@@ -129,6 +135,17 @@ class ClientType extends AbstractType
 				'required_form' => false
 			))
 		;
+
+		if($options['edit_form'] === true){
+			$builder
+				->add('password', 'Symfony\Component\Form\Extension\Core\Type\PasswordType', array(
+					'label' => 'client.form.new_password',
+					'label_attr' => array('class' => ''),
+					'attr' => array('class' => ''),
+					'required' => true
+				))
+			;
+		}
 	}
 
 	/**
@@ -138,7 +155,7 @@ class ClientType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'data_class' => 'AppBundle\Entity\Client',
-			'required_password' => true
+			'edit_form' => false
 		));
 	}
 

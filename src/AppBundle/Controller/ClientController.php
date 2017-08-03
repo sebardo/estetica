@@ -84,8 +84,8 @@ class ClientController extends BackendBundleController
 	public function createClientAction(Request $request)
 	{
 		$entity = new Client();
-		$form = $this->createForm('AppBundle\Form\ClientType', $entity);
-		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('client.create_btn'),'attr'=>array('class'=>'btn btn-success')));
+		$form = $this->createForm('AppBundle\Form\ClientType', $entity, array('edit_form' => false));
+		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -94,7 +94,7 @@ class ClientController extends BackendBundleController
 			$em->persist($entity);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.create_succefull'));
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.create_succesfull'));
 
 			return $this->redirectToRoute('admin_client_list', array('id' => $entity->getId()));
 		}
@@ -122,9 +122,8 @@ class ClientController extends BackendBundleController
 	public function editClientAction(Request $request, Client $entity)
 	{
 		$oldPassword = $entity->getPassword();
-		$deleteForm = $this->createDeleteForm($entity);
-		$editForm = $this->createForm('AppBundle\Form\ClientType', $entity, array('required_password' => false));
-		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.edit'),'attr'=>array('class'=>'btn btn-success')));
+		$editForm = $this->createForm('AppBundle\Form\ClientType', $entity, array('edit_form' => true));
+		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.edit_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -137,7 +136,7 @@ class ClientController extends BackendBundleController
 			$em->persist($entity);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.edit_succefull'));
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.edit_succesfull'));
 
 			return $this->redirectToRoute('admin_client_edit', array('id' => $entity->getId()));
 		}
@@ -145,7 +144,6 @@ class ClientController extends BackendBundleController
 		return $this->render('AppBundle:Client:edit.html.twig', array(
 			'entity' => $entity,
 			'form' => $editForm->createView(),
-			'delete_form' => $deleteForm->createView(),
 			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.edit")),
 			'active_side_bar' => $this->getActiveSidebar()
 		));
@@ -172,7 +170,7 @@ class ClientController extends BackendBundleController
 			$em = $this->getDoctrine()->getManager();
 			$em->remove($entity);
 			$em->flush();
-			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.delete_succefull'));
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.delete_succesfull'));
 		}
 
 		return $this->redirectToRoute('admin_client_list');
@@ -236,5 +234,29 @@ class ClientController extends BackendBundleController
 		}
 
 		return new JsonResponse($response);
+	}
+
+	/**
+	 * @param Request $request
+	 *
+	 * @Route("/image_upload" ,name="client_upload_image")
+	 * @return JsonResponse
+	 */
+	public function documentUploadAction(Request $request)
+	{
+		$filename = null;
+		$files_upload = $request->files->getIterator();
+		foreach($files_upload as $k => $i) {
+			$file = $request->files->get($k);
+			if($file) {
+				$filename= uniqid(rand(), true).'.'.$file->getClientOriginalExtension();
+				$file->move(
+					$this->get('webapp.media_resolver')->getRelRootPath('client.image'),
+					$filename
+				);
+			}
+		}
+
+		return new JsonResponse($filename);
 	}
 }

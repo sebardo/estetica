@@ -102,8 +102,8 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			}else{
 				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
 			}
+			$manager->flush();
 		}
-
 		$manager->flush();
 	}
 

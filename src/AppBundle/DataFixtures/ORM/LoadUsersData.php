@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Address;
+use AppBundle\Entity\FileDoc;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use AppBundle\Entity\Client;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -81,7 +82,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 			$billingAddress->setPostalCode("00001");
 			//City
 			$cityCodeCollection = $this->container->get('webapp.manager.city_manager')->getBy(array());
-			$cityCodeCollectionSize = count($cityCodeCollection);
+			$cityCodeCollectionSize = (count($cityCodeCollection) - 1);
 			$randValue = rand(0, $cityCodeCollectionSize);
 			$billingAddress->setCity($cityCodeCollection[$randValue]);
 			$billingAddress->setIsBilling(true);
@@ -106,6 +107,15 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 			}else{
 				$entity->setLogo("logo2.png");
 				$entity->setLocalAddress($billingAddress);
+			}
+
+			$numberImages = rand(0, 3);
+			for($i = 0; $i <= $numberImages; $i++) {
+				$fileDoc = new FileDoc();
+				$fileDoc->setClient($entity);
+				$fileDoc->setFile("image00".$i.'.jpeg');
+				$manager->persist($fileDoc);
+				$manager->flush();
 			}
 
 			//Plan

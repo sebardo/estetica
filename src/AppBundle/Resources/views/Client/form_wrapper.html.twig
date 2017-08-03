@@ -2,7 +2,14 @@
 
  {% block create_body %}
      {{ form_start(form) }}
-     {{ form_row(form.logoFile) }}
+     {% if entity.logo is not null %}
+         <div class="row">
+             <div class="col-xs-4">
+                 <img class="logo-image-preview img-responsive" src="{{ image_path ~ '/' ~ entity.logo }}">
+             </div>
+         </div>
+     {% endif %}
+     {{ form_row(form.logoFile, {'label': false}) }}
      {{ form_row(form.plan) }}
      {{ form_row(form.tradeName) }}
      {{ form_row(form.tagLine) }}
@@ -12,12 +19,22 @@
      {{ form_row(form.societyName) }}
      {{ form_row(form.socialNumber) }}
      {{ form_row(form.nif) }}
+     {% if form.children.password is defined %}
+         {{ form_row(form.password) }}
+     {% endif %}
      {# Start #}
      {{ form_label(form.fileDocs) }}
      <div class="form-group">
          <ul class="filedocs" id="filedoc-fields-list" data-prototype="{{ form_widget(form.fileDocs.vars.prototype)|e }}">
              {% for fileField in form.fileDocs %}
                  <li class="wrapper-field">
+                     {% if entity.fileDocs is not null %}
+                         <div class="row">
+                             <div class="col-xs-4">
+                                 <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_by_client(entity, loop.index - 1) }}">
+                             </div>
+                         </div>
+                     {% endif %}
                      {{ form_errors(fileField) }}
                      {{ form_widget(fileField) }}
                  </li>
@@ -28,12 +45,16 @@
      {# END #}
      {# Start #}
      {{ form_row(form.billingAddress) }}
-     <div class="checkbox">
-         <label><input class="checkbox-show-local-address" id="is-local-address" type="checkbox" value="">{{ 'client.form.local_address_checkbox'|trans() }}</label>
-     </div>
-     <div id="local-address-wrapper" class="hide">
+     {% if entity.localAddress is null %}
+         <div class="checkbox">
+             <label><input class="checkbox-show-local-address" id="is-local-address" type="checkbox" value="">{{ 'client.form.local_address_checkbox'|trans() }}</label>
+         </div>
+         <div id="local-address-wrapper" class="hide">
+             {{ form_row(form.localAddress) }}
+         </div>
+     {% else %}
          {{ form_row(form.localAddress) }}
-     </div>
+     {% endif %}
      {{ form_row(form.urlWeb) }}
      {{ form_row(form.facebook) }}
      {{ form_row(form.instagram) }}
@@ -102,6 +123,8 @@
         // Ajax Province
         $(document).on('change', '.province_selector', function(){
             var $this = $(this);
+            var $typeCollection = $this.attr('id').split("_");
+            var $type = $typeCollection[2] || 'billingAddress';
             var data = {
                 province_id: $this.val()
             };

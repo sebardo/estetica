@@ -41,12 +41,14 @@ twig:
         site_title: '%site_title%'
         ticket_link: '%ticket_link%'
         flowww_link: '%flowww_link%'
+        image_path: "%app.path.images%"
     form:
         resources:
             - 'BackendBundle::bootstrap_3_layout.html.twig'
             - 'BackendBundle:Form:autocomplete.html.twig'
             - 'BackendBundle:Form:date_picker.html.twig'
             - 'BackendBundle:Form:files.html.twig'
+            - 'BackendBundle:Form:document.html.twig'
             - 'BackendBundle:Form:map.html.twig'
             - 'BackendBundle:Form:location.html.twig'
             - 'BackendBundle:Form:ckeditor.html.twig'

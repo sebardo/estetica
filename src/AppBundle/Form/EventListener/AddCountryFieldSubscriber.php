@@ -56,7 +56,7 @@ class AddCountryFieldSubscriber implements EventSubscriberInterface
 
 		$country = null;
 		if (null !== $data) {
-			$country = ($data->city) ? $data->city->getProvince()->getCountry() : null ;
+			$country = ($data->getCity()) ? $data->getCity()->getProvince()->getCountry() : null ;
 		}
 
 		$this->addCountryForm($form, $country);

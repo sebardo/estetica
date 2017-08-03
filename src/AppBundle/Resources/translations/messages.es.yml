@@ -1,9 +1,53 @@
+security:
+  login:
+    title_page: 'Login Centro de Estética'
+    description: 'Sistema de Login en Centro de Estética'
+    username: 'Nombre de usuario'
+    password: 'Contraseña'
+    rememberme: 'Recordar contraseña'
+    submit: 'Enviar'
+app:
+  edit: 'Editar'
+  delete: 'Borrar'
+  edit_btn: 'Editar'
+  create_btn: 'Crear'
+  list:
+    table:
+      created: 'Creado'
+      username: 'Username'
+      active: 'Activo'
+  sidebar:
+    ticket:
+      title_nav: 'Sistema de tickets'
+    flowwwer:
+      title_nav: 'Flowwwer'
+    video:
+      title_nav: 'Videos'
+      list: 'Listado de videos'
+    client:
+      title_nav: 'Cliente'
+      list: 'Listado de clientes'
 client:
   title_nav: 'Cliente'
   list: 'Listado Cliente'
   create_edit: 'Editar Cliente'
+  create_succesfull: 'Cliente creado correctamente'
+  edit_succesfull: 'Cliente editado correctamente'
+  delete_succesfull: 'Cliente borrado correctamente'
   create_new: 'Nuevo Cliente'
-  create_btn: 'Crear una entidad'
+  edit_btn: 'Editar un cliente'
+  create_btn: 'Crear un cliente'
+  edit:
+    title: 'Editar un cliente'
+    subtitle: 'Editar al cliente'
+    description: 'Editando al cliente'
+  create:
+    title: 'Crear un cliente'
+    subtitle: 'Crear al cliente'
+    description: 'Creando al cliente'
+  list:
+    title: 'Listado de clientes'
+    subtitle: 'Listado de todos los clientes'
   form:
     logo: 'Logo'
     plan: 'Planes'
@@ -23,6 +67,8 @@ client:
     facebook: 'Facebook'
     instagram: 'Instragram'
     blog: 'Blog'
+    password: 'Contraseña'
+    new_password: 'Nueva Contraseña'
 address:
   form:
     address: 'Dirección'

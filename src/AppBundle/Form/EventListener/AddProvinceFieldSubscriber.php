@@ -32,7 +32,7 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 
 	private function addProvinceForm(FormInterface $form, $province, $country)
 	{
-		$form->add($this->factory->createNamed('province','entity', $province, array(
+		$form->add($this->factory->createNamed('province', 'entity', $province, array(
 			'class'         => 'AppBundle\Entity\Province',
 			'auto_initialize' => false,
 			'empty_value'   => 'province.form.empty_value',
@@ -68,7 +68,7 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 		$province = null;
 		$country = null;
 		if (null !== $data) {
-			$province = ($data->city) ? $data->city->getProvince() : null ;
+			$province = ($data->getCity()) ? $data->getCity()->getProvince() : null ;
 			$country = ($province) ? $province->getCountry() : null ;
 		}
 
@@ -77,15 +77,19 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 
 	public function preBind(FormEvent $event)
 	{
-		$data = $event->getData();
-		$form = $event->getForm();
+		if(array_key_exists('required_form', $this->options)){
+			if($this->options['required_form']){
+				$data = $event->getData();
+				$form = $event->getForm();
 
-		if (null === $data) {
-			return;
+				if (null === $data) {
+					return;
+				}
+
+				$province = array_key_exists('province', $data) ? $data['province'] : null;
+				$country = array_key_exists('country', $data) ? $data['country'] : null;
+				$this->addProvinceForm($form, $province, $country);
+			}
 		}
-
-		$province = array_key_exists('province', $data) ? $data['province'] : null;
-		$country = array_key_exists('country', $data) ? $data['country'] : null;
-		$this->addProvinceForm($form, $province, $country);
 	}
 }

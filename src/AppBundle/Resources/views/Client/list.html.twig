@@ -1,7 +1,7 @@
 {% extends "BackendBundle:CRUD:list.html.twig" %}
 
-{% block page_title %}{{ 'app.client.list.title'|trans() }}{% endblock %}
-{% block page_subtitle %}{{ 'app.client.list.subtitle'|trans() }}{% endblock %}
+{% block page_title %}{{ 'client.list.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'client.list.subtitle'|trans() }}{% endblock %}
 {% block create_new_path path('admin_client_create') %}
 {% block create_new_title 'client.create_new'|trans %}
 {% block list_title 'client.list'|trans%}
@@ -12,9 +12,9 @@
         {% block thead %}
             <tr>
                 <th>{{ '#' }}</th>
-                <th>{{ 'category.created'|trans|title }}</th>
-                <th>{{ 'category.username'|trans|title }}</th>
-                <th>{{ 'category.active'|trans|title }}</th>
+                <th>{{ 'app.list.table.created'|trans|title }}</th>
+                <th>{{ 'app.list.table.username'|trans|title }}</th>
+                <th>{{ 'app.list.table.active'|trans|title }}</th>
                 <th>{{ 'app.edit'|trans|title }}</th>
                 <th>{{ 'app.delete'|trans|title }}</th>
             </tr>

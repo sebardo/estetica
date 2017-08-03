@@ -32,9 +32,10 @@ class AddCityFieldSubscriber implements EventSubscriberInterface
 
 	private function addCityForm(FormInterface $form, $province)
 	{
-		$form->add($this->factory->createNamed('city','entity', null, array(
+		$form->add($this->factory->createNamed('city', 'entity', null, array(
 			'class'         => 'AppBundle\Entity\City',
 			'auto_initialize' => false,
+			'mapped' => false,
 			'empty_value'   => 'city.form.empty_value',
 			'query_builder' => function (EntityRepository $repository) use ($province) {
 				$qb = $repository->createQueryBuilder('city')
@@ -66,7 +67,7 @@ class AddCityFieldSubscriber implements EventSubscriberInterface
 
 		$province = null;
 		if (null !== $data) {
-			$province = ($data->city) ? $data->city->getProvince() : null ;
+			$province = ($data->getCity()) ? $data->getCity()->getProvince() : null ;
 		}
 
 		$this->addCityForm($form, $province);
@@ -74,14 +75,18 @@ class AddCityFieldSubscriber implements EventSubscriberInterface
 
 	public function preBind(FormEvent $event)
 	{
-		$data = $event->getData();
-		$form = $event->getForm();
+		if(array_key_exists('required_form', $this->options)){
+			if($this->options['required_form']){
+				$data = $event->getData();
+				$form = $event->getForm();
 
-		if (null === $data) {
-			return;
+				if (null === $data) {
+					return;
+				}
+
+				$province = array_key_exists('province', $data) ? $data['province'] : null;
+				$this->addCityForm($form, $province);
+			}
 		}
-
-		$province = array_key_exists('province', $data) ? $data['province'] : null;
-		$this->addCityForm($form, $province);
 	}
 }
