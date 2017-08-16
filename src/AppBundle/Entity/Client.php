@@ -155,13 +155,6 @@ class Client extends Timestampable implements UserInterface
      */
     private $plan;
 
-//    /**
-//     * @var ArrayCollection
-//     *
-//     * @ORM\OneToMany(targetEntity="Address", mappedBy="client", cascade={"persist"})
-//     */
-//    private $addresses;
-
     /**
      * @ORM\OneToOne(targetEntity="Address")
      * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
@@ -201,7 +194,6 @@ class Client extends Timestampable implements UserInterface
         $this->salt = md5(time());
         $this->active = true;
         $this->role = self::ROLE_CLIENT;
-//        $this->addresses = new ArrayCollection();
         $this->fileDocs = new ArrayCollection();
     }
 
@@ -626,46 +618,6 @@ class Client extends Timestampable implements UserInterface
     {
         $this->localAddress = $localAddress;
     }
-
-//    /**
-//     * @return ArrayCollection
-//     */
-//    public function getAddresses()
-//    {
-//        return $this->addresses;
-//    }
-//
-//    /**
-//     * @param ArrayCollection $addresses
-//     */
-//    public function setAddresses($addresses)
-//    {
-//        $this->addresses = $addresses;
-//    }
-//
-//    /**
-//     * @param $address
-//     */
-//    public function addAddress($address)
-//    {
-//        if ($this->addresses->contains($address)){
-//            return;
-//        }
-//
-//        $this->addresses->add($address);
-//    }
-//
-//    /**
-//     * @param $address
-//     */
-//    public function removeAddress($address)
-//    {
-//        if (!$this->addresses->contains($address)){
-//            return;
-//        }
-//
-//        $this->addresses->remove($address);
-//    }
 
     public function __toString()
     {

@@ -24,3 +24,4 @@ parameters:
     ticket_link: "https://clubdeestetica.freshdesk.com/helpdesk"
     flowww_link: "https://login.flowww.net/es/"
     app.path.images: /uploads/images/
+    app.path.files: /uploads/files/
