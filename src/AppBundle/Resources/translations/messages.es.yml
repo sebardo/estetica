@@ -88,3 +88,8 @@ city:
   form:
     name: 'Ciudad'
     empty_value: 'Selecciona una Ciudad'
+multimedia:
+  form:
+    title: 'Título'
+    url_video: 'Url Video'
+    category: 'Categoría'

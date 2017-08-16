@@ -17,6 +17,12 @@ services:
     webapp.manager.city_manager:
         class: AppBundle\Model\CityModel
         arguments: ["@service_container"]
+    webapp.manager.multimedia_manager:
+        class: AppBundle\Model\MultimediaModel
+        arguments: ["@service_container"]
+    webapp.manager.multimedia_category_manager:
+        class: AppBundle\Model\MultimediaCategoryModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
