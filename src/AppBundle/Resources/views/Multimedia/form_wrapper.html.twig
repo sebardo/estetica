@@ -1,0 +1,36 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+ {% block create_body %}
+     {{ form_start(form) }}
+     {{ form_row(form.title) }}
+     {{ form_row(form.urlVideo) }}
+     {{ form_row(form.fileVich, {'label': 'multimedia.form.file'|trans()}) }}
+     {% if entity.file is not null %}
+         <div class="row">
+             <div class="col-xs-4">
+                 <a href="{{ files_path ~ '/' ~ entity.file }}" target="_blank" class="logo-image-preview img-responsive">{{ entity.file }}</a>
+             </div>
+         </div>
+     {% endif %}
+     {{ form_row(form.imageVich, {'label': 'multimedia.form.image'|trans()}) }}
+     {% if entity.image is not null %}
+         <div class="row">
+             <div class="col-xs-4">
+                 <img class="logo-image-preview img-responsive" src="{{ image_path ~ '/' ~ entity.image }}">
+             </div>
+         </div>
+     {% endif %}
+     {{ form_row(form.category) }}
+     {{ form_row(form.submit) }}
+     <div class="hide">
+         {{ form_rest(form) }}
+     </div>
+     {{ form_end(form) }}
+ {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}

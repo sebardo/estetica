@@ -170,4 +170,9 @@ class MultimediaCategory extends Timestampable
 
         $this->multimedias->remove($multimedia);
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

@@ -116,3 +116,5 @@ multimedia:
     url_video: 'Url Video'
     category: 'Categoría'
     category_default: 'Selecciona una categoría'
+    file: 'Archivo PDF'
+    image: 'Imagen'

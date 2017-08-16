@@ -21,6 +21,11 @@
                         <img src="{{ image_path ~ '/' ~ article.image }}" alt="{{ article.title }}">
                         <div class="caption">
                             <h3>{{ article.title }}</h3>
+                            {% if is_granted("ROLE_ADMIN") %}
+                            <p class="text-left">
+                                <a class="btn btn-default" href="{{ path('admin_multimedia_edit', {'id': article.id}) }}">{{ 'app.edit'|trans() }}</a>
+                            </p>
+                            {% endif %}
                             <p class="text-right">
                                 {% if article.urlVideo is not null %}
                                     <button data-toggle="modal" data-target="#article-{{ loop.index }}" class="btn btn-primary" role="button">{{ 'app.show'|trans() }}</button>

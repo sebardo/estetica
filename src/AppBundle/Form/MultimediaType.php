@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Form\EventListener\ValidateUrlVideoOrImageSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +29,7 @@ class MultimediaType extends AbstractType
                 'attr' => array('class' => '')
             ))
             ->add('fileVich', VichFileType::class, array(
-                'required' => true,
+                'required' => false,
                 'allow_delete' => true,
                 'label' => false,
                 'label_attr' => array('class' => ''),
@@ -41,7 +42,8 @@ class MultimediaType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
-            ->add('category', null, array(
+            ->add('category', 'entity', array(
+                'class' => 'AppBundle\Entity\MultimediaCategory',
                 'required' => true,
                 'label' => 'multimedia.form.category',
                 'label_attr' => array('class' => ''),
