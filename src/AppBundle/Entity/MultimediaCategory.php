@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Services\Formatting;
+use AppBundle\Services\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,6 +31,20 @@ class MultimediaCategory extends Timestampable
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="format_name", type="string", length=255, unique=true, nullable=true)
+     */
+    private $formatName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=255, unique=true, nullable=true)
+     */
+    private $slug;
 
     /**
      * @var ArrayCollection
@@ -61,6 +77,8 @@ class MultimediaCategory extends Timestampable
     public function setName($name)
     {
         $this->name = $name;
+        $this->setFormatName($name);
+        $this->setSlug($name);
 
         return $this;
     }
@@ -73,6 +91,44 @@ class MultimediaCategory extends Timestampable
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormatName()
+    {
+        return $this->formatName;
+    }
+
+    /**
+     * @param string $name
+     * @return MultimediaCategory
+     */
+    public function setFormatName($name)
+    {
+        $this->formatName = Formatting::formatString($name);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $name
+     * @return MultimediaCategory
+     */
+    public function setSlug($name)
+    {
+        $this->slug = Slugify::slug($name);
+
+        return $this;
     }
 
     /**
