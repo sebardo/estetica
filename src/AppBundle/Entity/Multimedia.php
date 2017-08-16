@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -242,6 +243,18 @@ class Multimedia extends Timestampable
     public function setCategory($category)
     {
         $this->category = $category;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if(empty($this->getFile()) && empty($this->getUrlVideo())){
+            $context->buildViolation('UrlVideo or File must not be empty!')
+                ->atPath('urlVideo')
+                ->addViolation();
+        }
     }
 
     public function __toString()

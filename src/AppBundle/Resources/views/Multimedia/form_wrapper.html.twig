@@ -4,7 +4,7 @@
      {{ form_start(form) }}
      {{ form_row(form.title) }}
      {{ form_row(form.urlVideo) }}
-     {{ form_row(form.fileVich, {'label': 'multimedia.form.file'|trans()}) }}
+     {{ form_row(form.fileVich, {'label': 'multimedia.form.file'|trans(), 'required': false}) }}
      {% if entity.file is not null %}
          <div class="row">
              <div class="col-xs-4">
