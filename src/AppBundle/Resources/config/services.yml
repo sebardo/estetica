@@ -37,3 +37,6 @@ services:
         arguments: [ "@service_container" ]
         tags:
             - { name: twig.extension }
+    webapp.form.filter_multimedia_category:
+        class: AppBundle\Form\FilterMultimediaCategory
+        arguments: ["@form.factory", "@router", "@webapp.manager.multimedia_category_manager"]

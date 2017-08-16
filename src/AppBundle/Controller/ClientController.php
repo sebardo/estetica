@@ -236,27 +236,27 @@ class ClientController extends BackendBundleController
 		return new JsonResponse($response);
 	}
 
-	/**
-	 * @param Request $request
-	 *
-	 * @Route("/image_upload" ,name="client_upload_image")
-	 * @return JsonResponse
-	 */
-	public function documentUploadAction(Request $request)
-	{
-		$filename = null;
-		$files_upload = $request->files->getIterator();
-		foreach($files_upload as $k => $i) {
-			$file = $request->files->get($k);
-			if($file) {
-				$filename= uniqid(rand(), true).'.'.$file->getClientOriginalExtension();
-				$file->move(
-					$this->get('webapp.media_resolver')->getRelRootPath('client.image'),
-					$filename
-				);
-			}
-		}
-
-		return new JsonResponse($filename);
-	}
+//	/**
+//	 * @param Request $request
+//	 *
+//	 * @Route("/image_upload" ,name="client_upload_image")
+//	 * @return JsonResponse
+//	 */
+//	public function documentUploadAction(Request $request)
+//	{
+//		$filename = null;
+//		$files_upload = $request->files->getIterator();
+//		foreach($files_upload as $k => $i) {
+//			$file = $request->files->get($k);
+//			if($file) {
+//				$filename= uniqid(rand(), true).'.'.$file->getClientOriginalExtension();
+//				$file->move(
+//					$this->get('webapp.media_resolver')->getRelRootPath('client.image'),
+//					$filename
+//				);
+//			}
+//		}
+//
+//		return new JsonResponse($filename);
+//	}
 }

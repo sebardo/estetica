@@ -42,6 +42,9 @@ twig:
         ticket_link: '%ticket_link%'
         flowww_link: '%flowww_link%'
         image_path: "%app.path.images%"
+        image_complete_path: "%kernel.root_dir%/../web/uploads/images"
+        files_path: "%app.path.files%"
+        files_complete_path: "%kernel.root_dir%/../web/uploads/files"
     form:
         resources:
             - 'BackendBundle::bootstrap_3_layout.html.twig'
@@ -115,7 +118,7 @@ knp_paginator:
         sort_direction_name: direction # sort direction query parameter name
         distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
     template:
-        pagination: 'KnpPaginatorBundle:Pagination:sliding.html.twig'     # sliding pagination controls template
+        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'     # sliding pagination controls template
         # KnpPaginatorBundle:Pagination:sliding.html.twig (by default)
         # KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
         #KnpPaginatorBundle:Pagination:twitter_bootstrap_pagination.html.twig

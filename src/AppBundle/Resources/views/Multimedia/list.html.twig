@@ -1,0 +1,72 @@
+{% extends "BackendBundle:CRUD:list.html.twig" %}
+
+{% block page_title %}{{ 'multimedia.list.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'multimedia.list.subtitle'|trans() }}{% endblock %}
+{% block create_new_path path('admin_multimedia_create') %}
+{% block create_new_title 'multimedia.create_new'|trans %}
+{% block list_title 'multimedia.list'|trans%}
+
+{% block list_body %}
+    <div class="row">
+        <div class="col-xs-12">
+            {{ form_start(filterForm) }}
+            {{ form_end(filterForm) }}
+        </div>
+
+        <div class="col-xs-12">
+            <div class="row">
+            {% for article in pagination %}
+                <div class="col-xs-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="{{ image_path ~ '/' ~ article.image }}" alt="{{ article.title }}">
+                        <div class="caption">
+                            <h3>{{ article.title }}</h3>
+                            <p class="text-right">
+                                {% if article.urlVideo is not null %}
+                                    <button data-toggle="modal" data-target="#article-{{ loop.index }}" class="btn btn-primary" role="button">{{ 'app.show'|trans() }}</button>
+                                {% else %}
+                                    <a href="{{ files_path ~ '/' ~ article.file }}" class="btn btn-primary" target="_blank">{{ 'app.show'|trans() }}</a>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="article-{{ loop.index }}" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">{{ article.title }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <iframe width="560" height="315" src="{{ article.urlVideo }}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'app.close'|trans() }}</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <div class="">
+
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('#form_multimedia-category').on('change', function() {
+           var $this = $(this);
+            var $form =  $this.parents('form');
+            $form.submit();
+        });
+    </script>
+{% endblock %}

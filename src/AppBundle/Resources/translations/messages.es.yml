@@ -7,6 +7,8 @@ security:
     rememberme: 'Recordar contraseña'
     submit: 'Enviar'
 app:
+  show: 'Ver'
+  close: 'Cerrar'
   edit: 'Editar'
   delete: 'Borrar'
   edit_btn: 'Editar'
@@ -89,7 +91,28 @@ city:
     name: 'Ciudad'
     empty_value: 'Selecciona una Ciudad'
 multimedia:
+  title_nav: 'Multimedia'
+  list: 'Listado Multimedia'
+  create_edit: 'Editar Multimedia'
+  create_succesfull: 'Multimedia creado correctamente'
+  edit_succesfull: 'Multimedia editado correctamente'
+  delete_succesfull: 'Multimedia borrado correctamente'
+  create_new: 'Nuevo Multimedia'
+  edit_btn: 'Editar un multimedia'
+  create_btn: 'Crear un multimedia'
+  edit:
+    title: 'Editar un multimedia'
+    subtitle: 'Editar al multimedia'
+    description: 'Editando al multimedia'
+  create:
+    title: 'Crear un multimedia'
+    subtitle: 'Crear al multimedia'
+    description: 'Creando al multimedia'
+  list:
+    title: 'Listado de multimedias'
+    subtitle: 'Listado de todos los multimedias'
   form:
     title: 'Título'
     url_video: 'Url Video'
     category: 'Categoría'
+    category_default: 'Selecciona una categoría'

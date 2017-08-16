@@ -88,16 +88,6 @@ class ClientType extends AbstractType
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
-//			->add('logoFile', 'BackendBundle\Form\Type\DocumentType', array(
-//				'required' => true,
-//				//'allow_delete' => false,
-//				'url_upload' => 'client_upload_image',
-//				'url_show' => '',
-//				'acceptFileTypes' => array('jpg','png','gif','jpeg'),
-//				'label' => 'client.form.logo',
-//				'label_attr' => array('class' => ''),
-//				'attr' => array('class' => '')
-//			))
 			->add('logoFile', 'Vich\UploaderBundle\Form\Type\VichImageType', array(
 				'required' => true,
 				'allow_delete' => true,
