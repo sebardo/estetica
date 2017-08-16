@@ -5,6 +5,15 @@
      {{ form_row(form.title) }}
      {{ form_row(form.urlVideo) }}
      {{ form_row(form.fileVich, {'label': 'multimedia.form.file'|trans(), 'required': false}) }}
+     {% if form.vars.errors is not null %}
+         {% for error in form.vars.errors %}
+             {% if error.messageTemplate == 'multimedia.file' %}
+                 <span class="alert-danger">
+                     {{ error.message }}
+                 </span>
+             {% endif %}
+         {% endfor %}
+     {% endif %}
      {% if entity.file is not null %}
          <div class="row">
              <div class="col-xs-4">

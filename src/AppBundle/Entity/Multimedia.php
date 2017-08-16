@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Multimedia extends Timestampable
 {
+    const YOUTUBE_URL = 'https://www.youtube.com/embed/';
+
     /**
      * @var int
      *
@@ -250,10 +252,26 @@ class Multimedia extends Timestampable
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if(empty($this->getFile()) && empty($this->getUrlVideo())){
-            $context->buildViolation('UrlVideo or File must not be empty!')
+        if(empty($this->getFileVich()) && empty($this->getUrlVideo())){
+            $context->buildViolation('multimedia.url_or_file')
                 ->atPath('urlVideo')
                 ->addViolation();
+        }
+
+        if(!empty($this->getUrlVideo())){
+            if(strpos(self::YOUTUBE_URL, $this->getUrlVideo()) === false){
+                $context->buildViolation('multimedia.url')
+                    ->atPath('urlVideo')
+                    ->addViolation();
+            }
+        }
+
+        if(!empty($this->getFileVich())){
+            if($this->getFileVich()->guessExtension() !== 'pdf'){
+                $context->buildViolation('multimedia.file')
+                    ->atPath('fileVich')
+                    ->addViolation();
+            }
         }
     }
 

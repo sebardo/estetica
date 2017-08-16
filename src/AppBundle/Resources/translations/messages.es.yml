@@ -118,3 +118,4 @@ multimedia:
     category_default: 'Selecciona una categoría'
     file: 'Archivo PDF'
     image: 'Imagen'
+    url_video_placeholder: 'https://www.youtube.com/embed/gJ4DAV7KVyQ'

@@ -20,13 +20,13 @@ class MultimediaType extends AbstractType
                 'required' => true,
                 'label' => 'multimedia.form.title',
                 'label_attr' => array('class' => ''),
-                'attr' => array('class' => '')
+                'attr' => array('class' => '', 'placeholder' => 'multimedia.form.title')
             ))
             ->add('urlVideo', null, array(
                 'required' => false,
                 'label' => 'multimedia.form.url_video',
                 'label_attr' => array('class' => ''),
-                'attr' => array('class' => '')
+                'attr' => array('class' => '', 'placeholder' => 'multimedia.form.url_video_placeholder',)
             ))
             ->add('fileVich', VichFileType::class, array(
                 'required' => false,

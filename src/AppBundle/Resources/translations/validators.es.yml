@@ -1,0 +1,4 @@
+multimedia:
+  url_or_file: UrlVideo or File must not be empty!
+  url: Url must be like embed youtube url
+  file: File must be pdf!
