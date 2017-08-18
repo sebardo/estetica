@@ -1,0 +1,18 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+ {% block create_body %}
+     {{ form_start(form) }}
+     {{ form_row(form.name) }}
+     {{ form_row(form.submit) }}
+     <div class="hide">
+         {{ form_rest(form) }}
+     </div>
+     {{ form_end(form) }}
+ {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}

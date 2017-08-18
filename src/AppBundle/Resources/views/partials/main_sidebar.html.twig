@@ -53,6 +53,19 @@
                     </li>
                 </ul>
             </li>
+            <li id="academic" class="treeview">
+                <a href=""><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.academic.title_nav'|trans|title }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="admin">
+                        <a id="academic-create" href="{{ path('admin_academic_list') }}"><i class="fa fa-study"></i> <span>{{ 'app.sidebar.academic.list'|trans|title }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         {% endif %}
     </ul>
 </section>

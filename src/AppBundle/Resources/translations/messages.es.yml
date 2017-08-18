@@ -18,6 +18,7 @@ app:
       created: 'Creado'
       username: 'Username'
       active: 'Activo'
+      name: 'Nombre'
   sidebar:
     ticket:
       title_nav: 'Sistema de tickets'
@@ -29,6 +30,9 @@ app:
     client:
       title_nav: 'Cliente'
       list: 'Listado de clientes'
+    academic:
+      title_nav: 'Estudios Académicos'
+      list: 'Listado de estudios académicos'
 client:
   title_nav: 'Cliente'
   list: 'Listado Cliente'
@@ -119,3 +123,27 @@ multimedia:
     file: 'Archivo PDF'
     image: 'Imagen'
     url_video_placeholder: 'https://www.youtube.com/embed/gJ4DAV7KVyQ'
+
+academic:
+  title_nav: 'Estudios Académicos'
+  list: 'Listado Estudios Académicos'
+  create_edit: 'Editar Estudios Académicos'
+  create_succesfull: 'Estudios Académicos creado correctamente'
+  edit_succesfull: 'Estudios Académicos editado correctamente'
+  delete_succesfull: 'Estudios Académicos borrado correctamente'
+  create_new: 'Nuevo Estudios Académicos'
+  edit_btn: 'Editar un Estudios Académicos'
+  create_btn: 'Crear un Estudios Académicos'
+  edit:
+    title: 'Editar un Estudios Académicos'
+    subtitle: 'Editar al Estudios Académicos'
+    description: 'Editando al Estudios Académicos'
+  create:
+    title: 'Crear un Estudios Académicos'
+    subtitle: 'Crear al Estudios Académicos'
+    description: 'Creando al Estudios Académicos'
+  list:
+    title: 'Listado de Estudios Académicos'
+    subtitle: 'Listado de todos los Estudios Académicos'
+  form:
+    name: 'Nombre'

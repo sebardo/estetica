@@ -23,6 +23,9 @@ services:
     webapp.manager.multimedia_category_manager:
         class: AppBundle\Model\MultimediaCategoryModel
         arguments: ["@service_container"]
+    webapp.manager.academic_manager:
+        class: AppBundle\Model\AcademicModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]

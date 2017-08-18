@@ -13,7 +13,11 @@ class DefaultController extends BackendBundleController
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
+        $user = $this->getUser();
+        if(empty($user)){
+            return $this->redirectToRoute('login');
+        }
+
         return $this->render('@App/index.html.twig', array(
             'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.homepage")),
             'active_side_bar' => $this->getActiveSidebar()

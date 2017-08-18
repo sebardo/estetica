@@ -1,0 +1,38 @@
+{% extends "BackendBundle:CRUD:list.html.twig" %}
+
+{% block page_title %}{{ 'academic.list.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'academic.list.subtitle'|trans() }}{% endblock %}
+{% block create_new_path path('admin_academic_create') %}
+{% block create_new_title 'academic.create_new'|trans %}
+{% block list_title 'academic.list'|trans%}
+
+{% block list_body %}
+    <table id="datatable" class="table table-bordered table-hover dataTable">
+        <thead>
+        {% block thead %}
+            <tr>
+                <th>{{ '#' }}</th>
+                <th>{{ 'app.list.table.name'|trans|title }}</th>
+                <th>{{ 'app.edit'|trans|title }}</th>
+                <th>{{ 'app.delete'|trans|title }}</th>
+            </tr>
+        {% endblock %}
+        </thead>
+        <tfoot>
+        {{ block('thead') }}
+        </tfoot>
+        <tbody>
+        {% for entity in academicCollection %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ entity.name }}</td>
+                <td><a class="btn btn-success" href="{{ path('admin_academic_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
+                <td>
+                    {% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}
+                    {{ form(deleteFormCollection[entity.id]) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
