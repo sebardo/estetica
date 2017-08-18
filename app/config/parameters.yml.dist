@@ -25,3 +25,4 @@ parameters:
     flowww_link: "https://login.flowww.net/es/"
     app.path.images: /uploads/images/
     app.path.files: /uploads/files/
+    app.path.registrations: /uploads/registrations/
