@@ -45,9 +45,9 @@ class Study
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="type", type="boolean")
+	 * @ORM\Column(name="high_level", type="boolean")
 	 */
-	private $type;
+	private $highLevel;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration", mappedBy="studies")
@@ -56,7 +56,7 @@ class Study
 
 	public function __construct()
 	{
-		$this->type = false;
+		$this->highLevel = false;
 		$this->registrations = new ArrayCollection();
 	}
 
@@ -104,22 +104,22 @@ class Study
 	/**
 	 * @return boolean
 	 */
-	public function isType()
+	public function isHighLevel()
 	{
-		return $this->type;
+		return $this->highLevel;
 	}
 
 	/**
-	 * @param boolean $type
+	 * @param boolean $highLevel
 	 */
-	public function setType($type)
+	public function setHighLevel($highLevel)
 	{
-		$this->type = $type;
+		$this->highLevel = $highLevel;
 	}
 
 	public function getGlobalName()
 	{
-		return ($this->type) ? self::LEVEL_HIGH : self::LEVEL_LOW;
+		return ($this->highLevel) ? self::LEVEL_HIGH : self::LEVEL_LOW;
 	}
 
 	/**

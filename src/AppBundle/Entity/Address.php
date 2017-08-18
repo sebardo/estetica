@@ -59,7 +59,7 @@ class Address extends Timestampable
     /**
      * @var string
      *
-     * @ORM\Column(name="postalCode", type="string", length=5)
+     * @ORM\Column(name="postal_code", type="string", length=5)
      */
     private $postalCode;
 
@@ -69,18 +69,6 @@ class Address extends Timestampable
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $city;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="PostalCode", inversedBy="addresses", cascade={"persist"})
-//     * @ORM\JoinColumn(name="postal_code_id", referencedColumnName="id", onDelete="CASCADE")
-//     */
-//    private $postalCode;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Client", inversedBy="addresses", cascade={"persist"})
-//     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
-//     */
-//    private $client;
 
     public function __construct()
     {

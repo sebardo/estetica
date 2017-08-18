@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Registration\PlaceResidence;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -49,9 +50,17 @@ class City
      */
     private $addresses;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Registration\PlaceResidence", mappedBy="city", cascade={"persist"})
+     */
+    private $places;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
+        $this->places = new ArrayCollection();
     }
 
     /**
@@ -164,6 +173,46 @@ class City
         }
 
         $this->addresses->remove($address);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPlaces()
+    {
+        return $this->places;
+    }
+
+    /**
+     * @param ArrayCollection $places
+     */
+    public function setPlaces($places)
+    {
+        $this->places = $places;
+    }
+
+    /**
+     * @param PlaceResidence $place
+     */
+    public function addPlaceResidence(PlaceResidence $place)
+    {
+        if ($this->places->contains($place)){
+            return;
+        }
+
+        $this->places->add($place);
+    }
+
+    /**
+     * @param PlaceResidence $place
+     */
+    public function removePlaceResidence(PlaceResidence $place)
+    {
+        if (!$this->places->contains($place)){
+            return;
+        }
+
+        $this->places->remove($place);
     }
 
     public function __toString()

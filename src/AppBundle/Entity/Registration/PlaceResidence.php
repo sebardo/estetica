@@ -3,7 +3,7 @@
 
 namespace AppBundle\Entity\Registration;
 
-use AppBundle\Services\Formatting;
+use AppBundle\Entity\City;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,16 +28,23 @@ class PlaceResidence
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="name", type="string", length=255, unique=true)
+	 * @ORM\Column(name="address", type="string", length=255)
 	 */
-	private $name;
+	private $address;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="format_name", type="string", length=255, unique=true, nullable=true)
+	 * @ORM\Column(name="postal_code", type="string", length=5)
 	 */
-	private $formatName;
+	private $postalCode;
+
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="places", cascade={"persist"})
+	 * @ORM\JoinColumn(name="city_id", referencedColumnName="id", onDelete="CASCADE")
+	 */
+	private $city;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration", mappedBy="placesResidence")
@@ -60,34 +67,33 @@ class PlaceResidence
 	/**
 	 * @return string
 	 */
-	public function getName()
+	public function getAddress()
 	{
-		return $this->name;
+		return $this->address;
 	}
 
 	/**
-	 * @param string $name
+	 * @param string $address
 	 */
-	public function setName($name)
+	public function setAddress($address)
 	{
-		$this->name = $name;
-		$this->setFormatName($name);
+		$this->address = $address;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getFormatName()
+	public function getPostalCode()
 	{
-		return $this->formatName;
+		return $this->postalCode;
 	}
 
 	/**
-	 * @param string $name
+	 * @param string $postalCode
 	 */
-	public function setFormatName($name)
+	public function setPostalCode($postalCode)
 	{
-		$this->formatName = Formatting::formatString($name);
+		$this->postalCode = $postalCode;
 	}
 
 	/**
@@ -124,8 +130,24 @@ class PlaceResidence
 		$this->registrations->remove($registration);
 	}
 
+	/**
+	 * @return City
+	 */
+	public function getCity()
+	{
+		return $this->city;
+	}
+
+	/**
+	 * @param City $city
+	 */
+	public function setCity($city)
+	{
+		$this->city = $city;
+	}
+
 	public function __toString()
 	{
-		return $this->name;
+		return $this->address;
 	}
 }
