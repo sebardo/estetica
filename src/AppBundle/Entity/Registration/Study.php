@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity\Registration;
 
+use AppBundle\Entity\Timestampable;
 use AppBundle\Services\Formatting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="study")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Registration\StudyRepository")
  */
-class Study
+class Study extends Timestampable
 {
 	CONST LEVEL_LOW = 'Grado Medio';
 	CONST LEVEL_HIGH = 'Grado Superior';
@@ -56,6 +57,7 @@ class Study
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->highLevel = false;
 		$this->registrations = new ArrayCollection();
 	}

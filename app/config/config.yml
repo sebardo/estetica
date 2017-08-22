@@ -45,6 +45,8 @@ twig:
         image_complete_path: "%kernel.root_dir%/../web/uploads/images"
         files_path: "%app.path.files%"
         files_complete_path: "%kernel.root_dir%/../web/uploads/files"
+        registration_path: "%app.path.registrations%"
+        registration_complete_path: "%kernel.root_dir%/../web/uploads/registrations"
     form:
         resources:
             - 'BackendBundle::bootstrap_3_layout.html.twig'

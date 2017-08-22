@@ -33,6 +33,26 @@ app:
     academic:
       title_nav: 'Estudios Académicos'
       list: 'Listado de estudios académicos'
+    registration:
+      title_nav: 'Registros'
+      list: 'Listado de registros'
+  gender:
+    name: Género
+    default: Selecciona un género
+    male: Hombre
+    female: Mujer
+  boolean:
+    verdadero: Sí
+    falso: No
+  language_level:
+    default: Selecciona una opción
+    low: Bajo
+    middle: Medio
+    high: Alto
+    native: Nativo
+form:
+  label:
+    delete: Borrar
 client:
   title_nav: 'Cliente'
   list: 'Listado Cliente'
@@ -147,3 +167,92 @@ academic:
     subtitle: 'Listado de todos los Estudios Académicos'
   form:
     name: 'Nombre'
+
+registration:
+  title_nav: 'Registro'
+  list: 'Listado Registros'
+  create_edit: 'Editar Registro'
+  create_succesfull: 'Registro creado correctamente'
+  edit_succesfull: 'Registro editado correctamente'
+  delete_succesfull: 'Registro borrado correctamente'
+  create_new: 'Nuevo Registro'
+  edit_btn: 'Editar un Registro'
+  create_btn: 'Crear un Registro'
+  edit:
+    title: 'Editar un Registro'
+    subtitle: 'Editar al Registro'
+    description: 'Editando al Registro'
+  create:
+    title: 'Crear un Registro'
+    subtitle: 'Crear al Registro'
+    description: 'Creando al Registro'
+  list:
+    title: 'Listado de Registros'
+    subtitle: 'Listado de todos los Registros'
+  form:
+    name:
+      name: Nombre
+      default: Nombre
+    first_last_name:
+      name: Primer Apellido
+      default: Primer Apellido
+    second_last_name:
+      name: Segundo Apellido
+      default: Segundo Apellido
+    phone:
+      name: Teléfono
+      default: Teléfono
+    mobile:
+      name: Móvil
+      default: Móvil
+    email:
+      name: Email
+      default: Email
+    gender:
+      name: Género
+      default: Selecciona un género
+      male: Hombre
+      female: Mujer
+    birthday:
+      name: Cumpleaños
+      default: Cumpleaños
+    parent_speciality:
+      name: Padres Especialidad
+    speciality:
+      name: Especialidad
+    image:
+      name: Imagen
+      default: Imagen
+    language:
+      name: Idioma
+      default: Idioma
+    time_availability:
+      name: Disponibilidad de tiempo
+      default: Selecciona un tiempo
+    contract_type:
+      name: Tipo de contrato
+      default: Selecciona un tipo de contrato
+    level_responsibility:
+      name: Nivel de responsabilidad
+      default: Selecciona un nivel de responsabilidad
+    address:
+      name: Lugar de residencia
+      default: Dirección
+    study:
+      name: Estudios
+      default: Selecciona un estudio
+    academic_study:
+      name: Estudios académicos
+      default: Selecciona un estudio académico
+    experience:
+      name: Experiencia
+    vehicle:
+      name: Vehículo
+    travel_availability:
+      name: Disponibilidad de viajar
+    certificate_disability:
+      name: Certificado de discapacidad
+    sales_training:
+      name: Formación adicional en técnico de ventas
+    course:
+      name: Cursos especializados

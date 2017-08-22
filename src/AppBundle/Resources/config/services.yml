@@ -26,6 +26,33 @@ services:
     webapp.manager.academic_manager:
         class: AppBundle\Model\AcademicModel
         arguments: ["@service_container"]
+    webapp.manager.registration_manager:
+            class: AppBundle\Model\RegistrationModel
+            arguments: ["@service_container"]
+    webapp.manager.time_availability_manager:
+        class: AppBundle\Model\TimeAvailabilityModel
+        arguments: ["@service_container"]
+    webapp.manager.contracty_type_manager:
+        class: AppBundle\Model\ContractTypeModel
+        arguments: ["@service_container"]
+    webapp.manager.level_responsibility_manager:
+        class: AppBundle\Model\LevelResponsibilityModel
+        arguments: ["@service_container"]
+    webapp.manager.study_manager:
+        class: AppBundle\Model\StudyModel
+        arguments: ["@service_container"]
+    webapp.manager.language_manager:
+        class: AppBundle\Model\LanguageModel
+        arguments: ["@service_container"]
+    webapp.manager.course_manager:
+        class: AppBundle\Model\CourseModel
+        arguments: ["@service_container"]
+    webapp.manager.speciality_manager:
+        class: AppBundle\Model\SpecialityModel
+        arguments: ["@service_container"]
+    webapp.manager.parent_speciality_manager:
+        class: AppBundle\Model\ParentSpecialityModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
@@ -40,6 +67,23 @@ services:
         arguments: [ "@service_container" ]
         tags:
             - { name: twig.extension }
+    webapp.twig.registration:
+        class: AppBundle\Twig\RegistrationExtension
+        arguments: [ "@service_container" ]
+        tags:
+            - { name: twig.extension }
     webapp.form.filter_multimedia_category:
         class: AppBundle\Form\FilterMultimediaCategory
         arguments: ["@form.factory", "@router", "@webapp.manager.multimedia_category_manager"]
+    webapp.form.language_choices_type:
+        class: AppBundle\Form\Registration\LanguageType
+        arguments: ["@webapp.manager.language_manager"]
+    webapp.form.course_choices_type:
+        class: AppBundle\Form\Registration\CourseType
+        arguments: ["@webapp.manager.course_manager"]
+    webapp.form.speciality_choices_type:
+        class: AppBundle\Form\Registration\SpecialityType
+        arguments: ["@webapp.manager.speciality_manager", null]
+    webapp.form.parent_speciality_choices_type:
+        class: AppBundle\Form\Registration\ParentSpecialityType
+        arguments: ["@webapp.manager.parent_speciality_manager"]

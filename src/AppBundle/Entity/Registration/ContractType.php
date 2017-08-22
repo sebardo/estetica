@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity\Registration;
 
+use AppBundle\Entity\Timestampable;
 use AppBundle\Services\Formatting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="contract_type")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Registration\ContractTypeRepository")
  */
-class ContractType
+class ContractType extends Timestampable
 {
 	/**
 	 * @var int
@@ -46,6 +47,7 @@ class ContractType
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->registrations = new ArrayCollection();
 	}
 

@@ -4,6 +4,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Registration\Experience;
+use AppBundle\Entity\Registration\PlaceResidence;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -172,10 +173,10 @@ class Registration extends Timestampable
 	private $levelsResponsibility;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\PlaceResidence", inversedBy="registrations")
-	 * @ORM\JoinTable(name="registrations_places")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Registration\PlaceResidence", inversedBy="registration")
+	 * @ORM\JoinColumn(name="place_residence_id", referencedColumnName="id")
 	 */
-	private $placesResidence;
+	private $placeResidence;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\Study", inversedBy="registrations")
@@ -199,7 +200,6 @@ class Registration extends Timestampable
 		$this->timesAvailability = new ArrayCollection();
 		$this->contractTypes = new ArrayCollection();
 		$this->levelsResponsibility = new ArrayCollection();
-		$this->placesResidence = new ArrayCollection();
 		$this->studies = new ArrayCollection();
 		$this->academicStudies = new ArrayCollection();
 	}
@@ -661,37 +661,19 @@ class Registration extends Timestampable
 	}
 
 	/**
-	 * @return mixed
+	 * @return PlaceResidence
 	 */
-	public function getPlacesResidence()
+	public function getPlaceResidence()
 	{
-		return $this->placesResidence;
+		return $this->placeResidence;
 	}
 
 	/**
-	 * @param mixed $placesResidence
+	 * @param PlaceResidence $placeResidence
 	 */
-	public function setPlacesResidence($placesResidence)
+	public function setPlaceResidence($placeResidence)
 	{
-		$this->placesResidence = $placesResidence;
-	}
-
-	public function addPlaceResidence($placeResidence)
-	{
-		if($this->placesResidence->contains($placeResidence)){
-			return;
-		}
-
-		$this->placesResidence->add($placeResidence);
-	}
-
-	public function removePlaceResidence($placeResidence)
-	{
-		if(!$this->placesResidence->contains($placeResidence)){
-			return;
-		}
-
-		$this->placesResidence->remove($placeResidence);
+		$this->placeResidence = $placeResidence;
 	}
 
 	/**

@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity\Registration;
 
+use AppBundle\Entity\Timestampable;
 use AppBundle\Services\Formatting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="speciality")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Registration\SpecialityRepository")
  */
-class Speciality
+class Speciality extends Timestampable
 {
 	/**
 	 * @var int
@@ -55,6 +56,7 @@ class Speciality
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->registrationsHaveSpecialities = new ArrayCollection();
 	}
 

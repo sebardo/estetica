@@ -6,7 +6,7 @@ namespace AppBundle\Repository\Registration;
 
 use Doctrine\ORM\EntityRepository;
 
-class LanguagesRepository extends EntityRepository
+class LanguageRepository extends EntityRepository
 {
 
 }

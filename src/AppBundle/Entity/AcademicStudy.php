@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="academic_study")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AcademicStudyRepository")
  */
-class AcademicStudy
+class AcademicStudy extends Timestampable
 {
 	/**
 	 * @var int
@@ -47,6 +47,7 @@ class AcademicStudy
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->registrations = new ArrayCollection();
 	}
 

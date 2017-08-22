@@ -1,0 +1,166 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+ {% block create_body %}
+     {{ form_start(form) }}
+     {{ form_row(form.name) }}
+     {{ form_row(form.firstLastname) }}
+     {{ form_row(form.secondLastname) }}
+     {{ form_row(form.phone) }}
+     {{ form_row(form.mobile) }}
+     {{ form_row(form.email) }}
+     {{ form_row(form.gender) }}
+     {{ form_row(form.birthday) }}
+     {% if entity.image is not null %}
+         <div class="row">
+             <div class="col-xs-4">
+                 <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image }}">
+             </div>
+         </div>
+     {% endif %}
+     {{ form_row(form.imageFile, {'label': false}) }}
+     {{ form_row(form.parentSpeciality) }}
+     {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+     {% for parent in parentSpecialityCollection  %}
+            {% set _row = 'speciality_' ~ parent %}
+            {% if form[_row] is not null %}
+                {{ form_widget(form[_row]) }}
+            {% endif %}
+     {% endfor %}
+     {{ form_row(form.experience) }}
+     {{ form_row(form.vehicle) }}
+     {{ form_row(form.travelAvailability) }}
+     {{ form_row(form.language) }}
+     {{ form_row(form.timesAvailability) }}
+     {{ form_row(form.certificateDisability) }}
+     {{ form_row(form.salesTraining) }}
+     {{ form_row(form.contractTypes) }}
+     {{ form_row(form.levelsResponsibility) }}
+     {{ form_row(form.placeResidence) }}
+     {{ form_row(form.studies) }}
+     {{ form_row(form.course) }}
+     {{ form_row(form.academicStudies) }}
+     {{ form_row(form.submit) }}
+     <div class="hide">
+         {{ form_rest(form) }}
+     </div>
+     {{ form_end(form) }}
+ {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var create_select_language_level = function(location, field, id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_level_languages") }}',
+                success: function(data) {
+                    var language_level_selector = $('<select/>').attr({
+                        'id': id + '_extend',
+                        'name': field,
+                        'disabled': 'disabled'
+                    });
+                    language_level_selector.html("<option>{{ 'app.language_level.default'|trans() }}</option>");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        language_level_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                    location.append(language_level_selector);
+                }
+            });
+        };
+
+        var create_textarea_detail = function(location, field, id) {
+            var textarea_detail = $('<textarea/>').attr({
+                'id': id + '_detail',
+                'name': field,
+                'disabled': 'disabled'
+            });
+
+            location.append(textarea_detail);
+        };
+
+        $(document).on('ifChecked', '#appbundle_registration_parentSpeciality', function(event) {
+            var $this = $(this);
+            var $target = $(event.target);
+            var $id = $target.val();
+            var data = {
+                parent_speciality_id: $id
+            };
+            setTimeout(function() {
+                $('.speciality_children').fadeOut(500, function() {
+                    var $this = $(this);
+                    $this.removeClass('hide');
+                    $this.css({
+                        'display': 'none'
+                    });
+                });
+            }, 500);
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_parent_specialities") }}',
+                data: data,
+                success: function(data) {
+                    var $speciality_selector = $('#appbundle_registration_speciality_' + data[0].name);
+                    setTimeout(function() {
+                        $speciality_selector.fadeOut(500, function() {
+                            var $this = $(this);
+                            $this.css({
+                                'display': 'block'
+                            });
+                        });
+                    }, 500);
+
+                }
+            });
+        });
+
+        //Ajax Country
+        $(document).on('change', '.country_selector', function(){
+            var $this = $(this);
+            var data = {
+                country_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_provinces") }}',
+                data: data,
+                success: function(data) {
+                    var $province_selector = $('#appbundle_registration_placeResidence_province');
+
+                    $province_selector.html("<option>{{ 'province.form.empty_value'|trans() }}</option>");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $province_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+
+                    var $city_selector = $('#appbundle_registration_placeResidence_city');
+                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+                }
+            });
+        });
+
+        // Ajax Province
+        $(document).on('change', '.province_selector', function(){
+            var $this = $(this);
+            var data = {
+                province_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_cities") }}',
+                data: data,
+                success: function(data) {
+                    var $city_selector = $('#appbundle_registration_placeResidence_city');
+
+                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $city_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

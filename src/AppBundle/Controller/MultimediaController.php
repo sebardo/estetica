@@ -17,7 +17,7 @@ use BackendBundle\Controller\DefaultController as BackendBundleController;
 
 /**
  * Class MultimediaController
- * @Route("/multimedia")
+ * @Route("/admin/multimedia")
  */
 class MultimediaController extends BackendBundleController
 {

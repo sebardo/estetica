@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity\Registration;
 
+use AppBundle\Entity\Timestampable;
 use AppBundle\Services\Formatting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="language")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Registration\LanguageRepository")
  */
-class Language
+class Language extends Timestampable
 {
 	/**
 	 * @var int
@@ -48,6 +49,7 @@ class Language
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->registrationsHaveLanguages = new ArrayCollection();
 	}
 

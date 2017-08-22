@@ -4,6 +4,8 @@
 namespace AppBundle\Entity\Registration;
 
 use AppBundle\Entity\City;
+use AppBundle\Entity\Registration;
+use AppBundle\Entity\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -14,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="place_residence")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Registration\PlaceResidenceRepository")
  */
-class PlaceResidence
+class PlaceResidence extends Timestampable
 {
 	/**
 	 * @var int
@@ -47,13 +49,13 @@ class PlaceResidence
 	private $city;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration", mappedBy="placesResidence")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Registration", mappedBy="placeResidence")
 	 */
-	private $registrations;
+	private $registration;
 
 	public function __construct()
 	{
-		$this->registrations = new ArrayCollection();
+		parent::__construct();
 	}
 
 	/**
@@ -97,37 +99,19 @@ class PlaceResidence
 	}
 
 	/**
-	 * @return mixed
+	 * @return Registration
 	 */
-	public function getRegistrations()
+	public function getRegistration()
 	{
-		return $this->registrations;
+		return $this->registration;
 	}
 
 	/**
-	 * @param mixed $registrations
+	 * @param Registration $registration
 	 */
-	public function setRegistrations($registrations)
+	public function setRegistration($registration)
 	{
-		$this->registrations = $registrations;
-	}
-
-	public function addRegistration($registration)
-	{
-		if($this->registrations->contains($registration)){
-			return;
-		}
-
-		$this->registrations->add($registration);
-	}
-
-	public function removeRegistration($registration)
-	{
-		if(!$this->registrations->contains($registration)){
-			return;
-		}
-
-		$this->registrations->remove($registration);
+		$this->registration = $registration;
 	}
 
 	/**

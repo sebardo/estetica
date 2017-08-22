@@ -3,6 +3,7 @@
 
 namespace AppBundle\Entity\Registration;
 
+use AppBundle\Entity\Timestampable;
 use AppBundle\Services\Formatting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="level_responsibility")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Registration\LevelResponsibilityRepository")
  */
-class LevelResponsibility
+class LevelResponsibility extends Timestampable
 {
 	/**
 	 * @var int
@@ -46,6 +47,7 @@ class LevelResponsibility
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->registrations = new ArrayCollection();
 	}
 
