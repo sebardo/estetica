@@ -1,4 +1,6 @@
 multimedia:
-  url_or_file: UrlVideo or File must not be empty!
-  url: Url must be like embed youtube url
-  file: File must be pdf!
+  url_or_file: UrlVideo or File no puede estar vacío
+  url: Url debe ser de tipo embed youtube url
+  file: Archivo debe ser pdf
+registration:
+  min_one: Al menos debes seleccionar un campo

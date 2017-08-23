@@ -31,6 +31,7 @@ class RegistrationExtension extends \Twig_Extension
 		$parentSpecialityCollection = $this->container->get('webapp.manager.parent_speciality_manager')->getBy(array());
 		foreach ($parentSpecialityCollection as $parentSpeciality) {
 			$response[$parentSpeciality->getId()] = Slugify::slug($parentSpeciality->getFormatName());
+//			$response[$parentSpeciality->getId()] = Slugify::slug($parentSpeciality->getId());
 		}
 
 		return $response;

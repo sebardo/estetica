@@ -132,6 +132,6 @@ class PlaceResidence extends Timestampable
 
 	public function __toString()
 	{
-		return $this->address;
+		return $this->getAddress();
 	}
 }

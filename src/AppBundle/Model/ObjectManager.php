@@ -56,11 +56,15 @@ abstract class ObjectManager
 
 	/**
 	 * @param Timestampable $entity
+	 * @param boolean $flush
 	 */
-	public function remove(Timestampable $entity)
+	public function remove(Timestampable $entity, $flush = true)
 	{
 		$this->em->remove($entity);
-		$this->em->flush();
+
+		if($flush){
+			$this->em->flush();
+		}
 	}
 
 	public function getOneBy($fields = array())

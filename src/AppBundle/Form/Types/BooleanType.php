@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\Registration;
+namespace AppBundle\Form\Types;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,8 +12,8 @@ class BooleanType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'choices' => array(
-				0 => 'app.boolean.verdadero',
-				1 => 'app.boolean.falso',
+				0 => 'app.boolean.falso',
+				1 => 'app.boolean.verdadero'
 			)
 		));
 	}

@@ -2,15 +2,31 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Registration;
+use AppBundle\Entity\Registration\Course;
+use AppBundle\Entity\Registration\Language;
+use AppBundle\Entity\Registration\ParentSpeciality;
+use AppBundle\Entity\Registration\Speciality;
+use AppBundle\Entity\RegistrationHasCourse;
+use AppBundle\Entity\RegistrationHasLanguage;
+use AppBundle\Entity\RegistrationHasSpeciality;
+use AppBundle\Form\EventListener\AddCourseFieldSubscriber;
+use AppBundle\Form\EventListener\AddLanguageFieldSubscriber;
 use AppBundle\Form\EventListener\AddSpecialityFieldSubscriber;
-use AppBundle\Form\Registration\BooleanType;
+use AppBundle\Form\Types\BooleanType;
+use AppBundle\Form\Types\GenderType;
 use AppBundle\Form\Registration\CourseType;
 use AppBundle\Form\Registration\LanguageType;
 use AppBundle\Form\Registration\PlaceResidenceType;
-use AppBundle\Form\Registration\GenderType;
+use AppBundle\Model\CourseModel;
+use AppBundle\Model\LanguageModel;
+use AppBundle\Model\SpecialityModel;
+use AppBundle\Services\Slugify;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -31,6 +47,10 @@ class RegistrationType extends AbstractType
     {
         $specialitySubscriber = new AddSpecialityFieldSubscriber($this->container, $options);
         $builder->addEventSubscriber($specialitySubscriber);
+        $courseSubscriber = new AddCourseFieldSubscriber($this->container, $options);
+        $builder->addEventSubscriber($courseSubscriber);
+        $languageSubscriber = new AddLanguageFieldSubscriber($this->container, $options);
+        $builder->addEventSubscriber($languageSubscriber);
 
         $builder
             //Personal
@@ -83,30 +103,21 @@ class RegistrationType extends AbstractType
                 'attr' => array('class' => '')
             ))
             ->add('imageFile', VichImageType::class, array(
-                'required' => true,
+                'required' => false,//TODO: change
                 'allow_delete' => true,
                 'label' => 'registration.form.image.name',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
-            //Speciality
-                //Events
+            //Speciality on Event
             //Experience
-            ->add('experience', BooleanType::class, array(
+            ->add('experience', null, array(
                 'label' => 'registration.form.experience.name',
                 'required' => true,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
-            //Language
-                //Events
-            ->add('language', new LanguageType($this->container->get('webapp.manager.language_manager')), array(
-                'label' => 'registration.form.language.name',
-                'required' => true,
-                'label_attr' => array('class' => ''),
-                'attr' => array('class' => ''),
-                'mapped' => false
-            ))
+            //Language on Event
             //Vehicle
             ->add('vehicle', BooleanType::class, array(
                 'label' => 'registration.form.vehicle.name',
@@ -165,7 +176,6 @@ class RegistrationType extends AbstractType
             //Address PlaceResidence
             ->add('placeResidence', PlaceResidenceType::class, array(
                 'label' => 'registration.form.address.name',
-//                'placeholder' => 'registration.form.address.default',
                 'required' => true,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
@@ -181,13 +191,6 @@ class RegistrationType extends AbstractType
             ))
             //SpecialityDetails
                 //Event
-            ->add('course', new CourseType($this->container->get('webapp.manager.course_manager')), array(
-                'label' => 'registration.form.course.name',
-                'required' => true,
-                'label_attr' => array('class' => ''),
-                'attr' => array('class' => ''),
-                'mapped' => false
-            ))
             //Academic Studies
             ->add('academicStudies' , null, array(
                 'label' => 'registration.form.academic_study.name',

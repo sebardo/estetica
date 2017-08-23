@@ -47,7 +47,7 @@ class PlaceResidenceType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Registration\PlaceResidence',
-            'required_form' => false
+            'required_form' => true
         ));
     }
 

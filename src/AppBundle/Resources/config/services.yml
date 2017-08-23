@@ -53,6 +53,15 @@ services:
     webapp.manager.parent_speciality_manager:
         class: AppBundle\Model\ParentSpecialityModel
         arguments: ["@service_container"]
+    webapp.manager.registration_has_speciality_manager:
+        class: AppBundle\Model\RegistrationHasSpecialityModel
+        arguments: ["@service_container"]
+    webapp.manager.registration_has_language_manager:
+        class: AppBundle\Model\RegistrationHasLanguageModel
+        arguments: ["@service_container"]
+    webapp.manager.registration_has_course_manager:
+        class: AppBundle\Model\RegistrationHasCourseModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
@@ -77,13 +86,13 @@ services:
         arguments: ["@form.factory", "@router", "@webapp.manager.multimedia_category_manager"]
     webapp.form.language_choices_type:
         class: AppBundle\Form\Registration\LanguageType
-        arguments: ["@webapp.manager.language_manager"]
+        arguments: ["@webapp.manager.language_manager", "@webapp.manager.registration_has_language_manager", null]
     webapp.form.course_choices_type:
         class: AppBundle\Form\Registration\CourseType
-        arguments: ["@webapp.manager.course_manager"]
+        arguments: ["@webapp.manager.course_manager", "@webapp.manager.registration_has_course_manager", null]
     webapp.form.speciality_choices_type:
         class: AppBundle\Form\Registration\SpecialityType
-        arguments: ["@webapp.manager.speciality_manager", null]
+        arguments: ["@webapp.manager.speciality_manager", "@webapp.manager.registration_has_speciality_manager", null, null]
     webapp.form.parent_speciality_choices_type:
         class: AppBundle\Form\Registration\ParentSpecialityType
         arguments: ["@webapp.manager.parent_speciality_manager"]

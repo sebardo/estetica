@@ -190,6 +190,15 @@ registration:
     title: 'Listado de Registros'
     subtitle: 'Listado de todos los Registros'
   form:
+    errors:
+      speciality:
+        empty: 'Al menos debes seleccionar una especialidad'
+        detail: 'La descripción de la especialidad %field% no puede estar vacía'
+      course:
+        empty: 'Al menos debes seleccionar un curso'
+        detail: 'La descripción del curso %field% no puede estar vacía'
+      language:
+        empty: 'Al menos debes seleccionar un idioma'
     name:
       name: Nombre
       default: Nombre

@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use BackendBundle\Controller\DefaultController as BackendBundleController;
@@ -108,6 +109,13 @@ class RegistrationController extends BackendBundleController
 		$entity->setMobile('123456789');
 		$entity->setEmail('nombre@admin.com');
 		$entity->setImage('1.png.jpg');
+		$entity->setExperience($this->getDoctrine()->getRepository('AppBundle:Registration\Experience')->findOneBy(array(), array('id' => 'desc')));
+		$placeResidence = new Registration\PlaceResidence();
+		$placeResidence->setAddress('Direccion');
+		$placeResidence->setPostalCode('12345');
+		$city = $this->getDoctrine()->getRepository('AppBundle:City')->findOneBy(array(), array('id' => 'desc'));
+		$placeResidence->setCity($city);
+		$entity->setPlaceResidence($placeResidence);
 		//End Delete this
 		$form = $this->createForm(new RegistrationType($this->container), $entity);
 		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));

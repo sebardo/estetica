@@ -4,7 +4,10 @@
 namespace AppBundle\Form\Registration;
 
 
+use AppBundle\Entity\Registration;
+use AppBundle\Entity\RegistrationHasCourse;
 use AppBundle\Model\CourseModel;
+use AppBundle\Model\RegistrationHasCourseModel;
 use AppBundle\Services\Slugify;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,10 +16,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CourseType extends AbstractType
 {
 	private $entityModel;
+	private $registrationHasCourseModel;
+	private $data;
 
-	public function __construct(CourseModel $entityModel)
+	public function __construct(CourseModel $entityModel, RegistrationHasCourseModel $registrationHasCourseModel, $data)
 	{
 		$this->entityModel = $entityModel;
+		$this->registrationHasCourseModel = $registrationHasCourseModel;
+		$this->data = ($data instanceof Registration) ? $data : null;
 	}
 
 	/**
@@ -25,19 +32,21 @@ class CourseType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$courseCollection = $this->getChoicesByEntity();
-		foreach ($courseCollection as $course) {
+		foreach ($courseCollection as $key => $course) {
 			$builder
-				->add('course_' . Slugify::slug($course), 'checkbox', array(
+				->add('course_' . Slugify::slug($key), 'checkbox', array(
 					'label' => $course,
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
+					'data' => $this->getCheckedByRegistrationAndCourseId($this->data, $key)
 				))
-				->add('course_' . Slugify::slug($course) . '_detail', 'textarea', array(
+				->add('course_' . Slugify::slug($key) . '_detail', 'textarea', array(
 					'label' => false,
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
+					'data' => $this->getValueByRegistrationAndCourseId($this->data, $key)
 				));
 		}
 	}
@@ -51,6 +60,32 @@ class CourseType extends AbstractType
 		}
 
 		return $response;
+	}
+
+	private function getCheckedByRegistrationAndCourseId($registration, $courseId)
+	{
+		if($registration instanceof Registration) {
+			/** @var RegistrationHasCourse $registrationHasCourse */
+			$registrationHasCourse = $this->registrationHasCourseModel->getOneBy(array('registration' => $registration, 'course' => $courseId));
+			if(!empty($registrationHasCourse)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private function getValueByRegistrationAndCourseId($registration, $courseId)
+	{
+		if($registration instanceof Registration) {
+			/** @var RegistrationHasCourse $registrationHasCourse */
+			$registrationHasCourse = $this->registrationHasCourseModel->getOneBy(array('registration' => $registration, 'course' => $courseId));
+			if(!empty($registrationHasCourse)){
+				return $registrationHasCourse->getValue();
+			}
+		}
+
+		return null;
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

@@ -157,23 +157,26 @@ class Registration extends Timestampable
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\TimeAvailability", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_times")
+	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
 	private $timesAvailability;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\ContractType", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_contracts")
+	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
 	private $contractTypes;
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\LevelResponsibility", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_responsibilities")
+	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
 	private $levelsResponsibility;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Registration\PlaceResidence", inversedBy="registration")
+	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Registration\PlaceResidence", inversedBy="registration", cascade={"persist"})
 	 * @ORM\JoinColumn(name="place_residence_id", referencedColumnName="id")
 	 */
 	private $placeResidence;
@@ -187,6 +190,7 @@ class Registration extends Timestampable
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\AcademicStudy", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_academics")
+	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
 	private $academicStudies;
 

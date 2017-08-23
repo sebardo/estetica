@@ -4,8 +4,10 @@
 namespace AppBundle\Form\Registration;
 
 
+use AppBundle\Entity\Registration;
 use AppBundle\Entity\Registration\ParentSpeciality;
-use AppBundle\Entity\Registration\Speciality;
+use AppBundle\Entity\RegistrationHasSpeciality;
+use AppBundle\Model\RegistrationHasSpecialityModel;
 use AppBundle\Model\SpecialityModel;
 use AppBundle\Services\Slugify;
 use Symfony\Component\Form\AbstractType;
@@ -16,11 +18,15 @@ class SpecialityType extends AbstractType
 {
 	private $parentSpeciality;
 	private $entityModel;
+	private $registrationHasSpecialityModel;
+	private $data;
 
-	public function __construct(SpecialityModel $entityModel, ParentSpeciality $parentSpeciality)
+	public function __construct(SpecialityModel $entityModel, RegistrationHasSpecialityModel $registrationHasSpecialityModel, ParentSpeciality $parentSpeciality, $data)
 	{
 		$this->entityModel = $entityModel;
+		$this->registrationHasSpecialityModel = $registrationHasSpecialityModel;
 		$this->parentSpeciality = $parentSpeciality;
+		$this->data = ($data instanceof Registration) ? $data : null;
 	}
 
 	/**
@@ -29,19 +35,21 @@ class SpecialityType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$specialityCollection = $this->getChoicesByEntity();
-		foreach ($specialityCollection as $speciality) {
+		foreach ($specialityCollection as $key => $speciality) {
 			$builder
-				->add('speciality_' . Slugify::slug($speciality), 'checkbox', array(
+				->add('speciality_' . Slugify::slug($key), 'checkbox', array(
 					'label' => $speciality,
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
+					'data' => $this->getCheckedByRegistrationAndSpecialityId($this->data, $key)
 				))
-				->add('speciality_' . Slugify::slug($speciality) . '_detail', 'textarea', array(
+				->add('speciality_' . Slugify::slug($key) . '_detail', 'textarea', array(
 					'label' => false,
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
+					'data' => $this->getValueByRegistrationAndSpecialityId($this->data, $key)
 				));
 		}
 	}
@@ -55,6 +63,32 @@ class SpecialityType extends AbstractType
 		}
 
 		return $response;
+	}
+
+	private function getCheckedByRegistrationAndSpecialityId($registration, $specialityId)
+	{
+		if($registration instanceof Registration) {
+			/** @var RegistrationHasSpeciality $registrationHasSpeciality */
+			$registrationHasSpeciality = $this->registrationHasSpecialityModel->getOneBy(array('registration' => $registration, 'speciality' => $specialityId));
+			if(!empty($registrationHasSpeciality)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private function getValueByRegistrationAndSpecialityId($registration, $specialityId)
+	{
+		if($registration instanceof Registration) {
+			/** @var RegistrationHasSpeciality $registrationHasSpeciality */
+			$registrationHasSpeciality = $this->registrationHasSpecialityModel->getOneBy(array('registration' => $registration, 'speciality' => $specialityId));
+			if(!empty($registrationHasSpeciality)){
+				return $registrationHasSpeciality->getValue();
+			}
+		}
+
+		return null;
 	}
 
 	public function configureOptions(OptionsResolver $resolver)

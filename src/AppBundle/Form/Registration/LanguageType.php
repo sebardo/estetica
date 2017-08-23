@@ -4,8 +4,11 @@
 namespace AppBundle\Form\Registration;
 
 
+use AppBundle\Entity\Registration;
 use AppBundle\Entity\Registration\Language;
+use AppBundle\Entity\RegistrationHasLanguage;
 use AppBundle\Model\LanguageModel;
+use AppBundle\Model\RegistrationHasLanguageModel;
 use AppBundle\Services\Slugify;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,10 +22,14 @@ class LanguageType extends AbstractType
 	const NATIVE_LEVEL = 'native';
 
 	private $entityModel;
+	private $registrationHasLanguageModel;
+	private $data;
 
-	public function __construct(LanguageModel $entityModel)
+	public function __construct(LanguageModel $entityModel, RegistrationHasLanguageModel $registrationHasLanguageModel, $data)
 	{
 		$this->entityModel = $entityModel;
+		$this->registrationHasLanguageModel = $registrationHasLanguageModel;
+		$this->data = ($data instanceof Registration) ? $data : null;
 	}
 
 	/**
@@ -32,21 +39,23 @@ class LanguageType extends AbstractType
 	{
 		$languageCollection = $this->getChoicesByEntity();
 
-		foreach ($languageCollection as $language) {
+		foreach ($languageCollection as $key => $language) {
 			$builder
-				->add('language_' . Slugify::slug($language), 'checkbox', array(
+				->add('language_' . Slugify::slug($key), 'checkbox', array(
 					'label' => $language,
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
+					'data' => $this->getCheckedByRegistrationAndLanguageId($this->data, $key)
 				))
-				->add('language_' . Slugify::slug($language) . '_detail', 'choice', array(
+				->add('language_' . Slugify::slug($key) . '_detail', 'choice', array(
 					'choices' => $this->getLevelChoicesByEntity(),
 					'label' => false,
 					'expanded' => false,
 					'multiple' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
+					'data' => $this->getValueByRegistrationAndLanguageId($this->data, $key)
 				));
 		}
 	}
@@ -71,6 +80,32 @@ class LanguageType extends AbstractType
 		$response[self::NATIVE_LEVEL] = 'app.language_level.' . self::NATIVE_LEVEL;
 
 		return $response;
+	}
+
+	private function getCheckedByRegistrationAndLanguageId($registration, $languageId)
+	{
+		if($registration instanceof Registration) {
+			/** @var RegistrationHasLanguage $registrationHasLanguage */
+			$registrationHasLanguage = $this->registrationHasLanguageModel->getOneBy(array('registration' => $registration, 'language' => $languageId));
+			if(!empty($registrationHasLanguage)){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private function getValueByRegistrationAndLanguageId($registration, $languageId)
+	{
+		if($registration instanceof Registration) {
+			/** @var RegistrationHasLanguage $registrationHasLanguage */
+			$registrationHasLanguage = $this->registrationHasLanguageModel->getOneBy(array('registration' => $registration, 'language' => $languageId));
+			if(!empty($registrationHasLanguage)){
+				return $registrationHasLanguage->getValue();
+			}
+		}
+
+		return null;
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
