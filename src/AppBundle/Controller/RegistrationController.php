@@ -101,22 +101,6 @@ class RegistrationController extends BackendBundleController
 	public function createRegistrationAction(Request $request)
 	{
 		$entity = new Registration();
-		//Delete this
-		$entity->setName('Nombre');
-		$entity->setFirstLastname('Apellido');
-		$entity->setSecondLastname('Apellido2');
-		$entity->setPhone('612322121');
-		$entity->setMobile('123456789');
-		$entity->setEmail('nombre@admin.com');
-		$entity->setImage('1.png.jpg');
-		$entity->setExperience($this->getDoctrine()->getRepository('AppBundle:Registration\Experience')->findOneBy(array(), array('id' => 'desc')));
-		$placeResidence = new Registration\PlaceResidence();
-		$placeResidence->setAddress('Direccion');
-		$placeResidence->setPostalCode('12345');
-		$city = $this->getDoctrine()->getRepository('AppBundle:City')->findOneBy(array(), array('id' => 'desc'));
-		$placeResidence->setCity($city);
-		$entity->setPlaceResidence($placeResidence);
-		//End Delete this
 		$form = $this->createForm(new RegistrationType($this->container), $entity);
 		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$form->handleRequest($request);
