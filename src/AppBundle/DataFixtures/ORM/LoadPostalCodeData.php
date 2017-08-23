@@ -42,7 +42,7 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 	 */
 	public function load(ObjectManager $manager)
 	{
-		$_file = '/Volumes/G-DRIVE mobile USB/Sites-htdocs/clubEstetica/src/AppBundle/DataFixtures/ORM/Postalcode.csv';
+		$_file = $this->container->getParameter('postal_code_csv.path');
 		if (!is_file($_file)) {
 			throw new Exception("No se puede leer el fichero");
 		}
