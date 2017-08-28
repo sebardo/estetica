@@ -44,7 +44,7 @@ class CourseType extends AbstractType
 				->add('course_' . Slugify::slug($key) . '_detail', 'textarea', array(
 					'label' => false,
 					'required' => false,
-					'attr' => array('class' => ''),
+					'attr' => array('class' => 'field-detail'),
 					'mapped' => false,
 					'data' => $this->getValueByRegistrationAndCourseId($this->data, $key)
 				));

@@ -103,8 +103,8 @@ class RegistrationType extends AbstractType
                 'attr' => array('class' => '')
             ))
             ->add('imageFile', VichImageType::class, array(
-                'required' => false,//TODO: change
-                'allow_delete' => true,
+                'required' => false,
+                'allow_delete' => false,
                 'label' => 'registration.form.image.name',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')

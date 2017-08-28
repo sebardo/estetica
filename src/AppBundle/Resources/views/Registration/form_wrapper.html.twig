@@ -31,14 +31,16 @@
      {{ form_row(form.email) }}
      {{ form_row(form.gender) }}
      {{ form_row(form.birthday) }}
+     {% set required_image = 'required' %}
      {% if entity.image is not null %}
+         {% set required_image = false %}
          <div class="row">
              <div class="col-xs-4">
                  <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image }}">
              </div>
          </div>
      {% endif %}
-     {{ form_row(form.imageFile, {'label': false}) }}
+     {{ form_row(form.imageFile, {'label': false, 'required':required_image}) }}
      {% if speciality_error == true or speciality_detail_error == true %}
          {{ form_row(form.parentSpeciality, {'attr': {'class': error_form_class }}) }}
          {% if speciality_error != false %}
@@ -85,7 +87,6 @@
      {% else %}
          {{ form_row(form.language, {'attr': {'class': default_form_class }}) }}
      {% endif %}
-     {#{{ form_widget(form.language) }}#}
      {{ form_row(form.timesAvailability) }}
      {{ form_row(form.certificateDisability) }}
      {{ form_row(form.salesTraining) }}
@@ -105,7 +106,6 @@
      {% else %}
          {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
      {% endif %}
-     {#{{ form_widget(form.course) }}#}
      {{ form_row(form.academicStudies) }}
      {{ form_row(form.submit) }}
      <div class="hide">
@@ -117,36 +117,54 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        var create_select_language_level = function(location, field, id) {
-            $.ajax({
-                type: 'post',
-                url: '{{ path("select_level_languages") }}',
-                success: function(data) {
-                    var language_level_selector = $('<select/>').attr({
-                        'id': id + '_extend',
-                        'name': field,
-                        'disabled': 'disabled'
+        var hide_detail_fields = function() {
+            var $field_detail = $('.field-detail');
+            $field_detail.css({
+                'display': 'none'
+            })
+        };
+
+        hide_detail_fields();
+
+        var handle_detail_fields = function(event, type) {
+            var display = (type === 'checked') ? 'block' : 'none';
+            var $target = $(event.target);
+            var $id = $target.attr('id');
+            var $targetDetail = $id.concat('_detail');
+            setTimeout(function() {
+                $('#' + $targetDetail).fadeOut(500, function() {
+                    var $this = $(this);
+                    $this.css({
+                        'display': display
                     });
-                    language_level_selector.html("<option>{{ 'app.language_level.default'|trans() }}</option>");
+                });
+            }, 500);
+        }
+        //Speciality
+        $(document).on('ifChecked', '.speciality_children', function(event) {
+            handle_detail_fields(event, 'checked');
+        });
+        $(document).on('ifUnchecked', '.speciality_children', function(event) {
+            handle_detail_fields(event, 'unchecked');
+        });
 
-                    for (var i=0, total = data.length; i < total; i++) {
-                        language_level_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
-                    }
-                    location.append(language_level_selector);
-                }
-            });
-        };
+        //Language
+        $(document).on('ifChecked', '#appbundle_registration_language', function(event) {
+            handle_detail_fields(event, 'checked');
+        });
+        $(document).on('ifUnchecked', '#appbundle_registration_language', function(event) {
+            handle_detail_fields(event, 'unchecked');
+        });
 
-        var create_textarea_detail = function(location, field, id) {
-            var textarea_detail = $('<textarea/>').attr({
-                'id': id + '_detail',
-                'name': field,
-                'disabled': 'disabled'
-            });
+        //Course
+        $(document).on('ifChecked', '#appbundle_registration_course', function(event) {
+            handle_detail_fields(event, 'checked');
+        });
+        $(document).on('ifUnchecked', '#appbundle_registration_course', function(event) {
+            handle_detail_fields(event, 'unchecked');
+        });
 
-            location.append(textarea_detail);
-        };
-
+        //ParentSpeciality
         $(document).on('ifChecked', '#appbundle_registration_parentSpeciality', function(event) {
             var $this = $(this);
             var $target = $(event.target);

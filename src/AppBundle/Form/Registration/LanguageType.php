@@ -53,7 +53,7 @@ class LanguageType extends AbstractType
 					'label' => false,
 					'expanded' => false,
 					'multiple' => false,
-					'attr' => array('class' => ''),
+					'attr' => array('class' => 'field-detail'),
 					'mapped' => false,
 					'data' => $this->getValueByRegistrationAndLanguageId($this->data, $key)
 				));

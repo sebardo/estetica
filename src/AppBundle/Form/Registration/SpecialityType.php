@@ -47,7 +47,7 @@ class SpecialityType extends AbstractType
 				->add('speciality_' . Slugify::slug($key) . '_detail', 'textarea', array(
 					'label' => false,
 					'required' => false,
-					'attr' => array('class' => ''),
+					'attr' => array('class' => 'field-detail'),
 					'mapped' => false,
 					'data' => $this->getValueByRegistrationAndSpecialityId($this->data, $key)
 				));
