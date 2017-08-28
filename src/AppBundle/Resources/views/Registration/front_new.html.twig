@@ -1,0 +1,307 @@
+{% extends "BackendBundle::backend_base.html.twig" %}
+
+{% block body %}
+    <div class="wrapper">
+        <!-- Main Header -->
+        <header class="main-header">
+
+
+            <!-- Logo -->
+            <span class="logo black-logo">
+                  <!-- mini logo for sidebar mini 50x50 pixels -->
+                  <span class="logo-mini">
+                      <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
+                  </span>
+                <!-- logo for regular state and mobile devices -->
+                  <span class="logo-lg">
+                      <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
+                  </span>
+            </span>
+
+            <div class="shadow"></div>
+        </header>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1 class="text-info">
+                    <small>{% block description_status %}{% endblock %}</small>
+                    {#{{ description_page }}#}
+
+                </h1>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                {% block content %}
+                    {% form_theme form "BackendBundle::bootstrap_3_layout.html.twig" %}
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3>{% block create_title %}{{ 'registration.create_new'|trans|capitalize }}{% endblock %}</h3>
+                        </div>
+                        <div class="box-body">
+                            {% block create_body %}
+                                {{ form_start(form) }}
+                                {% set speciality_error = false %}
+                                {% set speciality_detail_error = false %}
+                                {% set language_error = false %}
+                                {% set course_error = false %}
+                                {% set default_form_class = 'form-group' %}
+                                {% set error_form_class = 'form-group has-error' %}
+                                {% for error in form.vars.errors %}
+                                    {% if error.cause == 'parentSpeciality' %}
+                                        {% set speciality_error = error.message %}
+                                    {% endif %}
+                                    {% if error.cause == 'speciality' %}
+                                        {% set speciality_detail_error = error.message %}
+                                    {% endif %}
+                                    {% if error.cause == 'language' %}
+                                        {% set language_error = error.message %}
+                                    {% endif %}
+                                    {% if error.cause == 'course' %}
+                                        {% set course_error = error.message %}
+                                    {% endif %}
+                                {% endfor %}
+                                {{ form_row(form.name) }}
+                                {{ form_row(form.firstLastname) }}
+                                {{ form_row(form.secondLastname) }}
+                                {{ form_row(form.phone) }}
+                                {{ form_row(form.mobile) }}
+                                {{ form_row(form.email) }}
+                                {{ form_row(form.gender) }}
+                                {{ form_row(form.birthday) }}
+                                {% set required_image = 'required' %}
+                                {% if entity.image is not null %}
+                                    {% set required_image = false %}
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image }}">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {{ form_row(form.imageFile, {'label': false, 'required':required_image}) }}
+                                {% if speciality_error == true or speciality_detail_error == true %}
+                                    {{ form_row(form.parentSpeciality, {'attr': {'class': error_form_class }}) }}
+                                    {% if speciality_error != false %}
+                                        <div class="form-group has-error">
+                                            <div class="help-block">
+                                                <ul class="list-unstyled">
+                                                    <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ speciality_error }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if speciality_detail_error != false %}
+                                        <div class="form-group has-error">
+                                            <div class="help-block">
+                                                <ul class="list-unstyled">
+                                                    <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ speciality_detail_error }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class }}) }}
+                                {% endif %}
+                                {{ form_widget(form.parentSpeciality) }}
+                                {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+                                {% for parent in parentSpecialityCollection  %}
+                                    {% set _row = 'speciality_' ~ parent %}
+                                    {% if form[_row] is not null %}
+                                        {{ form_widget(form[_row]) }}
+                                    {% endif %}
+                                {% endfor %}
+                                {{ form_row(form.experience) }}
+                                {{ form_row(form.vehicle) }}
+                                {{ form_row(form.travelAvailability) }}
+                                {% if language_error != false %}
+                                    {{ form_row(form.language, {'attr': {'class': error_form_class }}) }}
+                                    <div class="form-group has-error">
+                                        <div class="help-block">
+                                            <ul class="list-unstyled">
+                                                <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ language_error }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    {{ form_row(form.language, {'attr': {'class': default_form_class }}) }}
+                                {% endif %}
+                                {{ form_row(form.timesAvailability) }}
+                                {{ form_row(form.certificateDisability) }}
+                                {{ form_row(form.salesTraining) }}
+                                {{ form_row(form.contractTypes) }}
+                                {{ form_row(form.levelsResponsibility) }}
+                                {{ form_row(form.placeResidence) }}
+                                {{ form_row(form.studies) }}
+                                {% if course_error != false %}
+                                    {{ form_row(form.course, {'attr': {'class': error_form_class }}) }}
+                                    <div class="form-group has-error">
+                                        <div class="help-block">
+                                            <ul class="list-unstyled">
+                                                <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ course_error }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
+                                {% endif %}
+                                {{ form_row(form.academicStudies) }}
+                                {{ form_row(form.submit) }}
+                                <div class="hide">
+                                    {{ form_rest(form) }}
+                                </div>
+                                {{ form_end(form) }}
+                            {% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var hide_detail_fields = function() {
+            var $field_detail = $('.field-detail');
+            $field_detail.css({
+                'display': 'none'
+            })
+        };
+
+        hide_detail_fields();
+
+        var handle_detail_fields = function(event, type) {
+            var display = (type === 'checked') ? 'block' : 'none';
+            var $target = $(event.target);
+            var $id = $target.attr('id');
+            var $targetDetail = $id.concat('_detail');
+            setTimeout(function() {
+                $('#' + $targetDetail).fadeOut(500, function() {
+                    var $this = $(this);
+                    $this.css({
+                        'display': display
+                    });
+                });
+            }, 500);
+        }
+        //Speciality
+        $(document).on('ifChecked', '.speciality_children', function(event) {
+            handle_detail_fields(event, 'checked');
+        });
+        $(document).on('ifUnchecked', '.speciality_children', function(event) {
+            handle_detail_fields(event, 'unchecked');
+        });
+
+        //Language
+        $(document).on('ifChecked', '#appbundle_registration_language', function(event) {
+            handle_detail_fields(event, 'checked');
+        });
+        $(document).on('ifUnchecked', '#appbundle_registration_language', function(event) {
+            handle_detail_fields(event, 'unchecked');
+        });
+
+        //Course
+        $(document).on('ifChecked', '#appbundle_registration_course', function(event) {
+            handle_detail_fields(event, 'checked');
+        });
+        $(document).on('ifUnchecked', '#appbundle_registration_course', function(event) {
+            handle_detail_fields(event, 'unchecked');
+        });
+
+        //ParentSpeciality
+        $(document).on('ifChecked', '#appbundle_registration_parentSpeciality', function(event) {
+            var $this = $(this);
+            var $target = $(event.target);
+            var $id = $target.val();
+            var data = {
+                parent_speciality_id: $id
+            };
+            setTimeout(function() {
+                $('.speciality_children').fadeOut(500, function() {
+                    var $this = $(this);
+                    $this.removeClass('hide');
+                    $this.css({
+                        'display': 'none'
+                    });
+                });
+            }, 500);
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_parent_specialities") }}',
+                data: data,
+                success: function(data) {
+                    var $speciality_selector = $('#appbundle_registration_speciality_' + data[0].name);
+                    setTimeout(function() {
+                        $speciality_selector.fadeOut(500, function() {
+                            var $this = $(this);
+                            $this.css({
+                                'display': 'block'
+                            });
+                        });
+                    }, 500);
+
+                }
+            });
+        });
+
+        //Ajax Country
+        $(document).on('change', '.country_selector', function(){
+            var $this = $(this);
+            var data = {
+                country_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_provinces") }}',
+                data: data,
+                success: function(data) {
+                    var $province_selector = $('#appbundle_registration_placeResidence_province');
+
+                    $province_selector.html("<option>{{ 'province.form.empty_value'|trans() }}</option>");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $province_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+
+                    var $city_selector = $('#appbundle_registration_placeResidence_city');
+                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+                }
+            });
+        });
+
+        // Ajax Province
+        $(document).on('change', '.province_selector', function(){
+            var $this = $(this);
+            var data = {
+                province_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_cities") }}',
+                data: data,
+                success: function(data) {
+                    var $city_selector = $('#appbundle_registration_placeResidence_city');
+
+                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $city_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block page_title %}{{ 'registration.create.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'registration.create.subtitle'|trans() }}{% endblock %}

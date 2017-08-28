@@ -2,12 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Registration;
 use AppBundle\Entity\Registration\ParentSpeciality;
+use AppBundle\Form\RegistrationType;
 use AppBundle\Services\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use BackendBundle\Controller\DefaultController as BackendBundleController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends BackendBundleController
 {
@@ -23,6 +27,40 @@ class DefaultController extends BackendBundleController
 
         return $this->render('@App/index.html.twig', array(
             'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.homepage")),
+            'active_side_bar' => $this->getActiveSidebar()
+        ));
+    }
+
+    /**
+     * Create registration on front.
+     *
+     * @param Request $request
+     *
+     * @Route("/registration", name="front_registration_create")
+     * @Method({"GET", "POST"})
+     * @return Response
+     */
+    public function createRegistrationAction(Request $request)
+    {
+        $entity = new Registration();
+        $form = $this->createForm(new RegistrationType($this->container), $entity, array('edit_form' => false));
+        $form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('registration.create_succesfull'));
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('AppBundle:Registration:front_new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.create")),
             'active_side_bar' => $this->getActiveSidebar()
         ));
     }

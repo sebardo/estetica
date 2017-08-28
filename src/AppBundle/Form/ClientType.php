@@ -89,8 +89,8 @@ class ClientType extends AbstractType
 				'attr' => array('class' => '')
 			))
 			->add('logoFile', 'Vich\UploaderBundle\Form\Type\VichImageType', array(
-				'required' => true,
-				'allow_delete' => true,
+				'required' => ($options['edit_form']) ? false : true,
+				'allow_delete' => false,
 				'label' => 'client.form.logo',
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')

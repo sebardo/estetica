@@ -103,7 +103,7 @@ class RegistrationType extends AbstractType
                 'attr' => array('class' => '')
             ))
             ->add('imageFile', VichImageType::class, array(
-                'required' => false,
+                'required' => ($options['edit_form']) ? false : true,
                 'allow_delete' => false,
                 'label' => 'registration.form.image.name',
                 'label_attr' => array('class' => ''),
@@ -209,7 +209,8 @@ class RegistrationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Registration'
+            'data_class' => 'AppBundle\Entity\Registration',
+            'edit_form' => false
         ));
     }
 
