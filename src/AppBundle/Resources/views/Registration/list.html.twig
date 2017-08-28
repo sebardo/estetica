@@ -7,32 +7,197 @@
 {% block list_title 'registration.list'|trans%}
 
 {% block list_body %}
-    <table id="datatable" class="table table-bordered table-hover dataTable">
-        <thead>
-        {% block thead %}
-            <tr>
-                <th>{{ '#' }}</th>
-                <th>{{ 'app.list.table.name'|trans|title }}</th>
-                <th>{{ 'app.edit'|trans|title }}</th>
-                <th>{{ 'app.delete'|trans|title }}</th>
-            </tr>
-        {% endblock %}
-        </thead>
-        <tfoot>
-        {{ block('thead') }}
-        </tfoot>
-        <tbody>
-        {% for entity in registrationCollection %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ entity.name }}</td>
-                <td><a class="btn btn-success" href="{{ path('admin_registration_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
-                <td>
-                    {% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}
-                    {{ form(deleteFormCollection[entity.id]) }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-xs-12">
+            {{ form_start(filterForm) }}
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.name) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.surname) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.email) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.country) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.province) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.city) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.postal_code) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    {{ form_row(filterForm.parentSpeciality) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    {{ form_row(filterForm.speciality) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.certificateDisability) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.vehicle) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.travelAvailability) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    {{ form_row(filterForm.salesTraining) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.language) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.timeAvailability) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.experience) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.contractType) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.levelResponsibility) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.study) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.course) }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    {{ form_row(filterForm.academicStudy) }}
+                </div>
+            </div>
+            {{ form_end(filterForm) }}
+        </div>
+
+        <div class="col-xs-12">
+            <table id="datatable" class="table table-bordered table-hover dataTable">
+                <thead>
+                {% block thead %}
+                    <tr>
+                        <th>{{ '#' }}</th>
+                        <th>{{ 'app.list.table.name'|trans|title }}</th>
+                        <th>{{ 'app.edit'|trans|title }}</th>
+                        <th>{{ 'app.delete'|trans|title }}</th>
+                    </tr>
+                {% endblock %}
+                </thead>
+                <tfoot>
+                {{ block('thead') }}
+                </tfoot>
+                <tbody>
+                {% for entity in pagination %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ entity.name }}</td>
+                        <td><a class="btn btn-success" href="{{ path('admin_registration_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
+                        <td>
+                            {% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}
+                            {{ form(deleteFormCollection[entity.id]) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        //ParentSpeciality
+
+        $('#form_parentSpeciality').on('change', function() {
+            var $this = $(this);
+            var data = {
+                parent_speciality_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_specialities") }}',
+                data: data,
+                success: function(data) {
+                    var $speciality_selector = $('#form_speciality');
+                    console.log(data);
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $speciality_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                }
+            });
+        });
+        //Ajax Country
+        $(document).on('change', '.country_selector', function(){
+            var $this = $(this);
+            var data = {
+                country_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_provinces") }}',
+                data: data,
+                success: function(data) {
+                    var $province_selector = $('#form_province');
+
+                    $province_selector.html("<option>{{ 'province.form.empty_value'|trans() }}</option>");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $province_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+
+                    var $city_selector = $('#form_city');
+                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+                }
+            });
+        });
+
+        // Ajax Province
+        $(document).on('change', '.province_selector', function(){
+            var $this = $(this);
+            var data = {
+                province_id: $this.val()
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_cities") }}',
+                data: data,
+                success: function(data) {
+                    var $city_selector = $('#form_city');
+
+                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        $city_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}

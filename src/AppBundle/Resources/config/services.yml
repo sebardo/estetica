@@ -32,7 +32,7 @@ services:
     webapp.manager.time_availability_manager:
         class: AppBundle\Model\TimeAvailabilityModel
         arguments: ["@service_container"]
-    webapp.manager.contracty_type_manager:
+    webapp.manager.contract_type_manager:
         class: AppBundle\Model\ContractTypeModel
         arguments: ["@service_container"]
     webapp.manager.level_responsibility_manager:
@@ -62,6 +62,9 @@ services:
     webapp.manager.registration_has_course_manager:
         class: AppBundle\Model\RegistrationHasCourseModel
         arguments: ["@service_container"]
+    webapp.manager.experience_manager:
+        class: AppBundle\Model\ExperienceModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
@@ -84,6 +87,9 @@ services:
     webapp.form.filter_multimedia_category:
         class: AppBundle\Form\FilterMultimediaCategory
         arguments: ["@form.factory", "@router", "@webapp.manager.multimedia_category_manager"]
+    webapp.form.filter_registration:
+            class: AppBundle\Form\FilterRegistrationType
+            arguments: ["@form.factory", "@router", "@service_container"]
     webapp.form.language_choices_type:
         class: AppBundle\Form\Registration\LanguageType
         arguments: ["@webapp.manager.language_manager", "@webapp.manager.registration_has_language_manager", null]

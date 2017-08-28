@@ -13,6 +13,7 @@ app:
   delete: 'Borrar'
   edit_btn: 'Editar'
   create_btn: 'Crear'
+  search_btn: 'Buscar'
   list:
     table:
       created: 'Creado'
@@ -108,8 +109,8 @@ country:
     empty_value: 'Selecciona un País'
 province:
   form:
-    name: 'Provincia'
-    empty_value: 'Selecciona una Provincia'
+    name: 'Província'
+    empty_value: 'Selecciona una Província'
 city:
   form:
     name: 'Ciudad'
@@ -265,3 +266,58 @@ registration:
       name: Formación adicional en técnico de ventas
     course:
       name: Cursos especializados
+  filter_form:
+    name:
+      name: Nombre
+      default: Nombre
+    surname:
+      name: Apellidos
+      default: Apellidos
+    email:
+      name: Email
+      default: Email
+    parent_speciality:
+      name: Especialidad Padre
+      default: Selecciona una opción
+    speciality:
+      name: Especialidad
+      default: Selecciona una opción
+    experience:
+      name: Experiencia
+      default: Selecciona una opción
+    vehicle:
+      name: Vehículo
+      default: Selecciona una opción
+    travel_availability:
+      name: Disponibilidad de viajar
+      default: Selecciona una opción
+    language:
+      name: Idioma
+      default: Selecciona una opción
+    time_availability:
+      name: Tiempo disponible
+      default: Selecciona una opción
+    certificate_disability:
+      name: Certificado de discapacidad
+      default: Selecciona una opción
+    sales_training:
+      name: Formación en ventas
+      default: Selecciona una opción
+    contract_type:
+      name: Tipo de contrato
+      default: Selecciona una opción
+    level_responsibility:
+      name: Nivel de responsabilidad
+      default: Selecciona una opción
+    study:
+      name: Estudios
+      default: Selecciona una opción
+    course:
+      name: Cursos
+      default: Selecciona una opción
+    academic_study:
+      name: Estudios Académicos
+      default: Selecciona una opción
+    postal_code:
+      name: Código Postal
+      default: Código Postal

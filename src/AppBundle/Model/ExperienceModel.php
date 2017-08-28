@@ -7,7 +7,7 @@ namespace AppBundle\Model;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class RegistrationModel extends ObjectManager
+class ExperienceModel extends ObjectManager
 {
 	public function __construct(ContainerInterface $containerInterface)
 	{
@@ -19,15 +19,6 @@ class RegistrationModel extends ObjectManager
 	 */
 	function getRepository()
 	{
-		return $this->em->getRepository('AppBundle:Registration');
-	}
-
-	public function getQueryByFilterForm($data)
-	{
-		if (!empty($data)) {
-			return $this->getRepository()->findQueryByFilterForm($data);
-		}
-
-		return $this->getBy(array());
+		return $this->em->getRepository('AppBundle:Registration\Experience');
 	}
 }

@@ -151,6 +151,27 @@ class DefaultController extends BackendBundleController
         return new JsonResponse($response);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @Route("/ajax/specialities-children", name="select_specialities")
+     * @return JsonResponse
+     */
+    public function childrenSpecialitiesAction(Request $request)
+    {
+        $response = array();
+        $parentSpecialityId = $request->request->get('parent_speciality_id');
+        $specialityCollection = $this->container->get('webapp.manager.speciality_manager')->getBy(array("parent" => $parentSpecialityId));
+        foreach ($specialityCollection as $speciality) {
+            $response[] = array(
+                "id" => $speciality->getId(),
+                "name" => $speciality->getName()
+            );
+        }
+
+        return new JsonResponse($response);
+    }
+
 //	/**
 //	 * @param Request $request
 //	 *

@@ -46,29 +46,47 @@ class RegistrationController extends BackendBundleController
 	/**
 	 * List registration entities
 	 *
+	 * @param Request $request
+	 *
 	 * @Route("/admin/registration/list", name="admin_registration_list")
 	 * @Method({"GET","POST"})
 	 * @Security("has_role('ROLE_CLIENT')")
 	 * @return Response
 	 */
-	public function indexRegistrationAction()
+	public function indexRegistrationAction(Request $request)
 	{
 		$deleteFormCollection = array();
+		$globalDataForm = $request->query->all();
+		$dataForm = (array_key_exists('form', $globalDataForm)) ? $globalDataForm['form'] : null;
 
 		$registrationManager = $this->container->get('webapp.manager.registration_manager');
-		$registrationCollection = $registrationManager->getBy(array());
+		$registrationCollection = $this->getQuery($dataForm, $registrationManager);
+		$filterForm = $this->get('webapp.form.filter_registration')->buildForm($dataForm);
 
-		$deleteFormCollection = $this->getDeleteFormCollection($registrationCollection, $deleteFormCollection);
+		$pagination = $this->get('knp_paginator')->paginate(
+			$registrationCollection,
+			$request->query->getInt('page', 1)/*page number*/,
+			12/*limit per page*/
+		);
+
+		$deleteFormCollection = $this->getDeleteFormCollection($pagination, $deleteFormCollection);
 
 		return $this->render(
 			'AppBundle:Registration:list.html.twig',
 			array(
 				'registrationCollection' => $registrationCollection,
 				'deleteFormCollection' => $deleteFormCollection,
+				'filterForm' => $filterForm->createView(),
+				'pagination' => $pagination,
 				'breadcrumbs' => $this->getBreadCrumbs(false),
 				'active_side_bar' => $this->getActiveSidebar()
 			)
 		);
+	}
+
+	private function getQuery($dataForm, RegistrationModel $registrationManager)
+	{
+		return $registrationManager->getQueryByFilterForm($dataForm);
 	}
 
 	/**
