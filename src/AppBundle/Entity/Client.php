@@ -320,7 +320,7 @@ class Client extends Timestampable implements UserInterface
      */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        //Nothing
     }
 
     /**
