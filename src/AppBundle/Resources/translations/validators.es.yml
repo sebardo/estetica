@@ -1,3 +1,4 @@
+min_one_value: Al menos debes seleccionar un campo
 multimedia:
   url_or_file: UrlVideo or File no puede estar vacío
   url: Url debe ser de tipo embed youtube url
