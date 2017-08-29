@@ -588,7 +588,7 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @return mixed
+     * @return Address
      */
     public function getBillingAddress()
     {
@@ -596,15 +596,16 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @param mixed $billingAddress
+     * @param Address $billingAddress
      */
     public function setBillingAddress($billingAddress)
     {
+        $billingAddress->setClient($this);
         $this->billingAddress = $billingAddress;
     }
 
     /**
-     * @return mixed
+     * @return Address
      */
     public function getLocalAddress()
     {
@@ -612,10 +613,11 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @param mixed $localAddress
+     * @param Address $localAddress
      */
     public function setLocalAddress($localAddress)
     {
+        $localAddress->setClient($this);
         $this->localAddress = $localAddress;
     }
 

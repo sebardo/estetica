@@ -63,12 +63,17 @@ class Address extends Timestampable
      */
     private $postalCode;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="addresses", cascade={"persist"})
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $city;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Client", cascade={"persist"})
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $client;
 
     public function __construct()
     {
@@ -178,22 +183,6 @@ class Address extends Timestampable
         return $this->contact;
     }
 
-//    /**
-//     * @return PostalCode
-//     */
-//    public function getPostalCode()
-//    {
-//        return $this->postalCode;
-//    }
-//
-//    /**
-//     * @param PostalCode $postalCode
-//     */
-//    public function setPostalCode($postalCode)
-//    {
-//        $this->postalCode = $postalCode;
-//    }
-
     /**
      * @return boolean
      */
@@ -242,21 +231,21 @@ class Address extends Timestampable
         $this->city = $city;
     }
 
-//    /**
-//     * @return Client
-//     */
-//    public function getClient()
-//    {
-//        return $this->client;
-//    }
-//
-//    /**
-//     * @param Client $client
-//     */
-//    public function setClient($client)
-//    {
-//        $this->client = $client;
-//    }
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
 
     public function __toString()
     {
