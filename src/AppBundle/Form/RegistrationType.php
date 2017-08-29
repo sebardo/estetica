@@ -96,11 +96,13 @@ class RegistrationType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
-            ->add('birthday', null, array(
+            ->add('birthday', 'date', array(
                 'label' => 'registration.form.birthday.name',
                 'required' => true,
                 'label_attr' => array('class' => ''),
-                'attr' => array('class' => '')
+                'attr' => array('class' => ''),
+                'widget' => 'single_text'
+
             ))
             ->add('imageFile', VichImageType::class, array(
                 'required' => ($options['edit_form']) ? false : true,

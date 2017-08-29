@@ -46,7 +46,7 @@ class ClientType extends AbstractType
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
-			->add('societyName', 'BackendBundle\Form\Type\CKeditorType', array(
+			->add('societyName', 'text', array(
 				'label' => 'client.form.society_name',
 				'required' => true,
 				'label_attr' => array('class' => ''),

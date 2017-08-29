@@ -81,6 +81,7 @@ client:
     trade_name: 'Nombre comercial'
     tag_line: 'Slogan'
     short_description: 'Descripción corta'
+    society_name: 'Razón social'
     description: 'Descripción'
     technology: 'Tecnología'
     social_number: 'Número social'
@@ -167,7 +168,9 @@ academic:
     title: 'Listado de Estudios Académicos'
     subtitle: 'Listado de todos los Estudios Académicos'
   form:
-    name: 'Nombre'
+    name:
+      name: 'Nombre'
+      default: 'Nombre'
 
 registration:
   title_nav: 'Registro'

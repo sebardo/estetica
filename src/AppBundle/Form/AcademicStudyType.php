@@ -14,7 +14,15 @@ class AcademicStudyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, array(
+                'label' => 'academic.form.name.name',
+                'required' => true,
+                'label_attr' => array('class' => ''),
+                'attr' => array(
+                    'class' => '',
+                    'placeholder' => 'academic.form.name.default'
+                ),
+            ))
         ;
     }
     

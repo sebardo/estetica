@@ -47,7 +47,7 @@
      {{ form_row(form.billingAddress) }}
      {% if entity.localAddress is null %}
          <div class="checkbox">
-             <label><input class="checkbox-show-local-address" id="is-local-address" type="checkbox" value="">{{ 'client.form.local_address_checkbox'|trans() }}</label>
+             <label><input class="checkbox-show-local-address" id="is-local-address" type="checkbox" value=""> {{ 'client.form.local_address_checkbox'|trans() }}</label>
          </div>
          <div id="local-address-wrapper" class="hide">
              {{ form_row(form.localAddress) }}

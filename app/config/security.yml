@@ -24,7 +24,7 @@ security:
             form_login:
                 login_path:  login
                 check_path:  login_check
-                default_target_path: homepage
+                default_target_path: admin_client_list
             logout:
                 path:   logout
                 target: login
