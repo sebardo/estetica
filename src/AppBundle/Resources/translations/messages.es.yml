@@ -55,6 +55,7 @@ form:
   label:
     delete: Borrar
 client:
+  title_page: 'Cliente'
   title_nav: 'Cliente'
   list: 'Listado Cliente'
   create_edit: 'Editar Cliente'
@@ -117,6 +118,7 @@ city:
     name: 'Ciudad'
     empty_value: 'Selecciona una Ciudad'
 multimedia:
+  title_page: 'Multimedia'
   title_nav: 'Multimedia'
   list: 'Listado Multimedia'
   create_edit: 'Editar Multimedia'
@@ -147,6 +149,7 @@ multimedia:
     url_video_placeholder: 'https://www.youtube.com/embed/gJ4DAV7KVyQ'
 
 academic:
+  title_page: 'Estudios académicos'
   title_nav: 'Estudios Académicos'
   list: 'Listado Estudios Académicos'
   create_edit: 'Editar Estudios Académicos'
@@ -173,6 +176,7 @@ academic:
       default: 'Nombre'
 
 registration:
+  title_page: 'Registro'
   title_nav: 'Registro'
   list: 'Listado Registros'
   create_edit: 'Editar Registro'

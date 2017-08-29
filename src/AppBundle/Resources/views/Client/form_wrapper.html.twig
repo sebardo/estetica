@@ -1,5 +1,7 @@
 {% extends "BackendBundle:CRUD:create.html.twig" %}
 
+{% block title %}{{ 'client.title_page'|trans() }}{% endblock %}
+
  {% block create_body %}
      {{ form_start(form) }}
      {% if entity.logo is not null %}

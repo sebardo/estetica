@@ -1,6 +1,8 @@
 {% extends "BackendBundle:CRUD:create.html.twig" %}
 
- {% block create_body %}
+{% block title %}{{ 'multimedia.title_page'|trans() }}{% endblock %}
+
+{% block create_body %}
      {{ form_start(form) }}
      {{ form_row(form.title) }}
      {{ form_row(form.urlVideo) }}
@@ -35,7 +37,7 @@
          {{ form_rest(form) }}
      </div>
      {{ form_end(form) }}
- {% endblock %}
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
