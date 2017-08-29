@@ -98,6 +98,7 @@ class ClientType extends AbstractType
 			->add('fileDocs', CollectionType::class, array(
 				'entry_type' => 'AppBundle\Form\FileDocType',
 				'allow_add' => true,
+				'required' => ($options['edit_form']) ? false : true,
 				'label' => 'client.form.file_doc',
 				'by_reference' => false,
 				'allow_delete' => true,

@@ -156,13 +156,13 @@ class Client extends Timestampable implements UserInterface
     private $plan;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="Address", cascade={"persist"})
      * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
      */
     private $billingAddress;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address")
+     * @ORM\OneToOne(targetEntity="Address", cascade={"persist"})
      * @ORM\JoinColumn(name="local_address_id", referencedColumnName="id")
      */
     private $localAddress;

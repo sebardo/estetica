@@ -257,4 +257,9 @@ class Address extends Timestampable
 //    {
 //        $this->client = $client;
 //    }
+
+    public function __toString()
+    {
+        return $this->postalCode;
+    }
 }

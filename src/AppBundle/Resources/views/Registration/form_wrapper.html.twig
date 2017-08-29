@@ -1,8 +1,6 @@
 {% extends "BackendBundle:CRUD:create.html.twig" %}
 
-{% block title %}{{ 'registration.title_page'|trans() }}{% endblock %}
-
- {% block create_body %}
+{% block create_body %}
      {{ form_start(form) }}
      {% set speciality_error = false %}
      {% set speciality_detail_error = false %}
@@ -113,7 +111,7 @@
          {{ form_rest(form) }}
      </div>
      {{ form_end(form) }}
- {% endblock %}
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
