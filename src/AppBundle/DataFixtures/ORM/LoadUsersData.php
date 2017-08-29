@@ -4,6 +4,7 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Address;
 use AppBundle\Entity\FileDoc;
+use AppBundle\Entity\LocalAddress;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use AppBundle\Entity\Client;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -132,7 +133,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 		if($boolean){
 			$client->setLogo("logo1.png");
 			//Local Address
-			$localAddress = new Address();
+			$localAddress = new LocalAddress();
 			$localAddress->setAddress('Otra Calle Nosequé N13 puerta 20');
 			$localAddress->setContact('Otro Nombre de contacto');
 			$localAddress->setPhone(md5(time()));
@@ -145,7 +146,17 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 			$client->setLocalAddress($localAddress);
 		}else{
 			$client->setLogo("logo2.png");
-			$client->setLocalAddress($billingAddress);
+			//Local Address
+			$localAddress = new LocalAddress();
+			$localAddress->setAddress($billingAddress->getAddress());
+			$localAddress->setContact($billingAddress->getContact());
+			$localAddress->setPhone($billingAddress->getPhone());
+			$localAddress->setEmail($billingAddress->getEmail());
+			$localAddress->setPostalCode($billingAddress->getPostalCode());
+			//City
+			$localAddress->setCity($billingAddress->getCity());
+			$manager->persist($localAddress);
+			$client->setLocalAddress($localAddress);
 		}
 		$manager->persist($client);
 	}

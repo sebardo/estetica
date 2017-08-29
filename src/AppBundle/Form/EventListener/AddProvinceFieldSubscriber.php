@@ -77,19 +77,15 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 
 	public function preBind(FormEvent $event)
 	{
-		if(array_key_exists('required_form', $this->options)){
-			if($this->options['required_form']){
-				$data = $event->getData();
-				$form = $event->getForm();
+		$data = $event->getData();
+		$form = $event->getForm();
 
-				if (null === $data) {
-					return;
-				}
-
-				$province = array_key_exists('province', $data) ? $data['province'] : null;
-				$country = array_key_exists('country', $data) ? $data['country'] : null;
-				$this->addProvinceForm($form, $province, $country);
-			}
+		if (null === $data) {
+			return;
 		}
+
+		$province = array_key_exists('province', $data) ? $data['province'] : null;
+		$country = array_key_exists('country', $data) ? $data['country'] : null;
+		$this->addProvinceForm($form, $province, $country);
 	}
 }

@@ -65,6 +65,9 @@ services:
     webapp.manager.experience_manager:
         class: AppBundle\Model\ExperienceModel
         arguments: ["@service_container"]
+    webapp.manager.local_address_manager:
+        class: AppBundle\Model\LocalAddressModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
@@ -74,6 +77,11 @@ services:
         class: AppBundle\Services\Slugify
     webapp.services.formatting:
         class: AppBundle\Services\Formatting
+    webapp.services.random_string:
+        class: AppBundle\Services\RandomString
+    webapp.services.mailer:
+        class: AppBundle\Services\Mailer
+        arguments: ["@mailer", "@templating"]
     webapp.twig.client:
         class: AppBundle\Twig\ClientExtension
         arguments: [ "@service_container" ]

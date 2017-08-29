@@ -50,13 +50,6 @@ class Address extends Timestampable
     private $contact;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_billing", type="boolean")
-     */
-    private $isBilling;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="postal_code", type="string", length=5)
@@ -70,15 +63,13 @@ class Address extends Timestampable
     private $city;
 
     /**
-     * @ORM\OneToOne(targetEntity="Client", cascade={"persist"})
-     * @ORM\JoinColumn(name="client_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\OneToOne(targetEntity="Client", mappedBy="billingAddress", cascade={"persist"})
      */
     private $client;
 
     public function __construct()
     {
         parent::__construct();
-        $this->isBilling = false;
     }
 
     /**
@@ -184,22 +175,6 @@ class Address extends Timestampable
     }
 
     /**
-     * @return boolean
-     */
-    public function isIsBilling()
-    {
-        return $this->isBilling;
-    }
-
-    /**
-     * @param boolean $isBilling
-     */
-    public function setIsBilling($isBilling)
-    {
-        $this->isBilling = $isBilling;
-    }
-
-    /**
      * @return mixed
      */
     public function getPostalCode()
@@ -216,7 +191,7 @@ class Address extends Timestampable
     }
 
     /**
-     * @return mixed
+     * @return City
      */
     public function getCity()
     {
@@ -224,7 +199,7 @@ class Address extends Timestampable
     }
 
     /**
-     * @param mixed $city
+     * @param City $city
      */
     public function setCity($city)
     {

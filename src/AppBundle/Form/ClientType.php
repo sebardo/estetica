@@ -2,9 +2,12 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
@@ -118,9 +121,9 @@ class ClientType extends AbstractType
 				'attr' => array('class' => ''),
 				'required_form' => true
 			))
-			->add('localAddress', new AddressType(), array(
+			->add('localAddress', new LocalAddressType(), array(
 				'label' => 'client.form.local_address',
-				'required' => true,
+				'required' => false,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => ''),
 				'required_form' => false
@@ -137,6 +140,28 @@ class ClientType extends AbstractType
 				))
 			;
 		}
+
+		$listener = function (FormEvent $event) {
+			$clientData = $event->getData();
+			$form = $event->getForm();
+
+			if(!$clientData) {
+				return;
+			}
+
+			if(empty($clientData['localAddress']['address'])) {
+				$clientData['localAddress']['address'] = $clientData['billingAddress']['address'];
+				$clientData['localAddress']['phone'] = $clientData['billingAddress']['phone'];
+				$clientData['localAddress']['email'] = $clientData['billingAddress']['email'];
+				$clientData['localAddress']['contact'] = $clientData['billingAddress']['contact'];
+				$clientData['localAddress']['postalCode'] = $clientData['billingAddress']['postalCode'];
+				$clientData['localAddress']['country'] = $clientData['billingAddress']['country'];
+				$clientData['localAddress']['province'] = $clientData['billingAddress']['province'];
+				$clientData['localAddress']['city'] = $clientData['billingAddress']['city'];
+				$event->setData($clientData);
+			}
+		};
+		$builder->addEventListener(FormEvents::PRE_SUBMIT, $listener);
 	}
 
 	/**

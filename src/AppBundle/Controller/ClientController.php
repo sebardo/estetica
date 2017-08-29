@@ -4,6 +4,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Client;
+use AppBundle\Services\RandomString;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -89,10 +90,12 @@ class ClientController extends BackendBundleController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
+			$plainPassword = $this->get('webapp.manager.client_manager')->createCredentials($entity);
 			$this->get('webapp.manager.client_manager')->encodePassword($entity);
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
+			$this->get('webapp.manager.client_manager')->createClient($entity);
+
+			//Mailer Service
+			$this->get('webapp.services.mailer')->sendMail($entity, $plainPassword);
 
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.create_succesfull'));
 

@@ -5,6 +5,7 @@ namespace AppBundle\Model;
 
 
 use AppBundle\Entity\Client;
+use AppBundle\Services\RandomString;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
@@ -54,5 +55,20 @@ class ClientModel extends ObjectManager
 	function getRepository()
 	{
 		return $this->em->getRepository('AppBundle:Client');
+	}
+
+	public function createCredentials(Client $client)
+	{
+		$password = RandomString::getRandomPassword(16);
+		$client->setPassword($password);
+		$username = RandomString::generateRandomString(8);
+		$client->setUsername($username);
+
+		return $password;
+	}
+
+	public function createClient(Client $client)
+	{
+		$this->save($client);
 	}
 }

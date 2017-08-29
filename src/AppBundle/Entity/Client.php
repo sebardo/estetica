@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="client")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClientRepository")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class Client extends Timestampable implements UserInterface
 {
@@ -156,13 +157,13 @@ class Client extends Timestampable implements UserInterface
     private $plan;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Address", inversedBy="client", cascade={"persist"})
      * @ORM\JoinColumn(name="billing_address_id", referencedColumnName="id")
      */
     private $billingAddress;
 
     /**
-     * @ORM\OneToOne(targetEntity="Address", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="LocalAddress", inversedBy="client", cascade={"persist"})
      * @ORM\JoinColumn(name="local_address_id", referencedColumnName="id")
      */
     private $localAddress;
@@ -605,7 +606,7 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @return Address
+     * @return LocalAddress
      */
     public function getLocalAddress()
     {
@@ -613,11 +614,10 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @param Address $localAddress
+     * @param LocalAddress $localAddress
      */
     public function setLocalAddress($localAddress)
     {
-        $localAddress->setClient($this);
         $this->localAddress = $localAddress;
     }
 

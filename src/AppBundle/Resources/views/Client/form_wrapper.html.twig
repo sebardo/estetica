@@ -108,14 +108,14 @@
                 success: function(data) {
                     var $province_selector = $('#appbundle_client_' + $type + '_province');
 
-                    $province_selector.html("<option>{{ 'province.form.empty_value'|trans() }}</option>");
+                    $province_selector.html("<option value='-1'>{{ 'province.form.empty_value'|trans() }}</option>");
 
                     for (var i=0, total = data.length; i < total; i++) {
                         $province_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                     }
 
                     var $city_selector = $('#appbundle_client_' + $type + '_city');
-                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+                    $city_selector.html("<option value='-1'>{{ 'city.form.empty_value'|trans() }}</option>");
                 }
             });
         });
@@ -136,7 +136,7 @@
                 success: function(data) {
                     var $city_selector = $('#appbundle_client_' + $type + '_city');
 
-                    $city_selector.html("<option>{{ 'city.form.empty_value'|trans() }}</option>");
+                    $city_selector.html("<option value='-1'>{{ 'city.form.empty_value'|trans() }}</option>");
 
                     for (var i=0, total = data.length; i < total; i++) {
                         $city_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
