@@ -69,25 +69,25 @@ class ClientType extends AbstractType
 			))
 			->add('urlWeb', null, array(
 				'label' => 'client.form.url_web',
-				'required' => true,
+				'required' => false,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
 			->add('facebook', null, array(
 				'label' => 'client.form.facebook',
-				'required' => true,
+				'required' => false,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
 			->add('instagram', null, array(
 				'label' => 'client.form.instagram',
-				'required' => true,
+				'required' => false,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
 			->add('blog', null, array(
 				'label' => 'client.form.blog',
-				'required' => true,
+				'required' => false,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))

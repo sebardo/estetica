@@ -3,7 +3,9 @@
 {% block description_status 'backend.list'|trans~' '~'backend.of'|trans  %}
 {% block content %}
     {% block content_list %}
-            {% block create_action_list %}<a href="{% block create_new_path %}{% endblock %}" class="btn btn-info flat margin-bottom">{% block create_new_title %}{% endblock %}</a>{% endblock %}
+            {% if is_granted("ROLE_ADMIN") %}
+                {% block create_action_list %}<a href="{% block create_new_path %}{% endblock %}" class="btn btn-info flat margin-bottom">{% block create_new_title %}{% endblock %}</a>{% endblock %}
+            {% endif %}
 
         <div class="box box-primary">
             <div class="box-header">
