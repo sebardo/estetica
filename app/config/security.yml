@@ -36,7 +36,8 @@ security:
     access_control:
           - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
           - { path: ^/ajax/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-          - { path: ^/registration$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+          - { path: ^/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+          - { path: ^/candidatos, roles: IS_AUTHENTICATED_ANONYMOUSLY }
           - { path: ^/admin/multimedia/list, roles: ROLE_CLIENT }
           - { path: ^/admin/multimedia/$, roles: ROLE_ADMIN }
           - { path: ^/admin, roles: ROLE_CLIENT }

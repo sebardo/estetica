@@ -1,34 +1,17 @@
 {% extends "BackendBundle::backend_base.html.twig" %}
 
 {% block body %}
-    <div class="wrapper">
-        <!-- Main Header -->
-        <header class="main-header">
-
-
-            <!-- Logo -->
-            <span class="logo black-logo">
-                  <!-- mini logo for sidebar mini 50x50 pixels -->
-                  <span class="logo-mini">
-                      <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
-                  </span>
-                <!-- logo for regular state and mobile devices -->
-                  <span class="logo-lg">
-                      <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
-                  </span>
-            </span>
-
-            <div class="shadow"></div>
-        </header>
-
+    <div class="wrapper" style="background: #f1f8fd;">
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="margin: 0 auto;max-width: 80%;border:none;">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1 class="text-info">
-                    <small>{% block description_status %}{% endblock %}</small>
-                    {#{{ description_page }}#}
-
+                    <div class="row">
+                        <div class="col-xs-6 col-xs-offset-3">
+                            <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
+                        </div>
+                    </div>
                 </h1>
             </section>
 
@@ -37,9 +20,6 @@
                 {% block content %}
                     {% form_theme form "BackendBundle::bootstrap_3_layout.html.twig" %}
                     <div class="box box-primary">
-                        <div class="box-header">
-                            <h3>{% block create_title %}{{ 'registration.create_new'|trans|capitalize }}{% endblock %}</h3>
-                        </div>
                         <div class="box-body">
                             {% block create_body %}
                                 {{ form_start(form) }}
@@ -76,11 +56,11 @@
                                     {% set required_image = false %}
                                     <div class="row">
                                         <div class="col-xs-4">
-                                            <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image }}">
+                                            <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image.fileName }}">
                                         </div>
                                     </div>
                                 {% endif %}
-                                {{ form_row(form.imageFile, {'label': false, 'required':required_image}) }}
+                                {{ form_row(form.image, {'label': false}) }}
                                 {% if speciality_error == true or speciality_detail_error == true %}
                                     {{ form_row(form.parentSpeciality, {'attr': {'class': error_form_class }}) }}
                                     {% if speciality_error != false %}
@@ -147,7 +127,11 @@
                                     {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
                                 {% endif %}
                                 {{ form_row(form.academicStudies) }}
-                                {{ form_row(form.submit) }}
+                                <div class="row">
+                                    <div class="col-xs-12 text-center">
+                                        {{ form_row(form.submit, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}
+                                    </div>
+                                </div>
                                 <div class="hide">
                                     {{ form_rest(form) }}
                                 </div>
@@ -160,8 +144,6 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-
-        <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
 {% endblock %}

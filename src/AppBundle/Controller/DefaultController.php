@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Client;
 use AppBundle\Entity\Registration;
 use AppBundle\Entity\Registration\ParentSpeciality;
 use AppBundle\Form\RegistrationType;
@@ -36,7 +37,7 @@ class DefaultController extends BackendBundleController
      *
      * @param Request $request
      *
-     * @Route("/registration", name="front_registration_create")
+     * @Route("/candidatos", name="front_registration_create")
      * @Method({"GET", "POST"})
      * @return Response
      */
@@ -58,6 +59,43 @@ class DefaultController extends BackendBundleController
         }
 
         return $this->render('AppBundle:Registration:front_new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+            'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.create")),
+            'active_side_bar' => $this->getActiveSidebar()
+        ));
+    }
+
+    /**
+     * Create client on front.
+     *
+     * @param Request $request
+     *
+     * @Route("/registro", name="front_client_create")
+     * @Method({"GET", "POST"})
+     * @return Response
+     */
+    public function createClientAction(Request $request)
+    {
+        $entity = new Client();
+        $form = $this->createForm('AppBundle\Form\ClientType', $entity, array('edit_form' => false));
+        $form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plainPassword = $this->get('webapp.manager.client_manager')->createCredentials($entity);
+            $this->get('webapp.manager.client_manager')->encodePassword($entity);
+            $this->get('webapp.manager.client_manager')->createClient($entity);
+
+            //Mailer Service
+            $this->get('webapp.services.mailer')->sendMail($entity, $plainPassword);
+
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.create_succesfull'));
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('AppBundle:Client:front_new.html.twig', array(
             'entity' => $entity,
             'form' => $form->createView(),
             'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.create")),
