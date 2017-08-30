@@ -85,6 +85,7 @@ class AddLanguageFieldSubscriber implements EventSubscriberInterface
 						$entity->setValue($extraData);
 						$languageManager->save($entity, false);
 					}
+					$count++;
 				}
 			}
 		}

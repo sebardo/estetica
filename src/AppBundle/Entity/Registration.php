@@ -7,8 +7,6 @@ use AppBundle\Entity\Registration\Experience;
 use AppBundle\Entity\Registration\PlaceResidence;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="registration")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegistrationRepository")
- * @Vich\Uploadable
  */
 class Registration extends Timestampable
 {
@@ -86,18 +83,10 @@ class Registration extends Timestampable
 	private $birthday;
 
 	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="image", type="string", length=255)
+	 * @ORM\OneToOne(targetEntity="Image", inversedBy="registration", cascade={"persist"})
+	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
 	 */
 	private $image;
-
-	/**
-	 * @var File
-	 *
-	 * @Vich\UploadableField(mapping="registrations", fileNameProperty="image")
-	 */
-	private $imageFile;
 
 	/**
 	 * @var boolean
@@ -342,42 +331,6 @@ class Registration extends Timestampable
 	public function setBirthday($birthday)
 	{
 		$this->birthday = $birthday;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getImage()
-	{
-		return $this->image;
-	}
-
-	/**
-	 * @param string $image
-	 */
-	public function setImage($image)
-	{
-		$this->image = $image;
-	}
-
-	/**
-	 * @return File
-	 */
-	public function getImageFile()
-	{
-		return $this->imageFile;
-	}
-
-	/**
-	 * @param File|null $imageFile
-	 */
-	public function setImageFile(File $imageFile = null)
-	{
-		$this->imageFile = $imageFile;
-
-		if ($imageFile) {
-			$this->updatedAt = new \DateTime('now');
-		}
 	}
 
 	/**
@@ -746,6 +699,22 @@ class Registration extends Timestampable
 		}
 
 		$this->academicStudies->remove($academicStudy);
+	}
+
+	/**
+	 * @return Image
+	 */
+	public function getImage()
+	{
+		return $this->image;
+	}
+
+	/**
+	 * @param Image $image
+	 */
+	public function setImage($image)
+	{
+		$this->image = $image;
 	}
 
 	public function __toString()

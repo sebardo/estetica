@@ -4,6 +4,7 @@
 namespace AppBundle\Model;
 
 
+use AppBundle\Entity\Registration;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,5 +30,12 @@ class RegistrationModel extends ObjectManager
 		}
 
 		return $this->getBy(array());
+	}
+
+	public function create(Registration $entity)
+	{
+		$this->save($entity);
+
+		return $entity;
 	}
 }

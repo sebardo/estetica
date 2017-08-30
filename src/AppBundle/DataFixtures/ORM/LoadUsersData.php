@@ -126,7 +126,6 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 		$cityCodeCollectionSize = (count($cityCodeCollection) - 1);
 		$randValue = rand(0, $cityCodeCollectionSize);
 		$billingAddress->setCity($cityCodeCollection[$randValue]);
-		$billingAddress->setIsBilling(true);
 		$manager->persist($billingAddress);
 		$client->setBillingAddress($billingAddress);
 

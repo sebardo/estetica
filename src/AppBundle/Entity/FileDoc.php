@@ -34,7 +34,7 @@ class FileDoc extends Timestampable
     /**
      * @var File
      *
-     * @Vich\UploadableField(mapping="images", fileNameProperty="file")
+     * @Vich\UploadableField(mapping="files", fileNameProperty="file")
      */
     private $fileVich;
 
@@ -122,5 +122,8 @@ class FileDoc extends Timestampable
         $this->client = $client;
     }
 
-
+    public function __toString()
+    {
+        return (string)$this->id;
+    }
 }

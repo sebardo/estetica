@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="client")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClientRepository")
  * @Vich\Uploadable
- * @ORM\HasLifecycleCallbacks()
  */
 class Client extends Timestampable implements UserInterface
 {
@@ -683,21 +682,22 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @param $fileDoc
+     * @param FileDoc $fileDoc
      */
-    public function addFileDoc($fileDoc)
+    public function addFileDoc(FileDoc $fileDoc)
     {
         if ($this->fileDocs->contains($fileDoc)){
             return;
         }
 
         $this->fileDocs->add($fileDoc);
+        $fileDoc->setClient($this);
     }
 
     /**
-     * @param $fileDoc
+     * @param FileDoc $fileDoc
      */
-    public function removeFileDoc($fileDoc)
+    public function removeFileDoc(FileDoc $fileDoc)
     {
         if (!$this->fileDocs->contains($fileDoc)){
             return;

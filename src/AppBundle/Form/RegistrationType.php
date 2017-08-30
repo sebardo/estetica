@@ -3,32 +3,16 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Registration;
-use AppBundle\Entity\Registration\Course;
-use AppBundle\Entity\Registration\Language;
-use AppBundle\Entity\Registration\ParentSpeciality;
-use AppBundle\Entity\Registration\Speciality;
-use AppBundle\Entity\RegistrationHasCourse;
-use AppBundle\Entity\RegistrationHasLanguage;
-use AppBundle\Entity\RegistrationHasSpeciality;
 use AppBundle\Form\EventListener\AddCourseFieldSubscriber;
 use AppBundle\Form\EventListener\AddLanguageFieldSubscriber;
 use AppBundle\Form\EventListener\AddSpecialityFieldSubscriber;
 use AppBundle\Form\Types\BooleanType;
 use AppBundle\Form\Types\GenderType;
-use AppBundle\Form\Registration\CourseType;
-use AppBundle\Form\Registration\LanguageType;
 use AppBundle\Form\Registration\PlaceResidenceType;
-use AppBundle\Model\CourseModel;
-use AppBundle\Model\LanguageModel;
-use AppBundle\Model\SpecialityModel;
-use AppBundle\Services\Slugify;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RegistrationType extends AbstractType
 {
@@ -104,9 +88,8 @@ class RegistrationType extends AbstractType
                 'widget' => 'single_text'
 
             ))
-            ->add('imageFile', VichImageType::class, array(
+            ->add('image', new ImageType(), array(
                 'required' => ($options['edit_form']) ? false : true,
-                'allow_delete' => false,
                 'label' => 'registration.form.image.name',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')

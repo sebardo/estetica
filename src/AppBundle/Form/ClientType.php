@@ -136,7 +136,7 @@ class ClientType extends AbstractType
 					'label' => 'client.form.new_password',
 					'label_attr' => array('class' => ''),
 					'attr' => array('class' => ''),
-					'required' => true
+					'required' => false
 				))
 			;
 		}

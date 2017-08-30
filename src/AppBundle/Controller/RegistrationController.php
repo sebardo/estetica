@@ -124,9 +124,7 @@ class RegistrationController extends BackendBundleController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
+			$this->get('webapp.manager.registration_manager')->create($entity);
 
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('registration.create_succesfull'));
 

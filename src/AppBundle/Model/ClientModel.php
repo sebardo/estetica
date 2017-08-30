@@ -5,6 +5,7 @@ namespace AppBundle\Model;
 
 
 use AppBundle\Entity\Client;
+use AppBundle\Entity\FileDoc;
 use AppBundle\Services\RandomString;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
