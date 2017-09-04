@@ -60,12 +60,12 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				echo "Veces $count\n";
 			}
 		} else {
-//			$_file = $this->container->getParameter('postal_code_csv.path');
-//			if (!is_file($_file)) {
-//				throw new Exception("No se puede leer el fichero");
-//			}
-//
-//			$this->createPostalCode($manager, $_file, true);
+			$_file = $this->container->getParameter('postal_code_csv.path');
+			if (!is_file($_file)) {
+				throw new Exception("No se puede leer el fichero");
+			}
+
+			$this->createPostalCode($manager, $_file, true);
 		}
 	}
 
@@ -105,7 +105,13 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			$cityCollection[] = $item->getSlug();
 		}
 
+		$count = 0;
 		foreach ($postalCodeCollection as $item) {
+			echo "=============================================================\n";
+			echo "=============================================================\n";
+			echo "=============================================================\n";
+			echo "Registro número:  $count\n";
+			echo "=============================================================\n";
 			//Country
 			if(array_key_exists('country', $item)){
 				$countryColumn = $item["country"];
@@ -149,7 +155,7 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			}else{
 				$province = $this->container->get('webapp.manager.province_manager')->getOneBy(array('slug' => $provinceSlug));
 				$provinceSlug = $province->getSlug();
-				echo "Escribiendo province:  $provinceSlug\n";
+				echo "Existe province:  $provinceSlug\n";
 			}
 			//City
 			if(array_key_exists('place', $item)){
@@ -172,8 +178,9 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			}else{
 				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
 				$citySlug = $city->getSlug();
-				echo "Ya existe city:  $citySlug\n";
+				echo "Existe city:  $citySlug\n";
 			}
+			$count++;
 			//$manager->flush();
 		}
 
