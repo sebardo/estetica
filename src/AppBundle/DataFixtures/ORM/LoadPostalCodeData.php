@@ -148,29 +148,29 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$citySlug = Slugify::slug($cityColumn);
 			}
 
-			echo "Escribiendo city:  $citySlug\n";
-			$cityCollection[] = $citySlug;
-			$city = new City();
-			$city->setName($cityColumn);
-			$city->setSlug($citySlug);
-			$city->setProvince($province);
-			$manager->persist($city);
-			$manager->flush();
+//			echo "Escribiendo city:  $citySlug\n";
+//			$cityCollection[] = $citySlug;
+//			$city = new City();
+//			$city->setName($cityColumn);
+//			$city->setSlug($citySlug);
+//			$city->setProvince($province);
+//			$manager->persist($city);
+//			$manager->flush();
 
-//			if(!in_array($citySlug, $cityCollection)){
-//				echo "Escribiendo city:  $citySlug\n";
-//				$cityCollection[] = $citySlug;
-//				$city = new City();
-//				$city->setName($cityColumn);
-//				$city->setSlug($citySlug);
-//				$city->setProvince($province);
-//				$manager->persist($city);
-//				$manager->flush();
-//			}else{
-//				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
-//				$citySlug = $city->getSlug();
-//				echo "Existe city:  $citySlug\n";
-//			}
+			if(!in_array($citySlug, $cityCollection)){
+				echo "Escribiendo city:  $citySlug\n";
+				$cityCollection[] = $citySlug;
+				$city = new City();
+				$city->setName($cityColumn);
+				$city->setSlug($citySlug);
+				$city->setProvince($province);
+				$manager->persist($city);
+				$manager->flush();
+			}else{
+				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
+				$citySlug = $city->getSlug();
+				echo "Existe city:  $citySlug\n";
+			}
 			$count++;
 			//$manager->flush();
 		}
