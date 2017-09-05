@@ -43,30 +43,12 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 	 */
 	public function load(ObjectManager $manager)
 	{
-		$_dir = $this->container->getParameter('postal_code_csv.path_dir');
-		if(is_dir($_dir)){
-			$finder = new Finder();
-			$finder->files()->in($_dir);
-
-			$count = 0;
-			foreach ($finder as $_file) {
-				if (!is_file($_file)) {
-					throw new Exception("No se puede leer el fichero");
-				}
-				$this->createPostalCode($manager, $_file, true);
-				sleep(5);
-				$fileName = $_file->getRealPath();
-				echo "Documento $fileName\n";
-				echo "Veces $count\n";
-			}
-		} else {
-			$_file = $this->container->getParameter('postal_code_csv.path');
-			if (!is_file($_file)) {
-				throw new Exception("No se puede leer el fichero");
-			}
-
-			$this->createPostalCode($manager, $_file, true);
+		$_file = $this->container->getParameter('postal_code_csv.path');
+		if (!is_file($_file)) {
+			throw new Exception("No se puede leer el fichero");
 		}
+
+		$this->createPostalCode($manager, $_file, true);
 	}
 
 	private function createPostalCode(ObjectManager $manager, $_file, $flush = false)
@@ -117,7 +99,7 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$countryColumn = $item["country"];
 				$countrySlug = Slugify::slug($countryColumn);
 			} else {
-				$countryColumn = $item[2];
+				$countryColumn = $item[0];
 				$countrySlug = Slugify::slug($countryColumn);
 			}
 
@@ -139,7 +121,7 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$provinceColumn = $item["city"];
 				$provinceSlug = Slugify::slug($provinceColumn);
 			} else {
-				$provinceColumn = $item[5];
+				$provinceColumn = $item[1];
 				$provinceSlug = Slugify::slug($provinceColumn);
 			}
 
@@ -162,24 +144,33 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$cityColumn = $item["place"];
 				$citySlug = Slugify::slug($cityColumn);
 			} else {
-				$cityColumn = $item[3];
+				$cityColumn = $item[2];
 				$citySlug = Slugify::slug($cityColumn);
 			}
 
-			if(!in_array($citySlug, $cityCollection)){
-				echo "Escribiendo city:  $citySlug\n";
-				$cityCollection[] = $citySlug;
-				$city = new City();
-				$city->setName($cityColumn);
-				$city->setSlug($citySlug);
-				$city->setProvince($province);
-				$manager->persist($city);
-				$manager->flush();
-			}else{
-				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
-				$citySlug = $city->getSlug();
-				echo "Existe city:  $citySlug\n";
-			}
+			echo "Escribiendo city:  $citySlug\n";
+			$cityCollection[] = $citySlug;
+			$city = new City();
+			$city->setName($cityColumn);
+			$city->setSlug($citySlug);
+			$city->setProvince($province);
+			$manager->persist($city);
+			$manager->flush();
+
+//			if(!in_array($citySlug, $cityCollection)){
+//				echo "Escribiendo city:  $citySlug\n";
+//				$cityCollection[] = $citySlug;
+//				$city = new City();
+//				$city->setName($cityColumn);
+//				$city->setSlug($citySlug);
+//				$city->setProvince($province);
+//				$manager->persist($city);
+//				$manager->flush();
+//			}else{
+//				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
+//				$citySlug = $city->getSlug();
+//				echo "Existe city:  $citySlug\n";
+//			}
 			$count++;
 			//$manager->flush();
 		}
