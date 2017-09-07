@@ -259,7 +259,7 @@ class Multimedia extends Timestampable
         }
 
         if(!empty($this->getUrlVideo())){
-            if(strpos(self::YOUTUBE_URL, $this->getUrlVideo()) === false){
+            if(strpos($this->getUrlVideo(), self::YOUTUBE_URL) === false){
                 $context->buildViolation('multimedia.url')
                     ->atPath('urlVideo')
                     ->addViolation();
