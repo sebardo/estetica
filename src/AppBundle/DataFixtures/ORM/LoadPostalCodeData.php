@@ -69,24 +69,6 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			fclose($file);
 		}
 
-		$countryCollection = array();
-		$_countryCollection = $this->container->get('webapp.manager.country_manager')->getBy(array());
-		foreach ($_countryCollection as $item) {
-			$countryCollection[] = $item->getSlug();
-		}
-
-		$provinceCollection = array();
-		$_provinceCollection = $this->container->get('webapp.manager.province_manager')->getBy(array());
-		foreach ($_provinceCollection as $item) {
-			$provinceCollection[] = $item->getSlug();
-		}
-
-		$cityCollection = array();
-		$_cityCollection = $this->container->get('webapp.manager.city_manager')->getBy(array());
-		foreach ($_cityCollection as $item) {
-			$cityCollection[] = $item->getSlug();
-		}
-
 		$count = 0;
 		foreach ($postalCodeCollection as $item) {
 			echo "=============================================================\n";
@@ -103,19 +85,18 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$countrySlug = Slugify::slug($countryColumn);
 			}
 
-			if(!in_array($countrySlug, $countryCollection)){
+			$country = $this->container->get('webapp.manager.country_manager')->getOneBy(array('slug' => $countrySlug));
+			if(empty($country)){
 				echo "Escribiendo country:  $countrySlug\n";
-				$countryCollection[] = $countrySlug;
 				$country = new Country();
 				$country->setName($countryColumn);
 				$country->setSlug($countrySlug);
 				$manager->persist($country);
-				$manager->flush();
+//				$manager->flush();
 			}else{
-				$country = $this->container->get('webapp.manager.country_manager')->getOneBy(array('slug' => $countrySlug));
-				$countrySlug = $country->getSlug();
 				echo "Existe country: $countrySlug\n";
 			}
+
 			//Province
 			if(array_key_exists('city', $item)){
 				$provinceColumn = $item["city"];
@@ -125,20 +106,19 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$provinceSlug = Slugify::slug($provinceColumn);
 			}
 
-			if(!in_array($provinceSlug, $provinceCollection)){
+			$province = $this->container->get('webapp.manager.province_manager')->getOneBy(array('slug' => $provinceSlug));
+			if(empty($province)){
 				echo "Escribiendo province:  $provinceSlug\n";
-				$provinceCollection[] = $provinceSlug;
 				$province = new Province();
 				$province->setName($provinceColumn);
 				$province->setSlug($provinceSlug);
 				$province->setCountry($country);
 				$manager->persist($province);
-				$manager->flush();
-			}else{
-				$province = $this->container->get('webapp.manager.province_manager')->getOneBy(array('slug' => $provinceSlug));
-				$provinceSlug = $province->getSlug();
+//				$manager->flush();
+			}else {
 				echo "Existe province:  $provinceSlug\n";
 			}
+
 			//City
 			if(array_key_exists('place', $item)){
 				$cityColumn = $item["place"];
@@ -148,34 +128,20 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$citySlug = Slugify::slug($cityColumn);
 			}
 
-//			echo "Escribiendo city:  $citySlug\n";
-//			$cityCollection[] = $citySlug;
-//			$city = new City();
-//			$city->setName($cityColumn);
-//			$city->setSlug($citySlug);
-//			$city->setProvince($province);
-//			$manager->persist($city);
-//			$manager->flush();
-
-			if(!in_array($citySlug, $cityCollection)){
+			$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
+			if(empty($city)) {
 				echo "Escribiendo city:  $citySlug\n";
-				$cityCollection[] = $citySlug;
 				$city = new City();
 				$city->setName($cityColumn);
 				$city->setSlug($citySlug);
 				$city->setProvince($province);
 				$manager->persist($city);
-				$manager->flush();
-			}else{
-				$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
-				$citySlug = $city->getSlug();
+//				$manager->flush();
+			}else {
 				echo "Existe city:  $citySlug\n";
 			}
-			$count++;
-			//$manager->flush();
-		}
 
-		if($flush){
+			$count++;
 			$manager->flush();
 		}
 	}
