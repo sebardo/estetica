@@ -69,6 +69,24 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			fclose($file);
 		}
 
+		$countryCollection = array();
+		$_countryCollection = $this->container->get('webapp.manager.country_manager')->getBy(array());
+		foreach ($_countryCollection as $item) {
+			$countryCollection[] = $item->getSlug();
+		}
+
+		$provinceCollection = array();
+		$_provinceCollection = $this->container->get('webapp.manager.province_manager')->getBy(array());
+		foreach ($_provinceCollection as $item) {
+			$provinceCollection[] = $item->getSlug();
+		}
+
+		$cityCollection = array();
+		$_cityCollection = $this->container->get('webapp.manager.city_manager')->getBy(array());
+		foreach ($_cityCollection as $item) {
+			$cityCollection[] = $item->getSlug();
+		}
+
 		$count = 0;
 		foreach ($postalCodeCollection as $item) {
 			echo "=============================================================\n";
@@ -85,8 +103,10 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$countrySlug = Slugify::slug($countryColumn);
 			}
 
-			$country = $this->container->get('webapp.manager.country_manager')->getOneBy(array('slug' => $countrySlug));
-			if(empty($country)){
+//			$country = $this->container->get('webapp.manager.country_manager')->getOneBy(array('slug' => $countrySlug));
+//			if(empty($country)){
+			if(!in_array($countrySlug, $countryCollection)){
+				$countryCollection[] = $countrySlug;
 				echo "Escribiendo country:  $countrySlug\n";
 				$country = new Country();
 				$country->setName($countryColumn);
@@ -106,8 +126,10 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$provinceSlug = Slugify::slug($provinceColumn);
 			}
 
-			$province = $this->container->get('webapp.manager.province_manager')->getOneBy(array('slug' => $provinceSlug));
-			if(empty($province)){
+//			$province = $this->container->get('webapp.manager.province_manager')->getOneBy(array('slug' => $provinceSlug));
+//			if(empty($province)){
+			if(!in_array($provinceSlug, $provinceCollection)){
+				$provinceCollection[] = $provinceSlug;
 				echo "Escribiendo province:  $provinceSlug\n";
 				$province = new Province();
 				$province->setName($provinceColumn);
@@ -128,8 +150,10 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$citySlug = Slugify::slug($cityColumn);
 			}
 
-			$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
-			if(empty($city)) {
+//			$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
+//			if(empty($city)) {
+			if(!in_array($citySlug, $cityCollection)){
+				$cityCollection[] = $citySlug;
 				echo "Escribiendo city:  $citySlug\n";
 				$city = new City();
 				$city->setName($cityColumn);
@@ -142,8 +166,9 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			}
 
 			$count++;
-			$manager->flush();
+//			$manager->flush();
 		}
+		$manager->flush();
 	}
 
 	/**
