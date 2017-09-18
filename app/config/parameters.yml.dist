@@ -27,3 +27,4 @@ parameters:
     app.path.images: /uploads/images
     app.path.files: /uploads/files
     app.path.registrations: /uploads/registrations
+    app.path.documents: /uploads/documents

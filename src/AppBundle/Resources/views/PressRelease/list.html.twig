@@ -1,0 +1,47 @@
+{% extends "BackendBundle:CRUD:list.html.twig" %}
+
+{% block page_title %}{{ 'press_release.list.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'press_release.list.subtitle'|trans() }}{% endblock %}
+{% block create_buttons %}
+    {% if is_granted("ROLE_CLIENT") %}
+            <a href="{{ path('admin_press_release_create') }}" class="btn btn-info flat margin-bottom">{{ 'press_release.create_new'|trans }}</a>
+    {% endif %}
+{% endblock %}
+{#{% if is_granted("ROLE_CLIENT") %}#}
+    {#{% block create_new_path path('admin_press_release_create') %}#}
+    {#{% block create_new_title 'press_release.create_new'|trans %}#}
+{#{% endif %}#}
+{% block list_title 'press_release.list'|trans%}
+
+{% block list_body %}
+    <table id="datatable" class="table table-bordered table-hover dataTable">
+        <thead>
+        {% block thead %}
+            <tr>
+                <th>{{ '#' }}</th>
+                <th>{{ 'app.list.table.published'|trans|title }}</th>
+                <th>{{ 'app.list.table.title'|trans|title }}</th>
+                <th>{{ 'app.edit'|trans|title }}</th>
+                <th>{{ 'app.delete'|trans|title }}</th>
+            </tr>
+        {% endblock %}
+        </thead>
+        <tfoot>
+        {{ block('thead') }}
+        </tfoot>
+        <tbody>
+        {% for entity in pressReleaseCollection %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ entity.published|date('d/m/Y') }}</td>
+                <td>{{ entity.title }}</td>
+                <td><a class="btn btn-success" href="{{ path('admin_press_release_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
+                <td>
+                    {% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}
+                    {{ form(deleteFormCollection[entity.id]) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

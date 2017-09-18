@@ -113,6 +113,9 @@ vich_uploader:
         registrations:
             uri_prefix:         "%app.path.registrations%"
             upload_destination: "%kernel.root_dir%/../web/uploads/registrations"
+        documents:
+            uri_prefix:         "%app.path.documents%"
+            upload_destination: "%kernel.root_dir%/../web/uploads/documents"
 
 # Knp Paginator Configuration
 knp_paginator:

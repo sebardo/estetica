@@ -1,0 +1,21 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+{% block create_body %}
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.published) }}
+    {{ form_row(form.description) }}
+    {% if entity.document is not null %}
+        <div class="row">
+            <div class="col-xs-4">
+                <img class="logo-image-preview img-responsive" src="{{ image_path ~ '/' ~ entity.document }}">
+            </div>
+        </div>
+    {% endif %}
+    {{ form_row(form.documentFile, {'label': false}) }}
+    {{ form_row(form.submit) }}
+    <div class="hide">
+        {{ form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

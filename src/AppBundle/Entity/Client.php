@@ -188,6 +188,13 @@ class Client extends Timestampable implements UserInterface
      */
     private $fileDocs;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="PressRelease", mappedBy="client", cascade={"persist"})
+     */
+    private $pressReleases;
+
     public function __construct()
     {
         parent::__construct();
@@ -195,6 +202,7 @@ class Client extends Timestampable implements UserInterface
         $this->active = true;
         $this->role = self::ROLE_CLIENT;
         $this->fileDocs = new ArrayCollection();
+        $this->pressReleases = new ArrayCollection();
     }
 
     /**
@@ -704,5 +712,46 @@ class Client extends Timestampable implements UserInterface
         }
 
         $this->fileDocs->remove($fileDoc);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPressReleases()
+    {
+        return $this->pressReleases;
+    }
+
+    /**
+     * @param ArrayCollection $pressReleases
+     */
+    public function setPressReleases($pressReleases)
+    {
+        $this->pressReleases = $pressReleases;
+    }
+
+    /**
+     * @param PressRelease $pressRelease
+     */
+    public function addPressRelease(PressRelease $pressRelease)
+    {
+        if ($this->pressReleases->contains($pressRelease)){
+            return;
+        }
+
+        $this->pressReleases->add($pressRelease);
+        $pressRelease->setClient($this);
+    }
+
+    /**
+     * @param PressRelease $pressRelease
+     */
+    public function removePressRelease(PressRelease $pressRelease)
+    {
+        if (!$this->pressReleases->contains($pressRelease)){
+            return;
+        }
+
+        $this->pressReleases->remove($pressRelease);
     }
 }

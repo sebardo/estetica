@@ -20,6 +20,8 @@ app:
       username: 'Username'
       active: 'Activo'
       name: 'Nombre'
+      title: 'Título'
+      published: 'Publicado'
   sidebar:
     ticket:
       title_nav: 'Sistema de tickets'
@@ -37,6 +39,9 @@ app:
     registration:
       title_nav: 'Registros'
       list: 'Listado de registros'
+    press_release:
+      title_nav: 'Nota Prensa'
+      list: 'Listado de notas prensa'
   gender:
     name: Género
     default: Selecciona un género
@@ -328,3 +333,36 @@ registration:
     postal_code:
       name: Código Postal
       default: Código Postal
+press_release:
+  title_page: 'Nota Prensa'
+  title_nav: 'Nota Prensa'
+  list: 'Listado Nota Prensa'
+  create_edit: 'Editar Nota Prensa'
+  create_succesfull: 'Nota Prensa creada correctamente'
+  edit_succesfull: 'Nota Prensa editada correctamente'
+  delete_succesfull: 'Nota Prensa borrada correctamente'
+  create_new: 'Nueva Nota Prensa'
+  edit_btn: 'Editar una nota de prensa'
+  create_btn: 'Crear una nota de prensa'
+  edit:
+    title: 'Editar una nota de prensa'
+    subtitle: 'Editar la nota de prensa'
+    description: 'Editando la nota de prensa'
+  create:
+    title: 'Crear una nota de prensa'
+    subtitle: 'Crear la nota de prensa'
+    description: 'Creando la nota de prensa'
+  list:
+    title: 'Listado de notas de prensa'
+    subtitle: 'Listado de todos las notas de prensa'
+  form:
+    title:
+      name: Evento / Noticia
+    description:
+      name: Características y observaciones destacables
+    publised:
+      name: Fecha y hora
+    autor:
+      name: Autor
+    document:
+      name: Documentación aportada
