@@ -1,0 +1,150 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+{% block create_body %}
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.support) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.subcategory) }}
+    {# Start #}
+    <div class="form-group">
+        {{ form_label(form.fileDocs) }}
+        {% if form.vars.errors %}
+            {% for error in form.vars.errors %}
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled">
+                {% if error.cause == 'fileDocs' %}
+                    <li>
+                        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                        {{ error.message | trans }}
+                    </li>
+                {% endif %}
+                    </ul>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {#{{ form_errors(form) }}#}
+        {#{{ dump(form) }}#}
+        <ul class="filedocs" id="filedoc-fields-list" data-prototype="{{ form_widget(form.fileDocs.vars.prototype)|e }}">
+            {% for fileField in form.fileDocs %}
+                <li class="wrapper-field">
+                    {% if entity.fileDocs is not null %}
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_by_creativity(entity, loop.index - 1) }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {{ form_errors(fileField) }}
+                    {{ form_widget(fileField) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="#" id="add-another-filedoc">{{ 'creativity.form.file_doc_add_file_doc'|trans() }}</a>
+    </div>
+    {# END #}
+    {{ form_row(form.submit) }}
+    <div class="hide">
+        {{ form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+    var fileDocCount = '{{ form.fileDocs|length }}';
+    var max_images = 1;
+
+    function calculateMaxImages(support_id) {
+        if(support_id === 'flyers') {
+            max_images = 2;
+        }else {
+            max_images = 1;
+        }
+    }
+
+    jQuery(document).ready(function() {
+        jQuery('#add-another-filedoc').click(function(e) {
+            e.preventDefault();
+            var support_id = $('#appbundle_creativity_support').val();
+            calculateMaxImages(support_id);
+            if(max_images > fileDocCount){
+                var objectList = jQuery('#filedoc-fields-list');
+                var newWidget = objectList.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, fileDocCount);
+                fileDocCount++;
+
+                var newLi = jQuery('<li></li>').html(newWidget);
+                var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close').html('&times;');
+                removeButton.appendTo(newLi);
+                newLi.appendTo(objectList);
+            }
+        });
+    });
+
+    //Remove Button
+    jQuery(document).on('click', '.close', function(){
+        $(this).closest('li').fadeOut(500, function() {
+            $(this).remove();
+            fileDocCount--;
+        });
+    });
+
+    //Change Support
+    $(document).on('change', '#appbundle_creativity_support', function(){
+        var support_id = $(this).val();
+        calculateMaxImages(support_id);
+
+        if(max_images < fileDocCount){
+            var list = $('#filedoc-fields-list').find('li');
+            var list_length = list.length;
+            list.eq(list_length - 1).fadeOut(500, function() {
+                $(this).remove();
+                fileDocCount--;
+            });
+        }
+    });
+
+    //Ajax Country
+    $(document).on('change', '#appbundle_creativity_category', function(){
+        var $this = $(this);
+        var category_id = $this.val();
+        var $subcategory_selector = $('#appbundle_creativity_subcategory');
+        var data = {
+            category_id: $this.val()
+        };
+
+        if(category_id === 'packs') {
+            $subcategory_selector.parent('.form-group').fadeOut(500, function() {
+                $(this).css({
+                    'display': 'none'
+                });
+                $subcategory_selector.html("");
+            });
+        }else {
+            $subcategory_selector.parent('.form-group').fadeOut(500, function() {
+                $(this).css({
+                    'display': 'block'
+                });
+                getCreativeSubcategories($subcategory_selector, data);
+            });
+        }
+    });
+
+    function getCreativeSubcategories(selector, data) {
+        $.ajax({
+            type: 'post',
+            url: '{{ path("select_creativity_subcategories") }}',
+            data: data,
+            success: function(data) {
+                selector.html("");
+
+                for (var i=0, total = data.length; i < total; i++) {
+                    selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Client;
+use AppBundle\Entity\Creativity;
 use AppBundle\Entity\Registration;
 use AppBundle\Entity\Registration\ParentSpeciality;
 use AppBundle\Form\RegistrationType;
@@ -204,6 +205,28 @@ class DefaultController extends BackendBundleController
             $response[] = array(
                 "id" => $speciality->getId(),
                 "name" => $speciality->getName()
+            );
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/ajax/creativity-subcategory", name="select_creativity_subcategories")
+     * @return JsonResponse
+     */
+    public function creativitySubcategoriesAction(Request $request)
+    {
+        $response = array();
+        $categoryId = $request->request->get('category_id');
+        $subcategoryCollection = Creativity::getSelectSubcategories($categoryId);
+
+        foreach ($subcategoryCollection as $subategorykey => $subcategoryValue) {
+            $response[] = array(
+                "id" => $subategorykey,
+                "name" => $this->get('translator')->trans($subcategoryValue)
             );
         }
 

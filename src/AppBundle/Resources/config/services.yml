@@ -74,6 +74,9 @@ services:
     webapp.manager.press_release_manager:
         class: AppBundle\Model\PressReleaseModel
         arguments: ["@service_container"]
+    webapp.manager.creativity_manager:
+        class: AppBundle\Model\CreativityModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
@@ -95,6 +98,11 @@ services:
             - { name: twig.extension }
     webapp.twig.registration:
         class: AppBundle\Twig\RegistrationExtension
+        arguments: [ "@service_container" ]
+        tags:
+            - { name: twig.extension }
+    webapp.twig.creativity:
+        class: AppBundle\Twig\CreativityExtension
         arguments: [ "@service_container" ]
         tags:
             - { name: twig.extension }

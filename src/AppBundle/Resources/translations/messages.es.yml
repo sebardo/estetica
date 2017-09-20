@@ -6,6 +6,9 @@ security:
     password: 'Contraseña'
     rememberme: 'Recordar contraseña'
     submit: 'Enviar'
+validator:
+  must_have_one_image: 'Al menos debe tener una imagen'
+  must_have_two_image: 'Al menos debe tener 2 imágenes'
 app:
   show: 'Ver'
   close: 'Cerrar'
@@ -42,6 +45,9 @@ app:
     press_release:
       title_nav: 'Nota Prensa'
       list: 'Listado de notas prensa'
+    creativity:
+      title_nav: 'Creatividad'
+      list: 'Listado de creatividades'
   gender:
     name: Género
     default: Selecciona un género
@@ -56,6 +62,69 @@ app:
     middle: Medio
     high: Alto
     native: Nativo
+  support:
+    flyers: 'Flyers'
+    routers: 'Routers'
+    rollup: 'Roll-up'
+  category:
+    technology:
+      name: 'Tecnología'
+      1:
+        name: 'Criolipolisis'
+      2:
+        name: 'IPL Fotodepilación'
+      3:
+        name: 'Láser depilación'
+      4:
+        name: 'Radiofrecuencia'
+      5:
+        name: 'Cavitación'
+      6:
+        name: 'Hifu'
+      7:
+        name: 'NARL'
+    month:
+      name: 'Promo del mes'
+      1:
+        name: 'Enero'
+      2:
+        name: 'Febrero'
+      3:
+        name: 'Marzo'
+      4:
+        name: 'Abril'
+      5:
+        name: 'Mayo'
+      6:
+        name: 'Junio'
+      7:
+        name: 'Julio'
+      8:
+        name: 'Agosto'
+      9:
+        name: 'Septiembre'
+      10:
+        name: 'Octubre'
+      11:
+        name: 'Noviembre'
+      12:
+        name: 'Diciembre'
+    campaign:
+      name: 'Campaña de Temporada'
+      1:
+        name: 'Día del Padre'
+      2:
+        name: 'Día de la Madre'
+      3:
+        name: 'San Valentín'
+      4:
+        name: 'Verano'
+      5:
+        name: 'Navidad'
+      6:
+        name: 'Otros'
+    pack:
+      name: 'Creatividad de Packs'
 form:
   label:
     delete: Borrar
@@ -366,3 +435,34 @@ press_release:
       name: Autor
     document:
       name: Documentación aportada
+creativity:
+  title_page: 'Creatividad'
+  title_nav: 'Creatividad'
+  list: 'Listado Creatividades'
+  create_edit: 'Editar Creatividad'
+  create_succesfull: 'Creatividad creada correctamente'
+  edit_succesfull: 'Creatividad editada correctamente'
+  delete_succesfull: 'Creatividad borrada correctamente'
+  create_new: 'Nuevo Creatividad'
+  edit_btn: 'Editar un creatividad'
+  create_btn: 'Crear un creatividad'
+  edit:
+    title: 'Editar una creatividad'
+    subtitle: 'Editar la creatividad'
+    description: 'Editando la creatividad'
+  create:
+    title: 'Crear una creatividad'
+    subtitle: 'Crear la creatividad'
+    description: 'Creando la creatividad'
+  list:
+    title: 'Listado de creatividades'
+    subtitle: 'Listado de todas los creatividades'
+  form:
+    name: 'Nombre'
+    category: 'Categoría'
+    category_default: 'Selecciona una categoría'
+    subcategory: 'Subcategoría'
+    support: 'Soporte'
+    file_doc: 'Imagen'
+    image: 'Imagen'
+    file_doc_add_file_doc: 'Añadir imagen'

@@ -79,6 +79,19 @@
                     </li>
                 </ul>
             </li>
+            <li id="creativity" class="treeview">
+                <a href=""><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity.title_nav'|trans|title }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="admin">
+                        <a id="press-release-create" href="{{ path('admin_creativity_list') }}"><i class="fa fa-study"></i> <span>{{ 'app.sidebar.creativity.list'|trans|title }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         {% elseif is_granted("ROLE_CLIENT") %}
             <li id="ticket" class="treeview">
                 <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.ticket.title_nav'|trans|title }}</span>
