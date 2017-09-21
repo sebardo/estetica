@@ -24,8 +24,10 @@ parameters:
     site_title: "Club de Estética"
     ticket_link: "https://clubdeestetica.freshdesk.com/helpdesk"
     flowww_link: "https://login.flowww.net/es/"
+    mail_central: "creatividades@clubsdeestetica.com"
     app.path.images: /uploads/images
     app.path.files: /uploads/files
     app.path.registrations: /uploads/registrations
     app.path.documents: /uploads/documents
     app.path.creativities: /uploads/creativities
+    url_map: "https://{s}.tiles.mapbox.com/v4/{mapId}/{z}/{x}/{y}.png?access_token={token}"

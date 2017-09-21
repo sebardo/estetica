@@ -92,6 +92,19 @@
                     </li>
                 </ul>
             </li>
+            <li id="creativity-proposal" class="treeview">
+                <a href=""><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity_proposal.title_nav'|trans|title }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="admin">
+                        <a id="press-release-create" href="{{ path('admin_creativity_proposal_list') }}"><i class="fa fa-study"></i> <span>{{ 'app.sidebar.creativity_proposal.list'|trans|title }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         {% elseif is_granted("ROLE_CLIENT") %}
             <li id="ticket" class="treeview">
                 <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.ticket.title_nav'|trans|title }}</span>
@@ -139,6 +152,19 @@
                 <ul class="treeview-menu">
                     <li id="admin">
                         <a id="press-release-create" href="{{ path('admin_press_release_list') }}"><i class="fa fa-study"></i> <span>{{ 'app.sidebar.press_release.list'|trans|title }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li id="creativity-proposal" class="treeview">
+                <a href=""><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity_proposal.title_nav'|trans|title }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="admin">
+                        <a id="press-release-create" href="{{ path('admin_creativity_proposal_create') }}"><i class="fa fa-study"></i> <span>{{ 'app.sidebar.creativity_proposal.create'|trans|title }}</span>
                         </a>
                     </li>
                 </ul>

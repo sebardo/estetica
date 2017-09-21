@@ -1,0 +1,14 @@
+Soporte: {{ proposal.support }}
+Promoción: {{ proposal.promotion }}
+Detalles: {{ proposal.detail }}
+Cantidad: {{ proposal.quantity }}
+Buzoneo: {{ proposal.delivery }}
+Detalles Buzoneo: {{ proposal.deliveryDetail }}
+Mapa:
+Latitud: {{ proposal.latitude }}
+Longitud: {{ proposal.longitude }}
+Mapa: {{ proposal.map }}
+Imágenes:
+{% for image in proposal.fileDocs %}
+    <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_by_creativity_proposal(proposal, loop.index - 1) }}">
+{% endfor %}

@@ -77,6 +77,9 @@ services:
     webapp.manager.creativity_manager:
         class: AppBundle\Model\CreativityModel
         arguments: ["@service_container"]
+    webapp.manager.creativity_proposal_manager:
+        class: AppBundle\Model\CreativityProposalModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
@@ -124,3 +127,12 @@ services:
     webapp.form.parent_speciality_choices_type:
         class: AppBundle\Form\Registration\ParentSpecialityType
         arguments: ["@webapp.manager.parent_speciality_manager"]
+    webapp.listener.proposal_created:
+        class: AppBundle\EventListener\ProposalListener
+        arguments:
+            templating: "@twig"
+            mailer: "@mailer"
+            sender: "%mail_central%"
+            receiver: "%mail_central%"
+        tags:
+            - { name: kernel.event_listener, event: proposal.created, method: onProposalCreated }

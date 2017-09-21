@@ -9,6 +9,7 @@ security:
 validator:
   must_have_one_image: 'Al menos debe tener una imagen'
   must_have_two_image: 'Al menos debe tener 2 imágenes'
+  must_not_be_blank: 'No puede estar vacío'
 app:
   show: 'Ver'
   close: 'Cerrar'
@@ -48,6 +49,10 @@ app:
     creativity:
       title_nav: 'Creatividad'
       list: 'Listado de creatividades'
+    creativity_proposal:
+      title_nav: 'Propuesta Creatividad'
+      list: 'Listado de propuestas'
+      create: 'Crear propuesta creatividad'
   gender:
     name: Género
     default: Selecciona un género
@@ -444,8 +449,8 @@ creativity:
   edit_succesfull: 'Creatividad editada correctamente'
   delete_succesfull: 'Creatividad borrada correctamente'
   create_new: 'Nuevo Creatividad'
-  edit_btn: 'Editar un creatividad'
-  create_btn: 'Crear un creatividad'
+  edit_btn: 'Editar una creatividad'
+  create_btn: 'Crear una creatividad'
   edit:
     title: 'Editar una creatividad'
     subtitle: 'Editar la creatividad'
@@ -456,7 +461,7 @@ creativity:
     description: 'Creando la creatividad'
   list:
     title: 'Listado de creatividades'
-    subtitle: 'Listado de todas los creatividades'
+    subtitle: 'Listado de todas las creatividades'
   form:
     name: 'Nombre'
     category: 'Categoría'
@@ -466,3 +471,36 @@ creativity:
     file_doc: 'Imagen'
     image: 'Imagen'
     file_doc_add_file_doc: 'Añadir imagen'
+creativity_proposal:
+  title_page: 'Propuesta Creatividad'
+  title_nav: 'Propuesta Creatividad'
+  list: 'Listado Propuesta Creatividades'
+  create_edit: 'Editar Propuesta Creatividad'
+  create_succesfull: 'Propuesta Creatividad creada correctamente'
+  edit_succesfull: 'Propuesta Creatividad editada correctamente'
+  delete_succesfull: 'Propuesta Creatividad borrada correctamente'
+  create_new: 'Nuevo Propuesta Creatividad'
+  edit_btn: 'Editar una propuesta creatividad'
+  create_btn: 'Crear una propuesta creatividad'
+  edit:
+    title: 'Editar una propuesta creatividad'
+    subtitle: 'Editar la propuesta creatividad'
+    description: 'Editando la propuesta creatividad'
+  create:
+    title: 'Crear una propuesta creatividad'
+    subtitle: 'Crear la propuesta creatividad'
+    description: 'Creando la propuesta creatividad'
+  list:
+    title: 'Listado de propuestas creatividades'
+    subtitle: 'Listado de todas las propuesta creatividades'
+  form:
+    support: 'Soporte'
+    promotion: 'Promoción'
+    file_doc: 'Imágenes'
+    detail: 'Detalles'
+    quantity: 'Cantidad'
+    delivery: 'Buzoneo'
+    delivery_detail: 'Detalles de Buzoneo'
+    file_doc_add_file_doc: 'Añadir imagen'
+    latitude: 'Latitud'
+    longitude: 'Longitud'

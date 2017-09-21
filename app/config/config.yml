@@ -47,6 +47,13 @@ twig:
         files_complete_path: "%kernel.root_dir%/../web/uploads/files"
         registration_path: "%app.path.registrations%"
         registration_complete_path: "%kernel.root_dir%/../web/uploads/registrations"
+        document_path: "%app.path.documents%"
+        document_complete_path: "%kernel.root_dir%/../web/uploads/documents"
+        creativity_path: "%app.path.creativities%"
+        creativity_complete_path: "%kernel.root_dir%/../web/uploads/creativities"
+        proposal_path: "%app.path.proposals%"
+        proposal_complete_path: "%kernel.root_dir%/../web/uploads/proposals"
+        url_map: '%url_map%'
     form:
         resources:
             - 'BackendBundle::bootstrap_3_layout.html.twig'
@@ -119,6 +126,9 @@ vich_uploader:
         creativities:
             uri_prefix:         "%app.path.creativities%"
             upload_destination: "%kernel.root_dir%/../web/uploads/creativities"
+        proposals:
+            uri_prefix:         "%app.path.proposals%"
+            upload_destination: "%kernel.root_dir%/../web/uploads/proposals"
 
 # Knp Paginator Configuration
 knp_paginator:

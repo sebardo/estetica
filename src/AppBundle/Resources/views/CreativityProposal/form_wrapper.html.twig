@@ -1,0 +1,178 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+{% block create_body %}
+    {{ form_start(form) }}
+    {{ form_row(form.support) }}
+    {{ form_row(form.promotion) }}
+    {# Start #}
+    <div class="form-group">
+        {{ form_label(form.fileDocs) }}
+        {% if form.vars.errors %}
+            {% for error in form.vars.errors %}
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled">
+                {% if error.cause == 'fileDocs' %}
+                    <li>
+                        <span class="glyphicon glyphicon-exclamation-sign"></span>
+                        {{ error.message | trans }}
+                    </li>
+                {% endif %}
+                    </ul>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <ul class="filedocs" id="filedoc-fields-list" data-prototype="{{ form_widget(form.fileDocs.vars.prototype)|e }}">
+            {% for fileField in form.fileDocs %}
+                <li class="wrapper-field">
+                    {% if entity.fileDocs is not null %}
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_by_creativity_proposal(entity, loop.index - 1) }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {{ form_errors(fileField) }}
+                    {{ form_widget(fileField) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="#" id="add-another-filedoc">{{ 'creativity.form.file_doc_add_file_doc'|trans() }}</a>
+    </div>
+    {# END #}
+    {{ form_row(form.detail) }}
+    {{ form_row(form.quantity) }}
+    {{ form_row(form.delivery) }}
+    <div class="row delivery-show delivery-detail-wrapper">
+        <div class="col-xs-12">
+            {% set error = form_errors(form.deliveryDetail) | trim %}
+            <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                {{ form_label(form.deliveryDetail, 'Detalles envío' | trans) }}
+                {{ form_widget(form.deliveryDetail, { 'attr': { 'class': 'form-control', 'placeholder': 'Detalles del envío' | trans } }) }}
+                <span class="help-block error-message">{{ error | striptags }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row delivery-show lat-long-input-wrapper">
+        <div class="col-sm-6 lat-input-wrapper">
+            {% set error = form_errors(form.latitude) | trim %}
+            <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                {{ form_label(form.latitude, 'Latitud' | trans) }}
+                {{ form_widget(form.latitude, { 'attr': { 'class': 'form-control', 'placeholder': 'Latitud Mapa' | trans } }) }}
+                <span class="help-block error-message">{{ error | striptags }}</span>
+            </div>
+        </div>
+        <div class="col-sm-6 long-input-wrapper">
+            {% set error = form_errors(form.longitude) | trim %}
+            <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                {{ form_label(form.longitude, 'Longitud' | trans) }}
+                {{ form_widget(form.longitude, { 'attr': { 'class': 'form-control', 'placeholder': 'Longitud Mapa' | trans } }) }}
+                <span class="help-block error-message">{{ error | striptags }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row delivery-show map-input-wrapper">
+        <div class="col-xs-12">
+            {% set value_map = entity.latitude ~ '@' ~ entity.longitude %}
+            {% include 'AppBundle:CreativityProposal:map_show.html.twig' %}
+        </div>
+    </div>
+    {{ form_row(form.submit) }}
+    <div class="hide">
+        {{ form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript">
+    var fileDocCount = '{{ form.fileDocs|length }}';
+
+    jQuery(document).ready(function() {
+        jQuery('#add-another-filedoc').click(function(e) {
+            e.preventDefault();
+            var objectList = jQuery('#filedoc-fields-list');
+            var newWidget = objectList.attr('data-prototype');
+            newWidget = newWidget.replace(/__name__/g, fileDocCount);
+            fileDocCount++;
+
+            var newLi = jQuery('<li></li>').html(newWidget);
+            var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close').html('&times;');
+            removeButton.appendTo(newLi);
+            newLi.appendTo(objectList);
+        });
+    });
+
+    //Remove Button
+    jQuery(document).on('click', '.close', function(){
+        $(this).closest('li').fadeOut(500, function() {
+            $(this).remove();
+            fileDocCount--;
+        });
+    });
+
+    //Show local address
+    function deliverDetailsShow(show) {
+        var $delivery_show_wrapper_collection = $('.delivery-show');
+        if(show){
+            $delivery_show_wrapper_collection.fadeIn(500, function() {
+                var $this = $(this);
+                $this.css({
+                    'display': 'block'
+                })
+            });
+        }else {
+            $delivery_show_wrapper_collection.fadeOut(500, function() {
+                var $this = $(this);
+                $this.css({
+                    'display': 'none'
+                })
+            });
+        }
+    }
+
+    $(document).on('ifChanged', '#appbundle_creativityproposal_delivery', function(event) {
+        checkboxIsChecked('#appbundle_creativityproposal_delivery');
+    });
+
+    function checkboxIsChecked(selector){
+        var el = $(selector);
+        if(el.is(':checked')){
+            deliverDetailsShow(true)
+        }else{
+            deliverDetailsShow(false);
+        }
+    }
+
+    setTimeout(function() {
+        deliverDetailsShow(false);
+        checkboxIsChecked('#appbundle_creativityproposal_delivery');
+    }, 300);
+
+    //para mostrar el mapa
+    if ($('#map_show').length > 0) {
+        var value, latLng, url_map;
+        value = $($('#map_show input')[0]);
+        url_map = $($('#map_show input')[1]).val();
+        lat = $('#appbundle_creativityproposal_latitude');
+        lon = $('#appbundle_creativityproposal_longitude');
+        if (value.val() != '') {
+            var aux = value.val().split('@');
+            latLng = L.latLng(aux[0], aux[1]);
+            var map = L.map('map').setView(latLng, 15);
+            var myLayer = L.tileLayer(url_map, {
+                mapId: 'mapbox.streets',
+                token: 'pk.eyJ1IjoidG9tYXNkYXIiLCJhIjoiNjk4MjA5MjA0MDE2YjBmOTNmOTVlYjRjNDQzMzc3Y2UifQ.WGfpevghECXxduCiztMrBw'
+            }).addTo(map);
+            // var marker = L.marker(latLng).addTo(map);
+            var marker = L.marker(latLng, { draggable: true }).addTo(map);
+            var onDragEnd = function () {
+                lat.val(marker.getLatLng().lat);
+                lon.val(marker.getLatLng().lng);
+            };
+            marker.on('drag', onDragEnd);
+            onDragEnd();
+        }
+    }
+</script>
+{% endblock %}

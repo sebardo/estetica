@@ -41,8 +41,10 @@ security:
           - { path: ^/admin/multimedia/list, roles: ROLE_CLIENT }
           - { path: ^/admin/registration/list, roles: ROLE_CLIENT }
           - { path: ^/admin/press-release$, roles: ROLE_CLIENT }
+          - { path: ^/admin/creativity-proposal/new$, roles: ROLE_CLIENT }
           - { path: ^/admin/registration/$, roles: ROLE_ADMIN }
           - { path: ^/admin/creativity/$, roles: ROLE_ADMIN }
+          - { path: ^/admin/creativity-proposal/$, roles: ROLE_ADMIN }
           - { path: ^/admin/multimedia/$, roles: ROLE_ADMIN }
           - { path: ^/admin, roles: ROLE_CLIENT }
             # activate different ways to authenticate%
