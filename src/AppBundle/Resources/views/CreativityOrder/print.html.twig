@@ -1,0 +1,28 @@
+{% extends "BackendBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <h5 class="title-form-print">{{ 'creativity_order.title.form.print'|trans() }}</h5>
+            {{ form_start(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-xs-6 text-left">
+            <a class="btn btn-default" href="#" target="_blank">{{ 'app.preview'|trans() }}</a>
+        </div>
+        <div class="col-xs-12 col-xs-4 text-right">
+            <a class="btn btn-success" id="submit-form" href="#">{{ 'app.create_btn'|trans() }}</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts  %}
+    {{  parent() }}
+    <script type="text/javascript">
+        $('#submit-form').click(function () {
+            $('form').submit();
+        });
+    </script>
+{% endblock %}

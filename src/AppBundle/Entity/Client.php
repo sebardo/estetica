@@ -195,6 +195,13 @@ class Client extends Timestampable implements UserInterface
      */
     private $pressReleases;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CreativityOrder", mappedBy="client", cascade={"persist"})
+     */
+    private $creativityOrders;
+
     public function __construct()
     {
         parent::__construct();
@@ -203,6 +210,7 @@ class Client extends Timestampable implements UserInterface
         $this->role = self::ROLE_CLIENT;
         $this->fileDocs = new ArrayCollection();
         $this->pressReleases = new ArrayCollection();
+        $this->creativityOrders = new ArrayCollection();
     }
 
     /**
@@ -747,6 +755,47 @@ class Client extends Timestampable implements UserInterface
      * @param PressRelease $pressRelease
      */
     public function removePressRelease(PressRelease $pressRelease)
+    {
+        if (!$this->pressReleases->contains($pressRelease)){
+            return;
+        }
+
+        $this->pressReleases->remove($pressRelease);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCreativityOrders()
+    {
+        return $this->creativityOrders;
+    }
+
+    /**
+     * @param ArrayCollection $creativityOrders
+     */
+    public function setCreativityOrders($creativityOrders)
+    {
+        $this->creativityOrders = $creativityOrders;
+    }
+
+    /**
+     * @param CreativityOrder $pressRelease
+     */
+    public function addCreativityOrder(CreativityOrder $pressRelease)
+    {
+        if ($this->pressReleases->contains($pressRelease)){
+            return;
+        }
+
+        $this->pressReleases->add($pressRelease);
+        $pressRelease->setClient($this);
+    }
+
+    /**
+     * @param CreativityOrder $pressRelease
+     */
+    public function removeCreativityOrder(CreativityOrder $pressRelease)
     {
         if (!$this->pressReleases->contains($pressRelease)){
             return;

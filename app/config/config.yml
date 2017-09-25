@@ -53,6 +53,8 @@ twig:
         creativity_complete_path: "%kernel.root_dir%/../web/uploads/creativities"
         proposal_path: "%app.path.proposals%"
         proposal_complete_path: "%kernel.root_dir%/../web/uploads/proposals"
+        creativity_oder_path: "%app.path.creativity_orders%"
+        creativity_oder_complete_path: "%kernel.root_dir%/../web/uploads/creativity_orders"
         url_map: '%url_map%'
     form:
         resources:
@@ -129,6 +131,9 @@ vich_uploader:
         proposals:
             uri_prefix:         "%app.path.proposals%"
             upload_destination: "%kernel.root_dir%/../web/uploads/proposals"
+        creativity_orders:
+            uri_prefix:         "%app.path.creativity_orders%"
+            upload_destination: "%kernel.root_dir%/../web/uploads/creativity_orders"
 
 # Knp Paginator Configuration
 knp_paginator:

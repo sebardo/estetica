@@ -3,8 +3,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Client;
 use AppBundle\Entity\Creativity;
-use AppBundle\Services\Slugify;
+use AppBundle\Entity\CreativityOrder;
+use AppBundle\Event\OrderEvent;
+use AppBundle\Form\Order\CreativityOrderFieldType;
+use AppBundle\Form\Order\CreativityOrderPrintType;
+use AppBundle\Form\Order\CreativityOrderDeliveryType;
+use AppBundle\OrderEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -72,19 +78,162 @@ class CreativityOrderController extends BackendBundleController
 	 * @param Creativity $creativity
 	 *
 	 * @Route("/creativity/{id}/custom", name="admin_creativity_order_custom_create")
-	 * @ParamConverter("post", class="AppBundle:Creativity")
+	 * @ParamConverter("creativity", class="AppBundle:Creativity", options={"id" = "id"})
 	 * @Method({"GET", "POST"})
 	 * @Security("has_role('ROLE_CLIENT')")
 	 * @return Response
 	 */
 	public function createCustomCreativityAction(Request $request, Creativity $creativity)
 	{
+		/** @var Client $client */
+		$client = $this->container->get('security.token_storage')->getToken()->getUser();
+		$entity = new CreativityOrder($creativity, $client);
+		$form = $this->createForm(new CreativityOrderFieldType(), $entity, array('support' => $creativity->getSupport()));
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			//TODO: Vincular con ese pdf o crearlo inmediatamente en el constructor?
+			$em->persist($entity);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.create_succesfull'));
+
+			return $this->redirectToRoute('admin_creativity_order_printed', array('id' => $creativity->getId(), 'creativity_order_id' => $entity->getId()));
+		}
+
 		return $this->render(
 			'AppBundle:CreativityOrder:create.html.twig',
 			array(
+				'client' => $client,
+				'creativity' => $creativity,
+				'entity' => $entity,
+				'form' => $form->createView(),
 				'breadcrumbs' => $this->getBreadCrumbs(false),
 				'active_side_bar' => $this->getActiveSidebar()
 			)
+		);
+	}
+
+	/**
+	 * Printed custom creativity on front.
+	 *
+	 * @param Request $request
+	 * @param Creativity $creativity
+	 * @param CreativityOrder $order
+	 *
+	 * @Route("/creativity/{id}/custom/{creativity_order_id}/printed", name="admin_creativity_order_printed")
+	 * @ParamConverter("creativity", class="AppBundle:Creativity", options={"id" = "id"})
+	 * @ParamConverter("order", class="AppBundle:CreativityOrder", options={"id" = "creativity_order_id"})
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_CLIENT')")
+	 * @return Response
+	 */
+	public function printedCustomCreativityAction(Request $request, Creativity $creativity, CreativityOrder $order)
+	{
+		/** @var Client $client */
+		$client = $this->container->get('security.token_storage')->getToken()->getUser();
+		if($order->getClient() !== $client) {
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.permissions_denied'));
+
+			return $this->redirectToRoute('admin_creativity_selection');
+		}
+
+		$form = $this->createForm(new CreativityOrderPrintType(), $order);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($order);
+			$em->flush();
+
+			if($order->getPrint()){
+				$this->sendNotification($order);
+				return $this->redirectToRoute('admin_creativity_order_completed', array('id' => $creativity->getId(), 'creativity_order_id' => $order->getId()));
+			}
+
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.send_notification_fail'));
+
+			return $this->redirectToRoute('admin_creativity_selection');
+		}
+
+		return $this->render(
+			'AppBundle:CreativityOrder:print.html.twig',
+			array(
+				'support' => $creativity->getSupport(),
+				'creativity' => $creativity,
+				'entity' => $order,
+				'form' => $form->createView(),
+				'breadcrumbs' => $this->getBreadCrumbs(false),
+				'active_side_bar' => $this->getActiveSidebar()
+			)
+		);
+	}
+
+	/**
+	 * Completed custom creativity on front.
+	 *
+	 * @param Request $request
+	 * @param Creativity $creativity
+	 * @param CreativityOrder $order
+	 *
+	 * @Route("/creativity/{id}/custom/{creativity_order_id}/completed", name="admin_creativity_order_completed")
+	 * @ParamConverter("creativity", class="AppBundle:Creativity", options={"id" = "id"})
+	 * @ParamConverter("order", class="AppBundle:CreativityOrder", options={"id" = "creativity_order_id"})
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_CLIENT')")
+	 * @return Response
+	 */
+	public function completedCustomCreativityAction(Request $request, Creativity $creativity, CreativityOrder $order)
+	{
+		/** @var Client $client */
+		$client = $this->container->get('security.token_storage')->getToken()->getUser();
+		if($order->getClient() !== $client) {
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.permissions_denied'));
+
+			return $this->redirectToRoute('admin_creativity_selection');
+		}
+
+		if($creativity->getSupport() === Creativity::SUPPORT_FLYERS) {
+			$form = $this->createForm(new CreativityOrderDeliveryType(), $order);
+			$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
+			$form->handleRequest($request);
+
+			if ($form->isSubmitted() && $form->isValid()) {
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($order);
+				$em->flush();
+
+				$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.send_notification'));
+
+				return $this->redirectToRoute('admin_creativity_selection');
+			}
+		} else {
+			$this->sendNotification($order);
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.send_notification'));
+
+			return $this->redirectToRoute('admin_creativity_selection');
+		}
+
+		return $this->render(
+			'AppBundle:CreativityOrder:complete.html.twig',
+			array(
+				'support' => $creativity->getSupport(),
+				'creativity' => $creativity,
+				'entity' => $order,
+				'form' => $form->createView(),
+				'breadcrumbs' => $this->getBreadCrumbs(false),
+				'active_side_bar' => $this->getActiveSidebar()
+			)
+		);
+	}
+
+	private function sendNotification(CreativityOrder $creativityOrder)
+	{
+		//Send Email
+		$this->get('event_dispatcher')->dispatch(
+			OrderEvents::ORDER_CREATED,
+			new OrderEvent($creativityOrder)
 		);
 	}
 }

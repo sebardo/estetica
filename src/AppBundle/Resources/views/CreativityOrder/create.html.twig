@@ -1,5 +1,54 @@
 {% extends "BackendBundle::layout.html.twig" %}
 
 {% block content %}
+    <div class="row">
+        <h3 class="col-xs-12 title-header text-center">{{ 'creativity_order.title.header'|trans() }}</h3>
+        <div class="col-xs-12 col-sm-6">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h5 class="title-images-preview">{{ 'creativity_order.title.preview'|trans() }}</h5>
+                </div>
+                {% if creativity.fileDocs|length > 1 %}
+                    {% for images in creativity.fileDocs %}
+                        <div class="col-xs-6">
+                            <img class="file-doc-image-preview img-responsive" src="{{ creativity_path ~ '/' ~ get_filedoc_by_creativity(creativity, loop.index - 1) }}">
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% for images in creativity.fileDocs %}
+                        <div class="col-xs-12">
+                            <img class="file-doc-image-preview img-responsive" src="{{ creativity_path ~ '/' ~ get_filedoc_by_creativity(creativity, loop.index - 1) }}">
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <h5 class="title-images-preview">{{ 'creativity_order.title.form.preview'|trans({'%center_name%': client.societyName }) }}</h5>
+            {{ form_start(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-xs-4 text-left">
+            <a class="btn btn-warning" href="{{ path('admin_creativity_selection') }}">{{ 'app.return'|trans() }}</a>
+        </div>
+        <div class="col-xs-12 col-xs-4 text-center">
+            {# acceder a un pdf vacío #}
+            <a class="btn btn-default" href="#" target="_blank">{{ 'app.preview'|trans() }}</a>
+        </div>
+        <div class="col-xs-12 col-xs-4 text-right">
+            <a class="btn btn-success" id="submit-form" href="#">{{ 'app.create_btn'|trans() }}</a>
+        </div>
+    </div>
+{% endblock %}
 
+
+{% block javascripts  %}
+    {{  parent() }}
+<script type="text/javascript">
+    $('#submit-form').click(function () {
+        $('form').submit();
+    });
+</script>
 {% endblock %}

@@ -1,0 +1,119 @@
+{% extends "BackendBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h5 class="title-form-print">{{ 'creativity_order.title.form.complete'|trans() }}</h5>
+            {{ form_start(form) }}
+            {{ form_row(form.delivery) }}
+            <div class="row delivery-show delivery-detail-wrapper">
+                <div class="col-xs-12">
+                    {% set error = form_errors(form.deliveryDetail) | trim %}
+                    <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                        {{ form_label(form.deliveryDetail, 'Detalles envío' | trans) }}
+                        {{ form_widget(form.deliveryDetail, { 'attr': { 'class': 'form-control', 'placeholder': 'Detalles del envío' | trans } }) }}
+                        <span class="help-block error-message">{{ error | striptags }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row delivery-show lat-long-input-wrapper">
+                <div class="col-sm-6 lat-input-wrapper">
+                    {% set error = form_errors(form.latitude) | trim %}
+                    <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                        {{ form_label(form.latitude, 'Latitud' | trans) }}
+                        {{ form_widget(form.latitude, { 'attr': { 'class': 'form-control', 'placeholder': 'Latitud Mapa' | trans } }) }}
+                        <span class="help-block error-message">{{ error | striptags }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 long-input-wrapper">
+                    {% set error = form_errors(form.longitude) | trim %}
+                    <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                        {{ form_label(form.longitude, 'Longitud' | trans) }}
+                        {{ form_widget(form.longitude, { 'attr': { 'class': 'form-control', 'placeholder': 'Longitud Mapa' | trans } }) }}
+                        <span class="help-block error-message">{{ error | striptags }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row delivery-show map-input-wrapper">
+                <div class="col-xs-12">
+                    {% set value_map = entity.latitude ~ '@' ~ entity.longitude %}
+                    {% include 'AppBundle:CreativityProposal:map_show.html.twig' %}
+                </div>
+            </div>
+            {{ form_row(form.submit) }}
+            <div class="hide">
+                {{ form_rest(form) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts  %}
+    {{  parent() }}
+    <script type="text/javascript">
+        //Show local address
+        function deliverDetailsShow(show) {
+            var $delivery_show_wrapper_collection = $('.delivery-show');
+            if(show){
+                $delivery_show_wrapper_collection.fadeIn(500, function() {
+                    var $this = $(this);
+                    $this.css({
+                        'display': 'block'
+                    })
+                });
+            }else {
+                $delivery_show_wrapper_collection.fadeOut(500, function() {
+                    var $this = $(this);
+                    $this.css({
+                        'display': 'none'
+                    })
+                });
+            }
+        }
+
+        $(document).on('ifChanged', '#appbundle_creativityorder_delivery_delivery', function(event) {
+            checkboxIsChecked('#appbundle_creativityorder_delivery_delivery');
+        });
+
+        function checkboxIsChecked(selector){
+            var el = $(selector);
+            if(el.is(':checked')){
+                deliverDetailsShow(true)
+            }else{
+                deliverDetailsShow(false);
+            }
+        }
+
+        setTimeout(function() {
+            deliverDetailsShow(false);
+            checkboxIsChecked('#appbundle_creativityorder_delivery_delivery');
+        }, 300);
+
+        //para mostrar el mapa
+        if ($('#map_show').length > 0) {
+            var value, latLng, url_map;
+            value = $($('#map_show input')[0]);
+            url_map = $($('#map_show input')[1]).val();
+            lat = $('#appbundle_creativityorder_delivery_latitude');
+            lon = $('#appbundle_creativityorder_delivery_longitude');
+            if (value.val() != '') {
+                var aux = value.val().split('@');
+                latLng = L.latLng(aux[0], aux[1]);
+                var map = L.map('map').setView(latLng, 15);
+                var myLayer = L.tileLayer(url_map, {
+                    mapId: 'mapbox.streets',
+                    token: 'pk.eyJ1IjoidG9tYXNkYXIiLCJhIjoiNjk4MjA5MjA0MDE2YjBmOTNmOTVlYjRjNDQzMzc3Y2UifQ.WGfpevghECXxduCiztMrBw'
+                }).addTo(map);
+                // var marker = L.marker(latLng).addTo(map);
+                var marker = L.marker(latLng, { draggable: true }).addTo(map);
+                var onDragEnd = function () {
+                    lat.val(marker.getLatLng().lat);
+                    lon.val(marker.getLatLng().lng);
+                };
+                marker.on('drag', onDragEnd);
+                onDragEnd();
+            }
+        }
+    </script>
+{% endblock %}

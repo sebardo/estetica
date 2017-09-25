@@ -18,6 +18,8 @@ app:
   edit_btn: 'Editar'
   create_btn: 'Crear'
   search_btn: 'Buscar'
+  preview: 'Previsualizar'
+  return: 'Volver'
   list:
     table:
       created: 'Creado'
@@ -53,6 +55,9 @@ app:
       title_nav: 'Propuesta Creatividad'
       list: 'Listado de propuestas'
       create: 'Crear propuesta creatividad'
+    creativity_order:
+      title_nav: 'Personalización Creatividad'
+      create: 'Crear personalización creatividad'
   gender:
     name: Género
     default: Selecciona un género
@@ -504,3 +509,67 @@ creativity_proposal:
     file_doc_add_file_doc: 'Añadir imagen'
     latitude: 'Latitud'
     longitude: 'Longitud'
+creativity_order:
+  title_page: 'Personalización Creatividad'
+  title_nav: 'Personalización Creatividad'
+  list: 'Listado Personalización Creatividades'
+  create_edit: 'Editar Personalización Creatividad'
+  create_succesfull: 'Personalización Creatividad creada correctamente'
+  edit_succesfull: 'Personalización Creatividad editada correctamente'
+  delete_succesfull: 'Personalización Creatividad borrada correctamente'
+  create_new: 'Nuevo Personalización Creatividad'
+  edit_btn: 'Editar una personalización creatividad'
+  create_btn: 'Crear una personalización creatividad'
+  send_notification_fail: 'No ha finalizado el proceso de creación de la personalización de la creatividad'
+  send_notification: 'Envío de la notificación con los datos personalizados de la creatividad'
+  permissions_denied: 'No puedes acceder a esta personalización'
+  edit:
+    title: 'Editar una personalización creatividad'
+    subtitle: 'Editar la personalización creatividad'
+    description: 'Editando la personalización creatividad'
+  create:
+    title: 'Crear una personalización creatividad'
+    subtitle: 'Crear la personalización creatividad'
+    description: 'Creando la personalización creatividad'
+  list:
+    title: 'Listado de personalización creatividades'
+    subtitle: 'Listado de todas las personalización creatividades'
+  select:
+    support: 'Selecciona soporte de la creatividad'
+    category: 'Selecciona la categoría de la creatividad'
+  title:
+    header: 'Personalización de la creatividad seleccionada'
+    preview: 'Propuesta creatividad club'
+    form:
+      preview: 'Diseño personalizado %center_name%'
+  form:
+    support: 'Soporte'
+    delivery: 'Buzoneo'
+    delivery_detail: 'Detalles de Buzoneo'
+    file_doc_add_file_doc: 'Añadir imagen'
+    latitude: 'Latitud'
+    longitude: 'Longitud'
+    print: 'Imprimir personalización creatividad'
+    flyers:
+      flyer_obverse_header: 'Concepto de la promoción'
+      flyer_obverse_content_1: 'Contenido 1 de la promoción'
+      flyer_obverse_prize_1: 'Precio 1 de la oferta'
+      flyer_obverse_content_2: 'Contenido 2 de la promoción'
+      flyer_obverse_prize_2: 'Precio 2 de la oferta'
+      flyer_obverse_footer: 'Tag line del centro o slogan'
+      flyer_back_header: 'Título o concepto de la tecnología empleada'
+      flyer_back_description: 'Descripción tecnología empleada en la promoción'
+      flyer_back_footer: 'Datos del centro'
+    routers:
+      router_obverse_header: 'Concepto de la promoción'
+      router_obverse_content_1: 'Contenido 1 de la promoción'
+      router_obverse_prize_1: 'Precio 1 de la oferta'
+      router_obverse_content_2: 'Contenido 2 de la promoción'
+      router_obverse_prize_2: 'Precio 2 de la oferta'
+      router_obverse_footer: 'Tag line del centro o slogan'
+    roll-up:
+      rollup_obverse_header: 'Concepto de la promoción'
+      rollup_obverse_content_1: 'Anexo de texto 1'
+      rollup_obverse_content_2: 'Anexo de texto 2'
+      rollup_obverse_content_2: 'Anexo de texto 3'
+      rollup_obverse_footer: 'Tag line del centro o slogan'

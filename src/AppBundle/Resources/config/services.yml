@@ -80,6 +80,9 @@ services:
     webapp.manager.creativity_proposal_manager:
         class: AppBundle\Model\CreativityProposalModel
         arguments: ["@service_container"]
+    webapp.manager.creativity_oder_manager:
+        class: AppBundle\Model\CreativityOrderModel
+        arguments: ["@service_container"]
     webapp.listener.login_listener:
         class: AppBundle\EventListener\SecurityListener
         arguments: ["@router"]
@@ -136,3 +139,13 @@ services:
             receiver: "%mail_central%"
         tags:
             - { name: kernel.event_listener, event: proposal.created, method: onProposalCreated }
+    webapp.listener.order_created:
+        class: AppBundle\EventListener\OrderListener
+        arguments:
+            templating: "@twig"
+            mailer: "@mailer"
+            sender: "%mail_central%"
+            receiver: "%mail_central%"
+            orderPath: "%app.path.creativities%"
+        tags:
+            - { name: kernel.event_listener, event: order.created, method: onOrderCreated }

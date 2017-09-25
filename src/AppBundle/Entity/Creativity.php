@@ -42,7 +42,7 @@ class Creativity extends Timestampable
     const ROLLUP_OBVERSE_CONTENT_1 = 'rollup-obverse-content-1';
     const ROLLUP_OBVERSE_CONTENT_2 = 'rollup-obverse-content-2';
     const ROLLUP_OBVERSE_CONTENT_3 = 'rollup-obverse-content-3';
-    const ROLLUP_BACK_FOOTER = 'rollup-back-footer';
+    const ROLLUP_OBVERSE_FOOTER = 'rollup-obverse-footer';
     //Category
     const CATEGORY_TECHNOLOGY = 'technology';
     const CATEGORY_MONTH = 'month';
@@ -120,10 +120,17 @@ class Creativity extends Timestampable
      */
     private $fileDocs;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="CreativityOrder", mappedBy="creativity", cascade={"persist"})
+     */
+    private $creativityOrders;
+
     public function __construct()
     {
         parent::__construct();
         $this->fileDocs = new ArrayCollection();
+        $this->creativityOrders = new ArrayCollection();
     }
 
     /**
@@ -211,7 +218,7 @@ class Creativity extends Timestampable
                 self::ROLLUP_OBVERSE_CONTENT_1,
                 self::ROLLUP_OBVERSE_CONTENT_2,
                 self::ROLLUP_OBVERSE_CONTENT_3,
-                self::ROLLUP_BACK_FOOTER,
+                self::ROLLUP_OBVERSE_FOOTER,
             )
         );
     }
@@ -350,6 +357,47 @@ class Creativity extends Timestampable
         }
 
         $this->fileDocs->remove($fileDoc);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCreativityOrders()
+    {
+        return $this->creativityOrders;
+    }
+
+    /**
+     * @param ArrayCollection $creativityOrders
+     */
+    public function setCreativityOrders($creativityOrders)
+    {
+        $this->creativityOrders = $creativityOrders;
+    }
+
+    /**
+     * @param CreativityOrder $creativityOrder
+     */
+    public function addCreativityOrder(CreativityOrder $creativityOrder)
+    {
+        if ($this->creativityOrders->contains($creativityOrder)){
+            return;
+        }
+
+        $this->creativityOrders->add($creativityOrder);
+        $creativityOrder->setCreativity($this);
+    }
+
+    /**
+     * @param CreativityOrder $creativityOrder
+     */
+    public function removeCreativityOrder(CreativityOrder $creativityOrder)
+    {
+        if (!$this->creativityOrders->contains($creativityOrder)){
+            return;
+        }
+
+        $this->creativityOrders->remove($creativityOrder);
     }
 
     public function __toString()
