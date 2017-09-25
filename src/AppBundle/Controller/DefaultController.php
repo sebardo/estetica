@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Creativity;
+use AppBundle\Entity\CreativityFile;
 use AppBundle\Entity\Registration;
 use AppBundle\Entity\Registration\ParentSpeciality;
 use AppBundle\Form\RegistrationType;
@@ -228,6 +229,36 @@ class DefaultController extends BackendBundleController
                 "id" => $subategorykey,
                 "name" => $this->get('translator')->trans($subcategoryValue)
             );
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/ajax/creativities", name="select_creativities")
+     * @return JsonResponse
+     */
+    public function creativitiesAction(Request $request)
+    {
+        $response = array();
+        $support = $request->request->get('support');
+        $category = $request->request->get('category');
+        $creativityCollection = $this->get('webapp.manager.creativity_manager')->getBy(array('support' => $support, 'category' => $category), array('category' => 'ASC', 'subcategory' => 'ASC'));
+
+        foreach ($creativityCollection as $creativity) {
+            if($creativity instanceof Creativity){
+                $image = $creativity->getFileDocs()->first();
+                $response[] = array(
+                    "id" => $creativity->getId(),
+                    "name" => $creativity->getName(),
+                    "category" => $creativity->getCategory(),
+                    "subcategory" => $creativity->getSubcategory(),
+                    "url" => $this->generateUrl('admin_creativity_order_custom_create', array('id' => $creativity->getId())),
+                    "image" => $this->getParameter('app.path.creativities') . '/' . $image->getFile(),
+                );
+            }
         }
 
         return new JsonResponse($response);

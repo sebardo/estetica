@@ -1,0 +1,96 @@
+{% extends "BackendBundle::layout.html.twig" %}
+
+{% block content %}
+    <form action="#" method="GET">
+        <div class="form-group">
+            <label for="support-selection">{{ 'creativity_order.select.support'|trans() }}</label>
+            <select name="support" id="support-selection">
+                {% for key, support in supportCollection %}
+                    <option value="{{ key }}">{{ support|trans() }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="category-selection">{{ 'creativity_order.select.category'|trans() }}</label>
+            <select name="category" id="category-selection">
+                {% for key, category in categoryCollection %}
+                    <option value="{{ key }}">{{ category|trans() }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+    <div class="row" id="creativity-selection"></div>
+{% endblock %}
+
+{% block javascripts  %}
+    {{  parent() }}
+    <script type="text/javascript">
+        function getCreativies(selector, data) {
+            var $selector = $(selector);
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_creativities") }}',
+                data: data,
+                success: function(data) {
+                    $selector.html("");
+                    var subcategory = '';
+                    for (var i = 0, total = data.length; i < total; i++) {
+                        if (data[i].subcategory && subcategory !== data[i].subcategory) {
+                            subcategory = data[i].subcategory;
+                            $selector.append('<div class="container"><div class="row"><div class="col-xs-6 col-sm-4 col-md-3 subcategory-title-wrapper"><h5 class="subcategory-title">' + subcategory.toUpperCase() + '</h5></div></div></div>');
+                        }
+                        $selector.append('<div class="col-xs-6 col-sm-4 col-md-3 creativity-wrapper" data-value="' + data[i].id + '" data-url="' + data[i].url + '"><p class="title-creativity">' + data[i].name + '</p><img class="img-responsive" src="' + data[i].image + '" alt="' + data[i].name + '"></div>');
+                    }
+
+                    redirectToCreateCustomCreativity();
+                }
+            });
+        }
+
+        function checkFields(selectors) {
+            var response = true;
+            selectors = Array.isArray(selectors) ? selectors : [selectors];
+            selectors.forEach(function(item, index) {
+                var value = $(item).val();
+                if(value === 'undefined') {
+                    response = false;
+                }
+            });
+
+            return response;
+        }
+
+        $('#support-selection').on('change', function() {
+           var $this = $(this);
+           if(checkFields(['#support-selection', '#category-selection'])) {
+               var $category = $('#category-selection');
+               var data = {
+                   support: $this.val(),
+                   category: $category.val()
+               };
+               getCreativies('#creativity-selection', data)
+           }
+        });
+
+        $('#category-selection').on('change', function() {
+            var $this = $(this);
+            if(checkFields(['#support-selection', '#category-selection'])) {
+                var $support = $('#support-selection');
+                var data = {
+                    support: $support.val(),
+                    category: $this.val()
+                };
+                getCreativies('#creativity-selection', data)
+            }
+        });
+
+        function redirectToCreateCustomCreativity() {
+            $('.creativity-wrapper').click(function() {
+                var $this = $(this);
+                setTimeout(function() {
+                    window.location.href = $this.data('url')
+                }, 500);
+            });
+        }
+    </script>
+{% endblock %}

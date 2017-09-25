@@ -67,14 +67,14 @@ abstract class ObjectManager
 		}
 	}
 
-	public function getOneBy($fields = array())
+	public function getOneBy($fields = array(), $order = array())
 	{
-		return $this->getRepository()->findOneBy($fields);
+		return $this->getRepository()->findOneBy($fields, $order);
 	}
 
-	public function getBy($fields = array())
+	public function getBy($fields = array(), $order = array())
 	{
-		return $this->getRepository()->findBy($fields);
+		return $this->getRepository()->findBy($fields, $order);
 	}
 
 	/**

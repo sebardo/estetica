@@ -19,6 +19,30 @@ class Creativity extends Timestampable
     const SUPPORT_FLYERS = 'flyers';
     const SUPPORT_ROUTERS = 'routers';
     const SUPPORT_ROLLUP = 'roll-up';
+    //Creativity Fields
+    //FLYER
+    const FLYER_OBVERSE_HEADER = 'flyer-obverse-header';
+    const FLYER_OBVERSE_CONTENT_1 = 'flyer-obverse-content-1';
+    const FLYER_OBVERSE_PRIZE_1 = 'flyer-obverse-prize-1';
+    const FLYER_OBVERSE_CONTENT_2 = 'flyer-obverse-content-2';
+    const FLYER_OBVERSE_PRIZE_2 = 'flyer-obverse-prize-2';
+    const FLYER_OBVERSE_FOOTER = 'flyer-obverse-footer';
+    const FLYER_BACK_HEADER = 'flyer-back-header';
+    const FLYER_BACK_DESCRIPTION = 'flyer-back-description';
+    const FLYER_BACK_FOOTER = 'flyer-back-footer';
+    //ROUTER
+    const ROUTER_OBVERSE_HEADER = 'router-obverse-header';
+    const ROUTER_OBVERSE_CONTENT_1 = 'router-obverse-content-1';
+    const ROUTER_OBVERSE_PRIZE_1 = 'router-obverse-prize-1';
+    const ROUTER_OBVERSE_CONTENT_2 = 'router-obverse-content-2';
+    const ROUTER_OBVERSE_PRIZE_2 = 'router-obverse-prize-2';
+    const ROUTER_OBVERSE_FOOTER = 'router-obverse-footer';
+    //ROLLUP
+    const ROLLUP_OBVERSE_HEADER = 'rollup-obverse-header';
+    const ROLLUP_OBVERSE_CONTENT_1 = 'rollup-obverse-content-1';
+    const ROLLUP_OBVERSE_CONTENT_2 = 'rollup-obverse-content-2';
+    const ROLLUP_OBVERSE_CONTENT_3 = 'rollup-obverse-content-3';
+    const ROLLUP_BACK_FOOTER = 'rollup-back-footer';
     //Category
     const CATEGORY_TECHNOLOGY = 'technology';
     const CATEGORY_MONTH = 'month';
@@ -158,6 +182,43 @@ class Creativity extends Timestampable
             self::SUPPORT_ROUTERS => 'app.support.routers',
             self::SUPPORT_ROLLUP => 'app.support.rollup',
         );
+    }
+
+    public static function createSupportFieldArray()
+    {
+        return $response = array(
+            self::SUPPORT_FLYERS => array(
+                self::FLYER_OBVERSE_HEADER,
+                self::FLYER_OBVERSE_CONTENT_1,
+                self::FLYER_OBVERSE_PRIZE_1,
+                self::FLYER_OBVERSE_CONTENT_2,
+                self::FLYER_OBVERSE_PRIZE_2,
+                self::FLYER_OBVERSE_FOOTER,
+                self::FLYER_BACK_HEADER,
+                self::FLYER_BACK_DESCRIPTION,
+                self::FLYER_BACK_FOOTER,
+            ),
+            self::SUPPORT_ROUTERS => array(
+                self::ROUTER_OBVERSE_HEADER,
+                self::ROUTER_OBVERSE_CONTENT_1,
+                self::ROUTER_OBVERSE_PRIZE_1,
+                self::ROUTER_OBVERSE_CONTENT_2,
+                self::ROUTER_OBVERSE_PRIZE_2,
+                self::ROUTER_OBVERSE_FOOTER,
+            ),
+            self::SUPPORT_ROLLUP => array(
+                self::ROLLUP_OBVERSE_HEADER,
+                self::ROLLUP_OBVERSE_CONTENT_1,
+                self::ROLLUP_OBVERSE_CONTENT_2,
+                self::ROLLUP_OBVERSE_CONTENT_3,
+                self::ROLLUP_BACK_FOOTER,
+            )
+        );
+    }
+
+    public static function getSupportFields($support)
+    {
+        return (array_key_exists($support, self::createSupportFieldArray())) ? self::createSupportFieldArray()[$support] : array();
     }
 
     /**
