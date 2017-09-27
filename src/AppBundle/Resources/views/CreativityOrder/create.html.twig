@@ -34,8 +34,13 @@
             <a class="btn btn-warning" href="{{ path('admin_creativity_selection') }}">{{ 'app.return'|trans() }}</a>
         </div>
         <div class="col-xs-12 col-xs-4 text-center">
-            {# acceder a un pdf vacío #}
-            <a class="btn btn-default" href="#" target="_blank">{{ 'app.preview'|trans() }}</a>
+            <form id="create-pdf" action="{{ path('admin_creativity_create_pdf', { 'id': creativity.id, 'client_id': client.id }) }}" method="POST">
+                {% for key, value in entity.fieldsValue %}
+                    <input type="hidden" id="{{ key }}" name="values[{{ key }}]" value="{{ value }}">
+                {% endfor %}
+                <button type="submit" class="btn btn-default">{{ 'app.preview'|trans() }}</button>
+            </form>
+
         </div>
         <div class="col-xs-12 col-xs-4 text-right">
             <a class="btn btn-success" id="submit-form" href="#">{{ 'app.create_btn'|trans() }}</a>
@@ -47,8 +52,26 @@
 {% block javascripts  %}
     {{  parent() }}
 <script type="text/javascript">
+    var name_form = 'appbundle_creativityorder_field';
+    var form = $('form[name="' + name_form + '"]');
+
     $('#submit-form').click(function () {
-        $('form').submit();
+        form.submit();
+    });
+
+    $('#create-pdf').submit(function(e) {
+        var $this = $(this);
+        e.preventDefault();
+
+        //Fill form value
+        form.find('input[type="text"]').each(function(index, el) {
+            var $el = $(el);
+            var name_el = $el.attr('id').split(name_form + '_').pop().replace(/_/g, '-');
+            var value = $el.val();
+            $this.find('#' + name_el).val(value);
+        });
+
+        this.submit();
     });
 </script>
 {% endblock %}

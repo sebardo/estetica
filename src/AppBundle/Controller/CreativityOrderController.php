@@ -11,6 +11,10 @@ use AppBundle\Form\Order\CreativityOrderFieldType;
 use AppBundle\Form\Order\CreativityOrderPrintType;
 use AppBundle\Form\Order\CreativityOrderDeliveryType;
 use AppBundle\OrderEvents;
+use AppBundle\Services\Formatting;
+use AppBundle\Services\ImageHandler;
+use AppBundle\Services\Pdf;
+use AppBundle\Services\SupportPdf\SupportPdf;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -93,7 +97,10 @@ class CreativityOrderController extends BackendBundleController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			//TODO: Vincular con ese pdf o crearlo inmediatamente en el constructor?
+			$filename = 'order_' . $client->getSocietyName() . '_' . time() . '.pdf';
+			$filenamePath = ltrim($this->getParameter('app.path.creativity_orders'), '/') . '/' . $filename;
+			$pdf = $this->generateFinalPdf($entity, $creativity, $client, $filenamePath);
+			$entity->setCreativityOrderPdf($filename);
 			$em->persist($entity);
 			$em->flush();
 
@@ -235,5 +242,61 @@ class CreativityOrderController extends BackendBundleController
 			OrderEvents::ORDER_CREATED,
 			new OrderEvent($creativityOrder)
 		);
+	}
+
+	/**
+	 * @param Request    $request
+	 * @param Creativity $creativity
+	 * @param Client     $client
+	 * @param string     $filename
+	 *
+	 * @Route("/creativity/{id}/client/{client_id}/create-pdf", name="admin_creativity_create_pdf")
+	 * @ParamConverter("creativity", class="AppBundle:Creativity", options={"id" = "id"})
+	 * @ParamConverter("client", class="AppBundle:Client", options={"id" = "client_id"})
+	 * @Method({"POST"})
+	 * @Security("has_role('ROLE_CLIENT')")
+	 * @return Response
+	 */
+	public function createPdf(Request $request, Creativity $creativity, Client $client, $filename = null)
+	{
+		$supportType = $creativity->getSupport();
+		$supportBackgroundImages = $this->getSupportBackgroundImagesPathByCreativity($creativity);
+
+		$clientLogo = $client->getLogo();
+		$contentValues = $request->request->get('values');
+		$bgImageAttributes = ImageHandler::getImageSize($supportBackgroundImages[0]);
+		$logoPath = ltrim($this->container->getParameter('app.path.images'), '/') . '/' . $clientLogo;
+
+		$supportPdf = SupportPdf::create($supportType, $contentValues, $supportBackgroundImages);
+		$pdf = new Pdf($bgImageAttributes['width'], $bgImageAttributes['height'], $logoPath);
+
+		$pdf->generate($supportPdf);
+	}
+
+	private function generateFinalPdf(CreativityOrder $creativityOrder, Creativity $creativity, Client $client, $filename = null)
+	{
+		$supportType = $creativity->getSupport();
+		$supportBackgroundImages = $this->getSupportBackgroundImagesPathByCreativity($creativity);
+
+		$clientLogo = $client->getLogo();
+		$contentValues = $creativityOrder->getFieldsValue();
+		$bgImageAttributes = ImageHandler::getImageSize($supportBackgroundImages[0]);
+		$logoPath = ltrim($this->container->getParameter('app.path.images'), '/') . '/' . $clientLogo;
+
+		$supportPdf = SupportPdf::create($supportType, $contentValues, $supportBackgroundImages);
+		$pdf = new Pdf($bgImageAttributes['width'], $bgImageAttributes['height'], $logoPath);
+
+		return $pdf->generate($supportPdf, $filename);
+	}
+
+	private function getSupportBackgroundImagesPathByCreativity(Creativity $creativity)
+	{
+		$supportBackgroundImagesCollection = $creativity->getFileDocsOnArray();
+		$supportBackgroundImages = array();
+		foreach ($supportBackgroundImagesCollection as $item) {
+			$supportBackgroundImages[] = ltrim($this->container->getParameter('app.path.creativities'), '/') . '/' . $item;
+		}
+
+		return $supportBackgroundImages;
 	}
 }

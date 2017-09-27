@@ -326,6 +326,18 @@ class Creativity extends Timestampable
         return $this->fileDocs;
     }
 
+    public function getFileDocsOnArray()
+    {
+        $response = array();
+        foreach ($this->getFileDocs() as $fileDoc) {
+            if($fileDoc instanceof CreativityFile){
+                $response[] = $fileDoc->getFile();
+            }
+        }
+
+        return $response;
+    }
+
     /**
      * @param ArrayCollection $fileDocs
      */
