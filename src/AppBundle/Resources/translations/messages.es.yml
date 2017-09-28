@@ -83,6 +83,7 @@ app:
     flyers: 'Flyers'
     routers: 'Routers'
     rollup: 'Roll-up'
+    other: 'Otros'
   category:
     technology:
       name: 'Tecnología'
@@ -452,6 +453,8 @@ press_release:
       name: Autor
     document:
       name: Documentación aportada
+    published:
+      name: Publicado
 creativity:
   title_page: 'Creatividad'
   title_nav: 'Creatividad'

@@ -149,3 +149,12 @@ services:
             orderPath: "%app.path.creativities%"
         tags:
             - { name: kernel.event_listener, event: order.created, method: onOrderCreated }
+    webapp.listener.press_release_created:
+        class: AppBundle\EventListener\PressReleaseListener
+        arguments:
+            templating: "@twig"
+            mailer: "@mailer"
+            sender: "%mail_press_central%"
+            receiver: "%mail_press_central%"
+        tags:
+            - { name: kernel.event_listener, event: press_release.created, method: onPressReleaseCreated }
