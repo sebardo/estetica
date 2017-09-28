@@ -118,12 +118,18 @@ class ClientController extends BackendBundleController
 	 *
 	 * @Route("/{id}/edit", name="admin_client_edit")
 	 * @Method({"GET", "POST"})
-	 * @Security("has_role('ROLE_ADMIN')")
+	 * @Security("has_role('ROLE_CLIENT')")
 	 *
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
 	 */
 	public function editClientAction(Request $request, Client $entity)
 	{
+		/** @var Client $client */
+		$client = $this->container->get('security.token_storage')->getToken()->getUser();
+		if($entity !== $client) {
+			return $this->redirectToRoute('homepage');
+		}
+
 		$oldPassword = $entity->getPassword();
 		$editForm = $this->createForm('AppBundle\Form\ClientType', $entity, array('edit_form' => true));
 		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.edit_btn'),'attr'=>array('class'=>'btn btn-success')));

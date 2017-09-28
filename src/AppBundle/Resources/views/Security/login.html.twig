@@ -1,1 +1,7 @@
 {% extends "BackendBundle:Security:login.html.twig" %}
+
+{% block extendsForm %}
+    <div class="wrapper-link">
+        <a href="{{ path('front_client_create') }}" target="_blank">{{ 'security.login.register' | trans() }}</a>
+    </div>
+{% endblock %}

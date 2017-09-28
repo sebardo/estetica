@@ -38,6 +38,8 @@
                 <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
+            {% block extendsForm %}{% endblock %}
+
         </div><!-- /.login-box-body -->
     </div>
 {% endblock %}

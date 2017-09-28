@@ -38,25 +38,33 @@ class LoadPlansData extends AbstractFixture implements OrderedFixtureInterface, 
 		//Mini
 		$entity = new Plan();
 		$entity->setName('Mini');
-		$entity->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ornare in orci vel condimentum. Sed ac tellus quis justo rutrum consectetur elementum elementum ex. Sed tincidunt imperdiet lacus laoreet consectetur. Vestibulum finibus consectetur lobortis. Quisque porttitor id nunc et porttitor. Vestibulum rhoncus quam in libero euismod, feugiat efficitur libero placerat. Cras pharetra, nulla sed commodo auctor, enim eros blandit quam, nec condimentum lorem dui id est. Integer vitae volutpat erat, et bibendum massa. Sed convallis ac nunc at mattis.');
-		$entity->setMonthlyPrize(17);
-		$entity->setOtherPrize('204€/pago anual');
+		$entity->setDescription('');
+		$entity->setMonthlyPrize(8);
+		$entity->setOtherPrize('8€/mes');
 		$manager->persist($entity);
 
-		//Basic
+		//SMALL
 		$entity = new Plan();
-		$entity->setName('Basic');
-		$entity->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ornare in orci vel condimentum. Sed ac tellus quis justo rutrum consectetur elementum elementum ex. Sed tincidunt imperdiet lacus laoreet consectetur. Vestibulum finibus consectetur lobortis. Quisque porttitor id nunc et porttitor. Vestibulum rhoncus quam in libero euismod, feugiat efficitur libero placerat. Cras pharetra, nulla sed commodo auctor, enim eros blandit quam, nec condimentum lorem dui id est. Integer vitae volutpat erat, et bibendum massa. Sed convallis ac nunc at mattis.');
-		$entity->setMonthlyPrize(49);
-		$entity->setOtherPrize('294€/pago semestral');
+		$entity->setName('Small');
+		$entity->setDescription('');
+		$entity->setMonthlyPrize(17);
+		$entity->setOtherPrize('17€/mes');
 		$manager->persist($entity);
 
-		//Star
+		//STAR
 		$entity = new Plan();
 		$entity->setName('Star');
-		$entity->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ornare in orci vel condimentum. Sed ac tellus quis justo rutrum consectetur elementum elementum ex. Sed tincidunt imperdiet lacus laoreet consectetur. Vestibulum finibus consectetur lobortis. Quisque porttitor id nunc et porttitor. Vestibulum rhoncus quam in libero euismod, feugiat efficitur libero placerat. Cras pharetra, nulla sed commodo auctor, enim eros blandit quam, nec condimentum lorem dui id est. Integer vitae volutpat erat, et bibendum massa. Sed convallis ac nunc at mattis.');
+		$entity->setDescription('');
+		$entity->setMonthlyPrize(49);
+		$entity->setOtherPrize('49€/mes');
+		$manager->persist($entity);
+
+		//PREMIUM
+		$entity = new Plan();
+		$entity->setName('Premium');
+		$entity->setDescription('');
 		$entity->setMonthlyPrize(129);
-		$entity->setOtherPrize('387€/pago trimestral');
+		$entity->setOtherPrize('129€/mes');
 		$manager->persist($entity);
 
 		$manager->flush();

@@ -207,6 +207,6 @@ class Plan extends Timestampable
 
     public function __toString()
     {
-        return $this->name;
+        return 'PLAN ' . strtoupper($this->name) . ' ' . $this->getOtherPrize();
     }
 }

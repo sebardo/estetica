@@ -60,6 +60,6 @@ class CreativityExtension extends \Twig_Extension
 	 */
 	public function getName()
 	{
-		return 'client_extension';
+		return 'creativity_extension';
 	}
 }

@@ -1,0 +1,9 @@
+{% extends '@Backend/Default/partials/nav_right.html.twig' %}
+
+{% block profile_button %}
+    {% if is_granted('ROLE_ADMIN') %}
+        {# Nothing #}
+    {% else %}
+        <a class="btn btn-default btn-flat" href="{{ path('admin_client_edit', {'id': app.user.id }) }}">{{ 'app.edit' | trans() }}</a>
+    {% endif %}
+{% endblock %}

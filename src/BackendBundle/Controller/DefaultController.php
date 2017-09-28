@@ -21,6 +21,10 @@ class DefaultController extends Controller
 
     public function navbarRightAction()
     {
+        if($this->get('templating')->exists('AppBundle::partials/nav_right.html.twig')){
+            return $this->render('AppBundle::partials/nav_right.html.twig');
+        }
+
         return $this->render('BackendBundle:Default:partials/nav_right.html.twig');
     }
 

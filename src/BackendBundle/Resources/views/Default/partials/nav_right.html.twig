@@ -21,7 +21,9 @@
 
                 <!-- Menu Footer-->
                 <li class="user-footer">
-
+                    <div class="pull-left">
+                        {% block profile_button %}{% endblock %}
+                    </div>
                     <div class="pull-right">
                         <a href="{{ path('logout') }}" class="btn btn-default btn-flat">{{ 'backend.sign_out'|trans }}</a>
                     </div>

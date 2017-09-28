@@ -6,6 +6,7 @@ security:
     password: 'Contraseña'
     rememberme: 'Recordar contraseña'
     submit: 'Enviar'
+    register: 'Registrarse'
 validator:
   must_have_one_image: 'Al menos debe tener una imagen'
   must_have_two_image: 'Al menos debe tener 2 imágenes'
@@ -19,6 +20,7 @@ app:
   create_btn: 'Crear'
   search_btn: 'Buscar'
   preview: 'Previsualizar'
+  download: 'Descargar'
   return: 'Volver'
   list:
     table:
@@ -30,21 +32,26 @@ app:
       published: 'Publicado'
   sidebar:
     ticket:
-      title_nav: 'Sistema de tickets'
+      title_nav: 'Sat'
     flowwwer:
       title_nav: 'Flowwwer'
+    manage_cites:
+      title_nav: 'Gestión de citas'
     video:
-      title_nav: 'Videos'
-      list: 'Listado de videos'
+      title_nav: 'Formación y Asesoría'
+      children: 'Consulta clínica'
+      list: 'Formación continuada'
+    buying_central:
+      title_nav: 'Central de compras'
     client:
-      title_nav: 'Cliente'
-      list: 'Listado de clientes'
+      title_nav: 'Centro'
+      list: 'Listado de centros'
     academic:
       title_nav: 'Estudios Académicos'
       list: 'Listado de estudios académicos'
     registration:
-      title_nav: 'Registros'
-      list: 'Listado de registros'
+      title_nav: 'Bolsa de Empleo'
+      list: 'Listado de bolsa de empleo'
     press_release:
       title_nav: 'Nota Prensa'
       list: 'Listado de notas prensa'
@@ -139,27 +146,27 @@ form:
   label:
     delete: Borrar
 client:
-  title_page: 'Cliente'
-  title_nav: 'Cliente'
-  list: 'Listado Cliente'
-  create_edit: 'Editar Cliente'
-  create_succesfull: 'Cliente creado correctamente'
-  edit_succesfull: 'Cliente editado correctamente'
-  delete_succesfull: 'Cliente borrado correctamente'
-  create_new: 'Nuevo Cliente'
-  edit_btn: 'Editar un cliente'
-  create_btn: 'Crear un cliente'
+  title_page: 'Centro'
+  title_nav: 'Centro'
+  list: 'Listado Centro'
+  create_edit: 'Editar Centro'
+  create_succesfull: 'Centro creado correctamente'
+  edit_succesfull: 'Centro editado correctamente'
+  delete_succesfull: 'Centro borrado correctamente'
+  create_new: 'Nuevo Centro'
+  edit_btn: 'Editar un centro'
+  create_btn: 'Crear un centro'
   edit:
-    title: 'Editar un cliente'
-    subtitle: 'Editar al cliente'
-    description: 'Editando al cliente'
+    title: 'Editar un centro'
+    subtitle: 'Editar al centro'
+    description: 'Editando al centro'
   create:
-    title: 'Crear un cliente'
-    subtitle: 'Crear al cliente'
-    description: 'Creando al cliente'
+    title: 'Crear un centro'
+    subtitle: 'Crear al centro'
+    description: 'Creando al centro'
   list:
-    title: 'Listado de clientes'
-    subtitle: 'Listado de todos los clientes'
+    title: 'Listado de centros'
+    subtitle: 'Listado de todos los centros'
   form:
     logo: 'Logo'
     plan: 'Planes'
@@ -260,27 +267,27 @@ academic:
       default: 'Nombre'
 
 registration:
-  title_page: 'Registro'
-  title_nav: 'Registro'
-  list: 'Listado Registros'
-  create_edit: 'Editar Registro'
-  create_succesfull: 'Registro creado correctamente'
-  edit_succesfull: 'Registro editado correctamente'
-  delete_succesfull: 'Registro borrado correctamente'
-  create_new: 'Nuevo Registro'
-  edit_btn: 'Editar un Registro'
-  create_btn: 'Crear un Registro'
+  title_page: 'Bolsa de empleo'
+  title_nav: 'Bolsa de empleo'
+  list: 'Listado Bolsa de empleos'
+  create_edit: 'Editar Bolsa de empleo'
+  create_succesfull: 'Bolsa de empleo creado correctamente'
+  edit_succesfull: 'Bolsa de empleo editado correctamente'
+  delete_succesfull: 'Bolsa de empleo borrado correctamente'
+  create_new: 'Nuevo Bolsa de empleo'
+  edit_btn: 'Editar un Bolsa de empleo'
+  create_btn: 'Crear un Bolsa de empleo'
   edit:
-    title: 'Editar un Registro'
-    subtitle: 'Editar al Registro'
-    description: 'Editando al Registro'
+    title: 'Editar un Bolsa de empleo'
+    subtitle: 'Editar al Bolsa de empleo'
+    description: 'Editando al Bolsa de empleo'
   create:
-    title: 'Crear un Registro'
-    subtitle: 'Crear al Registro'
-    description: 'Creando al Registro'
+    title: 'Crear un Bolsa de empleo'
+    subtitle: 'Crear al Bolsa de empleo'
+    description: 'Creando al Bolsa de empleo'
   list:
-    title: 'Listado de Registros'
-    subtitle: 'Listado de todos los Registros'
+    title: 'Listado de Bolsa de empleos'
+    subtitle: 'Listado de todos los Bolsa de empleos'
   form:
     errors:
       speciality:
