@@ -542,6 +542,8 @@ creativity_order:
     preview: 'Propuesta creatividad club'
     form:
       preview: 'Diseño personalizado %center_name%'
+      complete: 'Formulario de creación del pedido'
+      print: 'Formulario de creación del pedido'
   form:
     support: 'Soporte'
     delivery: 'Buzoneo'
@@ -550,6 +552,13 @@ creativity_order:
     latitude: 'Latitud'
     longitude: 'Longitud'
     print: 'Imprimir personalización creatividad'
+    send:
+      details: 'Detalles de envío'
+      details_placeholder: 'Detalles del envío'
+    latitude: 'Latitud'
+    latitude_placeholder: 'Latitud Mapa'
+    longitude: 'Longitud'
+    longitude_placeholder: 'Longitud Mapa'
     flyers:
       flyer_obverse_header: 'Concepto de la promoción'
       flyer_obverse_content_1: 'Contenido 1 de la promoción'
