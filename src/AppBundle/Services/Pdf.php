@@ -64,7 +64,15 @@ class Pdf
 		return self::ORIENTATION_PORTRAIT;
 	}
 
-	public function generate(SupportPdfInterface $support, $filename = null)
+	public static function generatePdf($supportType, $contentValues, $supportBackgroundImages, $bgImageAttributes, $logoPath, $filename = null)
+	{
+		$supportPdf = SupportPdf::create($supportType, $contentValues, $supportBackgroundImages);
+		$pdf = new Pdf($bgImageAttributes['width'], $bgImageAttributes['height'], $logoPath);
+
+		return $pdf->generate($supportPdf, $filename);
+	}
+
+	private function generate(SupportPdfInterface $support, $filename = null)
 	{
 		$pdf = new \FPDF($this->getOrientation(), self::UNIT, array($this->getWidth(false), $this->getHeight(false)));
 		$page = 0;
@@ -135,13 +143,12 @@ class Pdf
 	{
 		foreach ($pageContent as $attributes) {
 			$pdf->SetFont(self::FONT_TYPE, null, $attributes['style']);
+			$pdf->Ln($attributes['space_y']);
 			if($attributes['space_x'] > 0) {
-				$pdf->Ln($attributes['space_y']);
 				$pdf->SetXY($attributes['space_x'], $attributes['space_y']);
-				$pdf->Cell($attributes['space_x'], $attributes['y'], $attributes['content'], 1, 1, SupportPdf::formattingAlign($attributes['x']));
+				$pdf->Cell($attributes['space_x'], $attributes['y'], $attributes['content'], 0, 0, SupportPdf::formattingAlign($attributes['x']));
 			}else {
-				$pdf->Ln($attributes['space_y']);
-				$pdf->Cell(0, $attributes['y'], $attributes['content'], 1, 1, SupportPdf::formattingAlign($attributes['x']));
+				$pdf->Cell(0, $attributes['y'], $attributes['content'], 0, 0, SupportPdf::formattingAlign($attributes['align']));
 			}
 		}
 	}

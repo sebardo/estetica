@@ -8,37 +8,43 @@ class SupportRouter extends SupportPdf
 {
 	const SUPPORT_NAME = 'routers';
 	const ROUTER_OBVERSE_HEADER = 'router-obverse-header';
-	const ROUTER_OBVERSE_HEADER_X = 'center';
+	const ROUTER_OBVERSE_HEADER_ALIGN = 'center';
+	const ROUTER_OBVERSE_HEADER_X = 0;
 	const ROUTER_OBVERSE_HEADER_Y = 250;
 	const ROUTER_OBVERSE_HEADER_SPACE_X = 0;
 	const ROUTER_OBVERSE_HEADER_SPACE_Y = 150;
 	const ROUTER_OBVERSE_HEADER_STYLE = self::FONT_STYLE_BIG;
 	const ROUTER_OBVERSE_CONTENT_1 = 'router-obverse-content-1';
-	const ROUTER_OBVERSE_CONTENT_1_X = 'center';
+	const ROUTER_OBVERSE_CONTENT_1_ALIGN = 'center';
+	const ROUTER_OBVERSE_CONTENT_1_X = 0;
 	const ROUTER_OBVERSE_CONTENT_1_Y = 350;
 	const ROUTER_OBVERSE_CONTENT_1_SPACE_X = 0;
 	const ROUTER_OBVERSE_CONTENT_1_SPACE_Y = 70;
 	const ROUTER_OBVERSE_CONTENT_1_STYLE = self::FONT_STYLE_NORMAL;
 	const ROUTER_OBVERSE_PRIZE_1 = 'router-obverse-prize-1';
-	const ROUTER_OBVERSE_PRIZE_1_X = 'center';
+	const ROUTER_OBVERSE_PRIZE_1_ALIGN = 'center';
+	const ROUTER_OBVERSE_PRIZE_1_X = 0;
 	const ROUTER_OBVERSE_PRIZE_1_Y = 150;
 	const ROUTER_OBVERSE_PRIZE_1_SPACE_X = 0;
 	const ROUTER_OBVERSE_PRIZE_1_SPACE_Y = 10;
 	const ROUTER_OBVERSE_PRIZE_1_STYLE = self::FONT_STYLE_SMALL;
 	const ROUTER_OBVERSE_PRIZE_2 = 'router-obverse-prize-2';
-	const ROUTER_OBVERSE_PRIZE_2_X = 'center';
+	const ROUTER_OBVERSE_PRIZE_2_ALIGN = 'center';
+	const ROUTER_OBVERSE_PRIZE_2_X = 0;
 	const ROUTER_OBVERSE_PRIZE_2_Y = 150;
 	const ROUTER_OBVERSE_PRIZE_2_SPACE_X = 0;
 	const ROUTER_OBVERSE_PRIZE_2_SPACE_Y = 400;
 	const ROUTER_OBVERSE_PRIZE_2_STYLE = self::FONT_STYLE_SMALL;
 	const ROUTER_OBVERSE_CONTENT_2 = 'router-obverse-content-2';
-	const ROUTER_OBVERSE_CONTENT_2_X = 'center';
+	const ROUTER_OBVERSE_CONTENT_2_ALIGN = 'center';
+	const ROUTER_OBVERSE_CONTENT_2_X = 0;
 	const ROUTER_OBVERSE_CONTENT_2_Y = 350;
 	const ROUTER_OBVERSE_CONTENT_2_SPACE_X = 0;
 	const ROUTER_OBVERSE_CONTENT_2_SPACE_Y = 10;
 	const ROUTER_OBVERSE_CONTENT_2_STYLE = self::FONT_STYLE_NORMAL;
 	const ROUTER_OBVERSE_FOOTER = 'router-obverse-footer';
-	const ROUTER_OBVERSE_FOOTER_X = 'center';
+	const ROUTER_OBVERSE_FOOTER_ALIGN = 'center';
+	const ROUTER_OBVERSE_FOOTER_X = 0;
 	const ROUTER_OBVERSE_FOOTER_Y = 200;
 	const ROUTER_OBVERSE_FOOTER_SPACE_X = 0;
 	const ROUTER_OBVERSE_FOOTER_SPACE_Y = 150;
@@ -65,6 +71,7 @@ class SupportRouter extends SupportPdf
 					'space_x' => self::ROUTER_OBVERSE_HEADER_SPACE_X,
 					'space_y' => self::ROUTER_OBVERSE_HEADER_SPACE_Y,
 					'style' => self::ROUTER_OBVERSE_HEADER_STYLE,
+					'align' => self::ROUTER_OBVERSE_HEADER_ALIGN,
 					'content' => $this->values[self::ROUTER_OBVERSE_HEADER],
 				),
 				self::ROUTER_OBVERSE_CONTENT_1 => array(
@@ -73,6 +80,7 @@ class SupportRouter extends SupportPdf
 					'space_x' => self::ROUTER_OBVERSE_CONTENT_1_SPACE_X,
 					'space_y' => self::ROUTER_OBVERSE_CONTENT_1_SPACE_Y,
 					'style' => self::ROUTER_OBVERSE_CONTENT_1_STYLE,
+					'align' => self::ROUTER_OBVERSE_CONTENT_1_ALIGN,
 					'content' => $this->values[self::ROUTER_OBVERSE_CONTENT_1],
 				),
 				self::ROUTER_OBVERSE_PRIZE_1 => array(
@@ -81,6 +89,7 @@ class SupportRouter extends SupportPdf
 					'space_x' => self::ROUTER_OBVERSE_PRIZE_1_SPACE_X,
 					'space_y' => self::ROUTER_OBVERSE_PRIZE_1_SPACE_Y,
 					'style' => self::ROUTER_OBVERSE_PRIZE_1_STYLE,
+					'align' => self::ROUTER_OBVERSE_PRIZE_1_ALIGN,
 					'content' => $this->values[self::ROUTER_OBVERSE_PRIZE_1],
 				),
 				self::ROUTER_OBVERSE_PRIZE_2 => array(
@@ -89,6 +98,7 @@ class SupportRouter extends SupportPdf
 					'space_x' => self::ROUTER_OBVERSE_PRIZE_2_SPACE_X,
 					'space_y' => self::ROUTER_OBVERSE_PRIZE_2_SPACE_Y,
 					'style' => self::ROUTER_OBVERSE_PRIZE_2_STYLE,
+					'align' => self::ROUTER_OBVERSE_PRIZE_2_ALIGN,
 					'content' => $this->values[self::ROUTER_OBVERSE_PRIZE_2],
 				),
 				self::ROUTER_OBVERSE_CONTENT_2 => array(
@@ -97,6 +107,7 @@ class SupportRouter extends SupportPdf
 					'space_x' => self::ROUTER_OBVERSE_CONTENT_2_SPACE_X,
 					'space_y' => self::ROUTER_OBVERSE_CONTENT_2_SPACE_Y,
 					'style' => self::ROUTER_OBVERSE_CONTENT_2_STYLE,
+					'align' => self::ROUTER_OBVERSE_CONTENT_2_ALIGN,
 					'content' => $this->values[self::ROUTER_OBVERSE_CONTENT_2],
 				),
 				self::ROUTER_OBVERSE_FOOTER => array(
@@ -105,6 +116,7 @@ class SupportRouter extends SupportPdf
 					'space_x' => self::ROUTER_OBVERSE_FOOTER_SPACE_X,
 					'space_y' => self::ROUTER_OBVERSE_FOOTER_SPACE_Y,
 					'style' => self::ROUTER_OBVERSE_FOOTER_STYLE,
+					'align' => self::ROUTER_OBVERSE_FOOTER_ALIGN,
 					'content' => $this->values[self::ROUTER_OBVERSE_FOOTER],
 				)
 			)
