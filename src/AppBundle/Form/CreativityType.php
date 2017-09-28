@@ -53,6 +53,17 @@ class CreativityType extends AbstractType
                 'attr' => array('class' => 'collection row required-label'),
                 'constraints' => array( new NotNull())
             ))
+            ->add('fileDocsRaw', CollectionType::class, array(
+                'entry_type' => 'AppBundle\Form\CreativityFileRawType',
+                'allow_add' => true,
+                'required' => ($options['edit_form']) ? false : true,
+                'label' => 'creativity.form.file_doc_raw',
+                'by_reference' => false,
+                'allow_delete' => true,
+                'label_attr' => array('class' => ''),
+                'attr' => array('class' => 'collection row required-label'),
+                'constraints' => array( new NotNull())
+            ))
         ;
 
         $listener = function (FormEvent $event) {
@@ -67,9 +78,15 @@ class CreativityType extends AbstractType
                 if(empty($creativityData['fileDocs']) || count($creativityData['fileDocs']) <= 2) {
                     $form->addError(new FormError('validator.must_have_two_image', null, array(), null, 'fileDocs'));
                 }
+                if(empty($creativityData['fileDocsRaw']) || count($creativityData['fileDocsRaw']) <= 2) {
+                    $form->addError(new FormError('validator.must_have_two_image', null, array(), null, 'fileDocsRaw'));
+                }
             }else {
                 if(empty($creativityData['fileDocs'])) {
                     $form->addError(new FormError('validator.must_have_one_image', null, array(), null, 'fileDocs'));
+                }
+                if(empty($creativityData['fileDocsRaw'])) {
+                    $form->addError(new FormError('validator.must_have_one_image', null, array(), null, 'fileDocsRaw'));
                 }
             }
         };

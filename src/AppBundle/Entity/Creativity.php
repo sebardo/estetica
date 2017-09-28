@@ -122,6 +122,12 @@ class Creativity extends Timestampable
 
     /**
      * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="CreativityFileRaw", mappedBy="creativity", cascade={"persist"})
+     */
+    private $fileDocsRaw;
+
+    /**
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="CreativityOrder", mappedBy="creativity", cascade={"persist"})
      */
     private $creativityOrders;
@@ -130,6 +136,7 @@ class Creativity extends Timestampable
     {
         parent::__construct();
         $this->fileDocs = new ArrayCollection();
+        $this->fileDocsRaw = new ArrayCollection();
         $this->creativityOrders = new ArrayCollection();
     }
 
@@ -369,6 +376,59 @@ class Creativity extends Timestampable
         }
 
         $this->fileDocs->remove($fileDoc);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFileDocsRaw()
+    {
+        return $this->fileDocsRaw;
+    }
+
+    public function getFileDocsRawOnArray()
+    {
+        $response = array();
+        foreach ($this->getFileDocsRaw() as $fileDocRaw) {
+            if($fileDocRaw instanceof CreativityFileRaw){
+                $response[] = $fileDocRaw->getFile();
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param ArrayCollection $fileDocsRaw
+     */
+    public function setFileDocsRaw($fileDocsRaw)
+    {
+        $this->fileDocsRaw = $fileDocsRaw;
+    }
+
+    /**
+     * @param CreativityFileRaw $fileDocRaw
+     */
+    public function addFileDocRaw(CreativityFileRaw $fileDocRaw)
+    {
+        if ($this->fileDocs->contains($fileDocRaw)){
+            return;
+        }
+
+        $this->fileDocsRaw->add($fileDocRaw);
+        $fileDocRaw->setCreativity($this);
+    }
+
+    /**
+     * @param CreativityFileRaw $fileDocRaw
+     */
+    public function removeFileDocRaw(CreativityFileRaw $fileDocRaw)
+    {
+        if (!$this->fileDocsRaw->contains($fileDocRaw)){
+            return;
+        }
+
+        $this->fileDocsRaw->remove($fileDocRaw);
     }
 
     /**

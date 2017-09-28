@@ -23,8 +23,6 @@
                 </div>
             {% endfor %}
         {% endif %}
-        {#{{ form_errors(form) }}#}
-        {#{{ dump(form) }}#}
         <ul class="filedocs" id="filedoc-fields-list" data-prototype="{{ form_widget(form.fileDocs.vars.prototype)|e }}">
             {% for fileField in form.fileDocs %}
                 <li class="wrapper-field">
@@ -43,6 +41,41 @@
         <a href="#" id="add-another-filedoc">{{ 'creativity.form.file_doc_add_file_doc'|trans() }}</a>
     </div>
     {# END #}
+    {# Start #}
+    <div class="form-group">
+        {{ form_label(form.fileDocsRaw) }}
+        {% if form.vars.errors %}
+            {% for error in form.vars.errors %}
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled">
+                        {% if error.cause == 'fileDocsRaw' %}
+                            <li>
+                                <span class="glyphicon glyphicon-exclamation-sign"></span>
+                                {{ error.message | trans }}
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <ul class="filedocs" id="filedoc-raw-fields-list" data-prototype="{{ form_widget(form.fileDocsRaw.vars.prototype)|e }}">
+            {% for fileField in form.fileDocsRaw %}
+                <li class="wrapper-field">
+                    {% if entity.fileDocsRaw is not null %}
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_raw_by_creativity(entity, loop.index - 1) }}">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {{ form_errors(fileField) }}
+                    {{ form_widget(fileField) }}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="#" id="add-another-filedoc-raw">{{ 'creativity.form.file_doc_add_file_doc'|trans() }}</a>
+    </div>
+    {# END #}
     {{ form_row(form.submit) }}
     <div class="hide">
         {{ form_rest(form) }}
@@ -54,6 +87,7 @@
     {{ parent() }}
 <script type="text/javascript">
     var fileDocCount = '{{ form.fileDocs|length }}';
+    var fileDocCountRaw = '{{ form.fileDocsRaw|length }}';
     var max_images = 1;
 
     function calculateMaxImages(support_id) {
@@ -81,6 +115,23 @@
                 newLi.appendTo(objectList);
             }
         });
+
+        jQuery('#add-another-filedoc-raw').click(function(e) {
+            e.preventDefault();
+            var support_id = $('#appbundle_creativity_support').val();
+            calculateMaxImages(support_id);
+            if(max_images > fileDocCountRaw){
+                var objectList = jQuery('#filedoc-raw-fields-list');
+                var newWidget = objectList.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, fileDocCountRaw);
+                fileDocCountRaw++;
+
+                var newLi = jQuery('<li></li>').html(newWidget);
+                var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close-raw').html('&times;');
+                removeButton.appendTo(newLi);
+                newLi.appendTo(objectList);
+            }
+        });
     });
 
     //Remove Button
@@ -91,6 +142,14 @@
         });
     });
 
+    //Remove Button
+    jQuery(document).on('click', '.close-raw', function(){
+        $(this).closest('li').fadeOut(500, function() {
+            $(this).remove();
+            fileDocCountRaw--;
+        });
+    });
+
     //Change Support
     $(document).on('change', '#appbundle_creativity_support', function(){
         var support_id = $(this).val();
@@ -98,8 +157,14 @@
 
         if(max_images < fileDocCount){
             var list = $('#filedoc-fields-list').find('li');
+            var listRaw = $('#filedoc-raw-fields-list').find('li');
             var list_length = list.length;
+            var listRaw_length = listRaw.length;
             list.eq(list_length - 1).fadeOut(500, function() {
+                $(this).remove();
+                fileDocCount--;
+            });
+            listRaw.eq(listRaw_length - 1).fadeOut(500, function() {
                 $(this).remove();
                 fileDocCount--;
             });

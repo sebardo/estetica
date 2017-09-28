@@ -5,6 +5,7 @@ namespace AppBundle\Twig;
 use AppBundle\Entity\Client;
 use AppBundle\Entity\Creativity;
 use AppBundle\Entity\CreativityFile;
+use AppBundle\Entity\CreativityFileRaw;
 use AppBundle\Entity\CreativityProposal;
 use AppBundle\Entity\CreativityProposalFile;
 use AppBundle\Entity\FileDoc;
@@ -25,6 +26,7 @@ class CreativityExtension extends \Twig_Extension
 	{
 		return array(
 			'get_filedoc_by_creativity' => new \Twig_Function_Method($this, 'getFileDocByCreativity'),
+			'get_filedoc_raw_by_creativity' => new \Twig_Function_Method($this, 'getFileDocRawByCreativity'),
 			'get_filedoc_by_creativity_proposal' => new \Twig_Function_Method($this, 'getFileDocByCreativityProposal'),
 		);
 	}
@@ -36,6 +38,18 @@ class CreativityExtension extends \Twig_Extension
 			/** @var CreativityFile $fileDoc */
 			$fileDoc = $fileDocsCollection->get($index);
 			return $fileDoc->getFile();
+		}
+
+		return "";
+	}
+
+	public function getFileDocRawByCreativity(Creativity $creativity, $index)
+	{
+		$fileDocsRawCollection = $creativity->getFileDocsRaw();
+		if($fileDocsRawCollection->containsKey($index)){
+			/** @var CreativityFileRaw $fileDocRaw */
+			$fileDocRaw = $fileDocsRawCollection->get($index);
+			return $fileDocRaw->getFile();
 		}
 
 		return "";

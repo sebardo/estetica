@@ -484,6 +484,7 @@ creativity:
     subcategory: 'Subcategoría'
     support: 'Soporte'
     file_doc: 'Imagen'
+    file_doc_raw: 'Imagen neutro'
     image: 'Imagen'
     file_doc_add_file_doc: 'Añadir imagen'
 creativity_proposal:
