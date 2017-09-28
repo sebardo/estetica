@@ -107,7 +107,7 @@ class CreativityProposalController extends BackendBundleController
 		return $this->render('AppBundle:CreativityProposal:new.html.twig', array(
 			'entity' => $entity,
 			'form' => $form->createView(),
-			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.create")),
+			'breadcrumbs' => ($this->isGranted('ROLE_ADMIN')) ? $this->getBreadCrumbs(true, array("name" => "backend.create")) : $this->getBreadCrumbs(false, array("name" => "backend.create")),
 			'active_side_bar' => $this->getActiveSidebar()
 		));
 	}

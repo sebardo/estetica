@@ -3,14 +3,12 @@
 {% block page_title %}{{ 'press_release.list.title'|trans() }}{% endblock %}
 {% block page_subtitle %}{{ 'press_release.list.subtitle'|trans() }}{% endblock %}
 {% block create_buttons %}
-    {% if is_granted("ROLE_CLIENT") %}
+    {% if is_granted("ROLE_ADMIN") %}
+        {% block create_action_list %}{% endblock %}
+    {% elseif is_granted("ROLE_CLIENT") %}
             <a href="{{ path('admin_press_release_create') }}" class="btn btn-info flat margin-bottom">{{ 'press_release.create_new'|trans }}</a>
     {% endif %}
 {% endblock %}
-{#{% if is_granted("ROLE_CLIENT") %}#}
-    {#{% block create_new_path path('admin_press_release_create') %}#}
-    {#{% block create_new_title 'press_release.create_new'|trans %}#}
-{#{% endif %}#}
 {% block list_title 'press_release.list'|trans%}
 
 {% block list_body %}

@@ -57,14 +57,7 @@ class PressReleaseController extends BackendBundleController
 		/** @var Client $client */
 		$client = $this->container->get('security.token_storage')->getToken()->getUser();
 
-		$pressReleaseManager = $this->container->get('webapp.manager.press_release_manager');
-
-		$pressReleaseCollection = $pressReleaseManager->getBy(array('client' => $client));
-//		foreach ($pressReleaseCollection as $pressRelease) {
-//			if($pressRelease instanceof PressRelease){
-//				$deleteFormCollection[$pressRelease->getId()] = $this->createDeleteForm($pressRelease)->createView();
-//			}
-//		}
+		$pressReleaseCollection = $this->getPressReleaseCollectionByRoleOrId($client);
 
 		return $this->render(
 			'AppBundle:PressRelease:list.html.twig',
@@ -75,6 +68,18 @@ class PressReleaseController extends BackendBundleController
 				'active_side_bar' => $this->getActiveSidebar()
 			)
 		);
+	}
+
+	private function getPressReleaseCollectionByRoleOrId(Client $client)
+	{
+		$pressReleaseManager = $this->container->get('webapp.manager.press_release_manager');
+		if($this->isGranted('ROLE_ADMIN')) {
+			$pressReleaseCollection = $pressReleaseManager->getBy(array());
+		}else {
+			$pressReleaseCollection = $pressReleaseManager->getBy(array('client' => $client));
+		}
+
+		return $pressReleaseCollection;
 	}
 
 	/**

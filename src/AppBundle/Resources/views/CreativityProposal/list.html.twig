@@ -4,8 +4,9 @@
 {% block page_subtitle %}{{ 'creativity_proposal.list.subtitle'|trans() }}{% endblock %}
 {% block list_title 'creativity_proposal.list'|trans%}
 {% if is_granted("ROLE_ADMIN") %}
-    {% block create_new_path path('admin_creativity_proposal_create') %}
-    {% block create_new_title 'creativity_proposal.create_new'|trans %}
+    {% block create_action_list %}{% endblock %}
+    {#{% block create_new_path path('admin_creativity_proposal_create') %}#}
+    {#{% block create_new_title 'creativity_proposal.create_new'|trans %}#}
 {% endif %}
 
 {% block list_body %}
@@ -16,7 +17,7 @@
                 <th>{{ '#' }}</th>
                 <th>{{ 'app.list.table.created'|trans|title }}</th>
                 <th>{{ 'app.list.table.name'|trans|title }}</th>
-                <th>{{ 'app.delete'|trans|title }}</th>
+                {#<th>{{ 'app.delete'|trans|title }}</th>#}
             </tr>
         {% endblock %}
         </thead>
@@ -29,10 +30,10 @@
                 <td>{{ loop.index }}</td>
                 <td>{{ entity.createdAt|date('d/m/Y') }}</td>
                 <td>{{ entity.promotion }}</td>
-                <td>
-                    {% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}
-                    {{ form(deleteFormCollection[entity.id]) }}
-                </td>
+                {#<td>#}
+                    {#{% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}#}
+                    {#{{ form(deleteFormCollection[entity.id]) }}#}
+                {#</td>#}
             </tr>
         {% endfor %}
         </tbody>
