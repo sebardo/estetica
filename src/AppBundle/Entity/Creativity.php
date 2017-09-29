@@ -416,6 +416,12 @@ class Creativity extends Timestampable
      */
     public function setFileDocsRaw($fileDocsRaw)
     {
+        foreach ($fileDocsRaw as $fileDocRaw) {
+            if($fileDocRaw instanceof CreativityFileRaw){
+                $fileDocRaw->setCreativity($this);
+            }
+        }
+
         $this->fileDocsRaw = $fileDocsRaw;
     }
 
