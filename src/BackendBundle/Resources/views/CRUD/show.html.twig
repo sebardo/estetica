@@ -8,13 +8,17 @@
             <div class="action pull-right">
                 <div class="btn-group">
                     <div class="btn-group">
+                        {% block edit_buttons %}
                         <a class="btn btn-sm btn-success flat" href="{% block path_edit %}{% endblock %}"><i
                                     class="fa fa-pencil"></i></a>
+                        {% endblock %}
                     </div>
-                    {% form_theme delete_form 'BackendBundle:CRUD:delete.html.twig' %}
-                    <div class="btn-group">
-                        {{ form(delete_form) }}
-                    </div>
+                    {% block delete_form %}
+                        {% form_theme delete_form 'BackendBundle:CRUD:delete.html.twig' %}
+                        <div class="btn-group">
+                            {{ form(delete_form) }}
+                        </div>
+                    {% endblock %}
                 </div>
             </div>
         </div>

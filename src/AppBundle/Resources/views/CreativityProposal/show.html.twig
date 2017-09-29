@@ -1,0 +1,106 @@
+{% extends '@Backend/CRUD/show.html.twig' %}
+
+{% block create_title %}{{ 'creativity_proposal.show.title' | trans() }}{% endblock %}
+{% block edit_buttons %}{% endblock %}
+{% block delete_form %}{% endblock %}
+
+{% block show_body %}
+    <div class="form-group">
+        <label class="">
+            {{ 'creativity_proposal.form.support' | trans() }}
+        </label>
+        <input class="form-control" type="text" disabled="disabled" value="{{ entity.support }}">
+    </div>
+    <div class="form-group">
+        <label class="">
+            {{ 'creativity_proposal.form.promotion' | trans() }}
+        </label>
+        <input class="form-control" type="text" disabled="disabled" value="{{ entity.promotion }}">
+    </div>
+    <div class="form-group">
+        <label class="">
+            {{ 'creativity_proposal.form.file_doc' | trans() }}
+        </label>
+        {% if entity.fileDocs is not null %}
+            <div class="row">
+            {% for image in entity.fileDocs %}
+                <div class="col-xs-4">
+                    <img class="file-doc-image-preview img-responsive" src="{{ proposal_path ~ '/' ~ get_filedoc_by_creativity_proposal(entity, loop.index - 1) }}">
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label class="">
+            {{ 'creativity_proposal.form.detail' | trans() }}
+        </label>
+        <textarea class="form-control" disabled="disabled">{{ entity.detail|raw }}"</textarea>
+    </div>
+    <div class="form-group">
+        <label class="">
+            {{ 'creativity_proposal.form.quantity' | trans() }}
+        </label>
+        <input class="form-control" type="text" disabled="disabled" value="{{ entity.quantity }}">
+    </div>
+    <div class="form-group">
+        <label class="">
+            {{ 'creativity_proposal.form.delivery' | trans() }}
+        </label>
+        <input class="form-control" type="text" disabled="disabled" value="{{ entity.delivery }}">
+    </div>
+    <div class="form-group">
+        <label class="">
+            {{ 'creativity_proposal.form.delivery_detail' | trans() }}
+        </label>
+        <textarea class="form-control" disabled="disabled">{{ entity.deliveryDetail|raw }}"</textarea>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <label class="">
+                    {{ 'creativity_proposal.form.latitude' | trans() }}
+                </label>
+                <input class="form-control" type="text" disabled="disabled" value="{{ entity.latitude }}">
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label class="">
+                    {{ 'creativity_proposal.form.longitude' | trans() }}
+                </label>
+                <input class="form-control" type="text" disabled="disabled" value="{{ entity.longitude }}">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row delivery-show map-input-wrapper">
+            <div class="col-xs-12">
+                {% set value_map = entity.latitude ~ '@' ~ entity.longitude %}
+                {% include 'AppBundle:CreativityProposal:map_show.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    //para mostrar el mapa
+    if ($('#map_show').length > 0) {
+        var value, latLng, url_map;
+        value = $($('#map_show input')[0]);
+        url_map = $($('#map_show input')[1]).val();
+        lat = $('#appbundle_creativityproposal_latitude');
+        lon = $('#appbundle_creativityproposal_longitude');
+        if (value.val() != '') {
+        var aux = value.val().split('@');
+        latLng = L.latLng(aux[0], aux[1]);
+        var map = L.map('map').setView(latLng, 15);
+        var myLayer = L.tileLayer(url_map, {
+            mapId: 'mapbox.streets',
+            token: 'pk.eyJ1IjoidG9tYXNkYXIiLCJhIjoiNjk4MjA5MjA0MDE2YjBmOTNmOTVlYjRjNDQzMzc3Y2UifQ.WGfpevghECXxduCiztMrBw'
+        }).addTo(map);
+        var marker = L.marker(latLng, { draggable: false }).addTo(map);
+        }
+    }
+</script>
+{% endblock %}

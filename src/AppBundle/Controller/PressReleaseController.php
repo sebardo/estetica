@@ -126,6 +126,27 @@ class PressReleaseController extends BackendBundleController
 		));
 	}
 
+	/**
+	 * Displays a show view to an existing press release entity.
+	 *
+	 * @param Request $request
+	 * @param PressRelease $entity
+	 *
+	 * @Route("/{id}/edit", name="admin_press_release_show")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+	 */
+	public function showCreativityProposalAction(Request $request, PressRelease $entity)
+	{
+		return $this->render('AppBundle:PressRelease:show.html.twig', array(
+			'entity' => $entity,
+			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.show")),
+			'active_side_bar' => $this->getActiveSidebar()
+		));
+	}
+
 //	/**
 //	 * Displays a form to edit an existing press release entity.
 //	 *

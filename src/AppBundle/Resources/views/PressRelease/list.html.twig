@@ -19,7 +19,7 @@
                 <th>{{ '#' }}</th>
                 <th>{{ 'app.list.table.published'|trans|title }}</th>
                 <th>{{ 'app.list.table.title'|trans|title }}</th>
-                {#<th>{{ 'app.edit'|trans|title }}</th>#}
+                <th>{{ 'app.show'|trans|title }}</th>
                 {#<th>{{ 'app.delete'|trans|title }}</th>#}
             </tr>
         {% endblock %}
@@ -33,7 +33,7 @@
                 <td>{{ loop.index }}</td>
                 <td>{{ entity.published|date('d/m/Y') }}</td>
                 <td>{{ entity.title }}</td>
-                {#<td><a class="btn btn-success" href="{{ path('admin_press_release_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>#}
+                <td><a class="btn btn-success" href="{{ path('admin_press_release_show',{'id':entity.id}) }}">{{ 'app.show'|trans|title }}</a></td>
                 {#<td>#}
                     {#{% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}#}
                     {#{{ form(deleteFormCollection[entity.id]) }}#}

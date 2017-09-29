@@ -431,6 +431,8 @@ press_release:
   create_new: 'Nueva Nota Prensa'
   edit_btn: 'Editar una nota de prensa'
   create_btn: 'Crear una nota de prensa'
+  show:
+    title: 'Ver nota de prensa'
   edit:
     title: 'Editar una nota de prensa'
     subtitle: 'Editar la nota de prensa'
@@ -498,6 +500,8 @@ creativity_proposal:
   create_new: 'Nuevo Propuesta Creatividad'
   edit_btn: 'Editar una propuesta creatividad'
   create_btn: 'Crear una propuesta creatividad'
+  show:
+    title: 'Ver propuesta creatividad'
   edit:
     title: 'Editar una propuesta creatividad'
     subtitle: 'Editar la propuesta creatividad'

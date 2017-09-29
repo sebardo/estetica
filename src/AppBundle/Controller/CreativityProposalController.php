@@ -113,6 +113,27 @@ class CreativityProposalController extends BackendBundleController
 	}
 
 	/**
+	 * Displays a show view to an existing creatvitiy proposal entity.
+	 *
+	 * @param Request $request
+	 * @param CreativityProposal $entity
+	 *
+	 * @Route("/{id}/edit", name="admin_creativity_proposal_show")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+	 */
+	public function showCreativityProposalAction(Request $request, CreativityProposal $entity)
+	{
+		return $this->render('AppBundle:CreativityProposal:show.html.twig', array(
+			'entity' => $entity,
+			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.show")),
+			'active_side_bar' => $this->getActiveSidebar()
+		));
+	}
+
+	/**
 	 * Deletes a creativity proposal entity.
 	 *
 	 * @param Request $request
