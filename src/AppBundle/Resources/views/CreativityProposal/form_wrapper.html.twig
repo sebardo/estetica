@@ -27,7 +27,7 @@
                     {% if entity.fileDocs is not null %}
                         <div class="row">
                             <div class="col-xs-4">
-                                <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_by_creativity_proposal(entity, loop.index - 1) }}">
+                                <img class="file-doc-image-preview img-responsive" src="{{ proposal_path ~ '/' ~ get_filedoc_by_creativity_proposal(entity, loop.index - 1) }}">
                             </div>
                         </div>
                     {% endif %}
@@ -46,8 +46,8 @@
         <div class="col-xs-12">
             {% set error = form_errors(form.deliveryDetail) | trim %}
             <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
-                {{ form_label(form.deliveryDetail, 'Detalles envío' | trans) }}
-                {{ form_widget(form.deliveryDetail, { 'attr': { 'class': 'form-control', 'placeholder': 'Detalles del envío' | trans } }) }}
+                {{ form_label(form.deliveryDetail, 'creativity_proposal.form.send.details' | trans) }}
+                {{ form_widget(form.deliveryDetail, { 'attr': { 'class': 'form-control', 'placeholder': 'creativity_proposal.form.send.details_placeholder' | trans } }) }}
                 <span class="help-block error-message">{{ error | striptags }}</span>
             </div>
         </div>
@@ -56,16 +56,16 @@
         <div class="col-sm-6 lat-input-wrapper">
             {% set error = form_errors(form.latitude) | trim %}
             <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
-                {{ form_label(form.latitude, 'Latitud' | trans) }}
-                {{ form_widget(form.latitude, { 'attr': { 'class': 'form-control', 'placeholder': 'Latitud Mapa' | trans } }) }}
+                {{ form_label(form.latitude, 'creativity_proposal.form.latitude' | trans) }}
+                {{ form_widget(form.latitude, { 'attr': { 'class': 'form-control', 'placeholder': 'creativity_proposal.form.latitude' | trans } }) }}
                 <span class="help-block error-message">{{ error | striptags }}</span>
             </div>
         </div>
         <div class="col-sm-6 long-input-wrapper">
             {% set error = form_errors(form.longitude) | trim %}
             <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
-                {{ form_label(form.longitude, 'Longitud' | trans) }}
-                {{ form_widget(form.longitude, { 'attr': { 'class': 'form-control', 'placeholder': 'Longitud Mapa' | trans } }) }}
+                {{ form_label(form.longitude, 'creativity_proposal.form.longitude' | trans) }}
+                {{ form_widget(form.longitude, { 'attr': { 'class': 'form-control', 'placeholder': 'creativity_proposal.form.longitude' | trans } }) }}
                 <span class="help-block error-message">{{ error | striptags }}</span>
             </div>
         </div>

@@ -75,10 +75,10 @@ class CreativityType extends AbstractType
             }
 
             if($creativityData['support'] === Creativity::SUPPORT_FLYERS){
-                if(empty($creativityData['fileDocs']) || count($creativityData['fileDocs']) <= 2) {
+                if(empty($creativityData['fileDocs']) || count($creativityData['fileDocs']) < 2) {
                     $form->addError(new FormError('validator.must_have_two_image', null, array(), null, 'fileDocs'));
                 }
-                if(empty($creativityData['fileDocsRaw']) || count($creativityData['fileDocsRaw']) <= 2) {
+                if(empty($creativityData['fileDocsRaw']) || count($creativityData['fileDocsRaw']) < 2) {
                     $form->addError(new FormError('validator.must_have_two_image', null, array(), null, 'fileDocsRaw'));
                 }
             }else {

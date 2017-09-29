@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * CreativityFile
+ * CreativityFileRaw
  *
  * @ORM\Table(name="creativity_file_raw")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CreativityFileRawRepository")
@@ -34,7 +34,7 @@ class CreativityFileRaw extends Timestampable
 	/**
 	 * @var File
 	 *
-	 * @Vich\UploadableField(mapping="creativities", fileNameProperty="file")
+	 * @Vich\UploadableField(mapping="creativities_raw", fileNameProperty="file")
 	 */
 	private $fileVich;
 
@@ -63,7 +63,7 @@ class CreativityFileRaw extends Timestampable
 	 * Set file
 	 *
 	 * @param string $file
-	 * @return FileDoc
+	 * @return CreativityFileRaw
 	 */
 	public function setFile($file)
 	{
@@ -85,7 +85,8 @@ class CreativityFileRaw extends Timestampable
 	/**
 	 * Set fileVich
 	 *
-	 * @param File|null $fileVich
+	 * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $fileVich
+	 * @return CreativityFileRaw
 	 */
 	public function setFileVich(File $fileVich = null)
 	{
@@ -94,12 +95,14 @@ class CreativityFileRaw extends Timestampable
 		if ($fileVich) {
 			$this->updatedAt = new \DateTime('now');
 		}
+
+		return $this;
 	}
 
 	/**
 	 * Get fileVich
 	 *
-	 * @return File
+	 * @return File|null
 	 */
 	public function getFileVich()
 	{

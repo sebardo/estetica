@@ -140,6 +140,19 @@ class Creativity extends Timestampable
         $this->creativityOrders = new ArrayCollection();
     }
 
+    public function getDataInArray()
+    {
+        return array(
+            'id' => !empty($this->getId()) ? $this->getId() : null,
+            'name' => !empty($this->getName()) ? $this->getName() : null,
+            'support' => !empty($this->getSupport()) ? $this->getSupport() : null,
+            'category' => !empty($this->getCategory()) ? $this->getCategory() : null,
+            'subcategory' => !empty($this->getSubcategory()) ? $this->getSubcategory() : null,
+            'fileDocs' => !empty($this->getFileDocs()) ? $this->getFileDocsOnArray() : null,
+            'fileDocsRaw' => !empty($this->getFileDocsRaw()) ? $this->getFileDocsRawOnArray() : null
+        );
+    }
+
     /**
      * Get id
      *
@@ -411,7 +424,7 @@ class Creativity extends Timestampable
      */
     public function addFileDocRaw(CreativityFileRaw $fileDocRaw)
     {
-        if ($this->fileDocs->contains($fileDocRaw)){
+        if ($this->fileDocsRaw->contains($fileDocRaw)){
             return;
         }
 

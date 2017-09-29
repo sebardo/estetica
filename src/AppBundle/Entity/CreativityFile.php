@@ -63,7 +63,7 @@ class CreativityFile extends Timestampable
      * Set file
      *
      * @param string $file
-     * @return FileDoc
+     * @return CreativityFile
      */
     public function setFile($file)
     {
@@ -85,7 +85,8 @@ class CreativityFile extends Timestampable
     /**
      * Set fileVich
      *
-     * @param File|null $fileVich
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $fileVich
+     * @return CreativityFile
      */
     public function setFileVich(File $fileVich = null)
     {
@@ -94,12 +95,14 @@ class CreativityFile extends Timestampable
         if ($fileVich) {
             $this->updatedAt = new \DateTime('now');
         }
+
+        return $this;
     }
 
     /**
      * Get fileVich
      *
-     * @return File
+     * @return File|null
      */
     public function getFileVich()
     {

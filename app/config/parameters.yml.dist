@@ -31,6 +31,7 @@ parameters:
     app.path.registrations: /uploads/registrations
     app.path.documents: /uploads/documents
     app.path.creativities: /uploads/creativities
+    app.path.creativities_raw: /uploads/creativities-raw
     app.path.proposals: /uploads/proposals
     app.path.creativity_orders: /uploads/creativity_orders
     url_map: "https://{s}.tiles.mapbox.com/v4/{mapId}/{z}/{x}/{y}.png?access_token={token}"

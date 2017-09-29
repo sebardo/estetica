@@ -29,7 +29,7 @@
                     {% if entity.fileDocs is not null %}
                         <div class="row">
                             <div class="col-xs-4">
-                                <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_by_creativity(entity, loop.index - 1) }}">
+                                <img class="file-doc-image-preview img-responsive" src="{{ creativity_path ~ '/' ~ get_filedoc_by_creativity(entity, loop.index - 1) }}">
                             </div>
                         </div>
                     {% endif %}
@@ -64,7 +64,7 @@
                     {% if entity.fileDocsRaw is not null %}
                         <div class="row">
                             <div class="col-xs-4">
-                                <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_raw_by_creativity(entity, loop.index - 1) }}">
+                                <img class="file-doc-image-preview img-responsive" src="{{ creativity_raw_path ~ '/' ~ get_filedoc_raw_by_creativity(entity, loop.index - 1) }}">
                             </div>
                         </div>
                     {% endif %}
@@ -110,7 +110,7 @@
                 fileDocCount++;
 
                 var newLi = jQuery('<li></li>').html(newWidget);
-                var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close').html('&times;');
+                var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close').addClass('close-filedoc').html('&times;');
                 removeButton.appendTo(newLi);
                 newLi.appendTo(objectList);
             }
@@ -127,7 +127,7 @@
                 fileDocCountRaw++;
 
                 var newLi = jQuery('<li></li>').html(newWidget);
-                var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close-raw').html('&times;');
+                var removeButton = jQuery('<button></button>').attr('type', 'button').addClass('close').addClass('close-filedoc-raw').html('&times;');
                 removeButton.appendTo(newLi);
                 newLi.appendTo(objectList);
             }
@@ -135,7 +135,7 @@
     });
 
     //Remove Button
-    jQuery(document).on('click', '.close', function(){
+    jQuery(document).on('click', '.close-filedoc', function(){
         $(this).closest('li').fadeOut(500, function() {
             $(this).remove();
             fileDocCount--;
@@ -143,7 +143,7 @@
     });
 
     //Remove Button
-    jQuery(document).on('click', '.close-raw', function(){
+    jQuery(document).on('click', '.close-filedoc-raw', function(){
         $(this).closest('li').fadeOut(500, function() {
             $(this).remove();
             fileDocCountRaw--;

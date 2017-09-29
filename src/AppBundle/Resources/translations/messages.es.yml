@@ -520,6 +520,9 @@ creativity_proposal:
     file_doc_add_file_doc: 'Añadir imagen'
     latitude: 'Latitud'
     longitude: 'Longitud'
+    send:
+      details: 'Detalles de envío'
+      details_placeholder: 'Detalles del envío'
 creativity_order:
   title_page: 'Personalización Creatividad'
   title_nav: 'Personalización Creatividad'

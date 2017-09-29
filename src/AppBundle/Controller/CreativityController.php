@@ -4,6 +4,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Creativity;
+use AppBundle\Entity\CreativityFileRaw;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -88,6 +89,8 @@ class CreativityController extends BackendBundleController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
+			$this->settingFileDocRawRelationship($request, $entity);
+
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
@@ -124,6 +127,8 @@ class CreativityController extends BackendBundleController
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
+			$this->settingFileDocRawRelationship($request, $entity);
+
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
@@ -183,5 +188,24 @@ class CreativityController extends BackendBundleController
 			->setMethod('DELETE')
 			->getForm()
 			;
+	}
+
+	/**
+	 * @param Request    $request
+	 * @param Creativity $entity
+	 */
+	private function settingFileDocRawRelationship(Request $request, Creativity $entity)
+	{
+		$files = $request->files->all();
+		$formFilesRaw = $files['appbundle_creativity']['fileDocsRaw'];
+		foreach ($formFilesRaw as $fileDocRaw) {
+			$file = $fileDocRaw['fileVich']['file'];
+			$originalName = $file->getClientOriginalName();
+			/** @var CreativityFileRaw $lastFileRaw */
+			$lastFileRaw = $this->get('doctrine')->getManager()->getRepository('AppBundle:CreativityFileRaw')->findOneBy(array('file' => $originalName, 'creativity' => null), array('createdAt' => 'DESC'));
+			if (! empty($lastFileRaw)) {
+				$lastFileRaw->setCreativity($entity);
+			}
+		}
 	}
 }
