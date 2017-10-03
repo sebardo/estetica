@@ -126,7 +126,7 @@ class ClientController extends BackendBundleController
 	{
 		/** @var Client $client */
 		$client = $this->container->get('security.token_storage')->getToken()->getUser();
-		if($entity !== $client) {
+		if($entity !== $client && !$this->isGranted('ROLE_ADMIN')) {
 			return $this->redirectToRoute('homepage');
 		}
 
