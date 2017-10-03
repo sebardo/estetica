@@ -190,6 +190,7 @@ client:
     blog: 'Blog'
     password: 'Contraseña'
     new_password: 'Nueva Contraseña'
+    active: 'Activo'
 address:
   form:
     address: 'Dirección'

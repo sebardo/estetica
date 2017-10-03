@@ -142,6 +142,16 @@ class ClientType extends AbstractType
 			;
 		}
 
+		if($options['admin_user'] === true){
+			$builder
+				->add('active', null, array(
+					'label' => 'client.form.active',
+					'label_attr' => array('class' => ''),
+					'attr' => array('class' => ''),
+					'required' => false
+				));
+		}
+
 		$listener = function (FormEvent $event) {
 			$clientData = $event->getData();
 			$form = $event->getForm();
