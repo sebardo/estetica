@@ -279,10 +279,10 @@ class CreativityOrderController extends BackendBundleController
 
 	private function getSupportBackgroundImagesPathByCreativity(Creativity $creativity)
 	{
-		$supportBackgroundImagesCollection = $creativity->getFileDocsOnArray();
+		$supportBackgroundImagesCollection = $creativity->getFileDocsRawOnArray();
 		$supportBackgroundImages = array();
 		foreach ($supportBackgroundImagesCollection as $item) {
-			$supportBackgroundImages[] = ltrim($this->container->getParameter('app.path.creativities'), '/') . '/' . $item;
+			$supportBackgroundImages[] = ltrim($this->container->getParameter('app.path.creativities_raw'), '/') . '/' . $item;
 		}
 
 		return $supportBackgroundImages;
