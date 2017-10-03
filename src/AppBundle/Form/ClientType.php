@@ -112,7 +112,8 @@ class ClientType extends AbstractType
 				'label' => 'client.form.plan',
 				'required' => true,
 				'label_attr' => array('class' => ''),
-				'attr' => array('class' => '')
+				'attr' => array('class' => ''),
+				'disabled' => ($options['admin_user']) ? false : 'disabled'
 			))
 			->add('billingAddress', new AddressType(), array(
 				'label' => 'client.form.billing_address',
@@ -171,7 +172,8 @@ class ClientType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'data_class' => 'AppBundle\Entity\Client',
-			'edit_form' => false
+			'edit_form' => false,
+			'admin_user' => true
 		));
 	}
 
