@@ -22,6 +22,9 @@
     {% if form.children.password is defined %}
         {{ form_row(form.password) }}
     {% endif %}
+    {% if form.children.active is defined %}
+        {{ form_row(form.active) }}
+    {% endif %}
     {# Start #}
     {{ form_label(form.fileDocs) }}
     <div class="form-group">
