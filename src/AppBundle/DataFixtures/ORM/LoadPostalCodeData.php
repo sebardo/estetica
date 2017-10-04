@@ -60,7 +60,7 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 			$nameFields = fgetcsv($file, 0, ":", "\"", "\"");
 			$numFields = count($nameFields);
 
-			while (($data = fgetcsv($file, 10000, ";")) !== false) {
+			while (($data = fgetcsv($file, 10000, ":")) !== false) {
 				for ($i = 0; $i < $numFields; $i++) {
 					$postalCode[$i] = $data[$i];
 				}
