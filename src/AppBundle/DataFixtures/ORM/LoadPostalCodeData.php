@@ -57,7 +57,7 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 		$postalCode = array();
 		if (($file = fopen($_file, "r")) !== FALSE) {
 
-			$nameFields = fgetcsv($file, 0, ";", "\"", "\"");
+			$nameFields = fgetcsv($file, 0, ":", "\"", "\"");
 			$numFields = count($nameFields);
 
 			while (($data = fgetcsv($file, 10000, ";")) !== false) {
@@ -103,8 +103,6 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$countrySlug = Slugify::slug($countryColumn);
 			}
 
-//			$country = $this->container->get('webapp.manager.country_manager')->getOneBy(array('slug' => $countrySlug));
-//			if(empty($country)){
 			if(!in_array($countrySlug, $countryCollection)){
 				$countryCollection[] = $countrySlug;
 				echo "Escribiendo country:  $countrySlug\n";
@@ -112,7 +110,6 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$country->setName($countryColumn);
 				$country->setSlug($countrySlug);
 				$manager->persist($country);
-//				$manager->flush();
 			}else{
 				echo "Existe country: $countrySlug\n";
 			}
@@ -126,8 +123,6 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$provinceSlug = Slugify::slug($provinceColumn);
 			}
 
-//			$province = $this->container->get('webapp.manager.province_manager')->getOneBy(array('slug' => $provinceSlug));
-//			if(empty($province)){
 			if(!in_array($provinceSlug, $provinceCollection)){
 				$provinceCollection[] = $provinceSlug;
 				echo "Escribiendo province:  $provinceSlug\n";
@@ -136,7 +131,6 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$province->setSlug($provinceSlug);
 				$province->setCountry($country);
 				$manager->persist($province);
-//				$manager->flush();
 			}else {
 				echo "Existe province:  $provinceSlug\n";
 			}
@@ -150,8 +144,6 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$citySlug = Slugify::slug($cityColumn);
 			}
 
-//			$city = $this->container->get('webapp.manager.city_manager')->getOneBy(array('slug' => $citySlug));
-//			if(empty($city)) {
 			if(!in_array($citySlug, $cityCollection)){
 				$cityCollection[] = $citySlug;
 				echo "Escribiendo city:  $citySlug\n";
@@ -160,13 +152,11 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 				$city->setSlug($citySlug);
 				$city->setProvince($province);
 				$manager->persist($city);
-//				$manager->flush();
 			}else {
 				echo "Existe city:  $citySlug\n";
 			}
 
 			$count++;
-//			$manager->flush();
 		}
 		$manager->flush();
 	}
