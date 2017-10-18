@@ -54,6 +54,14 @@ class LoadLanguageData extends AbstractFixture implements OrderedFixtureInterfac
 		$entity = new Language();
 		$entity->setName('Italiano');
 		$manager->persist($entity);
+		// German
+		$entity = new Language();
+		$entity->setName('Alemán');
+		$manager->persist($entity);
+		// Russian
+		$entity = new Language();
+		$entity->setName('Ruso');
+		$manager->persist($entity);
 
 		$manager->flush();
 	}

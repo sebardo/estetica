@@ -75,7 +75,7 @@ class LoadSpecialityData extends AbstractFixture implements OrderedFixtureInterf
 		$esteticaCollection[] = $entity;
 		//----
 		$entity = new Speciality();
-		$entity->setName('Fotodepilación (ipl)');
+		$entity->setName('Fotodepilación (IPL)');
 		$manager->persist($entity);
 		$esteticaCollection[] = $entity;
 		//----
@@ -102,7 +102,7 @@ class LoadSpecialityData extends AbstractFixture implements OrderedFixtureInterf
 		$mediciaEsteticaCollection[] = $entity;
 		//----
 		$entity = new Speciality();
-		$entity->setName('Cryolipolisis');
+		$entity->setName('Criolipolisis');
 		$manager->persist($entity);
 		$mediciaEsteticaCollection[] = $entity;
 		//----
@@ -117,7 +117,7 @@ class LoadSpecialityData extends AbstractFixture implements OrderedFixtureInterf
 		$mediciaEsteticaCollection[] = $entity;
 		//----
 		$entity = new Speciality();
-		$entity->setName('Peeling Químicos');
+		$entity->setName('Peelings Químicos');
 		$manager->persist($entity);
 		$mediciaEsteticaCollection[] = $entity;
 		//----

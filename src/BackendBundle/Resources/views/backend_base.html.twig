@@ -23,6 +23,7 @@
     'bundles/backend/plugins/Leaflet/leaflet.css'
     'bundles/backend/plugins/Leaflet/leaflet-vector-markers.css'
     'bundles/backend/css/*'
+    'bundles/app/css/*'
     filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css"/>
@@ -33,7 +34,6 @@
 
 {% block javascripts  %}
    {{  parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/backend/plugins/ckeditor/ckeditor.js') }}"></script>
     <script type="text/javascript">
         window.container.jsonDataTable="{{ asset('bundles/backend/plugins/datatables/language/Spanish.json') }}"
     </script>

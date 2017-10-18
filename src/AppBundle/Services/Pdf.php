@@ -144,11 +144,14 @@ class Pdf
 		foreach ($pageContent as $attributes) {
 			$pdf->SetFont(self::FONT_TYPE, null, $attributes['style']);
 			$pdf->Ln($attributes['space_y']);
+			$str = $attributes['content'];
+			$text = iconv('UTF-8', 'windows-1252', $str);
+
 			if($attributes['space_x'] > 0) {
 				$pdf->SetXY($attributes['space_x'], $attributes['space_y']);
-				$pdf->Cell($attributes['space_x'], $attributes['y'], $attributes['content'], 0, 0, SupportPdf::formattingAlign($attributes['x']));
+				$pdf->Cell($attributes['space_x'], $attributes['y'], $text, 0, 0, SupportPdf::formattingAlign($attributes['x']));
 			}else {
-				$pdf->Cell(0, $attributes['y'], $attributes['content'], 0, 0, SupportPdf::formattingAlign($attributes['align']));
+				$pdf->Cell(0, $attributes['y'], $text, 0, 0, SupportPdf::formattingAlign($attributes['align']));
 			}
 		}
 	}

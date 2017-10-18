@@ -41,6 +41,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 		$entity->setPassword('Admin123');
 		$this->container->get('webapp.manager.client_manager')->encodePassword($entity);
 		$entity->addRole(Client::ROLE_ADMIN);
+		$entity->setIsAdministrator(true);
 		$entity->setShortDescription("");
 		$entity->setDescription("");
 		$entity->setNif("");

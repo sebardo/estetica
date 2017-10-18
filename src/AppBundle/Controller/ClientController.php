@@ -54,7 +54,7 @@ class ClientController extends BackendBundleController
 
 		$clientManager = $this->container->get('webapp.manager.client_manager');
 
-		$clientCollection = $clientManager->getBy(array());
+		$clientCollection = $clientManager->getBy(array("isAdministrator" => false));
 		foreach ($clientCollection as $client) {
 			if($client instanceof Client){
 				$deleteFormCollection[$client->getId()] = $this->createDeleteForm($client)->createView();

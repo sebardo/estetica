@@ -45,7 +45,7 @@ app:
       title_nav: 'Central de compras'
     client:
       title_nav: 'Centro'
-      list: 'Listado de centros'
+      list: 'Centros'
     academic:
       title_nav: 'Estudios Académicos'
       list: 'Listado de estudios académicos'
@@ -204,8 +204,8 @@ country:
     empty_value: 'Selecciona un País'
 province:
   form:
-    name: 'Província'
-    empty_value: 'Selecciona una Província'
+    name: 'Provincia'
+    empty_value: 'Selecciona una Provincia'
 city:
   form:
     name: 'Ciudad'
@@ -324,20 +324,20 @@ registration:
       male: Hombre
       female: Mujer
     birthday:
-      name: Cumpleaños
-      default: Cumpleaños
+      name: Fecha de nacimiento
+      default: Fecha de nacimiento
     parent_speciality:
-      name: Padres Especialidad
+      name: Especialidad
     speciality:
       name: Especialidad
     image:
-      name: Imagen
-      default: Imagen
+      name: Subir Curriculum
+      default: Curriculum
     language:
       name: Idioma
       default: Idioma
     time_availability:
-      name: Disponibilidad de tiempo
+      name: Jornada
       default: Selecciona un tiempo
     contract_type:
       name: Tipo de contrato

@@ -59,6 +59,13 @@ class Client extends Timestampable implements UserInterface
     protected $active;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_admin", type="boolean")
+     */
+    public $isAdministrator;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=255)
@@ -207,6 +214,7 @@ class Client extends Timestampable implements UserInterface
         parent::__construct();
         $this->salt = md5(time());
         $this->active = true;
+        $this->isAdministrator = false;
         $this->role = self::ROLE_CLIENT;
         $this->fileDocs = new ArrayCollection();
         $this->pressReleases = new ArrayCollection();
@@ -269,6 +277,22 @@ class Client extends Timestampable implements UserInterface
     public function setActive($active)
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsAdministrator()
+    {
+        return $this->isAdministrator;
+    }
+
+    /**
+     * @param boolean $isAdministrator
+     */
+    public function setIsAdministrator($isAdministrator)
+    {
+        $this->isAdministrator = $isAdministrator;
     }
 
     /**

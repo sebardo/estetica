@@ -1,0 +1,7 @@
+.pointer{
+    cursor: pointer;
+}
+
+.sidebar-menu .treeview-menu > li > a {
+    padding-left: 30px;
+}
