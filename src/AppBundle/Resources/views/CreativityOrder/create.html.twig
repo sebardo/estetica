@@ -64,7 +64,7 @@
         e.preventDefault();
 
         //Fill form value
-        form.find('input[type="text"]').each(function(index, el) {
+        form.find('.custom-field-value').each(function(index, el) {
             var $el = $(el);
             var name_el = $el.attr('id').split(name_form + '_').pop().replace(/_/g, '-');
             var value = $el.val();

@@ -23,13 +23,14 @@ class CreativityOrderFieldType extends AbstractType
 			$fieldCollection = Creativity::getSupportFields($this->support);
 			foreach ($fieldCollection as $field) {
 				$fieldFormatted = str_replace('-', '_', $field);
+				$formFieldType = (strpos($fieldFormatted, 'content') === false) ? 'text' : 'textarea';
 				$builder
-					->add($fieldFormatted, 'text', array(
+					->add($fieldFormatted, $formFieldType, array(
 						'mapped' => false,
 						'label' => 'creativity_order.form.'. $this->support . '.' . $fieldFormatted,
 						'required' => false,
 						'label_attr' => array('class' => ''),
-						'attr' => array('class' => '')
+						'attr' => array('class' => 'custom-field-value')
 					));
 				$builder->get($fieldFormatted)->addModelTransformer(new CallbackTransformer(
 					function ($value) use ($entity, $field) {

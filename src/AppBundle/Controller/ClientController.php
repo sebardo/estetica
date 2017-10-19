@@ -136,7 +136,8 @@ class ClientController extends BackendBundleController
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
-			if(!empty($editForm->get('password'))){
+			$passwordFieldRequest = $request->request->get($editForm->getName())['password'];
+			if(!empty($passwordFieldRequest)){
 				$this->get('webapp.manager.client_manager')->encodePassword($entity);
 			}else{
 				$entity->setPassword($oldPassword);

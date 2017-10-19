@@ -226,6 +226,8 @@ class CreativityOrderController extends BackendBundleController
 				'support' => $creativity->getSupport(),
 				'creativity' => $creativity,
 				'entity' => $order,
+				'latitude' => $client->getLatitude(),
+				'longitude' => $client->getLongitude(),
 				'form' => $form->createView(),
 				'breadcrumbs' => $this->getBreadCrumbs(false),
 				'active_side_bar' => $this->getActiveSidebar()

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Services\ClientCodeGenerator;
+use AppBundle\Services\GoogleMapsApi;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -29,6 +31,13 @@ class Client extends Timestampable implements UserInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255, nullable=true)
+     */
+    protected $code;
 
     /**
      * @var string
@@ -229,6 +238,22 @@ class Client extends Timestampable implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param $code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 
     /**
@@ -826,5 +851,19 @@ class Client extends Timestampable implements UserInterface
         }
 
         $this->pressReleases->remove($pressRelease);
+    }
+
+    public function getLatitude()
+    {
+        $googleLocation = GoogleMapsApi::getGoogleApiLocation($this->getBillingAddress()->getAddress());
+
+        return $googleLocation['latitude'];
+    }
+
+    public function getLongitude()
+    {
+        $googleLocation = GoogleMapsApi::getGoogleApiLocation($this->getBillingAddress()->getAddress());
+
+        return $googleLocation['longitude'];
     }
 }

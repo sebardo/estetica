@@ -90,7 +90,8 @@ class LoadSpecialityData extends AbstractFixture implements OrderedFixtureInterf
 		$esteticaCollection[] = $entity;
 		//----
 		$entity = new Speciality();
-		$entity->setName('Otros Estética');
+		$entity->setName('Otros');
+		$entity->setFormatName('other1');
 		$manager->persist($entity);
 		$esteticaCollection[] = $entity;
 
@@ -137,7 +138,8 @@ class LoadSpecialityData extends AbstractFixture implements OrderedFixtureInterf
 		$mediciaEsteticaCollection[] = $entity;
 		//----
 		$entity = new Speciality();
-		$entity->setName('Otros Medicina Estética');
+		$entity->setName('Otros');
+		$entity->setFormatName('other2');
 		$manager->persist($entity);
 		$mediciaEsteticaCollection[] = $entity;
 

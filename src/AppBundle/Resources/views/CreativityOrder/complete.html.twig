@@ -99,7 +99,9 @@
             lon = $('#appbundle_creativityorder_delivery_longitude');
             if (value.val() != '') {
                 var aux = value.val().split('@');
-                latLng = L.latLng(aux[0], aux[1]);
+                var latitude = '{{ latitude }}' || aux[0];
+                var longitude = '{{ longitude }}' || aux[1];
+                latLng = L.latLng(latitude, longitude);
                 var map = L.map('map').setView(latLng, 15);
                 var myLayer = L.tileLayer(url_map, {
                     mapId: 'mapbox.streets',

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Client;
 use AppBundle\Entity\CreativityProposal;
 use AppBundle\Event\ProposalEvent;
 use AppBundle\ProposalEvents;
@@ -84,6 +85,8 @@ class CreativityProposalController extends BackendBundleController
 	public function createCreativityProposalAction(Request $request)
 	{
 		$entity = new CreativityProposal();
+		/** @var Client $client */
+		$client = $this->container->get('security.token_storage')->getToken()->getUser();
 		$form = $this->createForm('AppBundle\Form\CreativityProposalType', $entity);
 		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$form->handleRequest($request);
@@ -107,6 +110,8 @@ class CreativityProposalController extends BackendBundleController
 		return $this->render('AppBundle:CreativityProposal:new.html.twig', array(
 			'entity' => $entity,
 			'form' => $form->createView(),
+			'latitude' => $client->getLatitude(),
+			'longitude' => $client->getLongitude(),
 			'breadcrumbs' => ($this->isGranted('ROLE_ADMIN')) ? $this->getBreadCrumbs(true, array("name" => "backend.create")) : $this->getBreadCrumbs(false, array("name" => "backend.create")),
 			'active_side_bar' => $this->getActiveSidebar()
 		));

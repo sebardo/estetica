@@ -28,7 +28,7 @@
         <tbody>
         {% for entity in clientCollection %}
             <tr>
-                <td>{{ loop.index }}</td>
+                <td>{{ entity.code }}</td>
                 <td>{{ entity.createdAt|date('d/m/Y') }}</td>
                 <td>{{ entity.username }}</td>
                 <td><i class="fa fa-circle" style="color: {{ entity.active }}"></i></td>

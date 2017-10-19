@@ -97,6 +97,10 @@ services:
     webapp.services.mailer:
         class: AppBundle\Services\Mailer
         arguments: ["@mailer", "@templating"]
+    webapp.services.google_maps_api:
+        class: AppBundle\Services\GoogleMapsApi
+    webapp.services.client_code_generator:
+        class: AppBundle\Services\ClientCodeGenerator
     webapp.twig.client:
         class: AppBundle\Twig\ClientExtension
         arguments: [ "@service_container" ]
@@ -158,3 +162,8 @@ services:
             receiver: "%mail_press_central%"
         tags:
             - { name: kernel.event_listener, event: press_release.created, method: onPressReleaseCreated }
+
+    webapp.listener.client_code_generator:
+        class: AppBundle\EventListener\ClientCodeListener
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist }

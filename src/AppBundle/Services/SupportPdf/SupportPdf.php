@@ -8,9 +8,9 @@ use AppBundle\Entity\Creativity;
 
 abstract class SupportPdf implements SupportPdfInterface
 {
-	const FONT_STYLE_NORMAL = '16';
-	const FONT_STYLE_BIG = '24';
-	const FONT_STYLE_SMALL = '12';
+	const FONT_STYLE_NORMAL = '24';
+	const FONT_STYLE_BIG = '32';
+	const FONT_STYLE_SMALL = '16';
 	const FONT_WEIGHT_NORMAL = 'normal';
 	const FONT_WEIGHT_BOLD = 'bold';
 	const FONT_WEIGHT_LIGHT = 'light';
