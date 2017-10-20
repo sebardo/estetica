@@ -6,6 +6,7 @@ namespace AppBundle\Services\SupportPdf;
 
 class SupportFlyer extends SupportPdf
 {
+	const LINE_HEIGHT = 40;
 	const SUPPORT_NAME = 'flyers';
 	const FLYER_OBVERSE_HEADER = 'flyer-obverse-header';
 	const FLYER_OBVERSE_HEADER_ALIGN = 'center';
@@ -26,14 +27,14 @@ class SupportFlyer extends SupportPdf
 	const FLYER_OBVERSE_PRIZE_1_X = 0;
 	const FLYER_OBVERSE_PRIZE_1_Y = 70;
 	const FLYER_OBVERSE_PRIZE_1_SPACE_X = 0;
-	const FLYER_OBVERSE_PRIZE_1_SPACE_Y = 200;
+	const FLYER_OBVERSE_PRIZE_1_SPACE_Y = 70;
 	const FLYER_OBVERSE_PRIZE_1_STYLE = SupportPdf::FONT_STYLE_SMALL;
 	const FLYER_OBVERSE_PRIZE_2 = 'flyer-obverse-prize-2';
 	const FLYER_OBVERSE_PRIZE_2_ALIGN = 'center';
 	const FLYER_OBVERSE_PRIZE_2_X = 0;
 	const FLYER_OBVERSE_PRIZE_2_Y = 50;
 	const FLYER_OBVERSE_PRIZE_2_SPACE_X = 0;
-	const FLYER_OBVERSE_PRIZE_2_SPACE_Y = 340;
+	const FLYER_OBVERSE_PRIZE_2_SPACE_Y = 280;
 	const FLYER_OBVERSE_PRIZE_2_STYLE = SupportPdf::FONT_STYLE_SMALL;
 	const FLYER_OBVERSE_CONTENT_2 = 'flyer-obverse-content-2';
 	const FLYER_OBVERSE_CONTENT_2_ALIGN = 'center';
@@ -47,7 +48,7 @@ class SupportFlyer extends SupportPdf
 	const FLYER_OBVERSE_FOOTER_X = 0;
 	const FLYER_OBVERSE_FOOTER_Y = 70;
 	const FLYER_OBVERSE_FOOTER_SPACE_X = 0;
-	const FLYER_OBVERSE_FOOTER_SPACE_Y = 190;
+	const FLYER_OBVERSE_FOOTER_SPACE_Y = 50;
 	const FLYER_OBVERSE_FOOTER_STYLE = SupportPdf::FONT_STYLE_NORMAL;
 	const FLYER_BACK_HEADER = 'flyer-back-header';
 	const FLYER_BACK_HEADER_ALIGN = 'center';
@@ -61,14 +62,14 @@ class SupportFlyer extends SupportPdf
 	const FLYER_BACK_DESCRIPTION_X = 0;
 	const FLYER_BACK_DESCRIPTION_Y = 500;
 	const FLYER_BACK_DESCRIPTION_SPACE_X = 0;
-	const FLYER_BACK_DESCRIPTION_SPACE_Y = 50;
+	const FLYER_BACK_DESCRIPTION_SPACE_Y = 150;
 	const FLYER_BACK_DESCRIPTION_STYLE = SupportPdf::FONT_STYLE_NORMAL;
 	const FLYER_BACK_FOOTER = 'flyer-back-footer';
 	const FLYER_BACK_FOOTER_ALIGN = 'center';
 	const FLYER_BACK_FOOTER_X = 0;
 	const FLYER_BACK_FOOTER_Y = 100;
 	const FLYER_BACK_FOOTER_SPACE_X = 0;
-	const FLYER_BACK_FOOTER_SPACE_Y = 870;
+	const FLYER_BACK_FOOTER_SPACE_Y = 650;
 	const FLYER_BACK_FOOTER_STYLE = SupportPdf::FONT_STYLE_NORMAL;
 	const PAGES = 2;
 

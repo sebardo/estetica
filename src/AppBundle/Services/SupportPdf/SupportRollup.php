@@ -6,6 +6,7 @@ namespace AppBundle\Services\SupportPdf;
 
 class SupportRollup extends SupportPdf
 {
+	const LINE_HEIGHT = 40;
 	const SUPPORT_NAME = 'roll-up';
 	const ROLLUP_OBVERSE_HEADER = 'rollup-obverse-header';
 	const ROLLUP_OBVERSE_HEADER_ALIGN = 'right';
@@ -40,7 +41,7 @@ class SupportRollup extends SupportPdf
 	const ROLLUP_OBVERSE_FOOTER_X = 'center';
 	const ROLLUP_OBVERSE_FOOTER_Y = 100;
 	const ROLLUP_OBVERSE_FOOTER_SPACE_X = 0;
-	const ROLLUP_OBVERSE_FOOTER_SPACE_Y = 440;
+	const ROLLUP_OBVERSE_FOOTER_SPACE_Y = 300;
 	const ROLLUP_OBVERSE_FOOTER_STYLE = self::FONT_STYLE_BIG;
 	const PAGES = 1;
 

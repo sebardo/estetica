@@ -5,6 +5,7 @@ namespace AppBundle\Services;
 
 use AppBundle\Services\SupportPdf\SupportPdf;
 use AppBundle\Services\SupportPdf\SupportPdfInterface;
+use AppBundle\Services\SupportPdf\SupportRollup;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Image;
 
@@ -149,9 +150,9 @@ class Pdf
 
 			if($attributes['space_x'] > 0) {
 				$pdf->SetXY($attributes['space_x'], $attributes['space_y']);
-				$pdf->Cell($attributes['space_x'], $attributes['y'], $text, 0, 0, SupportPdf::formattingAlign($attributes['x']));
+				$pdf->MultiCell(0, SupportRollup::LINE_HEIGHT, $text, 0, SupportPdf::formattingAlign($attributes['x'], false));
 			}else {
-				$pdf->Cell(0, $attributes['y'], $text, 0, 0, SupportPdf::formattingAlign($attributes['align']));
+				$pdf->MultiCell(0, SupportRollup::LINE_HEIGHT, $text, 0, SupportPdf::formattingAlign($attributes['align']), false);
 			}
 		}
 	}
