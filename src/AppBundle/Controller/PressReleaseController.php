@@ -143,7 +143,7 @@ class PressReleaseController extends BackendBundleController
 		/** @var Client $client */
 		$client = $this->container->get('security.token_storage')->getToken()->getUser();
 
-		if($entity->getClient() !== $client) {
+		if($entity->getClient() !== $client && !$this->isGranted('ROLE_ADMIN')) {
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('validator.cannot_see_this'));
 
 			return $this->redirectToRoute('admin_press_release_list');
