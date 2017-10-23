@@ -92,7 +92,9 @@ class FilterRegistrationType
 				'expanded' => false,
 				'multiple' => true,
 				'attr' => array(
-					'class' => 'no-required'
+					'class' => 'no-required selectpicker2',
+					'autocomplete' => 'off',
+					'title' => 'registration.filter_form.speciality.default'
 				),
 				'data' => empty($dataForm['speciality']) ? null : $dataForm['speciality']
 			))
@@ -135,7 +137,7 @@ class FilterRegistrationType
 				'label' => 'registration.filter_form.language.name',
 				'required' => true,
 				'label_attr' => array('class' => ''),
-				'attr' => array('class' => ''),
+				'attr' => array('class' => 'selectpicker', 'autocomplete' => 'off', 'title' => 'registration.filter_form.language.name'),
 				'expanded' => false,
 				'multiple' => true,
 				'data' => empty($dataForm['language']) ? null : $dataForm['language']
@@ -187,7 +189,7 @@ class FilterRegistrationType
 				'label' => 'registration.filter_form.course.name',
 				'required' => true,
 				'label_attr' => array('class' => ''),
-				'attr' => array('class' => ''),
+				'attr' => array('class' => 'selectpicker', 'autocomplete' => 'off', 'title' => 'registration.filter_form.course.name'),
 				'expanded' => false,
 				'multiple' => true,
 				'data' => empty($dataForm['course']) ? null : $dataForm['course']

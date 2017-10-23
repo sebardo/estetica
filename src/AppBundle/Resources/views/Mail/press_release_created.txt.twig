@@ -1,5 +1,5 @@
 Noticia: {{ press_release.id }}
 Título: {{ press_release.title }}
-Publicado: {{ press_release.published }}
+Publicado: {{ press_release.published|date('d/m/Y')  }}
 Description: {{ press_release.description }}
 Image: <img class="file-doc-image-preview img-responsive" src="{{ document_path ~ '/' ~ press_release.document }}">

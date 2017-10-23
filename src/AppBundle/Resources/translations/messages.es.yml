@@ -11,6 +11,7 @@ validator:
   must_have_one_image: 'Al menos debe tener una imagen'
   must_have_two_image: 'Al menos debe tener 2 imágenes'
   must_not_be_blank: 'No puede estar vacío'
+  cannot_see_this: 'No tienes permisos para ver este registro'
 app:
   show: 'Ver'
   close: 'Cerrar'

@@ -8,6 +8,12 @@
 {% endif %}
 {% block list_title 'registration.list'|trans%}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- SelectMultiplePicker CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css">">
+{% endblock %}
+
 {% block list_body %}
     <div class="row">
         <div class="col-xs-12">
@@ -135,6 +141,7 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>
     <script type="text/javascript">
         //ParentSpeciality
 
@@ -150,6 +157,10 @@
                 data: data,
                 success: function(data) {
                     var $speciality_selector = $('#form_speciality');
+                    $speciality_selector
+                            .find('option')
+                            .remove()
+                            .end();
                     console.log(data);
 
                     for (var i=0, total = data.length; i < total; i++) {

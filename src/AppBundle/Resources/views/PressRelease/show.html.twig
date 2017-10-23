@@ -21,7 +21,7 @@
         <label class="">
             {{ 'press_release.form.description.name' | trans() }}
         </label>
-        <textarea class="form-control" disabled="disabled">{{ entity.description }}</textarea>
+        <textarea class="form-control" disabled="disabled" rows="30">{{ entity.description }}</textarea>
     </div>
     <div class="form-group">
         <label class="">
@@ -30,7 +30,7 @@
         {% if entity.document is not null %}
             <div class="row">
                 <div class="col-xs-4">
-                    <img class="logo-doc-image-preview img-responsive" src="{{ document_path ~ '/' ~ entity.document }}">
+                    <a target="_blank" class="logo-doc-image-preview img-responsive" href="{{ document_path ~ '/' ~ entity.document }}">{{ entity.document }}</a>
                 </div>
             </div>
         {% endif %}

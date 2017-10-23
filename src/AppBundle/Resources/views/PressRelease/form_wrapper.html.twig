@@ -1,5 +1,10 @@
 {% extends "BackendBundle:CRUD:create.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
+{% endblock %}
+
 {% block create_body %}
     {{ form_start(form) }}
     {{ form_row(form.title) }}
@@ -18,4 +23,16 @@
         {{ form_rest(form) }}
     </div>
     {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.es.min.js"></script>
+    <script type="application/javascript">
+        $('.datepicker').datepicker({
+            'language': 'es',
+            'format': 'yyyy-mm-dd'
+        });
+    </script>
 {% endblock %}

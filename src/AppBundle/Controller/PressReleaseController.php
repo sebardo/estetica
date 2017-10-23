@@ -134,12 +134,21 @@ class PressReleaseController extends BackendBundleController
 	 *
 	 * @Route("/{id}/edit", name="admin_press_release_show")
 	 * @Method({"GET", "POST"})
-	 * @Security("has_role('ROLE_ADMIN')")
+	 * @Security("has_role('ROLE_CLIENT')")
 	 *
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
 	 */
 	public function showCreativityProposalAction(Request $request, PressRelease $entity)
 	{
+		/** @var Client $client */
+		$client = $this->container->get('security.token_storage')->getToken()->getUser();
+
+		if($entity->getClient() !== $client) {
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('validator.cannot_see_this'));
+
+			return $this->redirectToRoute('admin_press_release_list');
+		}
+
 		return $this->render('AppBundle:PressRelease:show.html.twig', array(
 			'entity' => $entity,
 			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.show")),

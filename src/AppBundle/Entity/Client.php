@@ -72,7 +72,7 @@ class Client extends Timestampable implements UserInterface
      *
      * @ORM\Column(name="is_admin", type="boolean")
      */
-    public $isAdministrator;
+    protected $isAdministrator;
 
     /**
      * @var string
@@ -140,28 +140,28 @@ class Client extends Timestampable implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="url_web", type="string", length=255)
+     * @ORM\Column(name="url_web", type="string", length=255, nullable=true)
      */
     private $urlWeb;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="facebook", type="string", length=255)
+     * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
      */
     private $facebook;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="instagram", type="string", length=255)
+     * @ORM\Column(name="instagram", type="string", length=255, nullable=true)
      */
     private $instagram;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="blog", type="string", length=255)
+     * @ORM\Column(name="blog", type="string", length=255, nullable=true)
      */
     private $blog;
 

@@ -20,12 +20,13 @@ class PressReleaseType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
-            ->add('published', 'date', array(
+            ->add('published', 'datetime', array(
                 'label' => 'press_release.form.published.name',
                 'required' => true,
                 'label_attr' => array('class' => ''),
-                'attr' => array('class' => ''),
-                'widget' => 'single_text'
+                'attr' => array('class' => 'datepicker'),
+                'widget' => 'single_text',
+                'html5' => false
             ))
             ->add('description', 'BackendBundle\Form\Type\CKeditorType', array(
                 'label' => 'press_release.form.description.name',
@@ -34,7 +35,7 @@ class PressReleaseType extends AbstractType
                 'attr' => array('class' => '')
             ))
             ->add('documentFile', 'Vich\UploaderBundle\Form\Type\VichFileType', array(
-                'required' => ($options['edit_form']) ? false : true,
+                'required' => false, //($options['edit_form']) ? false : true,
                 'allow_delete' => false,
                 'label' => 'press_release.form.document.name',
                 'label_attr' => array('class' => ''),
