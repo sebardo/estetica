@@ -138,7 +138,7 @@ class PressReleaseController extends BackendBundleController
 	 *
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
 	 */
-	public function showCreativityProposalAction(Request $request, PressRelease $entity)
+	public function showPressReleaseAction(Request $request, PressRelease $entity)
 	{
 		/** @var Client $client */
 		$client = $this->container->get('security.token_storage')->getToken()->getUser();

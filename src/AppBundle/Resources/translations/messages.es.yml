@@ -284,6 +284,10 @@ registration:
     title: 'Editar un Bolsa de empleo'
     subtitle: 'Editar al Bolsa de empleo'
     description: 'Editando al Bolsa de empleo'
+  show:
+    title: 'Ver Bolsa de empleo'
+    subtitle: 'Ver Bolsa de empleo'
+    description: 'Ver la Bolsa de empleo'
   create:
     title: 'Crear un Bolsa de empleo'
     subtitle: 'Crear al Bolsa de empleo'
@@ -291,6 +295,8 @@ registration:
   list:
     title: 'Listado de Bolsa de empleos'
     subtitle: 'Listado de todos los Bolsa de empleos'
+    firstname: 'Primer Apellido'
+    secondname: 'Segundo Apellido'
   form:
     errors:
       speciality:

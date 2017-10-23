@@ -176,6 +176,27 @@ class RegistrationController extends BackendBundleController
 	}
 
 	/**
+	 * Displays a show view to an existing press release entity.
+	 *
+	 * @param Request $request
+	 * @param Registration $entity
+	 *
+	 * @Route("/{id}/edit", name="admin_registration_show")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_CLIENT')")
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+	 */
+	public function showRegistrationAction(Request $request, Registration $entity)
+	{
+		return $this->render('AppBundle:Registration:show.html.twig', array(
+			'entity' => $entity,
+			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.show")),
+			'active_side_bar' => $this->getActiveSidebar()
+		));
+	}
+
+	/**
 	 * Deletes a registration entity.
 	 *
 	 * @param Request $request

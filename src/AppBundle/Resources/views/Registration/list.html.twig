@@ -105,6 +105,8 @@
                     <tr>
                         <th>{{ '#' }}</th>
                         <th>{{ 'app.list.table.name'|trans|title }}</th>
+                        <th>{{ 'registration.list.firstname'|trans|title }}</th>
+                        <th>{{ 'registration.list.secondname'|trans|title }}</th>
                         <th>{{ 'app.edit'|trans|title }}</th>
                         <th>{{ 'app.delete'|trans|title }}</th>
                     </tr>
@@ -118,9 +120,13 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ entity.name }}</td>
+                        <td>{{ entity.firstLastname }}</td>
+                        <td>{{ entity.secondLastname }}</td>
                         <td>
                             {% if is_granted("ROLE_ADMIN") %}
-                            <a class="btn btn-success" href="{{ path('admin_registration_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
+                                <a class="btn btn-success" href="{{ path('admin_registration_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
+                            {% else %}
+                                <a class="btn btn-loop" href="{{ path('admin_registration_show',{'id':entity.id}) }}">{{ 'app.show'|trans|title }}</a></td>
                             {% endif %}
                         <td>
                             {% if is_granted("ROLE_ADMIN") %}
