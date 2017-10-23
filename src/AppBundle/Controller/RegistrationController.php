@@ -181,7 +181,7 @@ class RegistrationController extends BackendBundleController
 	 * @param Request $request
 	 * @param Registration $entity
 	 *
-	 * @Route("/{id}/edit", name="admin_registration_show")
+	 * @Route("/admin/registration/{id}/edit", name="admin_registration_show")
 	 * @Method({"GET", "POST"})
 	 * @Security("has_role('ROLE_CLIENT')")
 	 *
