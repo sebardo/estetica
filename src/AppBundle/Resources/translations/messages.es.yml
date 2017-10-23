@@ -214,7 +214,7 @@ city:
 multimedia:
   title_page: 'Multimedia'
   title_nav: 'Multimedia'
-  list: 'Listado Multimedia'
+  list: 'Formación continuada/listado multimedia'
   create_edit: 'Editar Multimedia'
   create_succesfull: 'Multimedia creado correctamente'
   edit_succesfull: 'Multimedia editado correctamente'
