@@ -126,7 +126,7 @@
                             {% if is_granted("ROLE_ADMIN") %}
                                 <a class="btn btn-success" href="{{ path('admin_registration_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
                             {% else %}
-                                <a class="btn btn-loop" href="{{ path('admin_registration_show',{'id':entity.id}) }}">{{ 'app.show'|trans|title }}</a></td>
+                                <a class="btn btn-success" href="{{ path('admin_registration_show',{'id':entity.id}) }}">{{ 'app.show'|trans|title }}</a></td>
                             {% endif %}
                         <td>
                             {% if is_granted("ROLE_ADMIN") %}

@@ -195,7 +195,7 @@ class RegistrationController extends BackendBundleController
 		return $this->render('AppBundle:Registration:show.html.twig', array(
 			'entity' => $entity,
 			'form' => $editForm->createView(),
-			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.show")),
+			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "app.show")),
 			'active_side_bar' => $this->getActiveSidebar()
 		));
 	}
