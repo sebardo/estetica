@@ -189,8 +189,12 @@ class RegistrationController extends BackendBundleController
 	 */
 	public function showRegistrationAction(Request $request, Registration $entity)
 	{
+		$editForm = $this->createForm(new RegistrationType($this->container), $entity, array('edit_form' => true));
+		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.edit_btn'),'attr'=>array('class'=>'btn btn-success')));
+
 		return $this->render('AppBundle:Registration:show.html.twig', array(
 			'entity' => $entity,
+			'form' => $editForm->createView(),
 			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.show")),
 			'active_side_bar' => $this->getActiveSidebar()
 		));
