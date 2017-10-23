@@ -42,6 +42,10 @@ class LoadTimeAvailabilityData extends AbstractFixture implements OrderedFixture
 		$entity = new TimeAvailability();
 		$entity->setName('Parcial');
 		$manager->persist($entity);
+		// ByHours
+		$entity = new TimeAvailability();
+		$entity->setName('Por horas');
+		$manager->persist($entity);
 
 		$manager->flush();
 	}

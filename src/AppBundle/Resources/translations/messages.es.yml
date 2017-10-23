@@ -378,7 +378,7 @@ registration:
       name: Email
       default: Email
     parent_speciality:
-      name: Especialidad Padre
+      name: Especialidad
       default: Selecciona una opción
     speciality:
       name: Especialidad
