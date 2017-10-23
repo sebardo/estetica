@@ -21,7 +21,7 @@
         <label class="">
             {{ 'press_release.form.description.name' | trans() }}
         </label>
-        <textarea class="form-control" disabled="disabled" rows="30">{{ entity.description }}</textarea>
+        <textarea class="form-control" disabled="disabled" rows="30">{{ entity.description|striptags }}</textarea>
     </div>
     <div class="form-group">
         <label class="">
