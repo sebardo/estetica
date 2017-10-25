@@ -34,7 +34,7 @@
                     {% if entity.fileDocs is not null %}
                         <div class="row">
                             <div class="col-xs-4">
-                                <img class="file-doc-image-preview img-responsive" src="{{ image_path ~ '/' ~ get_filedoc_by_client(entity, loop.index - 1) }}">
+                                <img class="file-doc-image-preview img-responsive" src="{{ files_path ~ '/' ~ get_filedoc_by_client(entity, loop.index - 1) }}">
                             </div>
                         </div>
                     {% endif %}

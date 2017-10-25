@@ -321,6 +321,8 @@ registration:
     second_last_name:
       name: Segundo Apellido
       default: Segundo Apellido
+    photo:
+      name: Foto
     phone:
       name: Teléfono
       default: Teléfono
