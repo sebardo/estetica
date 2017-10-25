@@ -7,6 +7,8 @@ use AppBundle\Entity\Registration\Experience;
 use AppBundle\Entity\Registration\PlaceResidence;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -14,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="registration")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegistrationRepository")
+ * @Vich\Uploadable
  */
 class Registration extends Timestampable
 {
@@ -81,6 +84,20 @@ class Registration extends Timestampable
 	 * @ORM\Column(name="birthday", type="datetime")
 	 */
 	private $birthday;
+
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="photo", type="string", length=255)
+	 */
+	private $photo;
+
+	/**
+	 * @var File
+	 *
+	 * @Vich\UploadableField(mapping="registrations", fileNameProperty="photo")
+	 */
+	private $photoFile;
 
 	/**
 	 * @ORM\OneToOne(targetEntity="Image", inversedBy="registration", cascade={"persist"})
@@ -299,6 +316,42 @@ class Registration extends Timestampable
 	public function setEmail($email)
 	{
 		$this->email = $email;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPhoto()
+	{
+		return $this->photo;
+	}
+
+	/**
+	 * @param mixed $photo
+	 */
+	public function setPhoto($photo)
+	{
+		$this->photo = $photo;
+	}
+
+	/**
+	 * @return File
+	 */
+	public function getPhotoFile()
+	{
+		return $this->photoFile;
+	}
+
+	/**
+	 * @param File|null $photoFile
+	 */
+	public function setPhotoFile(File $photoFile = null)
+	{
+		$this->photoFile = $photoFile;
+
+		if ($photoFile) {
+			$this->updatedAt = new \DateTime('now');
+		}
 	}
 
 	/**

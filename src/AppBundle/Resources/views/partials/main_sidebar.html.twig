@@ -20,6 +20,27 @@
                 <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.ticket.title_nav'|trans|title }}</span>
                 </a>
             </li>
+            <li id="creativity-proposal" class="treeview">
+                <a href=""><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity_proposal.title_nav'|trans|title }}</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="press_release" class="treeview">
+                        <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans|title }}</span>
+                        </a>
+                    </li>
+                    <li id="creativity" class="treeview">
+                        <a href="{{ path('admin_creativity_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity.title_nav'|trans|title }}</span>
+                        </a>
+                    </li>
+                    <li id="admin" class="treeview">
+                        <a id="press-release-create" href="{{ path('admin_creativity_proposal_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity_proposal.list'|trans|title }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li id="manage-cites" class="treeview">
                 <a href="#"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.manage_cites.title_nav'|trans|title }}</span>
                 </a>
@@ -44,8 +65,12 @@
                 <a href="http://materialparaestetica.com/" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.buying_central.title_nav'|trans|title }}</span>
                 </a>
             </li>
-            <li id="press_release" class="treeview">
-                <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans|title }}</span>
+            <li id="registration" class="treeview">
+                <a href="{{ path('admin_registration_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.registration.title_nav'|trans|title }}</span>
+                </a>
+            </li>
+            <li id="flowwwer" class="treeview">
+                <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.flowwwer.title_nav'|trans|title }}</span>
                 </a>
             </li>
             <li id="client" class="treeview">
@@ -55,12 +80,9 @@
                 <a href="{{ path('admin_academic_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.academic.title_nav'|trans|title }}</span>
                 </a>
             </li>
-            <li id="registration" class="treeview">
-                <a href="{{ path('admin_registration_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.registration.title_nav'|trans|title }}</span>
-                </a>
-            </li>
-            <li id="creativity" class="treeview">
-                <a href="{{ path('admin_creativity_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity.title_nav'|trans|title }}</span>
+        {% elseif is_granted("ROLE_CLIENT") %}
+            <li id="ticket" class="treeview">
+                <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.ticket.title_nav'|trans|title }}</span>
                 </a>
             </li>
             <li id="creativity-proposal" class="treeview">
@@ -70,27 +92,22 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li id="admin">
-                        <a id="press-release-create" href="{{ path('admin_creativity_proposal_list') }}"><i class="fa fa-study"></i> <span>{{ 'app.sidebar.creativity_proposal.list'|trans|title }}</span>
+                    <li id="press_release" class="treeview">
+                        <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans|title }}</span>
+                        </a>
+                    </li>
+                    <li id="creativity-order" class="treeview">
+                        <a href="{{ path('admin_creativity_selection') }}"><i class="fa fa-bars"></i> <span>{{ 'app.download'|trans|title }}</span>
+                        </a>
+                    </li>
+                    <li id="creativity-proposal" class="treeview">
+                        <a href="{{ path('admin_creativity_proposal_create') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity_proposal.title_nav_other'|trans|title }}</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li id="flowwwer" class="treeview">
-                <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.flowwwer.title_nav'|trans|title }}</span>
-                </a>
-            </li>
-        {% elseif is_granted("ROLE_CLIENT") %}
-            <li id="ticket" class="treeview">
-                <a href="{{ ticket_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.ticket.title_nav'|trans|title }}</span>
-                </a>
-            </li>
             <li id="manage-cites" class="treeview">
                 <a href="#"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.manage_cites.title_nav'|trans|title }}</span>
-                </a>
-            </li>
-            <li id="buying-central" class="treeview">
-                <a href="http://materialparaestetica.com/" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.buying_central.title_nav'|trans|title }}</span>
                 </a>
             </li>
             <li id="video" class="treeview">
@@ -109,20 +126,16 @@
                     </li>
                 </ul>
             </li>
+            <li id="buying-central" class="treeview">
+                <a href="http://materialparaestetica.com/" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.buying_central.title_nav'|trans|title }}</span>
+                </a>
+            </li>
             <li id="registration" class="treeview">
                 <a href="{{ path('admin_registration_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.registration.title_nav'|trans|title }}</span>
                 </a>
             </li>
-            <li id="press_release" class="treeview">
-                <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans|title }}</span>
-                </a>
-            </li>
-            <li id="creativity-proposal" class="treeview">
-                <a href="{{ path('admin_creativity_proposal_create') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity_proposal.title_nav'|trans|title }}</span>
-                </a>
-            </li>
-            <li id="creativity-order" class="treeview">
-                <a href="{{ path('admin_creativity_selection') }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.creativity_order.title_nav'|trans|title }}</span>
+            <li id="registration" class="treeview">
+                <a href="{{ path('admin_client_edit', {'id': app.user.id }) }}"><i class="fa fa-bars"></i> <span>{{ 'app.sidebar.user.title_nav' | trans() }}</span>
                 </a>
             </li>
             <li id="flowwwer" class="treeview">

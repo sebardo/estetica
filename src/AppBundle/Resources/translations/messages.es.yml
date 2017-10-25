@@ -62,12 +62,15 @@ app:
       title_nav: 'Creatividad'
       list: 'Listado de creatividades'
     creativity_proposal:
-      title_nav: 'Propuesta Creatividad'
+      title_nav: 'Marketing Integral'
+      title_nav_other: 'Propuesta creatividad'
       list: 'Listado de propuestas'
       create: 'Crear propuesta creatividad'
     creativity_order:
       title_nav: 'Personalización Creatividad'
       create: 'Crear personalización creatividad'
+    user:
+      title_nav: 'Perfil'
   gender:
     name: Género
     default: Selecciona un género
@@ -501,7 +504,7 @@ creativity:
     file_doc_add_file_doc: 'Añadir imagen'
 creativity_proposal:
   title_page: 'Propuesta Creatividad'
-  title_nav: 'Propuesta Creatividad'
+  title_nav: 'Marketing Integral'
   list: 'Listado Propuesta Creatividades'
   create_edit: 'Editar Propuesta Creatividad'
   create_succesfull: 'Propuesta Creatividad creada correctamente'

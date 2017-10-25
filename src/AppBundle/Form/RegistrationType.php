@@ -56,6 +56,13 @@ class RegistrationType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
+            ->add('photoFile', 'Vich\UploaderBundle\Form\Type\VichImageType', array(
+                'required' => ($options['edit_form']) ? false : true,
+                'allow_delete' => false,
+                'label' => 'registration.form.photo.name',
+                'label_attr' => array('class' => ''),
+                'attr' => array('class' => '')
+            ))
             ->add('phone', null, array(
                 'label' => 'registration.form.phone.name',
                 'required' => true,
