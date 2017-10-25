@@ -37,7 +37,7 @@
                     for (var i = 0, total = data.length; i < total; i++) {
                         if (data[i].subcategory && subcategory !== data[i].subcategory) {
                             subcategory = data[i].subcategory;
-                            $selector.append('<div class="container"><div class="row"><div class="col-xs-6 col-sm-4 col-md-3 subcategory-title-wrapper"><h5 class="subcategory-title">' + subcategory.toUpperCase() + '</h5></div></div></div>');
+                            $selector.append('<div class="col-xs-12 container"><div class="row"><div class="col-xs-6 col-sm-4 col-md-3 subcategory-title-wrapper"><h3 class="subcategory-title">' + subcategory.toUpperCase() + '</h3></div></div></div>');
                         }
                         $selector.append('<div class="col-xs-6 col-sm-4 col-md-3 creativity-wrapper text-center pointer" data-value="' + data[i].id + '" data-url="' + data[i].url + '"><img class="img-responsive" src="' + data[i].image + '" alt="' + data[i].name + '"><p class="title-creativity">' + data[i].name + '</p></div>');
                     }

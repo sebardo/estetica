@@ -35,7 +35,8 @@
          {% set required_image = false %}
          <div class="row">
              <div class="col-xs-4">
-                 <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image.fileName }}">
+                 {#<img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image.fileName }}">#}
+                 <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.image.fileName }}">{{ entity..image.fileName }}</a>
              </div>
          </div>
      {% endif %}

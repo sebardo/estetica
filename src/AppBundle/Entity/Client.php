@@ -853,16 +853,21 @@ class Client extends Timestampable implements UserInterface
         $this->pressReleases->remove($pressRelease);
     }
 
+    public function getCompleteAddress()
+    {
+        return $this->getBillingAddress()->getAddress() . ' ' . $this->getBillingAddress()->getPostalCode() . ' ' . $this->getBillingAddress()->getCity() . ' ' . $this->getBillingAddress()->getCity()->getProvince() . ' ' . $this->getBillingAddress()->getCity()->getProvince()->getCountry();
+    }
+
     public function getLatitude()
     {
-        $googleLocation = GoogleMapsApi::getGoogleApiLocation($this->getBillingAddress()->getAddress());
+        $googleLocation = GoogleMapsApi::getGoogleApiLocation($this->getCompleteAddress());
 
         return $googleLocation['latitude'];
     }
 
     public function getLongitude()
     {
-        $googleLocation = GoogleMapsApi::getGoogleApiLocation($this->getBillingAddress()->getAddress());
+        $googleLocation = GoogleMapsApi::getGoogleApiLocation($this->getCompleteAddress());
 
         return $googleLocation['longitude'];
     }

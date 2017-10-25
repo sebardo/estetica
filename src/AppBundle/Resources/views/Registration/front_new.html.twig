@@ -56,11 +56,12 @@
                                     {% set required_image = false %}
                                     <div class="row">
                                         <div class="col-xs-4">
-                                            <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image.fileName }}">
+                                            {#<img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.image.fileName }}">#}
+                                            <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.image.fileName }}">{{ entity..image.fileName }}</a>
                                         </div>
                                     </div>
                                 {% endif %}
-                                {{ form_row(form.image, {'label': false}) }}
+                                {{ form_row(form.image) }}
                                 {% if speciality_error == true or speciality_detail_error == true %}
                                     {{ form_row(form.parentSpeciality, {'attr': {'class': error_form_class }}) }}
                                     {% if speciality_error != false %}
