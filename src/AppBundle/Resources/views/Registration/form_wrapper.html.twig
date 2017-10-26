@@ -123,6 +123,15 @@
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.es.min.js"></script>
+    <script type="application/javascript">
+        $('.datepicker').datepicker({
+            'language': 'es',
+            'format': 'yyyy-mm-dd',
+            'autoclose': true
+        });
+    </script>
     <script type="text/javascript">
         var hide_detail_fields = function() {
             var $field_detail = $('.field-detail');

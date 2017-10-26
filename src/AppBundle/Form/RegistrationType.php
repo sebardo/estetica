@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RegistrationType extends AbstractType
 {
@@ -56,7 +57,7 @@ class RegistrationType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
-            ->add('photoFile', 'Vich\UploaderBundle\Form\Type\VichImageType', array(
+            ->add('photoFile', VichImageType::class, array(
                 'required' => ($options['edit_form']) ? false : true,
                 'allow_delete' => false,
                 'label' => 'registration.form.photo.name',
@@ -91,7 +92,7 @@ class RegistrationType extends AbstractType
                 'label' => 'registration.form.birthday.name',
                 'required' => true,
                 'label_attr' => array('class' => ''),
-                'attr' => array('class' => ''),
+                'attr' => array('class' => 'datepicker'),
                 'widget' => 'single_text'
 
             ))
