@@ -213,5 +213,10 @@
                 }
             });
         });
+
+        setTimeout(function () {
+            $('input[type="checkbox"]').iCheck('disable');
+            $('input[type="radio"]').iCheck('disable');
+        }, 1000);
     </script>
 {% endblock %}

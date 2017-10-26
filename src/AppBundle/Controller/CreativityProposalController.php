@@ -104,7 +104,7 @@ class CreativityProposalController extends BackendBundleController
 
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_proposal.create_succesfull'));
 
-			return $this->redirectToRoute('admin_creativity_proposal_list');
+			return $this->redirectToRoute('homepage');
 		}
 
 		return $this->render('AppBundle:CreativityProposal:new.html.twig', array(
