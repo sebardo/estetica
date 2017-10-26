@@ -122,7 +122,7 @@ class Pdf
 	{
 		$pathArray = explode('/', $imagePath);
 		$pathArraySize = count($pathArray);
-		$pathArray[$pathArraySize - 1] = 'thumbail_' . $pathArray[$pathArraySize - 1];
+		$pathArray[$pathArraySize - 1] = 'thumbnail_' . $pathArray[$pathArraySize - 1];
 
 		return implode('/', $pathArray);
 	}

@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Services\ClientCodeGenerator;
 use AppBundle\Services\GoogleMapsApi;
+use AppBundle\Services\ImageHandler;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -180,6 +181,13 @@ class Client extends Timestampable implements UserInterface
      * @ORM\JoinColumn(name="local_address_id", referencedColumnName="id")
      */
     private $localAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="thumbnail_logo", type="string", length=255, nullable=true)
+     */
+    private $thumbnailLogo;
 
     /**
      * @var string
@@ -738,10 +746,36 @@ class Client extends Timestampable implements UserInterface
         $fileName = uniqid('logo-').'.'.$this->getLogoFile()->guessExtension();
 
         $this->getLogoFile()->move($directory, $fileName);
+        //
+        $fileFullPath = $directory . '/' . $fileName;
+        $pathArray = explode('/', $fileFullPath);
+        $pathArraySize = count($pathArray);
+        $this->setThumbnailLogo('thumbnail_' . $pathArray[$pathArraySize - 1]);
+        $pathArray[$pathArraySize - 1] = $this->getThumbnailLogo();
+        $thumbnailFullPath = implode('/', $pathArray);
+        $logoThumbnail = ImageHandler::generateImageThumbnail($fileFullPath, $thumbnailFullPath, 90, 90);
+        //
 
         $this->setLogo($fileName);
 
         unset($this->logoFile);
+        unset($logoThumbnail);
+    }
+
+    /**
+     * @return string
+     */
+    public function getThumbnailLogo()
+    {
+        return $this->thumbnailLogo;
+    }
+
+    /**
+     * @param string $thumbnailLogo
+     */
+    public function setThumbnailLogo($thumbnailLogo)
+    {
+        $this->thumbnailLogo = $thumbnailLogo;
     }
 
     /**

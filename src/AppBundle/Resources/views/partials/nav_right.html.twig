@@ -12,8 +12,10 @@
     {% if is_granted('ROLE_ADMIN') %}
         <img class="img-circle" src="{{ asset('bundles/backend/img/avatar_default.png') }}">
     {% else %}
-        {% if app.user.logo is not empty %}
-            <img class="img-circle" src="{{ asset(image_path ~ '/' ~ app.user.logo) }}">
+        {% if app.user.thumbnailLogo is not empty %}
+            <img class="img-responsive" src="{{ asset(image_path ~ '/' ~ app.user.thumbnailLogo) }}">
+        {% elseif app.user.logo is not empty %}
+            <img class="img-responsive" src="{{ asset(image_path ~ '/' ~ app.user.logo) }}">
         {% else %}
             <img class="img-circle" src="{{ asset('bundles/backend/img/avatar_default.png') }}">
         {% endif %}

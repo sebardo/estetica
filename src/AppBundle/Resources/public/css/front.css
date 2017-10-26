@@ -5,3 +5,9 @@
 .sidebar-menu .treeview-menu > li > a {
     padding-left: 30px;
 }
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
+    height: auto;
+    width: auto;
+    margin: 0 auto;
+}
