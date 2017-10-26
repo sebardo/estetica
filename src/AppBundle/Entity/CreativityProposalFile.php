@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CreativityProposalFileRepository")
  * @Vich\Uploadable
  */
-class CreativityProposalFile extends Timestampable
+class CreativityProposalFile extends Timestampable implements \Serializable
 {
     /**
      * @var int
@@ -125,6 +125,39 @@ class CreativityProposalFile extends Timestampable
     public function __toString()
     {
         return (string)$this->id;
+    }
+
+    /**
+     * String representation of object
+     * @link http://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->file
+        ));
+    }
+
+    /**
+     * Constructs the object
+     * @link http://php.net/manual/en/serializable.unserialize.php
+     *
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     *
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->file
+            ) = unserialize($serialized);
     }
 }
 

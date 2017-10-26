@@ -362,6 +362,8 @@ class Registration extends Timestampable
 		$this->getPhotoFile()->move($directory, $fileName);
 
 		$this->setPhotoPath($fileName);
+
+		unset($this->photoFile);
 	}
 
 	/**
@@ -791,6 +793,8 @@ class Registration extends Timestampable
 		$this->getCvFile()->move($directory, $fileName);
 
 		$this->setCvPath($fileName);
+
+		unset($this->cvFile);
 	}
 
 	/**

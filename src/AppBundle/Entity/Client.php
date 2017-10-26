@@ -740,6 +740,8 @@ class Client extends Timestampable implements UserInterface
         $this->getLogoFile()->move($directory, $fileName);
 
         $this->setLogo($fileName);
+
+        unset($this->logoFile);
     }
 
     /**

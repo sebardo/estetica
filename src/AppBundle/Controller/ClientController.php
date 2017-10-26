@@ -145,8 +145,6 @@ class ClientController extends BackendBundleController
 			$this->get('webapp.manager.client_manager')->updateClient($entity);
 
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.edit_succesfull'));
-
-			return $this->redirectToRoute('admin_client_edit', array('id' => $entity->getId()));
 		}
 
 		return $this->render('AppBundle:Client:edit.html.twig', array(
@@ -175,9 +173,7 @@ class ClientController extends BackendBundleController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$em->remove($entity);
-			$em->flush();
+			$this->get('webapp.manager.client_manager')->save($entity);
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.delete_succesfull'));
 		}
 
