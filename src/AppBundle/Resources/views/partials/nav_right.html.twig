@@ -7,3 +7,15 @@
         <a class="btn btn-default btn-flat" href="{{ path('admin_client_edit', {'id': app.user.id }) }}">{{ 'app.edit' | trans() }}</a>
     {% endif %}
 {% endblock %}
+
+{% block profile_logo %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <img class="img-circle" src="{{ asset('bundles/backend/img/avatar_default.png') }}">
+    {% else %}
+        {% if app.user.logo is not empty %}
+            <img class="img-circle" src="{{ asset(image_path ~ '/' ~ app.user.logo) }}">
+        {% else %}
+            <img class="img-circle" src="{{ asset('bundles/backend/img/avatar_default.png') }}">
+        {% endif %}
+    {% endif %}
+{% endblock %}

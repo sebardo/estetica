@@ -13,7 +13,9 @@
             <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
                 <li class="user-header">
+                    {% block profile_logo %}
                         <img class="img-circle" src="{{ asset('bundles/backend/img/avatar_default.png') }}">
+                    {% endblock %}
                     <p>
                         {{ app.user.username }}
                     </p>
