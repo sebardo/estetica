@@ -9,28 +9,42 @@ class ImageHandler
 	const THUMBNAIL_IMAGE_MAX_WIDTH =  150;
 	const THUMBNAIL_IMAGE_MAX_HEIGHT = 150;
 
+	public static function getType($filePath)
+	{
+		$response = false;
+
+		$sizeFile = getimagesize($filePath);
+		if(array_key_exists("mime", $sizeFile)) {
+			$mimeFile = $sizeFile["mime"];
+			$mimeFileArray = explode('/', $mimeFile);
+			$response = $mimeFileArray[1];
+		}
+
+		return $response;
+	}
+
 	public static function imageCreateFromAny($filePath)
 	{
-		$type = exif_imagetype($filePath); // [] if you don't have exif you could use getImageSize()
+		$type = self::getType($filePath); // [] if you don't have exif you could use getImageSize()
+
 		$allowedTypes = array(
-			1,  // [] gif
-			2,  // [] jpg
-			3,  // [] png
+			"gif",  // [] gif
+			"jpeg",  // [] jpg
+			"png",  // [] png
 		);
 		
 		if (!in_array($type, $allowedTypes)) {
 			return false;
 		}
 
-
 		switch ($type) {
-			case 1 :
+			case "gif" :
 				$im = imagecreatefromgif($filePath);
 				break;
-			case 2 :
+			case "jpeg" :
 				$im = imagecreatefromjpeg($filePath);
 				break;
-			case 3 :
+			case "png" :
 				$im = imagecreatefrompng($filePath);
 				break;
 			default :
@@ -72,15 +86,31 @@ class ImageHandler
 		} else {
 			$thumbnailImageHeight = (int) ($thumbnailImageWidth / $sourceAspectRatio);
 		}
-		$thumbnailGdImage = imagecreatetruecolor($thumbnailImageWidth, $thumbnailImageHeight);
-		imagealphablending($thumbnailGdImage, false);
-		imagesavealpha($thumbnailGdImage,true);
-		$col = imagecolorallocatealpha($thumbnailGdImage, 255, 255, 255, 127);
-		imagecopyresampled($thumbnailGdImage, $sourceGdImage, 0, 0, 0, 0, $thumbnailImageWidth, $thumbnailImageHeight, $imageAttributes['width'], $imageAttributes['height']);
-		imagepng($thumbnailGdImage, $thumbnailImagePath, 7);
-		imagedestroy($sourceGdImage);
-		imagedestroy($thumbnailGdImage);
+
+		self::getImageThumbnail($sourceImagePath, $sourceGdImage, $imageAttributes, $thumbnailImageWidth, $thumbnailImageHeight, $thumbnailImagePath);
 
 		return true;
+	}
+
+	public static function getImageThumbnail($sourceImagePath, $sourceGdImage, $imageAttributes, $thumbnailImageWidth, $thumbnailImageHeight, $thumbnailImagePath)
+	{
+		$type = self::getType($sourceImagePath);
+
+		if($type === "png") {//png
+			$thumbnailGdImage = imagecreatetruecolor($thumbnailImageWidth, $thumbnailImageHeight);
+			imagealphablending($thumbnailGdImage, false);
+			imagesavealpha($thumbnailGdImage,true);
+			$col = imagecolorallocatealpha($thumbnailGdImage, 255, 255, 255, 127);
+			imagecopyresampled($thumbnailGdImage, $sourceGdImage, 0, 0, 0, 0, $thumbnailImageWidth, $thumbnailImageHeight, $imageAttributes['width'], $imageAttributes['height']);
+			imagepng($thumbnailGdImage, $thumbnailImagePath, 7);
+			imagedestroy($sourceGdImage);
+			imagedestroy($thumbnailGdImage);
+		}else {
+			$thumbnailGdImage = imagecreatetruecolor($thumbnailImageWidth, $thumbnailImageHeight);
+			imagecopyresampled($thumbnailGdImage, $sourceGdImage, 0, 0, 0, 0, $thumbnailImageWidth, $thumbnailImageHeight, $imageAttributes['width'], $imageAttributes['height']);
+			imagejpeg($thumbnailGdImage, $thumbnailImagePath, 80);
+			imagedestroy($sourceGdImage);
+			imagedestroy($thumbnailGdImage);
+		}
 	}
 }

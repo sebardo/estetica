@@ -137,6 +137,7 @@ class Pdf
 			$logoThumbnail = ImageHandler::generateImageThumbnail($_logoPath, $logoPath);
 			$logoAttributes = ImageHandler::getImageSize($logoPath);
 		}
+
 		$pdf->Image($logoPath, $this->calculateCenter($logoAttributes['width']), null, $this->calculateWidthMax($logoAttributes['width']));
 	}
 
