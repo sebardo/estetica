@@ -10,13 +10,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RegistrationModel extends ObjectManager
 {
-	public function __construct(ContainerInterface $containerInterface)
+	public $registrationUploadDirectory;
+
+	public function __construct(ContainerInterface $containerInterface, $registrationUploadDirectory)
 	{
+		$this->registrationUploadDirectory = $registrationUploadDirectory;
 	    parent::__construct($containerInterface);
 	}
 
 	/**
-	 * @return EntityRepository
+	 * @return \AppBundle\Repository\RegistrationRepository
 	 */
 	function getRepository()
 	{
@@ -34,8 +37,14 @@ class RegistrationModel extends ObjectManager
 
 	public function create(Registration $entity)
 	{
+		$this->uploadPhoto($entity);
 		$this->save($entity);
 
 		return $entity;
+	}
+
+	public function uploadPhoto(Registration $entity)
+	{
+		$entity->uploadPhoto($this->registrationUploadDirectory);
 	}
 }

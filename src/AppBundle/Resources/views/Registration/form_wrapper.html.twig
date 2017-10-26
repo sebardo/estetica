@@ -25,14 +25,14 @@
      {{ form_row(form.name) }}
      {{ form_row(form.firstLastname) }}
      {{ form_row(form.secondLastname) }}
-    {% if entity.photo is not null %}
+    {% if entity.photoPath is not null %}
         <div class="row">
             <div class="col-xs-4">
-                <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photo }}">
+                <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
             </div>
         </div>
     {% endif %}
-    {{ form_row(form.photoFile, {'label': false}) }}
+    {{ form_row(form.photoFile) }}
      {{ form_row(form.phone) }}
      {{ form_row(form.mobile) }}
      {{ form_row(form.email) }}
@@ -43,7 +43,7 @@
          {% set required_image = false %}
          <div class="row">
              <div class="col-xs-4">
-                 <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.image.fileName }}">{{ entity..image.fileName }}</a>
+                 <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.image.fileName }}">{{ entity.image.fileName }}</a>
              </div>
          </div>
      {% endif %}

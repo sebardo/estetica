@@ -1,4 +1,6 @@
 min_one_value: Al menos debes seleccionar un campo
+Please upload a valid image: Debes subir una imagen válida
+Please upload a image with max size: Debes subir una imagen de máximo 5Mb
 multimedia:
   url_or_file: UrlVideo or File no puede estar vacío
   url: Url debe ser de tipo embed youtube url

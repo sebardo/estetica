@@ -51,13 +51,11 @@ class DefaultController extends BackendBundleController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->container->get("webapp.manager.registration_manager")->create($entity);
 
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('registration.create_succesfull'));
 
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('front_registration_create');
         }
 
         return $this->render('AppBundle:Registration:front_new.html.twig', array(

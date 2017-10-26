@@ -1,3 +1,5 @@
+parameters:
+    registration_upload_directory: "%kernel.root_dir%/../web/%app.path.registrations%/"
 services:
     webapp.manager.client_manager:
         class: AppBundle\Model\ClientModel
@@ -28,7 +30,7 @@ services:
         arguments: ["@service_container"]
     webapp.manager.registration_manager:
             class: AppBundle\Model\RegistrationModel
-            arguments: ["@service_container"]
+            arguments: ["@service_container", "%registration_upload_directory%"]
     webapp.manager.time_availability_manager:
         class: AppBundle\Model\TimeAvailabilityModel
         arguments: ["@service_container"]

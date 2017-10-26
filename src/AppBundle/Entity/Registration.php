@@ -7,7 +7,7 @@ use AppBundle\Entity\Registration\Experience;
 use AppBundle\Entity\Registration\PlaceResidence;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="registration")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegistrationRepository")
- * @Vich\Uploadable
  */
 class Registration extends Timestampable
 {
@@ -90,12 +89,17 @@ class Registration extends Timestampable
 	 *
 	 * @ORM\Column(name="photo", type="string", length=255)
 	 */
-	private $photo;
+	private $photoPath;
 
 	/**
-	 * @var File
-	 *
-	 * @Vich\UploadableField(mapping="registrations", fileNameProperty="photo")
+	 * @Assert\File(
+	 *     mimeTypes = "image/*",
+	 *     mimeTypesMessage = "Please upload a valid image"
+	 * )
+	 * @Assert\File(
+	 *     maxSize = "5M",
+	 *	   maxSizeMessage = "Please upload a image with max size"
+	 * )
 	 */
 	private $photoFile;
 
@@ -319,23 +323,36 @@ class Registration extends Timestampable
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 */
-	public function getPhoto()
+	public function getPhotoPath()
 	{
-		return $this->photo;
+		return $this->photoPath;
 	}
 
 	/**
-	 * @param mixed $photo
+	 * @param string $photoPath
 	 */
-	public function setPhoto($photo)
+	public function setPhotoPath($photoPath)
 	{
-		$this->photo = $photo;
+		$this->photoPath = $photoPath;
+	}
+
+	public function uploadPhoto($directory)
+	{
+		if (null === $this->getPhotoFile()) {
+			return;
+		}
+
+		$fileName = uniqid('registration').'.'.$this->getPhotoFile()->guessExtension();
+
+		$this->getPhotoFile()->move($directory, $fileName);
+
+		$this->setPhotoPath($fileName);
 	}
 
 	/**
-	 * @return File
+	 * @return UploadedFile
 	 */
 	public function getPhotoFile()
 	{
@@ -343,15 +360,11 @@ class Registration extends Timestampable
 	}
 
 	/**
-	 * @param File|null $photoFile
+	 * @param UploadedFile $photoFile
 	 */
-	public function setPhotoFile(File $photoFile = null)
+	public function setPhotoFile(UploadedFile $photoFile = null)
 	{
 		$this->photoFile = $photoFile;
-
-		if ($photoFile) {
-			$this->updatedAt = new \DateTime('now');
-		}
 	}
 
 	/**
