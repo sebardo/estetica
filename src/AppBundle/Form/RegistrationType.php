@@ -95,7 +95,7 @@ class RegistrationType extends AbstractType
                 'widget' => 'single_text'
 
             ))
-            ->add('image', new ImageType(), array(
+            ->add('cvFile', 'file', array(
                 'required' => ($options['edit_form']) ? false : true,
                 'label' => 'registration.form.image.name',
                 'label_attr' => array('class' => ''),

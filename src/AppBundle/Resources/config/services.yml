@@ -70,9 +70,6 @@ services:
     webapp.manager.local_address_manager:
         class: AppBundle\Model\LocalAddressModel
         arguments: ["@service_container"]
-    webapp.manager.image_manager:
-        class: AppBundle\Model\ImageModel
-        arguments: ["@service_container"]
     webapp.manager.press_release_manager:
         class: AppBundle\Model\PressReleaseModel
         arguments: ["@service_container"]

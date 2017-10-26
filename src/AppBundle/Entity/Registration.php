@@ -98,16 +98,29 @@ class Registration extends Timestampable
 	 * )
 	 * @Assert\File(
 	 *     maxSize = "5M",
-	 *	   maxSizeMessage = "Please upload a image with max size"
+	 *	   maxSizeMessage = "Please upload an image with max size"
 	 * )
 	 */
 	private $photoFile;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="Image", inversedBy="registration", cascade={"persist"})
-	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+	 * @var string
+	 *
+	 * @ORM\Column(name="cv", type="string", length=255)
 	 */
-	private $image;
+	private $cvPath;
+
+	/**
+	 * @Assert\File(
+	 *     mimeTypes = "application/pdf",
+	 *     mimeTypesMessage = "Please upload a valid file"
+	 * )
+	 * @Assert\File(
+	 *     maxSize = "5M",
+	 *	   maxSizeMessage = "Please upload a file with max size"
+	 * )
+	 */
+	private $cvFile;
 
 	/**
 	 * @var boolean
@@ -344,7 +357,7 @@ class Registration extends Timestampable
 			return;
 		}
 
-		$fileName = uniqid('registration').'.'.$this->getPhotoFile()->guessExtension();
+		$fileName = uniqid('registration-').'.'.$this->getPhotoFile()->guessExtension();
 
 		$this->getPhotoFile()->move($directory, $fileName);
 
@@ -767,20 +780,49 @@ class Registration extends Timestampable
 		$this->academicStudies->remove($academicStudy);
 	}
 
-	/**
-	 * @return Image
-	 */
-	public function getImage()
+	public function uploadCV($directory)
 	{
-		return $this->image;
+		if (null === $this->getCvFile()) {
+			return;
+		}
+
+		$fileName = uniqid('registration-cv-').'.'.$this->getCvFile()->guessExtension();
+
+		$this->getCvFile()->move($directory, $fileName);
+
+		$this->setCvPath($fileName);
 	}
 
 	/**
-	 * @param Image $image
+	 * @return string
 	 */
-	public function setImage($image)
+	public function getCvPath()
 	{
-		$this->image = $image;
+		return $this->cvPath;
+	}
+
+	/**
+	 * @param string $cvPath
+	 */
+	public function setCvPath($cvPath)
+	{
+		$this->cvPath = $cvPath;
+	}
+
+	/**
+	 * @return UploadedFile
+	 */
+	public function getCvFile()
+	{
+		return $this->cvFile;
+	}
+
+	/**
+	 * @param UploadedFile $cvFile
+	 */
+	public function setCvFile(UploadedFile $cvFile = null)
+	{
+		$this->cvFile = $cvFile;
 	}
 
 	public function __toString()

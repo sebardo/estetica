@@ -121,9 +121,6 @@ vich_uploader:
         files:
             uri_prefix:         "%app.path.files%"
             upload_destination: "%kernel.root_dir%/../web/uploads/files"
-        registrations:
-            uri_prefix:         "%app.path.registrations%"
-            upload_destination: "%kernel.root_dir%/../web/uploads/registrations"
         documents:
             uri_prefix:         "%app.path.documents%"
             upload_destination: "%kernel.root_dir%/../web/uploads/documents"

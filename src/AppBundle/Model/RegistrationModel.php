@@ -38,6 +38,7 @@ class RegistrationModel extends ObjectManager
 	public function create(Registration $entity)
 	{
 		$this->uploadPhoto($entity);
+		$this->uploadCV($entity);
 		$this->save($entity);
 
 		return $entity;
@@ -46,5 +47,10 @@ class RegistrationModel extends ObjectManager
 	public function uploadPhoto(Registration $entity)
 	{
 		$entity->uploadPhoto($this->registrationUploadDirectory);
+	}
+
+	public function uploadCV(Registration $entity)
+	{
+		$entity->uploadCV($this->registrationUploadDirectory);
 	}
 }
