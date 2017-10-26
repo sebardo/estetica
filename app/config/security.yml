@@ -43,7 +43,7 @@ security:
           - { path: ^/admin/press-release$, roles: ROLE_CLIENT }
           - { path: ^/admin/creativity-proposal/new$, roles: ROLE_CLIENT }
           - { path: ^/admin/creativity-order/$, roles: ROLE_CLIENT }
-          - { path: ^/admin/client/[0-9]+/edit$, roles: ROLE_CLIENT }
+#          - { path: ^/admin/client/[0-9]+/edit$, roles: ROLE_CLIENT }
           - { path: ^/admin/registration/[0-9]+/show$, roles: ROLE_CLIENT }
           - { path: ^/admin/registration/$, roles: ROLE_ADMIN }
           - { path: ^/admin/creativity/$, roles: ROLE_ADMIN }

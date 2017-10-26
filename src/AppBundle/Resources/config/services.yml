@@ -1,9 +1,11 @@
 parameters:
     registration_upload_directory: "%kernel.root_dir%/../web/%app.path.registrations%/"
+    client_logo_upload_directory: "%kernel.root_dir%/../web/%app.path.images%/"
+    client_files_upload_directory: "%kernel.root_dir%/../web/%app.path.files%/"
 services:
     webapp.manager.client_manager:
         class: AppBundle\Model\ClientModel
-        arguments: ["@service_container"]
+        arguments: ["@service_container", "%client_logo_upload_directory%", "%client_files_upload_directory%"]
     webapp.manager.plan_manager:
         class: AppBundle\Model\PlanModel
         arguments: ["@service_container"]

@@ -18,9 +18,14 @@ class ClientModel extends ObjectManager
 	 */
 	private $encoderFactory;
 
-	public function __construct(ContainerInterface $containerInterface)
+	public $clientLogoUploadDirectory;
+	public $clientFileUploadDirectory;
+
+	public function __construct(ContainerInterface $containerInterface, $clientLogoUploadDirectory, $clientFileUploadDirectory)
 	{
 		parent::__construct($containerInterface);
+		$this->clientLogoUploadDirectory = $clientLogoUploadDirectory;
+		$this->clientFileUploadDirectory = $clientFileUploadDirectory;
 		$this->encoderFactory = $this->container->get('security.encoder_factory');
 	}
 
@@ -51,7 +56,7 @@ class ClientModel extends ObjectManager
 	}
 
 	/**
-	 * @return EntityRepository
+	 * @return \AppBundle\Repository\ClientRepository
 	 */
 	function getRepository()
 	{
@@ -70,6 +75,23 @@ class ClientModel extends ObjectManager
 
 	public function createClient(Client $client)
 	{
+		$this->uploadLogo($client);
 		$this->save($client);
 	}
+
+	public function updateClient(Client $client)
+	{
+		$this->uploadLogo($client);
+		$this->save($client);
+	}
+
+	public function uploadLogo(Client $client)
+	{
+		$client->uploadLogo($this->clientLogoUploadDirectory);
+	}
+
+//	public function uploadFile(Client $client)
+//	{
+//		$client->uploadFile($this->clientFileUploadDirectory);
+//	}
 }

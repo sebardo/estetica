@@ -142,9 +142,7 @@ class ClientController extends BackendBundleController
 			}else{
 				$entity->setPassword($oldPassword);
 			}
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($entity);
-			$em->flush();
+			$this->get('webapp.manager.client_manager')->updateClient($entity);
 
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.edit_succesfull'));
 

@@ -5,9 +5,8 @@ namespace AppBundle\Entity;
 use AppBundle\Services\ClientCodeGenerator;
 use AppBundle\Services\GoogleMapsApi;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="client")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ClientRepository")
- * @Vich\Uploadable
  */
 class Client extends Timestampable implements UserInterface
 {
@@ -191,9 +189,14 @@ class Client extends Timestampable implements UserInterface
     private $logo;
 
     /**
-     * @var File
-     *
-     * @Vich\UploadableField(mapping="images", fileNameProperty="logo")
+     * @Assert\File(
+     *     mimeTypes = "image/*",
+     *     mimeTypesMessage = "Please upload a valid image"
+     * )
+     * @Assert\File(
+     *     maxSize = "5M",
+     *	   maxSizeMessage = "Please upload an image with max size"
+     * )
      */
     private $logoFile;
 
@@ -711,7 +714,7 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @return File
+     * @return UploadedFile
      */
     public function getLogoFile()
     {
@@ -719,15 +722,24 @@ class Client extends Timestampable implements UserInterface
     }
 
     /**
-     * @param File|null $logoFile
+     * @param UploadedFile $logoFile
      */
-    public function setLogoFile(File $logoFile = null)
+    public function setLogoFile(UploadedFile $logoFile = null)
     {
         $this->logoFile = $logoFile;
+    }
 
-        if ($logoFile) {
-           $this->updatedAt = new \DateTime('now');
+    public function uploadLogo($directory)
+    {
+        if (null === $this->getLogoFile()) {
+            return;
         }
+
+        $fileName = uniqid('logo-').'.'.$this->getLogoFile()->guessExtension();
+
+        $this->getLogoFile()->move($directory, $fileName);
+
+        $this->setLogo($fileName);
     }
 
     /**
