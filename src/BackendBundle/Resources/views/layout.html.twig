@@ -9,18 +9,17 @@
     <!-- Main Header -->
     <header class="main-header">
 
-
         <!-- Logo -->
-            <span class="logo black-logo">
-                  <!-- mini logo for sidebar mini 50x50 pixels -->
-                  <span class="logo-mini">
-                      <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
-                  </span>
-                            <!-- logo for regular state and mobile devices -->
-                  <span class="logo-lg">
-                      <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
-                  </span>
-            </span>
+        <span class="logo black-logo">
+              <!-- mini logo for sidebar mini 50x50 pixels -->
+              <span class="logo-mini">
+                  <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
+              </span>
+                        <!-- logo for regular state and mobile devices -->
+              <span class="logo-lg">
+                  <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
+              </span>
+        </span>
 
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -28,6 +27,8 @@
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            
+            <span class="center-title-tradename">{{ app.user.tradeName }}</span>
             {{ render(controller('BackendBundle:Default:navbarRight')) }}
 
         </nav>

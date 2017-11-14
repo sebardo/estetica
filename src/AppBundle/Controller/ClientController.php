@@ -132,7 +132,7 @@ class ClientController extends BackendBundleController
 
 		$oldPassword = $entity->getPassword();
 		$editForm = $this->createForm('AppBundle\Form\ClientType', $entity, array('edit_form' => true, 'admin_user' => $this->isGranted('ROLE_ADMIN')));
-		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.edit_btn'),'attr'=>array('class'=>'btn btn-success')));
+		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.save_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {

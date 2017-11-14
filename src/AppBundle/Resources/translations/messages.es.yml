@@ -13,11 +13,13 @@ validator:
   must_not_be_blank: 'No puede estar vacío'
   cannot_see_this: 'No tienes permisos para ver este registro'
 app:
+  upload-cv: Sube tu curriculum
   show: 'Ver'
   close: 'Cerrar'
   edit: 'Editar'
   delete: 'Borrar'
   edit_btn: 'Editar'
+  save_btn: 'Guardar'
   create_btn: 'Crear'
   search_btn: 'Buscar'
   preview: 'Previsualizar'
@@ -30,7 +32,7 @@ app:
       active: 'Activo'
       name: 'Nombre'
       title: 'Título'
-      published: 'Publicado'
+      published: 'Fecha de publicación'
       firstname: 'Primer Apellido'
       secondname: 'Segundo Apellido'
   sidebar:
@@ -199,7 +201,7 @@ client:
     active: 'Activo'
 address:
   form:
-    address: 'Dirección'
+    address: 'Dirección <span class="help">(Calle, número)</span>'
     phone: 'Teléfono'
     email: 'Email'
     contact: 'Persona de contacto'
@@ -275,6 +277,8 @@ academic:
       default: 'Nombre'
 
 registration:
+  captcha_fail: La verificación del captcha ha fallado, por favor intente de nuevo.
+  captcha_click: Por favor puse sobre el cuadro del captcha.
   title_page: 'Bolsa de empleo'
   title_nav: 'Bolsa de empleo'
   list: 'Listado Bolsa de empleos'
@@ -465,13 +469,15 @@ press_release:
     description:
       name: Características y observaciones destacables
     publised:
-      name: Fecha y hora
+      name: Fecha de publicación
     autor:
       name: Autor
     document:
       name: Documentación aportada
     published:
-      name: Publicado
+      name: Fecha de publicación
+    client:
+      name: Centro
 creativity:
   title_page: 'Creatividad'
   title_nav: 'Creatividad'

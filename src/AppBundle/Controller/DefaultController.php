@@ -51,9 +51,25 @@ class DefaultController extends BackendBundleController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->container->get("webapp.manager.registration_manager")->create($entity);
-
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('registration.create_succesfull'));
+            
+            
+            if($request->request->has('g-recaptcha-response') && !empty($request->request->get('g-recaptcha-response'))){
+                //your site secret key
+                $secret = '6LffrTgUAAAAABHBGJCryk_RIvRlvS9o0rGzKkfw';
+                //get verify response data
+                $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$request->request->get('g-recaptcha-response'));
+                $responseData = json_decode($verifyResponse);
+                
+                if($responseData->success){
+                    $this->container->get("webapp.manager.registration_manager")->create($entity);
+                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('registration.create_succesfull'));
+                }else{
+                    $this->get('session')->getFlashBag()->add('danger', $this->get('translator')->trans('registration.captcha_fail'));
+                }
+                
+            }else{
+                $this->get('session')->getFlashBag()->add('danger', $this->get('translator')->trans('registration.captcha_click'));
+            }
 
             return $this->redirectToRoute('front_registration_create');
         }

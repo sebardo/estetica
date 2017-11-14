@@ -11,6 +11,16 @@
         </label>
         <input class="form-control" type="text" disabled="disabled" value="{{ entity.title }}">
     </div>
+    
+    {%if entity.client.tradeName is defined and is_granted("ROLE_ADMIN") %}
+        <div class="form-group">
+            <label class="">
+                {{ 'press_release.form.client.name' | trans() }}
+            </label>
+            <input class="form-control" type="text" disabled="disabled" value="{{ entity.client.tradeName }}">
+        </div>
+    {%endif%}
+
     <div class="form-group">
         <label class="">
             {{ 'press_release.form.publised.name' | trans() }}
@@ -34,5 +44,11 @@
                 </div>
             </div>
         {% endif %}
+    </div>
+{% endblock %}
+
+{% block show_footer %}
+    <div class="box-footer clearfix">
+        <a class="btn btn-default" href="{{ path('admin_press_release_list') }}"> <span>{{ 'app.return'|trans|title }}</span></a>
     </div>
 {% endblock %}

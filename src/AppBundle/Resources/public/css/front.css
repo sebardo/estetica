@@ -11,3 +11,20 @@
     width: auto;
     margin: 0 auto;
 }
+.center-title-tradename{
+    display: inline-block;
+    text-align: center;
+    width: calc(100% - 162px - 42px);
+    color: #fff;
+    line-height: 50px;
+    font-weight: bold;
+}
+.help{
+    color: #e7963c;
+    font-weight: bold;
+}
+.upload-cv{
+    position: relative;
+    top: -35px;
+    width: 138px;
+}
