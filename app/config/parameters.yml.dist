@@ -35,3 +35,6 @@ parameters:
     app.path.proposals: /uploads/proposals
     app.path.creativity_orders: /uploads/creativity_orders
     url_map: "https://{s}.tiles.mapbox.com/v4/{mapId}/{z}/{x}/{y}.png?access_token={token}"
+    recaptcha_key: '6LffrTgUAAAAANEUc4-B5wV6S_xuOGG8DHcIpSsX'
+    recaptcha_secret: '6LffrTgUAAAAABHBGJCryk_RIvRlvS9o0rGzKkfw'
+ 

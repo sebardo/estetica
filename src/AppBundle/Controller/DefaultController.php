@@ -55,7 +55,7 @@ class DefaultController extends BackendBundleController
             
             if($request->request->has('g-recaptcha-response') && !empty($request->request->get('g-recaptcha-response'))){
                 //your site secret key
-                $secret = '6LffrTgUAAAAABHBGJCryk_RIvRlvS9o0rGzKkfw';
+                $secret = $this->container->getParameter('recaptcha_secret');
                 //get verify response data
                 $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$request->request->get('g-recaptcha-response'));
                 $responseData = json_decode($verifyResponse);
