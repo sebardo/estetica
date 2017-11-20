@@ -31,6 +31,12 @@ class AddressType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
+            ->add('addressInfo', null, array(
+                'required' => $options['required_form'],
+                'label' => 'address.form.addressinfo',
+                'label_attr' => array('class' => ''),
+                'attr' => array('class' => '')
+            ))
             ->add('phone', null, array(
                 'required' => $options['required_form'],
                 'label' => 'address.form.phone',

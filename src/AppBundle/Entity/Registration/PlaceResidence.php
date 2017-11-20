@@ -33,6 +33,13 @@ class PlaceResidence extends Timestampable
 	 * @ORM\Column(name="address", type="string", length=255)
 	 */
 	private $address;
+    
+    /**
+	 * @var string
+	 *
+	 * @ORM\Column(name="address_info", type="string", length=255)
+	 */
+	private $addressInfo;
 
 	/**
 	 * @var string
@@ -80,6 +87,22 @@ class PlaceResidence extends Timestampable
 	public function setAddress($address)
 	{
 		$this->address = $address;
+	}
+    
+    /**
+	 * @return string
+	 */
+	public function getAddressInfo()
+	{
+		return $this->addressInfo;
+	}
+
+	/**
+	 * @param string $addressInfo
+	 */
+	public function setAddressInfo($addressInfo)
+	{
+		$this->addressInfo = $addressInfo;
 	}
 
 	/**

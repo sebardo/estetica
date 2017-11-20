@@ -106,6 +106,15 @@ class FilterRegistrationType
 				'attr' => array('class' => ''),
 				'data' => empty($dataForm['experience']) ? -1 : $dataForm['experience']
 			))
+            ->add('experiencePlaces', 'Symfony\Component\Form\Extension\Core\Type\TextType', array(
+				'label' => 'registration.filter_form.experiencePlaces.name',
+				'required' => false,
+				'attr' => array(
+					'class' => 'no-required',
+					'placeholder' => 'registration.filter_form.experiencePlaces.default'
+				),
+				'data' => empty($dataForm['experiencePlaces']) ? '' : $dataForm['experiencePlaces']
+			))
 			->add('vehicle', new BooleanType(), array(
 				'label' => 'registration.filter_form.vehicle.name',
 				'required' => false,

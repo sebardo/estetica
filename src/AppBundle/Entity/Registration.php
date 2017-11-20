@@ -155,6 +155,13 @@ class Registration extends Timestampable
 	 * @ORM\JoinColumn(name="experience_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	private $experience;
+    
+    /**
+	 * @var string
+	 *
+	 * @ORM\Column(name="experience_places", type="string", length=10000)
+	 */
+	private $experiencePlaces;
 
 	/**
 	 * @var ArrayCollection
@@ -492,6 +499,22 @@ class Registration extends Timestampable
 	public function setExperience($experience)
 	{
 		$this->experience = $experience;
+	}
+    
+    /**
+	 * @return string
+	 */
+	public function getExperiencePlaces()
+	{
+		return $this->experiencePlaces;
+	}
+
+	/**
+	 * @param string $experiencePlaces
+	 */
+	public function setExperiencePlaces($experiencePlaces)
+	{
+		$this->experiencePlaces = $experiencePlaces;
 	}
 
 	/**

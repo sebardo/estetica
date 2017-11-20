@@ -109,6 +109,12 @@ class RegistrationType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
+            ->add('experiencePlaces', null, array(
+                'label' => 'registration.form.experience.places',
+                'required' => true,
+                'label_attr' => array('class' => ''),
+                'attr' => array('class' => '')
+            ))
             //Language on Event
             //Vehicle
             ->add('vehicle', BooleanType::class, array(

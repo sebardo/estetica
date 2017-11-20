@@ -28,6 +28,13 @@ class LocalAddress extends Timestampable
 	 */
 	private $address;
 
+    /**
+	 * @var string
+	 *
+	 * @ORM\Column(name="address_info", type="string", length=255)
+	 */
+	private $addressInfo;
+    
 	/**
 	 * @var string
 	 *
@@ -105,6 +112,22 @@ class LocalAddress extends Timestampable
 		return $this->address;
 	}
 
+    /**
+	 * @return string
+	 */
+	public function getAddressInfo()
+	{
+		return $this->addressInfo;
+	}
+
+	/**
+	 * @param string $addressInfo
+	 */
+	public function setAddressInfo($addressInfo)
+	{
+		$this->addressInfo = $addressInfo;
+	}
+    
 	/**
 	 * Set phone
 	 *

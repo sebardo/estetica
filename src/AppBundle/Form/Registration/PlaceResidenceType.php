@@ -31,6 +31,12 @@ class PlaceResidenceType extends AbstractType
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
+            ->add('addressInfo', null, array(
+                'required' => $options['required_form'],
+                'label' => 'address.form.addressinfo',
+                'label_attr' => array('class' => ''),
+                'attr' => array('class' => '')
+            ))
             ->add('postalCode', null, array(
                 'required' => $options['required_form'],
                 'label' => 'address.form.postal_code',

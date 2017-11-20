@@ -202,6 +202,7 @@ client:
 address:
   form:
     address: 'Dirección <span class="help">(Calle, número)</span>'
+    addressinfo: 'Piso, puerta, escalera'
     phone: 'Teléfono'
     email: 'Email'
     contact: 'Persona de contacto'
@@ -374,6 +375,7 @@ registration:
       default: Selecciona un estudio académico
     experience:
       name: Experiencia
+      places: ¿Dónde has trabajado?
     vehicle:
       name: Vehículo
     travel_availability:
@@ -403,6 +405,9 @@ registration:
     experience:
       name: Experiencia
       default: Selecciona una opción
+    experiencePlaces:
+      name: ¿Dónde has trabajado?
+      default: Lugares donde has trabajado
     vehicle:
       name: Vehículo
       default: Selecciona una opción
