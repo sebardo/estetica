@@ -1,0 +1,44 @@
+{% extends "BackendBundle:CRUD:list.html.twig" %}
+
+{% block page_title %}{{ 'slider.list.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'slider.list.subtitle'|trans() }}{% endblock %}
+{% block create_buttons %}
+    {% if is_granted("ROLE_ADMIN") %}
+        {% block create_action_list %}{% endblock %}
+        <a href="{{ path('admin_slider_create') }}" class="btn btn-info flat margin-bottom">{{ 'slider.create_new'|trans }}</a>
+    {% endif %}
+{% endblock %}
+{% block list_title 'slider.list'|trans%}
+
+{% block list_body %}
+    <table id="datatable" class="table table-bordered table-hover dataTable">
+        <thead>
+            {% block thead %}
+                <tr>
+                    <th>{{ '#' }}</th>
+                    <th>{{ 'app.list.table.title'|trans|title }}</th>
+                    {#<th>{{ 'app.list.table.caption'|trans|title }}</th>#}
+                    <th>{{ 'app.list.table.image'|trans|title }}</th>
+                    <th></th>
+                </tr>
+            {% endblock %}
+        </thead>
+        <tfoot>
+        {{ block('thead') }}
+        </tfoot>
+        <tbody>
+        {% for entity in sliderCollection %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ entity.title }}</td>
+                {#<td>{{ entity.caption }}</td>#}
+                <td><img src="{{ entity.image }}" width="100px"></td>
+                <td>
+                    <a class="btn btn-success" href="{{ path('admin_slider_show',{'id':entity.id}) }}">{{ 'app.show'|trans|title }}</a>
+                    <a class="btn btn-primary" href="{{ path('admin_slider_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

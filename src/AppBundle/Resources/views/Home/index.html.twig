@@ -1,0 +1,27 @@
+{% extends "AppBundle::index.html.twig" %}
+
+{% block content %}
+    {% set items = get_slider_items() %}
+    {% if items | length > 0 %}
+        {{ include ('AppBundle:Slider:carousel.html.twig')}}
+    {% endif %}
+    
+    {% set images = get_home_images() %}
+    <div class="home-images">
+        <img src="{{ images.image.path }}">
+        <img src="{{ images.image2.path }}">
+        <img src="{{ images.image3.path }}">
+    </div>
+    
+
+{% endblock %}
+
+
+{% block javascripts  %}
+   {{  parent() }}
+   
+   <script type="text/javascript">
+        $('.carousel').carousel()
+   </script>
+
+{% endblock %}

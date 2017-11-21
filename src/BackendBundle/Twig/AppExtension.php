@@ -17,6 +17,17 @@ class AppExtension extends \Twig_Extension {
 	{
 		$this->container = $container;
 	}
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getFunctions()
+    {
+        return array(
+            new \Twig_SimpleFunction('get_slider_items', array($this, 'getSliderItems')),
+            new \Twig_SimpleFunction('get_home_images', array($this, 'getHomeImages')),
+        );
+    }
 
 	public function getFilters()
 	{
@@ -30,6 +41,26 @@ class AppExtension extends \Twig_Extension {
 		return $object instanceof \DateTime;
 	}
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getSliderItems()
+    {
+        $em = $this->container->get('doctrine')->getManager();
+        $headers = $em->getRepository("AppBundle:Slider")->findBy(array('active' => true), array('order' => 'ASC'));
+        return $headers;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function getHomeImages()
+    {
+        $em = $this->container->get('doctrine')->getManager();
+        $headers = $em->getRepository("AppBundle:HomeImages")->findBy(array(), array());
+        return $headers[0];
+    }
+    
 	/**
 	 * Returns the name of the extension.
 	 *

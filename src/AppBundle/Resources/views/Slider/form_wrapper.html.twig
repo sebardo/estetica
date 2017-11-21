@@ -1,0 +1,39 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block create_body %}
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {#{ form_row(form.caption) }#} 
+    {% if entity.image is not null %}
+        <div class="row">
+            <div class="col-xs-4">
+                {#<img class="logo-image-preview img-responsive" src="{{ document_path ~ '/' ~ entity.document }}">#}
+                <a target="_blank" class="logo-doc-image-preview img-responsive" href="{{ entity.image }}"><img src="{{ entity.image }}" style="width: 100px;"></a>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_row(form.image, {'label': false}) }}
+    {{ form_row(form.submit) }}
+    <div class="hide">
+        {{ form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.es.min.js"></script>
+    <script type="application/javascript">
+        $('.datepicker').datepicker({
+            'language': 'es',
+            'format': 'yyyy-mm-dd',
+            'autoclose': true
+        });
+    </script>
+{% endblock %}

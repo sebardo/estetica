@@ -28,7 +28,7 @@ class DefaultController extends BackendBundleController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('@App/index.html.twig', array(
+        return $this->render('AppBundle:Home:index.html.twig', array(
             'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.homepage")),
             'active_side_bar' => $this->getActiveSidebar()
         ));

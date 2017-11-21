@@ -5603,3 +5603,23 @@ fieldset[disabled] .btn-yahoo.active {
     white-space: normal !important;
   }
 }
+
+
+/** custom */
+#myCarousel{
+    height: 400px;    
+    overflow: hidden;
+}
+#myCarousel .item{
+    min-height: 400px;
+}
+#myCarousel .item .fill{
+    min-height: 400px;
+}
+.home-images{
+    text-align: center;
+}
+.home-images img{
+    width: 32%;
+    padding: 10px;
+}

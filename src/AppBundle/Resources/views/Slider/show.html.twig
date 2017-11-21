@@ -1,0 +1,55 @@
+{% extends '@Backend/CRUD/show.html.twig' %}
+
+{% block create_title %}{{ 'slider.show.title' | trans() }}{% endblock %}
+{% block edit_buttons %}{% endblock %}
+{% block delete_form %}{% endblock %}
+
+{% block show_body %}
+    <div class="form-group">
+        <label class="">
+            {{ 'slider.form.title' | trans() }}
+        </label>
+        <input class="form-control" type="text" disabled="disabled" value="{{ entity.title }}">
+    </div>
+    
+    {%if entity.client.tradeName is defined and is_granted("ROLE_ADMIN") %}
+        <div class="form-group">
+            <label class="">
+                {{ 'slider.form.client' | trans() }}
+            </label>
+            <input class="form-control" type="text" disabled="disabled" value="{{ entity.client.tradeName }}">
+        </div>
+    {%endif%}
+
+    {#<div class="form-group">
+        <label class="">
+            {{ 'slider.form.caption' | trans() }}
+        </label>
+        <textarea class="form-control" disabled="disabled" rows="5">{{ entity.caption|striptags }}</textarea>
+    </div>#}
+    <div class="form-group">
+        <label class="">
+            {{ 'slider.form.image' | trans() }}
+        </label>
+        {% if entity.image is not null %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <img style="max-width: 100%" src="{{ entity.image }}" />
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block show_footer %}
+    <div class="box-footer clearfix">
+        <a class="btn btn-default" href="{{ path('admin_slider_list') }}"> <span>{{ 'app.return'|trans|title }}</span></a>
+        <form id="delete-entity" action="{{ path('admin_slider_delete', { 'id': entity.id  }) }}" method="post" class="pull-right">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <input type="submit" class="btn btn-danger pull-right"  value="Borrar"/>
+        </form>
+
+    </div>
+        
+{% endblock %}

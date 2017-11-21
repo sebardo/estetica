@@ -1,0 +1,86 @@
+{% extends "BackendBundle:CRUD:create.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
+{% endblock %}
+
+{% block create_body %}
+    {{ form_start(form) }}
+    
+    {% if entity.image is not null %}
+        <div class="row">
+            <div class="col-xs-4">
+                <a target="_blank" class="logo-doc-image-preview img-responsive" href="{{ entity.image }}">
+                    <img src="{{ entity.image }}" style="width: 100px">
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_row(form.image, {'label': false}) }}
+    <hr>
+    {% if entity.image2 is not null %}
+        <div class="row">
+            <div class="col-xs-4">
+                <a target="_blank" class="logo-doc-image-preview img-responsive" href="{{  entity.image2 }}">
+                    <img src="{{ entity.image2 }}" style="width: 100px">
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_row(form.image2, {'label': false}) }}
+    <hr>
+    {% if entity.image3 is not null %}
+        <div class="row">
+            <div class="col-xs-4">
+                <a target="_blank" class="logo-doc-image-preview img-responsive" href="{{ entity.image3 }}">
+                    <img src="{{ entity.image3 }}" style="width: 100px">
+                </a>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_row(form.image3, {'label': false}) }}
+    <hr>
+    
+    <div class="form-group">
+        {{ form_widget(form.submit) }}
+        {% if delete_form is defined %}<a class="btn btn-danger pull-right btn-delete" >Borrar</a>{% endif %}
+    </div>
+    
+    {{ form_row(form.submit) }}
+    <div class="hide">
+        {{ form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
+    
+    
+    
+    {% if delete_form is defined %}
+    <form id="delete-entity" action="{{ path('admin_homeimages_delete', { 'id': entity.id  }) }}" method="post" class="pull-right">
+        <input type="hidden" name="_method" value="DELETE" />
+        {{ form_widget(delete_form) }}
+        
+    </form>
+    {% endif %}
+    
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.es.min.js"></script>
+    <script type="application/javascript">
+        $('.datepicker').datepicker({
+            'language': 'es',
+            'format': 'yyyy-mm-dd',
+            'autoclose': true
+        });
+        
+        $(document).ready(function(){
+            $('.btn-delete').click(function(){
+                $('#delete-entity').submit();
+            });
+        });
+    </script>
+     
+{% endblock %}

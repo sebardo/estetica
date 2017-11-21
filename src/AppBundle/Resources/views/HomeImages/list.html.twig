@@ -1,0 +1,45 @@
+{% extends "BackendBundle:CRUD:list.html.twig" %}
+
+{% block page_title %}{{ 'homeimages.list.title'|trans() }}{% endblock %}
+{% block page_subtitle %}{{ 'homeimages.list.subtitle'|trans() }}{% endblock %}
+{% block create_buttons %}
+    {% if is_granted("ROLE_ADMIN") %}
+        {% block create_action_list %}{% endblock %}
+        {% if homeimagesCollection | length == 0%}
+        <a href="{{ path('admin_homeimages_create') }}" class="btn btn-info flat margin-bottom">{{ 'homeimages.create_new'|trans }}</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+{% block list_title 'homeimages.list'|trans%}
+
+{% block list_body %}
+    <table id="datatable" class="table table-bordered table-hover dataTable">
+        <thead>
+            {% block thead %}
+                <tr>
+                    <th>{{ '#' }}</th>
+                    <th>{{ 'app.list.table.image'|trans|title }}</th>
+                    <th>{{ 'app.list.table.image'|trans|title }}</th>
+                    <th>{{ 'app.list.table.image'|trans|title }}</th>
+                    <th></th>
+                </tr>
+            {% endblock %}
+        </thead>
+        <tfoot>
+        {{ block('thead') }}
+        </tfoot>
+        <tbody>
+        {% for entity in homeimagesCollection %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><img src="{{ entity.image.path }}" width="100px"></td>
+                <td><img src="{{ entity.image2.path }}" width="100px"></td>
+                <td><img src="{{ entity.image3.path }}" width="100px"></td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin_homeimages_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
