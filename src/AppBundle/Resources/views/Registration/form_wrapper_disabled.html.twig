@@ -23,22 +23,47 @@
                 {% set course_error = error.message %}
             {% endif %}
         {% endfor %}
+        
+        
         {{ form_row(form.name) }}
         {{ form_row(form.firstLastname) }}
         {{ form_row(form.secondLastname) }}
-        {% if entity.photoPath is not null %}
-            <div class="row">
-                <div class="col-xs-4">
-                    <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
-                </div>
-            </div>
-        {% endif %}
-        {#{{ form_row(form.photoFile) }}#}
         {{ form_row(form.phone) }}
         {{ form_row(form.mobile) }}
         {{ form_row(form.email) }}
         {{ form_row(form.gender) }}
         {{ form_row(form.birthday) }}
+        {{ form_row(form.placeResidence) }}
+
+        {{ form_row(form.certificateDisability) }}
+        {{ form_row(form.vehicle) }}
+        {{ form_row(form.travelAvailability) }}
+
+        {{ form_row(form.studies) }}
+
+        {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class } } ) }}
+        {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
+        {{ form_row(form.academicStudies) }}
+        
+        {{ form_widget(form.parentSpeciality) }}
+        {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+        {% for parent in parentSpecialityCollection  %}
+            {% set _row = 'speciality_' ~ parent %}
+            {% if form[_row] is not null %}
+                {{ form_widget(form[_row]) }}
+            {% endif %}
+        {% endfor %}
+        
+        {{ form_row(form.salesTraining) }}
+        
+        {{ form_row(form.language, {'attr': {'class': default_form_class } }) }}
+        
+        {{ form_row(form.experience) }}
+        {{ form_row(form.experiencePlaces) }}
+        {{ form_row(form.contractTypes) }}
+        {{ form_row(form.timesAvailability) }}
+        {{ form_row(form.levelsResponsibility) }}
+        
         {% set required_image = 'required' %}
         {% if entity.cvPath is not null %}
             {% set required_image = false %}
@@ -48,29 +73,15 @@
                 </div>
             </div>
         {% endif %}
-        {#{{ form_row(form.cvFile) }}#}
-        {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class }}) }}
-        {{ form_widget(form.parentSpeciality) }}
-        {% set parentSpecialityCollection = get_parent_speciality_collection() %}
-        {% for parent in parentSpecialityCollection  %}
-            {% set _row = 'speciality_' ~ parent %}
-            {% if form[_row] is not null %}
-                {{ form_widget(form[_row]) }}
-            {% endif %}
-        {% endfor %}
-        {{ form_row(form.experience) }}
-        {{ form_row(form.vehicle) }}
-        {{ form_row(form.travelAvailability) }}
-        {{ form_row(form.language, {'attr': {'class': default_form_class }}) }}
-        {{ form_row(form.timesAvailability) }}
-        {{ form_row(form.certificateDisability) }}
-        {{ form_row(form.salesTraining) }}
-        {{ form_row(form.contractTypes) }}
-        {{ form_row(form.levelsResponsibility) }}
-        {{ form_row(form.placeResidence) }}
-        {{ form_row(form.studies) }}
-        {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
-        {{ form_row(form.academicStudies) }}
+        
+        {% if entity.photoPath is not null %}
+            <div class="row">
+                <div class="col-xs-4">
+                    <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
+                </div>
+            </div>
+        {% endif %}
+        
         <div class="hide">
             {{ form_row(form.submit) }}
             {{ form_rest(form) }}
