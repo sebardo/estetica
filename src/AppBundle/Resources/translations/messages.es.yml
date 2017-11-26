@@ -54,8 +54,8 @@ app:
       title_nav: 'Centro'
       list: 'Centros'
     academic:
-      title_nav: 'Estudios Académicos'
-      list: 'Listado de estudios académicos'
+      title_nav: 'Formaciones no regladas'
+      list: 'Listado de formaciones no regladas'
     registration:
       title_nav: 'Bolsa de Empleo'
       list: 'Listado de bolsa de empleo'
@@ -379,8 +379,8 @@ registration:
       name: Estudios
       default: Selecciona un estudio
     academic_study:
-      name: Estudios académicos
-      default: Selecciona un estudio académico
+      name: Formaciones no regladas
+      default: Selecciona una formación no reglada
     experience:
       name: Experiencia
       places: ¿Dónde has trabajado?
