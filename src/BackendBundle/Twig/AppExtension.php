@@ -58,7 +58,8 @@ class AppExtension extends \Twig_Extension {
     {
         $em = $this->container->get('doctrine')->getManager();
         $headers = $em->getRepository("AppBundle:HomeImages")->findBy(array(), array());
-        return $headers[0];
+        if(isset($headers[0])) return $headers[0];
+        return null;
     }
     
 	/**

@@ -7,12 +7,13 @@
     {% endif %}
     
     {% set images = get_home_images() %}
+    {% if images | length > 0 %}
     <div class="home-images">
         <img src="{{ images.image.path }}">
         <img src="{{ images.image2.path }}">
         <img src="{{ images.image3.path }}">
     </div>
-    
+    {% endif %}
 
 {% endblock %}
 

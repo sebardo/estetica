@@ -97,7 +97,7 @@ app:
     native: Nativo
   support:
     flyers: 'Flyers'
-    routers: 'Routers'
+    routers: 'Poster'
     rollup: 'Roll-up'
     other: 'Otros'
   category:
