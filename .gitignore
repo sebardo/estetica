@@ -43,6 +43,7 @@
 **/Entity/*~
 
 # Ide
+/.idea
 .idea
 
 # txt
