@@ -648,20 +648,20 @@ slider:
     form:
         title: 'Título'
         caption: 'Descripción'
-        image: 'Imagén'
+        image: 'Imagen'
         client: 'Centro'
     
 homeimages:
     list: 'Listado de imágenes'
     title_nav: Imágenes
-    create_new: Crear nuevas imagenes
+    create_new: Crear nuevas imágenes
     create_succesfull: 'Imágenes creada correctamente'
     edit_succesfull: 'Imágenes editada correctamente'
     delete_succesfull: 'Imágenes borrada correctamente'
     show:
         title: Imágenes
     edit: Editar
-    deleted: Se han eliminado las imagenes correctamente.
+    deleted: Se han eliminado las imágenes correctamente.
         
-image.singular: Imágen
+image.singular: Imagen
     
