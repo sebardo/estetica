@@ -48,16 +48,7 @@ class HomeImages
      * @ORM\JoinColumn(onDelete="set null")
      */
     private $image3;
-     
-    
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->title;
-    }
-    
+
     /**
      * Get id
      *
