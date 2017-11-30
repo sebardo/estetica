@@ -15,7 +15,7 @@
         <div class="item {% if loop.first %}active{% endif %}">
             <!-- Set the first background image using inline CSS below. -->
             {#% if item.url != '' %}<a {% if item.openInNewWindow %}target="_blank"{% endif %} href="{{item.url}}">{% endif %}
-            <div class="fill" style="background-image:url('http://estetica.dev{{item.image}}');"></div>
+            <div class="fill" style="background-image:url('{{item.image}}');"></div>
             {% if item.url != '' %}</a>{% endif %}
             {% if item.title != '' and item.caption != ''%}
                 <div class="carousel-caption">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             {% endif%#}
-            <img width="100%" src="/{{item.image}}" alt="Los Angeles">
+            <img width="100%" src="{{item.image}}" alt="">
         </div>
         {% endfor %}
     </div>
