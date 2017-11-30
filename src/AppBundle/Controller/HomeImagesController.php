@@ -125,7 +125,7 @@ class HomeImagesController extends BackendBundleController
         $deleteForm = $this->createDeleteForm($homeimages);
         $editForm = $this->createForm('AppBundle\Form\HomeImagesType', $homeimages,  array('uploadDir'=> 'uploads/images/homeimages'));
         $editForm->add('submit', SubmitType::class, array(
-            'label' => $this->get('translator')->trans('app.edit_btn'),
+            'label' => $this->get('translator')->trans('homeimages.save'),
             'attr'=>array('class'=>'btn btn-success')
             ));
         

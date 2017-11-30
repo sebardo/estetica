@@ -13,7 +13,12 @@ validator:
   must_not_be_blank: 'No puede estar vacío'
   cannot_see_this: 'No tienes permisos para ver este registro'
 app:
+  personal_data: Datos personales
+  study: Estudios
+  study_legal: Estudios reglados
+  preferences: Tus preferencias
   upload-cv: Sube tu curriculum
+  upload-photo: Sube tu foto
   show: 'Ver'
   close: 'Cerrar'
   edit: 'Editar'
@@ -645,6 +650,7 @@ slider:
     show:
         title: Slide
     edit: Editar
+    save: Guardar
     form:
         title: 'Título'
         caption: 'Descripción'
@@ -661,6 +667,7 @@ homeimages:
     show:
         title: Imágenes
     edit: Editar
+    save: Guardar
     deleted: Se han eliminado las imágenes correctamente.
         
 image.singular: Imagen

@@ -18,7 +18,14 @@
         </div>
     {% endif %}
     {{ form_row(form.image, {'label': false}) }}
-    {{ form_row(form.submit) }}
+    
+    <div class="form-group">
+        {{ form_widget(form.submit) }}
+
+        <a class="btn btn-default" href="{{ path('admin_slider_list') }}"> <span>{{ 'app.return'|trans|title }}</span></a>
+
+    </div>
+    
     <div class="hide">
         {{ form_rest(form) }}
     </div>

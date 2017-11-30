@@ -44,6 +44,8 @@
                                         {% set course_error = error.message %}
                                     {% endif %}
                                 {% endfor %}
+                                <h3 class="box-title">{{ 'app.personal_data' | trans }}</h3>
+                                
                                 {{ form_row(form.name) }}
                                 {{ form_row(form.firstLastname) }}
                                 {{ form_row(form.secondLastname) }}
@@ -60,14 +62,19 @@
                                 {{ form_row(form.gender) }}
                                 {{ form_row(form.birthday) }}
                                 {{ form_row(form.placeResidence) }}
-                                
+                                <h4 class="box-title">Otros datos de interes</h4>
                                 {{ form_row(form.certificateDisability) }}
                                 {{ form_row(form.vehicle) }}
                                 {{ form_row(form.travelAvailability) }}
                                 
                                 
+                                <h3 class="box-title">{{ 'app.study' | trans }}</h3>
                                 
-                                {{ form_row(form.studies) }}
+                                <div class="form-group">
+                                    <label class="control-label required">{{ 'app.study_legal' | trans }}</label>
+                                    {{ form_widget(form.studies) }}
+                                </div>
+                                
                                 
                                 {% if speciality_error == true or speciality_detail_error == true %}
                                     {{ form_row(form.parentSpeciality, {'attr': {'class': error_form_class }}) }}
@@ -130,6 +137,9 @@
                                 {% endif %}
                                 {{ form_row(form.experience) }}
                                 {{ form_row(form.experiencePlaces) }}
+                                
+                                <h3 class="box-title">{{ 'app.preferences' | trans }}</h3>
+                                
                                 {{ form_row(form.contractTypes) }}
                                 {{ form_row(form.timesAvailability) }}
                                 {{ form_row(form.levelsResponsibility) }}
@@ -149,7 +159,13 @@
                                     <label for="appbundle_registration_cvFile" class="btn btn-primary upload-cv" >{{ 'app.upload-cv' | trans }}</label>
                                 </div>
                                 
-                                {{ form_row(form.photoFile) }}
+                                
+                                <div class="form-group" style="height: 50px;">
+                                    <span class="control-label required"><b>{{ 'registration.form.photo.name' | trans }}</b></span>
+                                    {{ form_widget(form.photoFile, {attr: {'style':'height: 36px;'} } ) }}
+                                    <label for="appbundle_registration_photoFile" class="btn btn-primary upload-photo" >{{ 'app.upload-photo' | trans }}</label>
+                                </div>
+                                
 
                                 <div class="row">
                                     <div class="col-xs-12">

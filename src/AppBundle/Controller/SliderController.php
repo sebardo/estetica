@@ -143,7 +143,7 @@ class SliderController extends BackendBundleController
         $deleteForm = $this->createDeleteForm($slider);
         $editForm = $this->createForm('AppBundle\Form\SliderType', $slider,  array('uploadDir'=> 'uploads/images/slider' ));
         $editForm->add('submit', SubmitType::class, array(
-            'label' => $this->get('translator')->trans('app.edit_btn'),
+            'label' => $this->get('translator')->trans('slider.save'),
             'attr'=>array('class'=>'btn btn-success')
             ));
          
@@ -159,7 +159,7 @@ class SliderController extends BackendBundleController
             $em->persist($slider);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'slider.edit_succesfull');
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('slider.edit_succesfull'));
             
             return $this->redirectToRoute('admin_slider_list');
         }
@@ -192,7 +192,7 @@ class SliderController extends BackendBundleController
             $em->remove($slider);
             $em->flush();
             
-            $this->get('session')->getFlashBag()->add('info', 'slider.delete_succesfull');
+            $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('slider.delete_succesfull'));
         }
 
         return $this->redirectToRoute('admin_slider_list');
@@ -215,28 +215,21 @@ class SliderController extends BackendBundleController
     }
     
     /**
-     * Enable/Disable  a slider entity.
+     * Delete by ajax  a slider entity.
      *
-     * @Route("/{id}/enable")
-     * @Method("POST")
+     * @Route("/{id}/delete", name="admin_slider_deleteajax")
+     * @Method("GET")
      */
-    public function enableAction(Request $request, Slider $slider)
+    public function deleteAjaxAction(Request $request, Slider $slider)
     {
         $em = $this->getDoctrine()->getManager();
         
-        if($slider->isActive()){
-            $slider->setActive(false);
-        }else{
-            $slider->setActive(true);
-        }
+        $em->remove($slider);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('info', $this->get('translator')->trans('slider.delete_succesfull'));
         
-        $em->flush($slider);
-
-        $sub = new \stdClass();
-        $sub->status = 'success';
-        $sub->id = $slider->getId();
-        $sub->active = $slider->isActive();
-        return new JsonResponse($sub);
-
+        return $this->redirectToRoute('admin_slider_list');
+      
     }
 }

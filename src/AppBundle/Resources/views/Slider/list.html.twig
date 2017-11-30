@@ -36,6 +36,7 @@
                 <td>
                     <a class="btn btn-success" href="{{ path('admin_slider_show',{'id':entity.id}) }}">{{ 'app.show'|trans|title }}</a>
                     <a class="btn btn-primary" href="{{ path('admin_slider_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a>
+                    <a class="btn btn-danger" href="{{ path('admin_slider_deleteajax', { 'id': entity.id  }) }}">{{ 'Borrar'|trans|title }}</a>
                 </td>
             </tr>
         {% endfor %}

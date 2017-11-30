@@ -23,7 +23,7 @@
     color: #e7963c;
     font-weight: bold;
 }
-.upload-cv{
+.upload-cv, .upload-photo{
     position: relative;
     top: -35px;
     width: 138px;
