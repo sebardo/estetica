@@ -62,7 +62,7 @@
                                 {{ form_row(form.gender) }}
                                 {{ form_row(form.birthday) }}
                                 {{ form_row(form.placeResidence) }}
-                                <h4 class="box-title">Otros datos de interes</h4>
+                                <h4 class="box-title">{{ 'app.interest' | trans }}</h4>
                                 {{ form_row(form.certificateDisability) }}
                                 {{ form_row(form.vehicle) }}
                                 {{ form_row(form.travelAvailability) }}
@@ -99,6 +99,14 @@
                                 {% else %}
                                     {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class }}) }}
                                 {% endif %}
+								
+								{% set parentSpecialityCollection = get_parent_speciality_collection() %}
+                                {% for parent in parentSpecialityCollection  %}
+                                    {% set _row = 'speciality_' ~ parent %}
+                                    {% if form[_row] is not null %}
+                                        {{ form_widget(form[_row]) }}
+                                    {% endif %}
+                                {% endfor %}
                                 
                                 {% if course_error != false %}
                                     {{ form_row(form.course, {'attr': {'class': error_form_class }}) }}
@@ -114,13 +122,6 @@
                                 {% endif %}
                                 
                                 {{ form_row(form.academicStudies) }}
-                                {% set parentSpecialityCollection = get_parent_speciality_collection() %}
-                                {% for parent in parentSpecialityCollection  %}
-                                    {% set _row = 'speciality_' ~ parent %}
-                                    {% if form[_row] is not null %}
-                                        {{ form_widget(form[_row]) }}
-                                    {% endif %}
-                                {% endfor %}
                                 
                                 {{ form_row(form.salesTraining) }}
                                  {% if language_error != false %}
