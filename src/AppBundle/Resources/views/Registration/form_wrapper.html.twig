@@ -23,7 +23,7 @@
          {% endif %}
      {% endfor %}
      
-     
+    <h3 class="box-title">{{ 'app.personal_data' | trans }}</h3>
     {{ form_row(form.name) }}
     {{ form_row(form.firstLastname) }}
     {{ form_row(form.secondLastname) }}
@@ -33,11 +33,11 @@
     {{ form_row(form.gender) }}
     {{ form_row(form.birthday) }}
     {{ form_row(form.placeResidence) }}
-     
+    <h4 class="box-title">{{ 'app.interest' | trans }}</h4>
     {{ form_row(form.certificateDisability) }}
     {{ form_row(form.vehicle) }}
     {{ form_row(form.travelAvailability) }}
-     
+    <h3 class="box-title">{{ 'app.study' | trans }}</h3>
     {{ form_row(form.studies) }}
 
     {% if speciality_error == true or speciality_detail_error == true %}
@@ -63,7 +63,15 @@
     {% else %}
         {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class }}) }}
     {% endif %}
-    
+	
+    {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+    {% for parent in parentSpecialityCollection  %}
+           {% set _row = 'speciality_' ~ parent %}
+           {% if form[_row] is not null %}
+               {{ form_widget(form[_row]) }}
+           {% endif %}
+    {% endfor %}
+	
     {% if course_error != false %}
         {{ form_row(form.course, {'attr': {'class': error_form_class }}) }}
         <div class="form-group has-error">
@@ -77,14 +85,6 @@
         {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
     {% endif %}
     {{ form_row(form.academicStudies) }}
-    
-    {% set parentSpecialityCollection = get_parent_speciality_collection() %}
-    {% for parent in parentSpecialityCollection  %}
-           {% set _row = 'speciality_' ~ parent %}
-           {% if form[_row] is not null %}
-               {{ form_widget(form[_row]) }}
-           {% endif %}
-    {% endfor %}
     
     {{ form_row(form.salesTraining) }}
     
@@ -104,6 +104,7 @@
     
     {{ form_row(form.experience) }}
     {{ form_row(form.experiencePlaces) }}
+	<h3 class="box-title">{{ 'app.preferences' | trans }}</h3>
     {{ form_row(form.contractTypes) }}
     {{ form_row(form.timesAvailability) }}
     {{ form_row(form.levelsResponsibility) }}
