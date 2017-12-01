@@ -150,7 +150,7 @@ class MultimediaController extends BackendBundleController
 			$em->persist($entity);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.create_succesfull'));
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('multimedia.create_succesfull'));
 
 			return $this->redirectToRoute('admin_multimedia_list');
 		}
@@ -178,7 +178,7 @@ class MultimediaController extends BackendBundleController
 	public function editMultimediaAction(Request $request, Multimedia $entity)
 	{
 		$editForm = $this->createForm('AppBundle\Form\MultimediaType', $entity);
-		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.edit_btn'),'attr'=>array('class'=>'btn btn-success')));
+		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.save_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -186,7 +186,7 @@ class MultimediaController extends BackendBundleController
 			$em->persist($entity);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.edit_succesfull'));
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('multimedia.edit_succesfull'));
 
 			return $this->redirectToRoute('admin_multimedia_edit', array('id' => $entity->getId()));
 		}
