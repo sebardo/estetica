@@ -47,7 +47,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">{{ article.title }}</h4>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" id="myModal{{loop.index}}">
                                 <iframe width="560" height="315" src="{{ article.urlVideo }}" frameborder="0" allowfullscreen></iframe>
                             </div>
                             <div class="modal-footer">
@@ -71,11 +71,19 @@
 
 {% block javascripts %}
     {{ parent() }}
+
+ 
     <script type="text/javascript">
         $('#form_multimedia-category').on('change', function() {
            var $this = $(this);
             var $form =  $this.parents('form');
             $form.submit();
         });
+        
+        $(".modal-backdrop, .modal .close, .modal .btn").on("click", function() {
+            var iframe = $(this).parent().parent().find('iframe');
+            iframe.attr("src", iframe.attr("src"));
+        });
+
     </script>
 {% endblock %}

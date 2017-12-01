@@ -15,6 +15,7 @@ validator:
 app:
   personal_data: Datos personales
   study: Estudios
+  interest: Otros datos de interés
   study_legal: Estudios reglados
   preferences: Tus preferencias
   upload-cv: Sube tu curriculum
@@ -305,8 +306,8 @@ registration:
   create_btn: 'Crear un Bolsa de empleo'
   edit:
     title: 'Editar un Bolsa de empleo'
-    subtitle: 'Editar al Bolsa de empleo'
-    description: 'Editando al Bolsa de empleo'
+    subtitle: 'Editar la Bolsa de empleo'
+    description: 'Editando la Bolsa de empleo'
   show:
     title: 'Ver Bolsa de empleo'
     subtitle: 'Ver Bolsa de empleo'
@@ -398,7 +399,7 @@ registration:
     sales_training:
       name: Formación adicional en técnico de ventas
     course:
-      name: Cursos especializados
+      name: Cursos académicos
   filter_form:
     name:
       name: Nombre
@@ -671,4 +672,3 @@ homeimages:
     deleted: Se han eliminado las imágenes correctamente.
         
 image.singular: Imagen
-    
