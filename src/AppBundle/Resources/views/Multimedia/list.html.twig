@@ -30,7 +30,7 @@
                                     {% endif %}
                                     <p class="pull-right text-right">
                                         {% if article.urlVideo is not null %}
-                                            <button data-toggle="modal" data-target="#article-{{ loop.index }}" class="btn btn-primary" role="button">{{ 'app.show'|trans() }}</button>
+                                            <button data-toggle="modal" data-target="#article-{{ loop.index }}" class="btn btn-primary" role="button"  data-backdrop="static" data-keyboard="false" >{{ 'app.show'|trans() }}</button>
                                         {% else %}
                                             <a href="{{ files_path ~ '/' ~ article.file }}" class="btn btn-primary" target="_blank">{{ 'app.show'|trans() }}</a>
                                         {% endif %}
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="article-{{ loop.index }}" class="modal fade" tabindex="-1" role="dialog">
+                <div id="article-{{ loop.index }}" class="modal fade" tabindex="-1" role="dialog" >
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -80,10 +80,11 @@
             $form.submit();
         });
         
-        $(".modal-backdrop, .modal .close, .modal .btn").on("click", function() {
+        $(".fade.in, .modal .close, .modal .btn").on("click", function() {
             var iframe = $(this).parent().parent().find('iframe');
             iframe.attr("src", iframe.attr("src"));
         });
 
+     
     </script>
 {% endblock %}
