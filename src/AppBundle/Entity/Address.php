@@ -31,7 +31,7 @@ class Address extends Timestampable
      /**
 	 * @var string
 	 *
-	 * @ORM\Column(name="address_info", type="string", length=255)
+	 * @ORM\Column(name="address_info", type="string", length=255, nullable=true)
 	 */
 	private $addressInfo;
 

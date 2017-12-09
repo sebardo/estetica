@@ -43,7 +43,7 @@ class LoadPostalCodeData extends AbstractFixture implements OrderedFixtureInterf
 	 */
 	public function load(ObjectManager $manager)
 	{
-		$_file = $this->container->getParameter('postal_code_csv.path');
+		$_file = __DIR__.$this->container->getParameter('postal_code_csv.path');
 		if (!is_file($_file)) {
 			throw new Exception("No se puede leer el fichero");
 		}
