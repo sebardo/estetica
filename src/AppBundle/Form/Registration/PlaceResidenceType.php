@@ -26,19 +26,19 @@ class PlaceResidenceType extends AbstractType
 
         $builder
             ->add('address', null, array(
-                'required' => $options['required_form'],
+                'required' => true,
                 'label' => 'address.form.address',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             ->add('addressInfo', null, array(
-                'required' => $options['required_form'],
+                'required' => false,
                 'label' => 'address.form.addressinfo',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             ->add('postalCode', null, array(
-                'required' => $options['required_form'],
+                'required' => true,
                 'label' => 'address.form.postal_code',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')

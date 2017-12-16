@@ -154,7 +154,7 @@ class RegistrationController extends BackendBundleController
 	public function editRegistrationAction(Request $request, Registration $entity)
 	{
 		$editForm = $this->createForm(new RegistrationType($this->container), $entity, array('edit_form' => true));
-		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.edit_btn'),'attr'=>array('class'=>'btn btn-success')));
+		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.save_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$editForm->handleRequest($request);
 
 		if ($editForm->isSubmitted() && $editForm->isValid()) {

@@ -301,7 +301,7 @@ registration:
   create_succesfull: 'Bolsa de empleo creado correctamente'
   edit_succesfull: 'Bolsa de empleo editado correctamente'
   delete_succesfull: 'Bolsa de empleo borrado correctamente'
-  create_new: 'Nuevo Bolsa de empleo'
+  create_new: 'Nuevo Candidato'
   edit_btn: 'Editar un Bolsa de empleo'
   create_btn: 'Crear un Bolsa de empleo'
   edit:

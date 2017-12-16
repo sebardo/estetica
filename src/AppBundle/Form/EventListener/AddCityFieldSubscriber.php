@@ -56,7 +56,7 @@ class AddCityFieldSubscriber implements EventSubscriberInterface
 			'attr' => array('class' => 'city_selector'),
 			'label' => 'city.form.name',
 			'label_attr' => array('class' => ''),
-			'required' => (array_key_exists('required_form', $this->options)) ? $this->options['required_form'] : true,
+			'required' => false,
 		)));
 	}
 

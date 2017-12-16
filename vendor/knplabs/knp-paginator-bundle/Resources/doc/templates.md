@@ -83,6 +83,7 @@ If you need custom parameters in pagination template, use:
 <?php
 // set an array of custom parameters
 $pagination->setCustomParameters(array(
+    'align' => 'center', # center|right (for template: twitter_bootstrap_v4_pagination)
     'style' => 'bottom',
     'span_class' => 'whatever'
 ));
@@ -109,8 +110,8 @@ The `knp_pagination_sortable()` template switch automatically the sorting direct
 You can add an array at the end of `knp_pagination_sortable()` to choose the direction.
 
 ``` html
-{{ knp_pagination_sortable(pagination, 'Title A-Z', 'a.title', {'direction': 'asc'}) }}
-{{ knp_pagination_sortable(pagination, 'Title Z-A', 'a.title', {'direction': 'desc'}) }}
+{{ knp_pagination_sortable(pagination, 'Title A-Z', 'a.title', {}, {'direction': 'asc'}) }}
+{{ knp_pagination_sortable(pagination, 'Title Z-A', 'a.title', {}, {'direction': 'desc'}) }}
 ```
 (Assuming you use the default configuration value of sort_direction_name)
 
@@ -133,5 +134,22 @@ $pagination = $paginator->paginate(
     10, // limit per page
     array('pageParameterName' => 'section', 'sortDirectionParameterName' => 'dir')
 );
+```
+
+Or even in Twig:
+
+```jinja
+    {{ knp_pagination_render(
+            pagination,
+            '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig',
+            {
+                'queryParam1': 'param1 value',
+                'queryParam2': 'param2 value'
+            },
+            {
+                'viewParam1': 'param1 value',
+                'viewParam2': 'param2 value'
+            },
+        ) }}
 ```
 

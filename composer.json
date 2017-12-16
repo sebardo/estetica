@@ -17,6 +17,7 @@
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/knp-paginator-bundle": "^2.6",
+        "whiteoctober/tcpdf-bundle": "^1.0.3",
         "royopa/fpdf-symfony2": "^2.0",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",

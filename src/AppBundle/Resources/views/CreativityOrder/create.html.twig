@@ -1,6 +1,39 @@
 {% extends "BackendBundle::layout.html.twig" %}
 
 {% block content %}
+    
+    
+    
+    
+   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style>
+  .draggable { 
+      width: 500px; 
+      height: auto; 
+      padding: 0.5em;
+      border: 5px solid #444; 
+      cursor: pointer;
+  }
+  [contenteditable] {
+        outline: 1px solid red;
+        padding: .5em;
+        margin: .5em;
+    }
+    .ui-widget-content{
+        background-color: transparent!important;
+    }
+  </style>
+	
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="http://cdn.ckeditor.com/4.5.5/standard-all/ckeditor.js"></script>
+
+  <script src="/bundles/app/js/jquery.ui.rotatable.js"></script>
+  <link rel="stylesheet" href="/bundles/app/css/jquery.ui.rotatable.css">  
+
+
+
+
     <div class="row">
         <h3 class="col-xs-12 title-header text-center">{{ 'creativity_order.title.header'|trans() }}</h3>
         <div class="col-xs-12 col-sm-6">
@@ -8,19 +41,16 @@
                 <div class="col-xs-12">
                     <h5 class="title-images-preview">{{ 'creativity_order.title.preview'|trans() }}</h5>
                 </div>
-                {% if creativity.fileDocs|length > 1 %}
-                    {% for images in creativity.fileDocs %}
-                        <div class="col-xs-6">
-                            <img class="file-doc-image-preview img-responsive" src="{{ creativity_path ~ '/' ~ get_filedoc_by_creativity(creativity, loop.index - 1) }}">
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    {% for images in creativity.fileDocs %}
-                        <div class="col-xs-12">
-                            <img class="file-doc-image-preview img-responsive" src="{{ creativity_path ~ '/' ~ get_filedoc_by_creativity(creativity, loop.index - 1) }}">
-                        </div>
-                    {% endfor %}
-                {% endif %}
+                <button type="button" onclick="newEditor()">Create new editor</button>
+                <i>* Double click to edit a content</i>
+                <div id="parent" style="height: 600px;width: 700px; background-image: url('{{ creativity_path ~ '/' ~ get_filedoc_by_creativity(creativity, 0)}}')">
+                    <div class="draggable ui-widget-content rotatable">
+                        <div id="editor1" class="editor" contenteditable="true">
+                        <h3>Drop stuff here then press the Destroy/Recreate button and try again.</h3>
+                      </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <div class="col-xs-12 col-sm-6">
@@ -74,4 +104,77 @@
         this.submit();
     });
 </script>
+
+
+ <script>
+     var count = 0;
+    function newEditor() {
+        count++;
+        console.log(count);
+        // This HTML could've come from AJAX data.
+        var el = CKEDITOR.dom.element.createFromHtml( '<div id="'+count+'" class="editor" contenteditable="true">Hello world</div>' );
+        CKEDITOR.document.getBody().append( el );
+
+        var div = document.createElement("div");
+        div.id = 'div-'+count;
+        div.className = 'draggable ui-widget-content rotatable';
+        document.getElementById('parent').appendChild(div);
+
+        // Create editor instance on the new element.
+        CKEDITOR.inline( el, {
+            toolbarGroups: [
+                { name: 'basicstyles' }
+            ]
+        } );
+        
+        console.log($(document).find('#'+count));
+        console.log($(document).find("#div-"+count));
+        
+        $(document).find('#'+count).appendTo("#div-"+count);
+         $( ".draggable" ).draggable({containment: "parent"}).rotatable();
+         
+         $(".editor").click(function(e) {
+            e.stopPropagation();
+            $( ".draggable" ).draggable( 'disable' )
+        });
+        $(document).click(function(e) {
+            if( e.target.className != 'editor') {
+              $( ".draggable" ).draggable( 'enable' );
+            }
+        });
+    }
+    
+    $( function() {
+        $( ".draggable" ).draggable({
+            containment: "parent"
+        });
+        $( ".rotatable" ).rotatable();
+    });
+    
+    $( function() {
+        'use strict';
+        CKEDITOR.inline('editor1', {
+          extraPlugins: 'sourcedialog,justify'
+        });
+        CKEDITOR.on( 'instanceCreated', function( evt ) {
+            console.log( 'instanceCreated', evt, evt.editor );
+        } );
+    });     
+
+ 
+    
+
+    $(document).ready(function(){
+        $(".editor").click(function(e) {
+            e.stopPropagation();
+            $( ".draggable" ).draggable( 'disable' )
+        });
+        $(document).click(function(e) {
+            if( e.target.className != 'editor') {
+              $( ".draggable" ).draggable( 'enable' );
+            }
+        });
+    });
+</script>
+    
 {% endblock %}

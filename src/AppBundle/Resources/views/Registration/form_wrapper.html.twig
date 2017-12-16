@@ -1,7 +1,18 @@
 {% extends "BackendBundle:CRUD:create.html.twig" %}
 
 {% block create_body %}
+    
+    <style>
+        .radio label{
+            padding-left: 0px!important;
+        }
+        .speciality{
+            padding-left: 25px;
+        }
+    </style>
      {{ form_start(form) }}
+     {{ form_errors(form) }}
+     
      {% set speciality_error = false %}
      {% set speciality_detail_error = false %}
      {% set language_error = false %}
@@ -64,13 +75,16 @@
         {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class }}) }}
     {% endif %}
 	
-    {% set parentSpecialityCollection = get_parent_speciality_collection() %}
-    {% for parent in parentSpecialityCollection  %}
-           {% set _row = 'speciality_' ~ parent %}
-           {% if form[_row] is not null %}
-               {{ form_widget(form[_row]) }}
-           {% endif %}
-    {% endfor %}
+    <div class="speciality">
+        {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+        {% for parent in parentSpecialityCollection  %}
+               {% set _row = 'speciality_' ~ parent %}
+               {% if form[_row] is not null %}
+                   {{ form_widget(form[_row]) }}
+               {% endif %}
+        {% endfor %}
+    </div>
+    
 	
     {% if course_error != false %}
         {{ form_row(form.course, {'attr': {'class': error_form_class }}) }}

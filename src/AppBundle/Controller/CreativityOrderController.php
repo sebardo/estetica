@@ -97,7 +97,7 @@ class CreativityOrderController extends BackendBundleController
 			$em = $this->getDoctrine()->getManager();
 			$filename = 'order_' . strtolower($creativity->getSupport()) . '_' . strtolower($client->getSocietyName()) . '_' . time() . '.pdf';
 			$filenamePath = ltrim($this->getParameter('app.path.creativity_orders'), '/') . '/' . $filename;
-			$pdf = $this->createCompletedPdf($entity, $creativity, $client, $filenamePath);
+            $pdf = $this->createCompletedPdf($entity, $creativity, $client, $filenamePath);
 			$entity->setCreativityOrderPdf($filename);
 			$em->persist($entity);
 			$em->flush();
@@ -269,14 +269,26 @@ class CreativityOrderController extends BackendBundleController
 
 	private function createCompletedPdf(CreativityOrder $creativityOrder, Creativity $creativity, Client $client, $filename = null)
 	{
-		$supportType = $creativity->getSupport();
-		$supportBackgroundImages = $this->getSupportBackgroundImagesPathByCreativity($creativity);
-		$clientLogo = $client->getLogo();
-		$contentValues = $creativityOrder->getFieldsValue();
-		$bgImageAttributes = ImageHandler::getImageSize($supportBackgroundImages[0]);
-		$logoPath = ltrim($this->container->getParameter('app.path.images'), '/') . '/' . $clientLogo;
-
-		return Pdf::generatePdf($supportType, $contentValues, $supportBackgroundImages, $bgImageAttributes, $logoPath, $filename);
+        $contentValues = $creativityOrder->getFieldsValue();
+       
+        $pdfObj = $this->container->get("white_october.tcpdf")->create();
+        $pdfObj->AddPage();
+        $pdfObj->WriteHTML($contentValues['rollup-obverse-content-1']);
+        $pdfObj->Output($filename, 'I');
+        
+//        
+//		$supportType = $creativity->getSupport();
+//		$supportBackgroundImages = $this->getSupportBackgroundImagesPathByCreativity($creativity);
+//        $bgImageAttributes = ImageHandler::getImageSize($supportBackgroundImages[0]);
+//		$logoPath = ltrim($this->container->getParameter('app.path.images'), '/') . '/' . $client->getLogo();
+//		$contentValues = $creativityOrder->getFieldsValue();
+//
+//        return Pdf::generateFromHTML($contentValues['rollup-obverse-content-1'], $bgImageAttributes, $logoPath);
+        
+//		$bgImageAttributes = ImageHandler::getImageSize($supportBackgroundImages[0]);
+//		$logoPath = ltrim($this->container->getParameter('app.path.images'), '/') . '/' . $clientLogo;
+//
+//		return Pdf::generatePdf($supportType, $contentValues, $supportBackgroundImages, $bgImageAttributes, $logoPath, $filename);
 	}
 
 	private function getSupportBackgroundImagesPathByCreativity(Creativity $creativity)

@@ -37,7 +37,7 @@ class AddCourseFieldSubscriber implements EventSubscriberInterface
 		$form
 			->add('course', new CourseType($this->container->get('webapp.manager.course_manager'), $this->container->get('webapp.manager.registration_has_course_manager'), $data), array(
 				'label' => 'registration.form.course.name',
-				'required' => true,
+				'required' => false,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => ''),
 				'mapped' => false

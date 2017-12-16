@@ -1,6 +1,16 @@
 {% extends "BackendBundle:CRUD:create.html.twig" %}
 
 {% block create_body %}
+    
+    <style>
+        .radio label{
+            padding-left: 0px!important;
+        }
+        .speciality{
+            padding-left: 25px;
+        }
+    </style>
+    
     {{ form_start(form) }}
     <fieldset disabled="disabled">
         {% set speciality_error = false %}
@@ -41,15 +51,18 @@
 		<h3 class="box-title">{{ 'app.study' | trans }}</h3>
         {{ form_row(form.studies) }}
 
-        {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class } } ) }}
-		{{ form_widget(form.parentSpeciality) }}
-        {% set parentSpecialityCollection = get_parent_speciality_collection() %}
-        {% for parent in parentSpecialityCollection  %}
-            {% set _row = 'speciality_' ~ parent %}
-            {% if form[_row] is not null %}
-                {{ form_widget(form[_row]) }}
-            {% endif %}
-        {% endfor %}
+        
+            {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class } } ) }}
+            {{ form_widget(form.parentSpeciality) }}
+            {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+            <div class="speciality">
+            {% for parent in parentSpecialityCollection  %}
+                {% set _row = 'speciality_' ~ parent %}
+                {% if form[_row] is not null %}
+                    {{ form_widget(form[_row]) }}
+                {% endif %}
+            {% endfor %}
+            </div>
         {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
         {{ form_row(form.academicStudies) }}
       

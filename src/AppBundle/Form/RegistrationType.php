@@ -38,7 +38,7 @@ class RegistrationType extends AbstractType
         $builder->addEventSubscriber($languageSubscriber);
 
         $builder
-            //Personal
+            //Personal nombre, Primer Apellido○Teléfono, Email, Género, Fecha de nacimiento, Dirección calle y numero ,Código postal 
             ->add('name', null, array(
                 'label' => 'registration.form.name.name',
                 'required' => true,
@@ -53,12 +53,12 @@ class RegistrationType extends AbstractType
             ))
             ->add('secondLastname', null, array(
                 'label' => 'registration.form.second_last_name.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             ->add('photoFile', 'file', array(
-                'required' => ($options['edit_form']) ? false : true,
+                'required' => false,
                 'label' => 'registration.form.photo.name',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
@@ -71,7 +71,7 @@ class RegistrationType extends AbstractType
             ))
             ->add('mobile', null, array(
                 'label' => 'registration.form.mobile.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
@@ -96,7 +96,7 @@ class RegistrationType extends AbstractType
 
             ))
             ->add('cvFile', 'file', array(
-                'required' => ($options['edit_form']) ? false : true,
+                'required' => false,
                 'label' => 'registration.form.image.name',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
@@ -105,13 +105,13 @@ class RegistrationType extends AbstractType
             //Experience
             ->add('experience', null, array(
                 'label' => 'registration.form.experience.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             ->add('experiencePlaces', null, array(
                 'label' => 'registration.form.experience.places',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
@@ -119,14 +119,14 @@ class RegistrationType extends AbstractType
             //Vehicle
             ->add('vehicle', BooleanType::class, array(
                 'label' => 'registration.form.vehicle.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             //TravelAvailability
             ->add('travelAvailability', BooleanType::class, array(
                 'label' => 'registration.form.travel_availability.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
@@ -135,28 +135,28 @@ class RegistrationType extends AbstractType
                 'label' => 'registration.form.time_availability.name',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => ''),
-                'required' => true,
+                'required' => false,
                 'expanded' => true,
                 'multiple' => true
             ))
             //Disability
             ->add('certificateDisability', BooleanType::class, array(
                 'label' => 'registration.form.certificate_disability.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             //SalesTraining
             ->add('salesTraining', BooleanType::class, array(
                 'label' => 'registration.form.sales_training.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             //ContractType
             ->add('contractTypes', null, array(
                 'label' => 'registration.form.contract_type.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => ''),
                 'expanded' => true,
@@ -165,7 +165,7 @@ class RegistrationType extends AbstractType
             //LevelResponsibility
             ->add('levelsResponsibility', null, array(
                 'label' => 'registration.form.level_responsibility.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => ''),
                 'expanded' => true,
@@ -174,14 +174,13 @@ class RegistrationType extends AbstractType
             //Address PlaceResidence
             ->add('placeResidence', PlaceResidenceType::class, array(
                 'label' => 'registration.form.address.name',
-                'required' => true,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             //Studies
             ->add('studies', null, array(
                 'label' => 'registration.form.study.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => ''),
                 'expanded' => true,
@@ -192,7 +191,7 @@ class RegistrationType extends AbstractType
             //Academic Studies
             ->add('academicStudies' , null, array(
                 'label' => 'registration.form.academic_study.name',
-                'required' => true,
+                'required' => false,
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => ''),
                 'expanded' => true,
