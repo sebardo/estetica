@@ -36,7 +36,7 @@ class AddLanguageFieldSubscriber implements EventSubscriberInterface
 		$form
 			->add('language', new LanguageType($this->container->get('webapp.manager.language_manager'), $this->container->get('webapp.manager.registration_has_language_manager'), $data), array(
 				'label' => 'registration.form.language.name',
-				'required' => false,
+				'required' => true,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => ''),
 				'mapped' => false

@@ -50,7 +50,7 @@ class AddSpecialityFieldSubscriber implements EventSubscriberInterface
 	{
 		$form->add('parentSpeciality', new ParentSpecialityType($this->container->get('webapp.manager.parent_speciality_manager')), array(
 				'label' => 'registration.form.parent_speciality.name',
-				'required' => false,
+				'required' => true,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => ''),
 				'mapped' => false,
@@ -61,7 +61,7 @@ class AddSpecialityFieldSubscriber implements EventSubscriberInterface
 			$hide = ($parentSpeciality == $_parentSpeciality) ? '' : 'hide';
 			$form->add('speciality_' . Slugify::slug($_parentSpeciality->getFormatName()), new SpecialityType($this->container->get('webapp.manager.speciality_manager'), $this->container->get('webapp.manager.registration_has_speciality_manager'), $_parentSpeciality, $data), array(
 					'label' => 'registration.form.speciality.name',
-					'required' => false,
+					'required' => true,
 					'label_attr' => array('class' => ''),
 					'attr' => array('class' => 'speciality_children ' . $hide),
 					'mapped' => false
