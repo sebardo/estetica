@@ -92,7 +92,7 @@ class FilterRegistrationType
 				'expanded' => false,
 				'multiple' => true,
 				'attr' => array(
-					'class' => 'no-required selectpicker2',
+					'class' => 'no-required selectpicker',
 					'autocomplete' => 'off',
 					'title' => 'registration.filter_form.speciality.default'
 				),

@@ -156,6 +156,7 @@
         //ParentSpeciality
 
         $('#form_parentSpeciality').on('change', function() {
+            
             var $this = $(this);
             var data = {
                 parent_speciality_id: $this.val()
@@ -176,6 +177,7 @@
                     for (var i=0, total = data.length; i < total; i++) {
                         $speciality_selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                     }
+                    $('#form_speciality').selectpicker('refresh');
                 }
             });
         });
