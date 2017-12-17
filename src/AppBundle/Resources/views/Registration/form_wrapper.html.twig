@@ -34,132 +34,140 @@
          {% endif %}
      {% endfor %}
      
-    <h3 class="box-title">{{ 'app.personal_data' | trans }}</h3>
-    {{ form_row(form.name) }}
-    {{ form_row(form.firstLastname) }}
-    {{ form_row(form.secondLastname) }}
-    {{ form_row(form.phone) }}
-    {{ form_row(form.mobile) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.gender) }}
-    {{ form_row(form.birthday) }}
-    {{ form_row(form.placeResidence) }}
-    <h4 class="box-title">{{ 'app.interest' | trans }}</h4>
-    {{ form_row(form.certificateDisability) }}
-    {{ form_row(form.vehicle) }}
-    {{ form_row(form.travelAvailability) }}
-    <h3 class="box-title">{{ 'app.study' | trans }}</h3>
-    {{ form_row(form.studies) }}
+    <div {% if step2 is defined %}style="display:none"{%endif%} class="form1-container">
+        <h3 class="box-title">{{ 'app.personal_data' | trans }}</h3>
+        {{ form_row(form.name) }}
+        {{ form_row(form.firstLastname) }}
+        {{ form_row(form.secondLastname) }}
+        {{ form_row(form.phone) }}
+        {{ form_row(form.mobile) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.gender) }}
+        {{ form_row(form.birthday) }}
+        {{ form_row(form.placeResidence) }}
+        <h4 class="box-title">{{ 'app.interest' | trans }}</h4>
+        {{ form_row(form.certificateDisability) }}
+        {{ form_row(form.vehicle) }}
+        {{ form_row(form.travelAvailability) }}
+        <h3 class="box-title">{{ 'app.study' | trans }}</h3>
+        {{ form_row(form.studies) }}
 
-    {% if speciality_error == true or speciality_detail_error == true %}
-        {{ form_row(form.parentSpeciality, {'attr': {'class': error_form_class }}) }}
-        {% if speciality_error != false %}
+        {% if speciality_error == true or speciality_detail_error == true %}
+            {{ form_row(form.parentSpeciality, {'attr': {'class': error_form_class }}) }}
+            {% if speciality_error != false %}
+                <div class="form-group has-error">
+                    <div class="help-block">
+                        <ul class="list-unstyled">
+                            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ speciality_error }}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+            {% if speciality_detail_error != false %}
+                <div class="form-group has-error">
+                    <div class="help-block">
+                        <ul class="list-unstyled">
+                            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ speciality_detail_error }}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class }}) }}
+        {% endif %}
+
+        <div class="speciality">
+            {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+            {% for parent in parentSpecialityCollection  %}
+                   {% set _row = 'speciality_' ~ parent %}
+                   {% if form[_row] is not null %}
+                       {{ form_widget(form[_row]) }}
+                   {% endif %}
+            {% endfor %}
+        </div>
+
+
+        {% if course_error != false %}
+            {{ form_row(form.course, {'attr': {'class': error_form_class }}) }}
             <div class="form-group has-error">
                 <div class="help-block">
                     <ul class="list-unstyled">
-                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ speciality_error }}</li>
+                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ course_error }}</li>
                     </ul>
                 </div>
             </div>
+        {% else %}
+            {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
         {% endif %}
-        {% if speciality_detail_error != false %}
+        {{ form_row(form.academicStudies) }}
+
+        {{ form_row(form.salesTraining) }}
+
+        {% if language_error != false %}
+            {{ form_row(form.language, {'attr': {'class': error_form_class }}) }}
             <div class="form-group has-error">
                 <div class="help-block">
                     <ul class="list-unstyled">
-                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ speciality_detail_error }}</li>
+                        <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ language_error }}</li>
                     </ul>
                 </div>
             </div>
+        {% else %}
+            {{ form_row(form.language, {'attr': {'class': default_form_class }}) }}
         {% endif %}
-    {% else %}
-        {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class }}) }}
-    {% endif %}
-	
-    <div class="speciality">
-        {% set parentSpecialityCollection = get_parent_speciality_collection() %}
-        {% for parent in parentSpecialityCollection  %}
-               {% set _row = 'speciality_' ~ parent %}
-               {% if form[_row] is not null %}
-                   {{ form_widget(form[_row]) }}
-               {% endif %}
-        {% endfor %}
-    </div>
-    
-	
-    {% if course_error != false %}
-        {{ form_row(form.course, {'attr': {'class': error_form_class }}) }}
-        <div class="form-group has-error">
-            <div class="help-block">
-                <ul class="list-unstyled">
-                    <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ course_error }}</li>
-                </ul>
-            </div>
-        </div>
-    {% else %}
-        {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
-    {% endif %}
-    {{ form_row(form.academicStudies) }}
-    
-    {{ form_row(form.salesTraining) }}
-    
-    {% if language_error != false %}
-        {{ form_row(form.language, {'attr': {'class': error_form_class }}) }}
-        <div class="form-group has-error">
-            <div class="help-block">
-                <ul class="list-unstyled">
-                    <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ language_error }}</li>
-                </ul>
-            </div>
-        </div>
-    {% else %}
-        {{ form_row(form.language, {'attr': {'class': default_form_class }}) }}
-    {% endif %}
-    
-    
-    {{ form_row(form.experience) }}
-    {{ form_row(form.experiencePlaces) }}
-	<h3 class="box-title">{{ 'app.preferences' | trans }}</h3>
-    {{ form_row(form.contractTypes) }}
-    {{ form_row(form.timesAvailability) }}
-    {{ form_row(form.levelsResponsibility) }}
 
-    <div class="form-group" style="height: 50px">
-        <span class="control-label required"><b>{{ 'registration.form.image.name' | trans }}</b></span>
-        <br>
-        {{ form_widget(form.cvFile, {attr: {'style':'height: 36px;'} } ) }}
-        <label for="appbundle_registration_cvFile" class="btn btn-primary upload-cv" >{{ 'app.upload-cv' | trans }}</label>
+
+        {{ form_row(form.experience) }}
+        {{ form_row(form.experiencePlaces) }}
+            <h3 class="box-title">{{ 'app.preferences' | trans }}</h3>
+        {{ form_row(form.contractTypes) }}
+        {{ form_row(form.timesAvailability) }}
+        {{ form_row(form.levelsResponsibility) }}
     </div>
     
-    {% set required_image = 'required' %}
-     {% if entity.cvPath is not null %}
-        {% set required_image = false %}
-        <div class="row">
-            <div class="col-xs-4">
-                <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
-            </div>
+    <div {% if step2 is not defined %}style="display:none"{%endif%}>
+        <div class="form-group" style="height: 50px;width: 49%;display: inline-block;">
+            <span class="control-label required"><b>{{ 'registration.form.image.name' | trans }}</b></span>
+            <br>
+            {% if step2 is defined %}{% set required = true %}{% else%}{% set required = false %}{%endif%}
+            {{ form_widget(form.cvFile, {attr: {'style':'height: 36px;', 'required': required} } ) }}
+            <label for="appbundle_registration_cvFile" class="btn btn-primary upload-cv" >{{ 'app.upload-cv' | trans }}</label>
         </div>
-     {% endif %}
-     
-     
-     
-    <div class="form-group" style="height: 50px">
-        <span class="control-label required"><b>{{ 'registration.form.photo.name' | trans }}</b></span>
-        <br>
-        {{ form_widget(form.photoFile, {attr: {'style':'height: 36px;'} } ) }}
-        <label for="appbundle_registration_photoFile" class="btn btn-primary upload-photo" >{{ 'app.upload-photo' | trans }}</label>
+
+        {% set required_image = 'required' %}
+        {% if entity.cvPath is not null %}
+           {% set required_image = false %}
+           <div class="row">
+               <div class="col-xs-4">
+                   <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
+               </div>
+           </div>
+        {% endif %}
+
+
+
+        <div class="form-group" style="height: 50px;width: 49%;display: inline-block;">
+            <span class="control-label required"><b>{{ 'registration.form.photo.name' | trans }}</b></span>
+            <br>
+            {% if step2 is defined %}{% set required = true %}{% else%}{% set required = false %}{%endif%}
+            {{ form_widget(form.photoFile, {attr: {'style':'height: 36px;', 'required': required} } ) }}
+            <label for="appbundle_registration_photoFile" class="btn btn-primary upload-photo" >{{ 'app.upload-photo' | trans }}</label>
+        </div>
+        {% if entity.photoPath is not null %}
+            <div class="row">
+                <div class="col-xs-4">
+                    <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
+                </div>
+            </div>
+        {% endif %}
     </div>
-    {% if entity.photoPath is not null %}
-        <div class="row">
-            <div class="col-xs-4">
-                <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
-            </div>
-        </div>
-    {% endif %}
+   
       
      
      
      
      {{ form_row(form.submit) }}
+     {% if step2 is defined %}<a href="{{ path('admin_registration_create')}}" class="btn btn-primary btn">Volver</a>{%endif%}
      <div class="hide">
          {{ form_rest(form) }}
      </div>

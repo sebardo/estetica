@@ -34,7 +34,14 @@ class SpecialityType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$specialityCollection = $this->getChoicesByEntity();
+                                
+                $returnValues = array();
+                foreach ($this->data->getRegistrationsHaveSpecialities() as $spe) {
+                    if($spe instanceof RegistrationHasSpeciality) 
+                        $returnValues[$spe->getSpeciality()->getId()] = $spe->getValue();
+                }
+
+                $specialityCollection = $this->getChoicesByEntity();
 		foreach ($specialityCollection as $key => $speciality) {
 			$builder
 				->add('speciality_' . Slugify::slug($key), 'checkbox', array(
@@ -42,14 +49,14 @@ class SpecialityType extends AbstractType
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
-					'data' => $this->getCheckedByRegistrationAndSpecialityId($this->data, $key)
+					'data' => (array_key_exists($key, $returnValues)) ? true : $this->getCheckedByRegistrationAndSpecialityId($this->data, $key)
 				))
 				->add('speciality_' . Slugify::slug($key) . '_detail', 'textarea', array(
 					'label' => false,
 					'required' => false,
 					'attr' => array('class' => 'field-detail'),
 					'mapped' => false,
-					'data' => $this->getValueByRegistrationAndSpecialityId($this->data, $key)
+					'data' => (array_key_exists($key, $returnValues)) ? $returnValues[$key] : $this->getValueByRegistrationAndSpecialityId($this->data, $key)
 				));
 		}
 	}

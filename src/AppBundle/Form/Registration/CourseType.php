@@ -31,6 +31,11 @@ class CourseType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+                $returnValues = array();
+                foreach ($this->data->getRegistrationsHaveCourses() as $cou) {
+                    $returnValues[$cou->getCourse()->getId()] = $cou->getValue();
+                }
+                
 		$courseCollection = $this->getChoicesByEntity();
 		foreach ($courseCollection as $key => $course) {
 			$builder
@@ -39,14 +44,14 @@ class CourseType extends AbstractType
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
-					'data' => $this->getCheckedByRegistrationAndCourseId($this->data, $key)
+					'data' => (array_key_exists($key, $returnValues)) ? true : $this->getCheckedByRegistrationAndCourseId($this->data, $key)
 				))
 				->add('course_' . Slugify::slug($key) . '_detail', 'textarea', array(
 					'label' => false,
 					'required' => false,
 					'attr' => array('class' => 'field-detail'),
 					'mapped' => false,
-					'data' => $this->getValueByRegistrationAndCourseId($this->data, $key)
+					'data' => (array_key_exists($key, $returnValues)) ? $returnValues[$key] : $this->getValueByRegistrationAndCourseId($this->data, $key)
 				));
 		}
 	}

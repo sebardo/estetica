@@ -77,23 +77,30 @@
         {{ form_row(form.timesAvailability) }}
         {{ form_row(form.levelsResponsibility) }}
         
-        {% set required_image = 'required' %}
-        {% if entity.cvPath is not null %}
-            {% set required_image = false %}
-            <div class="row">
-                <div class="col-xs-4">
-                    <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
+        <div style="width: 49%;display: inline-block;">
+            {% set required_image = 'required' %}
+            {% if entity.cvPath is not null %}
+                {% set required_image = false %}
+                <div class="row">
+                    <div class="col-xs-4">
+                        <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
         
-        {% if entity.photoPath is not null %}
-            <div class="row">
-                <div class="col-xs-4">
-                    <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
+        <div style="width: 49%;display: inline-block;">
+            {% if entity.photoPath is not null %}
+                <div class="row">
+                    <div class="col-xs-4">
+                        <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
+        
+        
+        
         
         <div class="hide">
             {{ form_row(form.submit) }}

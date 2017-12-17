@@ -24,7 +24,7 @@ class LevelResponsibility extends Timestampable
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	protected $id;
+	public $id;
 
 	/**
 	 * @var string

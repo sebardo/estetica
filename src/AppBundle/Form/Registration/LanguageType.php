@@ -38,6 +38,11 @@ class LanguageType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$languageCollection = $this->getChoicesByEntity();
+                
+                $returnValues = array();
+                foreach ($this->data->getRegistrationsHaveLanguages() as $lan) {
+                    $returnValues[$lan->getLanguage()->getId()] = $lan->getValue();
+                }
 
 		foreach ($languageCollection as $key => $language) {
 			$builder
@@ -46,7 +51,7 @@ class LanguageType extends AbstractType
 					'required' => false,
 					'attr' => array('class' => ''),
 					'mapped' => false,
-					'data' => $this->getCheckedByRegistrationAndLanguageId($this->data, $key)
+					'data' => (array_key_exists($key, $returnValues)) ? true : $this->getCheckedByRegistrationAndLanguageId($this->data, $key)
 				))
 				->add('language_' . Slugify::slug($key) . '_detail', 'choice', array(
 					'choices' => $this->getLevelChoicesByEntity(),
@@ -55,7 +60,7 @@ class LanguageType extends AbstractType
 					'multiple' => false,
 					'attr' => array('class' => 'field-detail'),
 					'mapped' => false,
-					'data' => $this->getValueByRegistrationAndLanguageId($this->data, $key)
+					'data' => (array_key_exists($key, $returnValues)) ? $returnValues[$key] : $this->getValueByRegistrationAndLanguageId($this->data, $key)
 				));
 		}
 	}

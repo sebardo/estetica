@@ -30,6 +30,7 @@ class RegistrationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $specialitySubscriber = new AddSpecialityFieldSubscriber($this->container, $options);
         $builder->addEventSubscriber($specialitySubscriber);
         $courseSubscriber = new AddCourseFieldSubscriber($this->container, $options);
@@ -207,7 +208,8 @@ class RegistrationType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Registration',
-            'edit_form' => false
+            'edit_form' => false,
+            'post' => null
         ));
     }
 

@@ -155,23 +155,24 @@
                                 {{ form_row(form.timesAvailability) }}
                                 {{ form_row(form.levelsResponsibility) }}
                                 
-                                {% set required_image = 'required' %}
-                                {% if entity.cvPath is not null %}
-                                    {% set required_image = false %}
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
+                                <div style="width: 49%;display: inline-block;">
+                                    {% set required_image = 'required' %}
+                                    {% if entity.cvPath is not null %}
+                                        {% set required_image = false %}
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
+                                            </div>
                                         </div>
+                                    {% endif %}
+                                    <div class="form-group" style="height: 50px;">
+                                        <span class="control-label required"><b>{{ 'registration.form.image.name' | trans }}</b></span>
+                                        {{ form_widget(form.cvFile, {attr: {'style':'height: 36px;'} } ) }}
+                                        <label for="appbundle_registration_cvFile" class="btn btn-primary upload-cv" >{{ 'app.upload-cv' | trans }}</label>
                                     </div>
-                                {% endif %}
-                                <div class="form-group" style="height: 50px;">
-                                    <span class="control-label required"><b>{{ 'registration.form.image.name' | trans }}</b></span>
-                                    {{ form_widget(form.cvFile, {attr: {'style':'height: 36px;'} } ) }}
-                                    <label for="appbundle_registration_cvFile" class="btn btn-primary upload-cv" >{{ 'app.upload-cv' | trans }}</label>
                                 </div>
                                 
-                                
-                                <div class="form-group" style="height: 50px;">
+                                <div class="form-group" style="height: 50px;width: 49%;display: inline-block;">
                                     <span class="control-label required"><b>{{ 'registration.form.photo.name' | trans }}</b></span>
                                     {{ form_widget(form.photoFile, {attr: {'style':'height: 36px;'} } ) }}
                                     <label for="appbundle_registration_photoFile" class="btn btn-primary upload-photo" >{{ 'app.upload-photo' | trans }}</label>

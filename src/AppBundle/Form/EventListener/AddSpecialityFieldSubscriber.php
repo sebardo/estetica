@@ -57,6 +57,7 @@ class AddSpecialityFieldSubscriber implements EventSubscriberInterface
 				'data' => ($parentSpeciality) ? $parentSpeciality->getId() : null
 			)
 		);
+                
 		foreach ($this->parentSpecialityCollection as $_parentSpeciality) {
 			$hide = ($parentSpeciality == $_parentSpeciality) ? '' : 'hide';
 			$form->add('speciality_' . Slugify::slug($_parentSpeciality->getFormatName()), new SpecialityType($this->container->get('webapp.manager.speciality_manager'), $this->container->get('webapp.manager.registration_has_speciality_manager'), $_parentSpeciality, $data), array(

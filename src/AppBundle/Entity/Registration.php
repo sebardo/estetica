@@ -701,20 +701,20 @@ class Registration extends Timestampable
 
 	public function addLevelResponsibility($levelResponsibility)
 	{
-		if($this->timesAvailability->contains($levelResponsibility)){
+		if($this->levelsResponsibility->contains($levelResponsibility)){
 			return;
 		}
 
-		$this->timesAvailability->add($levelResponsibility);
+		$this->levelsResponsibility->add($levelResponsibility);
 	}
 
 	public function removeLevelResponsibility($levelResponsibility)
 	{
-		if(!$this->timesAvailability->contains($levelResponsibility)){
+		if(!$this->levelsResponsibility->contains($levelResponsibility)){
 			return;
 		}
 
-		$this->timesAvailability->remove($levelResponsibility);
+		$this->levelsResponsibility->remove($levelResponsibility);
 	}
 
 	/**
