@@ -252,11 +252,11 @@ class Multimedia extends Timestampable
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if(empty($this->getFileVich()) && empty($this->getUrlVideo())){
-            $context->buildViolation('multimedia.url_or_file')
-                ->atPath('urlVideo')
-                ->addViolation();
-        }
+//        if(empty($this->getFileVich()) && empty($this->getUrlVideo())){
+//            $context->buildViolation('multimedia.url_or_file')
+//                ->atPath('urlVideo')
+//                ->addViolation();
+//        }
 
         if(!empty($this->getUrlVideo())){
             if(strpos($this->getUrlVideo(), self::YOUTUBE_URL) === false){

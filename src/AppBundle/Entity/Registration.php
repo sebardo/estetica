@@ -45,7 +45,7 @@ class Registration extends Timestampable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="second_lastname", type="string", length=255)
+	 * @ORM\Column(name="second_lastname", type="string", length=255, nullable=true)
 	 */
 	private $secondLastname;
 
@@ -59,7 +59,7 @@ class Registration extends Timestampable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="mobile", type="string", length=255)
+	 * @ORM\Column(name="mobile", type="string", length=255, nullable=true)
 	 */
 	private $mobile;
 
@@ -87,7 +87,7 @@ class Registration extends Timestampable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="photo", type="string", length=255)
+	 * @ORM\Column(name="photo", type="string", length=255, nullable=true)
 	 */
 	private $photoPath;
 
@@ -106,7 +106,7 @@ class Registration extends Timestampable
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="cv", type="string", length=255)
+	 * @ORM\Column(name="cv", type="string", length=255, nullable=true)
 	 */
 	private $cvPath;
 
@@ -132,21 +132,21 @@ class Registration extends Timestampable
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="travel_availability", type="boolean")
+	 * @ORM\Column(name="travel_availability", type="boolean", nullable=true)
 	 */
 	private $travelAvailability;
 
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="certificate_disability", type="boolean")
+	 * @ORM\Column(name="certificate_disability", type="boolean", nullable=true)
 	 */
 	private $certificateDisability;
 
 	/**
 	 * @var boolean
 	 *
-	 * @ORM\Column(name="sales_training", type="boolean")
+	 * @ORM\Column(name="sales_training", type="boolean", nullable=true)
 	 */
 	private $salesTraining;
 
@@ -159,7 +159,7 @@ class Registration extends Timestampable
     /**
 	 * @var string
 	 *
-	 * @ORM\Column(name="experience_places", type="string", length=10000)
+	 * @ORM\Column(name="experience_places", type="string", length=10000, nullable=true)
 	 */
 	private $experiencePlaces;
 
@@ -187,27 +187,24 @@ class Registration extends Timestampable
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\TimeAvailability", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_times")
-	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
-	private $timesAvailability;
+	private $timesAvailability; //@Assert\Count(min = 1, minMessage = "registration.min_one")
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\ContractType", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_contracts")
-	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
-	private $contractTypes;
+	private $contractTypes; //@Assert\Count(min = 1, minMessage = "registration.min_one")
 
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Registration\LevelResponsibility", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_responsibilities")
-	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
-	private $levelsResponsibility;
+	private $levelsResponsibility; //@Assert\Count(min = 1, minMessage = "registration.min_one")
 
 	/**
 	 * @ORM\OneToOne(targetEntity="AppBundle\Entity\Registration\PlaceResidence", inversedBy="registration", cascade={"persist"})
-	 * @ORM\JoinColumn(name="place_residence_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="place_residence_id", referencedColumnName="id", nullable=true)
 	 */
 	private $placeResidence;
 
@@ -220,9 +217,8 @@ class Registration extends Timestampable
 	/**
 	 * @ORM\ManyToMany(targetEntity="AppBundle\Entity\AcademicStudy", inversedBy="registrations")
 	 * @ORM\JoinTable(name="registrations_academics")
-	 * @Assert\Count(min = 1, minMessage = "registration.min_one")
 	 */
-	private $academicStudies;
+	private $academicStudies; //@Assert\Count(min = 1, minMessage = "registration.min_one")
 
 	public function __construct()
 	{

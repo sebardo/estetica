@@ -138,11 +138,11 @@ class AddSpecialityFieldSubscriber implements EventSubscriberInterface
 			}
 		}
 
-		if($count == 0) {
-			$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.speciality.empty'), null, array(), null, 'parentSpeciality');
-			$form->addError($formError);
-			$form->get('parentSpeciality')->addError($formError);
-		}
+//		if($count == 0) {
+//			$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.speciality.empty'), null, array(), null, 'parentSpeciality');
+//			$form->addError($formError);
+//			$form->get('parentSpeciality')->addError($formError);
+//		}
 	}
 
 	private function deleteRegistrationHasSpecialityCollectionByRegistrationEntity(Registration $entity)

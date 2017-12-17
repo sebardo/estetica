@@ -292,22 +292,22 @@ academic:
       default: 'Nombre'
 
 registration:
-  captcha_fail: La verificación del captcha ha fallado, por favor intente de nuevo.
-  captcha_click: Por favor puse sobre el cuadro del captcha.
+  captcha_fail: La verificación del captcha ha fallado.
+  captcha_click: Por favor pulse sobre el cuadro del captcha.
   title_page: 'Bolsa de empleo'
   title_nav: 'Bolsa de empleo'
   list: 'Listado Bolsa de empleos'
   create_edit: 'Editar Bolsa de empleo'
-  create_succesfull: 'Bolsa de empleo creado correctamente'
-  edit_succesfull: 'Bolsa de empleo editado correctamente'
-  delete_succesfull: 'Bolsa de empleo borrado correctamente'
+  create_succesfull: 'Candidato creado correctamente'
+  edit_succesfull: 'Candidato editado correctamente'
+  delete_succesfull: 'Candidato borrado correctamente'
   create_new: 'Nuevo Candidato'
-  edit_btn: 'Editar un Bolsa de empleo'
-  create_btn: 'Crear un Bolsa de empleo'
+  edit_btn: 'Editar un Candidato'
+  create_btn: 'Crear un Candidato'
   edit:
-    title: 'Editar un Bolsa de empleo'
-    subtitle: 'Editar la Bolsa de empleo'
-    description: 'Editando la Bolsa de empleo'
+    title: 'Editar un Candidato'
+    subtitle: 'Editar Candidato'
+    description: 'Editando el Candidato'
   show:
     title: 'Ver Bolsa de empleo'
     subtitle: 'Ver Bolsa de empleo'
@@ -317,8 +317,8 @@ registration:
     subtitle: 'Crear al Bolsa de empleo'
     description: 'Creando al Bolsa de empleo'
   list:
-    title: 'Listado de Bolsa de empleos'
-    subtitle: 'Listado de todos los Bolsa de empleos'
+    title: 'Listado de Candidatos'
+    subtitle: 'Listado todos los Candidatos'
     firstname: 'Primer Apellido'
     secondname: 'Segundo Apellido'
   form:

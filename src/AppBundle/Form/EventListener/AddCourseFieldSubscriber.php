@@ -96,10 +96,10 @@ class AddCourseFieldSubscriber implements EventSubscriberInterface
 			}
 		}
 
-		if($count == 0) {
-			$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.course.empty'), null, array(), null, 'course');
-			$form->addError($formError);
-		}
+//		if($count == 0) {
+//			$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.course.empty'), null, array(), null, 'course');
+//			$form->addError($formError);
+//		}
 	}
 
 	private function deleteRegistrationHasCourseCollectionByRegistrationEntity(Registration $entity)

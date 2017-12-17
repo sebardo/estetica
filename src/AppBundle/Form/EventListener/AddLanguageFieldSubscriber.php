@@ -90,10 +90,10 @@ class AddLanguageFieldSubscriber implements EventSubscriberInterface
 			}
 		}
 
-		if($count == 0) {
-			$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.language.empty'), null, array(), null, 'language');
-			$form->addError($formError);
-		}
+//		if($count == 0) {
+//			$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.language.empty'), null, array(), null, 'language');
+//			$form->addError($formError);
+//		}
 	}
 
 	private function deleteRegistrationHasLanguageCollectionByRegistrationEntity(Registration $entity)
