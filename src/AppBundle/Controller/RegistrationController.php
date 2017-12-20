@@ -120,8 +120,9 @@ class RegistrationController extends BackendBundleController
 	public function createRegistrationAction(Request $request)
 	{
 		$entity = new Registration();
+                $this->hydrateEntity($entity);
 		$form = $this->createForm(new RegistrationType($this->container), $entity, array('edit_form' => false));
-		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
+		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.next_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -154,10 +155,9 @@ class RegistrationController extends BackendBundleController
 	public function createRegistration2Action(Request $request)
 	{
             if($this->get('session')->has('registration_post')){
-                $post = $this->get('session')->get('registration_post');
 		$entity = new Registration();
-                $this->hydrateEntity($entity, $post);
-		$form = $this->createForm(new RegistrationType($this->container), $entity, array('edit_form' => false, 'post' => $post));
+                $this->hydrateEntity($entity);
+		$form = $this->createForm(new RegistrationType($this->container), $entity, array('edit_form' => false));
 		$form->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.create_btn'),'attr'=>array('class'=>'btn btn-success')));
 		$form->handleRequest($request);
 
@@ -183,113 +183,6 @@ class RegistrationController extends BackendBundleController
             
 	}
 
-        public function hydrateEntity(Registration $entity, $post) 
-        {
-            $em = $this->get('doctrine')->getManager();
-            if(isset($post['name'])) $entity->setName($post['name']);
-            if(isset($post['firstLastname'])) $entity->setFirstLastname($post['firstLastname']);
-            if(isset($post['secondLastname'])) $entity->setSecondLastname($post['secondLastname']);
-            if(isset($post['phone'])) $entity->setPhone($post['phone']);
-            if(isset($post['mobile'])) $entity->setMobile($post['mobile']);
-            if(isset($post['email'])) $entity->setEmail($post['email']);
-            if(isset($post['gender'])) $entity->setGender($post['gender']);
-            if(isset($post['birthday'])) $entity->setBirthday(\DateTime::createFromFormat('Y-m-d', $post['birthday']));
-            if(isset($post['placeResidence'])){
-                $pr = new Registration\PlaceResidence();
-                if(isset($post['placeResidence']['address'])) $pr->setAddress($post['placeResidence']['address']);
-                if(isset($post['placeResidence']['addressInfo'])) $pr->setAddressInfo($post['placeResidence']['addressInfo']);
-                if(isset($post['placeResidence']['postalCode'])) $pr->setPostalCode($post['placeResidence']['postalCode']);
-                $city = $em->getRepository('AppBundle:City')->find($post['placeResidence']['city']);
-                if(isset($post['placeResidence']['city'])) $pr->setCity($city);
-                $entity->setPlaceResidence($pr);
-            }
-            if(isset($post['certificateDisability'])) $entity->setCertificateDisability($post['certificateDisability']);
-            if(isset($post['vehicle'])) $entity->setVehicle($post['vehicle']);
-            if(isset($post['travelAvailability'])) $entity->setTravelAvailability($post['travelAvailability']);
-            if(isset($post['studies']) && count($post['studies']) > 0){
-                foreach ($post['studies'] as $studies) {
-                   $study =  $em->getRepository('AppBundle:Registration\Study')->find($studies);
-                   $entity->addStudy($study);
-                }
- 
-            }
-//            if(isset($post['parentSpeciality'])) {
-//                $parent =  $em->getRepository('AppBundle:Registration\Speciality')->find($post['parentSpeciality']);
-//                $entity->addRegistrationHasSpeciality($parent);
-//            }
-       
-            if(isset($post['speciality_estetica']) && count($post['speciality_estetica']) > 0){
-                foreach ($post['speciality_estetica'] as $key => $language) {
-                    $num = str_replace('speciality_', '', $key);
-                    if(is_numeric($num)){
-                       $registrationHasSpeciality = new RegistrationHasSpeciality();
-                       $registrationHasSpeciality->setSpeciality($em->getRepository('AppBundle:Registration\Speciality')->find($num));
-                       $registrationHasSpeciality->setValue($post['speciality_estetica'][$key.'_detail']);
-                       $registrationHasSpeciality->setRegistration($entity);
-                       $entity->addRegistrationHasSpeciality($registrationHasSpeciality);
-                   }
-                }
-            }
-            
-            if(isset($post['course']) && count($post['course']) > 0){
-                foreach ($post['course'] as $key => $language) {
-                    $num = str_replace('course_', '', $key);
-                    if(is_numeric($num)){
-                       $registrationHasCourse = new \AppBundle\Entity\RegistrationHasCourse();
-                       $registrationHasCourse->setCourse($em->getRepository('AppBundle:Registration\Course')->find($num));
-                       $registrationHasCourse->setValue($post['course'][$key.'_detail']);
-                       $registrationHasCourse->setRegistration($entity);
-                       $entity->addRegistrationHasCourse($registrationHasCourse);
-                   }
-                }
-            }
-            
-            
-            
-            if(isset($post['academicStudies']) && count($post['academicStudies']) > 0){
-                foreach ($post['academicStudies'] as $as) {
-                   $as =  $em->getRepository('AppBundle:AcademicStudy')->find($as);
-                   $entity->addAcademicStudy($as);
-                }
-            }
-            if(isset($post['salesTraining'])) $entity->setSalesTraining($post['salesTraining']);
-            if(isset($post['language']) && count($post['language']) > 0){
-                foreach ($post['language'] as $key => $language) {
-                    $num = str_replace('language_', '', $key);
-                    if(is_numeric($num)){
-                       $registrationHasLanguage = new \AppBundle\Entity\RegistrationHasLanguage();
-                       $registrationHasLanguage->setLanguage($em->getRepository('AppBundle:Registration\Language')->find($num));
-                       $registrationHasLanguage->setValue($post['language'][$key.'_detail']);
-                       $registrationHasLanguage->setRegistration($entity);
-                       $entity->addRegistrationHasLanguage($registrationHasLanguage);
-                   }
-                }
-            }
-            if(isset($post['experience'])) {
-                $exp =  $em->getRepository('AppBundle:Registration\Experience')->find($post['experience']);
-                $entity->setExperience($exp);
-            }
-            if(isset($post['experiencePlaces'])) $entity->setExperiencePlaces($post['experiencePlaces']);
-            if(isset($post['contractTypes']) && count($post['contractTypes']) > 0){
-                foreach ($post['contractTypes'] as $types) {
-                   $types =  $em->getRepository('AppBundle:Registration\TimeAvailability')->find($types);
-                   $entity->addContractType($types);
-                }
-            }
-            if(isset($post['timesAvailability']) && count($post['timesAvailability']) > 0){
-                foreach ($post['timesAvailability'] as $times) {
-                   $times =  $em->getRepository('AppBundle:Registration\TimeAvailability')->find($times);
-                   $entity->addTimeAvailability($times);
-                }
-            }
-            if(isset($post['levelsResponsibility']) && count($post['levelsResponsibility']) > 0){
-                foreach ($post['levelsResponsibility'] as $level) {
-                   $level =  $em->getRepository('AppBundle:Registration\LevelResponsibility')->find($level);
-                   $entity->addLevelResponsibility($level);
-                }
-            }
-//            print_r(count($entity->getRegistrationsHaveLanguages()));die;
-        }
         
 	/**
 	 * Displays a form to edit an existing registration entity.
@@ -316,7 +209,7 @@ class RegistrationController extends BackendBundleController
 
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('registration.edit_succesfull'));
 
-			return $this->redirectToRoute('admin_registration_edit', array('id' => $entity->getId()));
+			return $this->redirectToRoute('admin_registration_edit2', array('id' => $entity->getId()));
 		}
 
 		return $this->render('AppBundle:Registration:edit.html.twig', array(
@@ -326,7 +219,159 @@ class RegistrationController extends BackendBundleController
 			'active_side_bar' => $this->getActiveSidebar()
 		));
 	}
+        
+        /**
+	 * Displays a form to edit an existing registration entity.
+	 *
+	 * @param Request $request
+	 * @param Registration $entity
+	 *
+	 * @Route("/admin/registration/{id}/edit2", name="admin_registration_edit2")
+	 * @Method({"GET", "POST"})
+	 * @Security("has_role('ROLE_ADMIN')")
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+	 */
+	public function editRegistration2Action(Request $request, Registration $entity)
+	{
+		$editForm = $this->createForm(new RegistrationType($this->container), $entity, array('edit_form' => true));
+		$editForm->add('submit', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', array('label' => $this->get('translator')->trans('app.save_btn'),'attr'=>array('class'=>'btn btn-success')));
+		$editForm->handleRequest($request);
 
+		if ($editForm->isSubmitted() && $editForm->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$em->persist($entity);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('registration.edit_succesfull'));
+
+			return $this->redirectToRoute('admin_registration_edit', array('id' => $entity->getId()));
+		}
+
+		return $this->render('AppBundle:Registration:edit.html.twig', array(
+			'entity' => $entity,
+			'form' => $editForm->createView(),
+			'breadcrumbs' => $this->getBreadCrumbs(true, array("name" => "backend.edit")),
+			'active_side_bar' => $this->getActiveSidebar(),
+                        'step2' => true
+		));
+	}
+
+        /**
+         * 
+         * @param Registration $entity
+         */
+        public function hydrateEntity(Registration $entity) 
+        {
+            if($this->get('session')->has('registration_post')){
+                $post = $this->get('session')->get('registration_post');
+                $em = $this->get('doctrine')->getManager();
+                if(isset($post['name'])) $entity->setName($post['name']);
+                if(isset($post['firstLastname'])) $entity->setFirstLastname($post['firstLastname']);
+                if(isset($post['secondLastname'])) $entity->setSecondLastname($post['secondLastname']);
+                if(isset($post['phone'])) $entity->setPhone($post['phone']);
+                if(isset($post['mobile'])) $entity->setMobile($post['mobile']);
+                if(isset($post['email'])) $entity->setEmail($post['email']);
+                if(isset($post['gender'])) $entity->setGender($post['gender']);
+                if(isset($post['birthday'])) $entity->setBirthday(\DateTime::createFromFormat('Y-m-d', $post['birthday']));
+                if(isset($post['placeResidence'])){
+                    $pr = new Registration\PlaceResidence();
+                    if(isset($post['placeResidence']['address'])) $pr->setAddress($post['placeResidence']['address']);
+                    if(isset($post['placeResidence']['addressInfo'])) $pr->setAddressInfo($post['placeResidence']['addressInfo']);
+                    if(isset($post['placeResidence']['postalCode'])) $pr->setPostalCode($post['placeResidence']['postalCode']);
+                    $city = $em->getRepository('AppBundle:City')->find($post['placeResidence']['city']);
+                    if(isset($post['placeResidence']['city'])) $pr->setCity($city);
+                    $entity->setPlaceResidence($pr);
+                }
+                if(isset($post['certificateDisability'])) $entity->setCertificateDisability($post['certificateDisability']);
+                if(isset($post['vehicle'])) $entity->setVehicle($post['vehicle']);
+                if(isset($post['travelAvailability'])) $entity->setTravelAvailability($post['travelAvailability']);
+                if(isset($post['studies']) && count($post['studies']) > 0){
+                    foreach ($post['studies'] as $studies) {
+                       $study =  $em->getRepository('AppBundle:Registration\Study')->find($studies);
+                       $entity->addStudy($study);
+                    }
+
+                }
+    //            if(isset($post['parentSpeciality'])) {
+    //                $parent =  $em->getRepository('AppBundle:Registration\Speciality')->find($post['parentSpeciality']);
+    //                $entity->addRegistrationHasSpeciality($parent);
+    //            }
+
+                if(isset($post['speciality_estetica']) && count($post['speciality_estetica']) > 0){
+                    foreach ($post['speciality_estetica'] as $key => $language) {
+                        $num = str_replace('speciality_', '', $key);
+                        if(is_numeric($num)){
+                           $registrationHasSpeciality = new RegistrationHasSpeciality();
+                           $registrationHasSpeciality->setSpeciality($em->getRepository('AppBundle:Registration\Speciality')->find($num));
+                           $registrationHasSpeciality->setValue($post['speciality_estetica'][$key.'_detail']);
+                           $registrationHasSpeciality->setRegistration($entity);
+                           $entity->addRegistrationHasSpeciality($registrationHasSpeciality);
+                       }
+                    }
+                }
+
+                if(isset($post['course']) && count($post['course']) > 0){
+                    foreach ($post['course'] as $key => $language) {
+                        $num = str_replace('course_', '', $key);
+                        if(is_numeric($num)){
+                           $registrationHasCourse = new \AppBundle\Entity\RegistrationHasCourse();
+                           $registrationHasCourse->setCourse($em->getRepository('AppBundle:Registration\Course')->find($num));
+                           $registrationHasCourse->setValue($post['course'][$key.'_detail']);
+                           $registrationHasCourse->setRegistration($entity);
+                           $entity->addRegistrationHasCourse($registrationHasCourse);
+                       }
+                    }
+                }
+
+
+
+                if(isset($post['academicStudies']) && count($post['academicStudies']) > 0){
+                    foreach ($post['academicStudies'] as $as) {
+                       $as =  $em->getRepository('AppBundle:AcademicStudy')->find($as);
+                       $entity->addAcademicStudy($as);
+                    }
+                }
+                if(isset($post['salesTraining'])) $entity->setSalesTraining($post['salesTraining']);
+                if(isset($post['language']) && count($post['language']) > 0){
+                    foreach ($post['language'] as $key => $language) {
+                        $num = str_replace('language_', '', $key);
+                        if(is_numeric($num)){
+                           $registrationHasLanguage = new \AppBundle\Entity\RegistrationHasLanguage();
+                           $registrationHasLanguage->setLanguage($em->getRepository('AppBundle:Registration\Language')->find($num));
+                           $registrationHasLanguage->setValue($post['language'][$key.'_detail']);
+                           $registrationHasLanguage->setRegistration($entity);
+                           $entity->addRegistrationHasLanguage($registrationHasLanguage);
+                       }
+                    }
+                }
+                if(isset($post['experience'])) {
+                    $exp =  $em->getRepository('AppBundle:Registration\Experience')->find($post['experience']);
+                    $entity->setExperience($exp);
+                }
+                if(isset($post['experiencePlaces'])) $entity->setExperiencePlaces($post['experiencePlaces']);
+                if(isset($post['contractTypes']) && count($post['contractTypes']) > 0){
+                    foreach ($post['contractTypes'] as $types) {
+                       $types =  $em->getRepository('AppBundle:Registration\TimeAvailability')->find($types);
+                       $entity->addContractType($types);
+                    }
+                }
+                if(isset($post['timesAvailability']) && count($post['timesAvailability']) > 0){
+                    foreach ($post['timesAvailability'] as $times) {
+                       $times =  $em->getRepository('AppBundle:Registration\TimeAvailability')->find($times);
+                       $entity->addTimeAvailability($times);
+                    }
+                }
+                if(isset($post['levelsResponsibility']) && count($post['levelsResponsibility']) > 0){
+                    foreach ($post['levelsResponsibility'] as $level) {
+                       $level =  $em->getRepository('AppBundle:Registration\LevelResponsibility')->find($level);
+                       $entity->addLevelResponsibility($level);
+                    }
+                }
+            }
+            
+        }
+        
 	/**
 	 * Displays a show view to an existing press release entity.
 	 *

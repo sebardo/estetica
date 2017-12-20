@@ -50,7 +50,7 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 					$qb->where('country.name = :country')
 						->setParameter('country', null);
 				}
-
+                                $qb->orderBy('province.name', 'ASC');
 				return $qb;
 			},
 			'attr' => array('class' => 'province_selector'),

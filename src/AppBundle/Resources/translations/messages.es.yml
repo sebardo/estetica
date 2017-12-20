@@ -27,6 +27,7 @@ app:
   edit_btn: 'Editar'
   save_btn: 'Guardar'
   create_btn: 'Crear'
+  next_btn: 'Siguiente'
   search_btn: 'Buscar'
   preview: 'Previsualizar'
   download: 'Descargar'

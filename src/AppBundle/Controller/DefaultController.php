@@ -129,7 +129,7 @@ class DefaultController extends BackendBundleController
     {
         $response = array();
         $countryId = $request->request->get('country_id');
-        $provinceCollection = $this->container->get('webapp.manager.province_manager')->getBy(array("country" => $countryId));
+        $provinceCollection = $this->container->get('webapp.manager.province_manager')->getBy(array("country" => $countryId), array('name' => 'ASC'));
 
         foreach ($provinceCollection as $province) {
             $response[] = array(

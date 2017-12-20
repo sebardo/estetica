@@ -126,48 +126,51 @@
     </div>
     
     <div {% if step2 is not defined %}style="display:none"{%endif%}>
-        <div class="form-group" style="height: 50px;width: 49%;display: inline-block;">
+        <div class="form-group" style="height: 50px;width: 49%;display: inline-block;vertical-align: top">
             <span class="control-label required"><b>{{ 'registration.form.image.name' | trans }}</b></span>
             <br>
-            {% if step2 is defined %}{% set required = true %}{% else%}{% set required = false %}{%endif%}
-            {{ form_widget(form.cvFile, {attr: {'style':'height: 36px;', 'required': required} } ) }}
+            {{ form_widget(form.cvFile, {attr: {'style':'height: 36px;'} } ) }}
             <label for="appbundle_registration_cvFile" class="btn btn-primary upload-cv" >{{ 'app.upload-cv' | trans }}</label>
+            {% set required_image = 'required' %}
+            {% if entity.cvPath is not null %}
+               {% set required_image = false %}
+               <div class="row"  style="overflow: hidden">
+                   <div class="col-xs-4">
+                       <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
+                   </div>
+               </div>
+            {% endif %}
         </div>
 
-        {% set required_image = 'required' %}
-        {% if entity.cvPath is not null %}
-           {% set required_image = false %}
-           <div class="row">
-               <div class="col-xs-4">
-                   <a target="_blank" class="logo-image-preview img-responsive" href="{{ registration_path ~ '/' ~ entity.cvPath }}">{{ entity.cvPath }}</a>
-               </div>
-           </div>
-        {% endif %}
+        
 
 
 
-        <div class="form-group" style="height: 50px;width: 49%;display: inline-block;">
+        <div class="form-group" style="height: 50px;width: 49%;display: inline-table;vertical-align: top">
             <span class="control-label required"><b>{{ 'registration.form.photo.name' | trans }}</b></span>
             <br>
-            {% if step2 is defined %}{% set required = true %}{% else%}{% set required = false %}{%endif%}
-            {{ form_widget(form.photoFile, {attr: {'style':'height: 36px;', 'required': required} } ) }}
+            {{ form_widget(form.photoFile, {attr: {'style':'height: 36px;'} } ) }}
             <label for="appbundle_registration_photoFile" class="btn btn-primary upload-photo" >{{ 'app.upload-photo' | trans }}</label>
-        </div>
-        {% if entity.photoPath is not null %}
-            <div class="row">
-                <div class="col-xs-4">
-                    <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
+            {% if entity.photoPath is not null %}
+                <div class="row" style="overflow: hidden">
+                    <div class="col-xs-4">
+                        <img class="logo-image-preview img-responsive" src="{{ registration_path ~ '/' ~ entity.photoPath }}">
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
+        
     </div>
    
       
+    <div style="clear: both"></div>
      
+     <div class="form-group">
+         {{ form_widget(form.submit) }}
+         {% if step2 is defined %}<a href="{{ path('admin_registration_create')}}" class="btn btn-primary btn">Volver</a>{%endif%}
+     </div>
+    
      
-     
-     {{ form_row(form.submit) }}
-     {% if step2 is defined %}<a href="{{ path('admin_registration_create')}}" class="btn btn-primary btn">Volver</a>{%endif%}
      <div class="hide">
          {{ form_rest(form) }}
      </div>

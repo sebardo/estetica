@@ -34,50 +34,54 @@
             {% endif %}
         {% endfor %}
         
-        <h3 class="box-title">{{ 'app.personal_data' | trans }}</h3>
-        {{ form_row(form.name) }}
-        {{ form_row(form.firstLastname) }}
-        {{ form_row(form.secondLastname) }}
-        {{ form_row(form.phone) }}
-        {{ form_row(form.mobile) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.gender) }}
-        {{ form_row(form.birthday) }}
-        {{ form_row(form.placeResidence) }}
-		<h4 class="box-title">{{ 'app.interest' | trans }}</h4>
-        {{ form_row(form.certificateDisability) }}
-        {{ form_row(form.vehicle) }}
-        {{ form_row(form.travelAvailability) }}
-		<h3 class="box-title">{{ 'app.study' | trans }}</h3>
-        {{ form_row(form.studies) }}
-
-        
-            {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class } } ) }}
-            {{ form_widget(form.parentSpeciality) }}
-            {% set parentSpecialityCollection = get_parent_speciality_collection() %}
-            <div class="speciality">
-            {% for parent in parentSpecialityCollection  %}
-                {% set _row = 'speciality_' ~ parent %}
-                {% if form[_row] is not null %}
-                    {{ form_widget(form[_row]) }}
-                {% endif %}
-            {% endfor %}
-            </div>
-        {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
-        {{ form_row(form.academicStudies) }}
-      
-        {{ form_row(form.salesTraining) }}
-        
-        {{ form_row(form.language, {'attr': {'class': default_form_class } }) }}
-        
-        {{ form_row(form.experience) }}
-        {{ form_row(form.experiencePlaces) }}
-		<h3 class="box-title">{{ 'app.preferences' | trans }}</h3>
-        {{ form_row(form.contractTypes) }}
-        {{ form_row(form.timesAvailability) }}
-        {{ form_row(form.levelsResponsibility) }}
         
         <div style="width: 49%;display: inline-block;">
+            
+            
+            <h3 class="box-title">{{ 'app.personal_data' | trans }}</h3>
+            {{ form_row(form.name) }}
+            {{ form_row(form.firstLastname) }}
+            {{ form_row(form.secondLastname) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.mobile) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.gender) }}
+            {{ form_row(form.birthday) }}
+            {{ form_row(form.placeResidence) }}
+                    <h4 class="box-title">{{ 'app.interest' | trans }}</h4>
+            {{ form_row(form.certificateDisability) }}
+            {{ form_row(form.vehicle) }}
+            {{ form_row(form.travelAvailability) }}
+                    <h3 class="box-title">{{ 'app.study' | trans }}</h3>
+            {{ form_row(form.studies) }}
+
+
+                {{ form_row(form.parentSpeciality, {'attr': {'class': default_form_class } } ) }}
+                {{ form_widget(form.parentSpeciality) }}
+                {% set parentSpecialityCollection = get_parent_speciality_collection() %}
+                <div class="speciality">
+                {% for parent in parentSpecialityCollection  %}
+                    {% set _row = 'speciality_' ~ parent %}
+                    {% if form[_row] is not null %}
+                        {{ form_widget(form[_row]) }}
+                    {% endif %}
+                {% endfor %}
+                </div>
+            {{ form_row(form.course, {'attr': {'class': default_form_class }}) }}
+            {{ form_row(form.academicStudies) }}
+
+            {{ form_row(form.salesTraining) }}
+
+            {{ form_row(form.language, {'attr': {'class': default_form_class } }) }}
+
+            {{ form_row(form.experience) }}
+            {{ form_row(form.experiencePlaces) }}
+                    <h3 class="box-title">{{ 'app.preferences' | trans }}</h3>
+            {{ form_row(form.contractTypes) }}
+            {{ form_row(form.timesAvailability) }}
+            {{ form_row(form.levelsResponsibility) }}
+
+
             {% set required_image = 'required' %}
             {% if entity.cvPath is not null %}
                 {% set required_image = false %}
@@ -89,7 +93,7 @@
             {% endif %}
         </div>
         
-        <div style="width: 49%;display: inline-block;">
+        <div style="width: 49%;display: inline-block;vertical-align: top;padding: 20px">
             {% if entity.photoPath is not null %}
                 <div class="row">
                     <div class="col-xs-4">
