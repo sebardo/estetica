@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo chmod -R 777 app/cache/ app/logs/ 
+chmod -R 777 app/cache/ app/logs/ 
 php app/console doctrine:schema:drop --force && php app/console doctrine:schema:create && php app/console doctrine:fixtures:load --append
-sudo rm -rf app/cache/* app/logs/*
+rm -rf app/cache/* app/logs/*
 
