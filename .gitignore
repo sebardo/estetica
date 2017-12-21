@@ -49,3 +49,6 @@ vendor
 
 # txt
 clients_created*
+
+#Netbeans
+nbproject
