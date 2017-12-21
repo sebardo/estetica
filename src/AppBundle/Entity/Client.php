@@ -178,7 +178,7 @@ class Client extends Timestampable implements UserInterface
 
     /**
      * @ORM\OneToOne(targetEntity="LocalAddress", inversedBy="client", cascade={"persist"})
-     * @ORM\JoinColumn(name="local_address_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="local_address_id", referencedColumnName="id", nullable=true)
      */
     private $localAddress;
 
