@@ -97,7 +97,7 @@ class CreativityOrderController extends BackendBundleController
 			$em = $this->getDoctrine()->getManager();
 			$filename = 'order_' . strtolower($creativity->getSupport()) . '_' . strtolower($client->getSocietyName()) . '_' . time() . '.pdf';
 			$filenamePath = ltrim($this->getParameter('app.path.creativity_orders'), '/') . '/' . $filename;
-            $pdf = $this->createCompletedPdf($entity, $creativity, $client, $filenamePath);
+                        $pdf = $this->createCompletedPdf($entity, $creativity, $client, $filenamePath);
 			$entity->setCreativityOrderPdf($filename);
 			$em->persist($entity);
 			$em->flush();

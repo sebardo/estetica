@@ -87,8 +87,8 @@ class AddCourseFieldSubscriber implements EventSubscriberInterface
 							$entity->setValue($extraData);
 							$courseManager->save($entity, false);
 						} else {
-							$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.course.detail', array('%field%' => $course->getName())), null, array(), null, $courseName);
-							$form->addError($formError);
+//							$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.course.detail', array('%field%' => $course->getName())), null, array(), null, $courseName);
+//							$form->addError($formError);
 						}
 						$count++;
 					}

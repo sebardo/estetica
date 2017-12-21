@@ -129,8 +129,8 @@ class AddSpecialityFieldSubscriber implements EventSubscriberInterface
 								$entity->setValue($extraData);
 								$specialityManager->save($entity, false);
 							} else {
-								$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.speciality.detail', array('%field%' => $speciality->getName())), null, array(), null, 'speciality');
-								$form->addError($formError);
+//								$formError = new FormError($this->container->get('translator')->trans('registration.form.errors.speciality.detail', array('%field%' => $speciality->getName())), null, array(), null, 'speciality');
+//								$form->addError($formError);
 							}
 							$count++;
 						}
