@@ -20,7 +20,7 @@ parameters:
 
     # Custom
     currency: €
-    postal_code_csv.path: '/clubEstetica/src/AppBundle/DataFixtures/ORM/Postalcode.csv'
+    postal_code_csv.path: '/postal_code_mod-1.csv'
     site_title: "Club de Estética"
     ticket_link: "https://clubdeestetica.freshdesk.com/helpdesk"
     flowww_link: "https://login.flowww.net/es/"
