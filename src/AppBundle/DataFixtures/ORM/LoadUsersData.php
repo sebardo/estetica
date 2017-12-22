@@ -115,7 +115,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface, 
 			$manager->persist($client);
 			//fwrite($fileUsernameAndPasswords, "Username: " . $client->getUsername() ." - Password: " . $_password . PHP_EOL);
 		}
-		fclose($fileUsernameAndPasswords);
+		//fclose($fileUsernameAndPasswords);
 
 		$this->setAddress($clientCollection);
 		$this->setFiles($clientCollection);
