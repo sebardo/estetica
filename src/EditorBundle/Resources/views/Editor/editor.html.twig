@@ -19,29 +19,28 @@
     <ul class="nav nav-tabs">
         <li class="pull-left header"><i class="fa fa-th"></i> Diseña tu creatividad </li>
         <li class="active"><a href="#tab_1" data-toggle="tab">Cara</a></li>
-        <li><a href="#tab_2" data-toggle="tab">Contracara</a></li>
+        <li><a href="#tab_2"  >Contracara</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab_1-1" data-toggle="tab">Editor</a></li>
-                    <li><a id="preview-tab" href="#tab_2-1" data-toggle="tab">Preview</a></li>
+                    <li><a id="print" href="#tab_2-1" data-toggle="tab">Prevista</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1-1" style="text-align: center">
-                        <button id="print" type="button" >Print</button>
-                        <button type="button" onclick="newEditor()">Create new editor</button>
-                        <i>* Double click to edit a content</i>
+                        <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor()">Crear nuevo contenido</button>
+                        <i>* Doble click para editar un contenido</i>
                         <br>
-                        <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); display:inline-block; {{bgsize}}">
+                        <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position;relative;display:inline-block; {{bgsize}}">
                             {{ entity.frontPageHtml | raw }}
                             
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab_2-1">
-                        <button id="download">download</button>
-                        <div id="preview"></div>
+                    <div class="tab-pane" id="tab_2-1" style="text-align: center">
+                        <button class="pull-right btn btn-primary btn-flat" id="download">Descargar PDF de la prevista</button>
+                        <div id="preview">Cargando prevista ...</div>
                     </div>
                     <!-- /.tab-pane -->
                 </div>

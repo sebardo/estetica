@@ -1,19 +1,32 @@
 .clearfix{
     margin-bottom: 20px;
 }
-
 .draggable { 
-    width: 500px; 
-    height: auto; 
-    padding: 0.5em;
-    border: 5px solid #444; 
     cursor: pointer;
 }
 [contenteditable] {
-    outline: 1px solid red;
     padding: .5em;
     margin: .5em;
+    outline: 1px solid transparent;
+}
+[contenteditable]:hover {
+    outline: 1px solid red!important;
+}
+[contentresizable] {
+    padding: .5em;
+    margin: .5em;
+    outline: 1px solid transparent;
+}
+[contentresizable]:hover {
+    outline: 1px solid yellow!important;
 }
 .ui-widget-content{
     background-color: transparent!important;
+    border: none;
+}
+div>.ui-rotatable-handle.ui-draggable{
+    display: none;
+}
+div:hover>.ui-rotatable-handle.ui-draggable{
+    display: block;
 }

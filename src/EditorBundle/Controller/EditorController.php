@@ -164,7 +164,7 @@ class EditorController extends Controller
             
             $this->get('session')->getFlashBag()->add('success', 'template.edited');
             
-            return $this->redirectToRoute('editor_editor_show', array('id' => $template->getId()));
+            return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
         }
 
         return array(

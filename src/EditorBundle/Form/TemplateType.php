@@ -39,8 +39,8 @@ class TemplateType extends AbstractType
                     'label' => 'creativity.form.subcategory',
                     'choices' => $this->getSelectSubcategories('technology')
                 ))
-                ->add('frontPageHtml', HiddenType::class)
-                ->add('backPageHtml', HiddenType::class)
+                ->add('frontPageHtml', TextareaType::class, array('required' => false))
+                ->add('backPageHtml', TextareaType::class, array('required' => false))
                 ;
     }
     

@@ -33,16 +33,14 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-            
             <div class="box box-info">
-                
                 <div>
                     {{ form_start(edit_form, {
                                         'action': path('editor_editor_edit', { 'id': entity.id  }), 
                                         'method': 'post', 
                                         'attr': {'class': 'form-horizontal form-row-seperated'}
                                         }) }}
-                    <div class="box-body"  >
+                    <div class="box-body" style="display: none" >
                         {{ include ('EditorBundle:Editor:_form.html.twig', {form: edit_form} ) }}
                     </div>
                     
@@ -115,18 +113,32 @@
         this.submit();
     });
  
-    var count = 0;
+    
+
+    function makeid() {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+      for (var i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
+    }
+
     function newEditor() {
-        count++;
-        console.log(count);
+        
+        var counter = makeid();
+        console.log(counter);
         // This HTML could've come from AJAX data.
-        var el = CKEDITOR.dom.element.createFromHtml( '<div id="'+count+'" class="editor" contenteditable="true">Hello world</div>' );
+        var el = CKEDITOR.dom.element.createFromHtml( '<div id="'+counter+'" class="editor" contenteditable="true" >Contenido de ejemplo</div>' );
         CKEDITOR.document.getBody().append( el );
 
         var div = document.createElement("div");
-        div.id = 'div-'+count;
-        div.className = 'draggable ui-widget-content rotatable';
+        div.id = 'div-'+counter;
+        div.className = 'draggable ui-widget-content rotatable resizable';
         document.getElementById('parent').appendChild(div);
+        $('#'+'div-'+counter).attr('contentresizable', true);
+        $('#'+'div-'+counter).css('position', 'absolute');
 
         // Create editor instance on the new element.
         //CKEDITOR.inline( el, {
@@ -136,7 +148,8 @@
         //} );
         
         
-        CKEDITOR.replace(el, {
+        var editor = CKEDITOR.inline(el, {
+            title : false,
             allowedContent : true,
             extraPlugins: 'uploadimage,image2,panelbutton,colorbutton',
             height: 300,
@@ -162,14 +175,18 @@
             // resizer (because image size is controlled by widget styles or the image takes maximum
             // 100% of the editor width).
             image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
-            image2_disableResizer: true
+            image2_disableResizer: false
         });
         
-        console.log($(document).find('#'+count));
-        console.log($(document).find("#div-"+count));
+        editor.on("mode", function(ev) {
+            $(ev.editor.container.$).find("textarea.cke_source").attr({ title: "", "aria-label": "" });
+        });
         
-        $(document).find('#'+count).appendTo("#div-"+count);
-        $( ".draggable" ).draggable({containment: "parent"}).rotatable();
+        console.log($(document).find('#'+counter));
+        console.log($(document).find("#div-"+counter));
+        
+        $(document).find('#'+counter).appendTo("#div-"+counter);
+        $( ".draggable" ).draggable({containment: "parent"}).rotatable({wheelRotate:false}).resizable({containment: "parent"});
          
         $(".editor").click(function(e) {
             e.stopPropagation();
@@ -180,19 +197,62 @@
               $( ".draggable" ).draggable( 'enable' );
             }
         });
+        
+        
+        $('#'+'div-'+counter).effect("highlight", {}, 1500);
     }
     
     $( function() {
         $( ".draggable" ).draggable({
             containment: "parent"
         });
+        
+        $('.resizable').each(function( index ) {
+            $(this).resizable({
+                containment: "parent"
+            });
+        });
+        
+      
         $(".rotatable").each(function( index ) {
             var angle = Math.radians(getRotationDegrees($(this)));
             console.log(angle);
 
             $(this).rotatable({wheelRotate:false, angle: angle});
         });
-        //$( ".rotatable" ).rotatable({wheelRotate:false, angle: -3.12598});
+        $(".editor").each(function( index ) {
+            
+            CKEDITOR.inline($(this).attr('id'), {
+                title : false,
+                allowedContent : true,
+                extraPlugins: 'uploadimage,image2,panelbutton,colorbutton',
+                height: 300,
+
+                // Upload images to a CKFinder connector (note that the response type is set to JSON).
+                uploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+
+                // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+                filebrowserBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html',
+                filebrowserImageBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html?type=Images',
+                filebrowserUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                filebrowserImageUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+
+                // The following options are not necessary and are used here for presentation purposes only.
+                // They configure the Styles drop-down list and widgets to use classes.
+
+                stylesSet: [
+                        { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+                        { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+                ],
+
+                // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+                // resizer (because image size is controlled by widget styles or the image takes maximum
+                // 100% of the editor width).
+                image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
+                image2_disableResizer: false
+            });
+
+        });
     });
     
    
@@ -222,13 +282,26 @@
               $( ".draggable" ).draggable( 'enable' );
             }
         });
+        
+        
         $('#print').click(function(){
             var html = $('#parent').html();
-            $('#template_frontPageHtml').html(html);
+            var result = html.replace(/\<div class\=\"ui\-rotatable\-handle ui\-draggable\"\>\<\/div\>/gi, '');
+            var result1 = result.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
+            var result2 = result1.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-e\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
+            var result3 = result2.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
+            var last = result3.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
+            /*var result5 = result4.replace('contenteditable="true"', '');
+            var result6 = result5.replace('cke_editable cke_editable_inline cke_contents_ltr cke_show_borders', '');
+            var result7 = result6.replace('tabindex="0" spellcheck="false" role="textbox" aria-label="false" aria-describedby="cke_60"', '');*/
+            
+            
+            console.log(last);
+            $('#template_frontPageHtml').html(last);
             html2canvas(document.getElementById("parent")).then(function(canvas) {
                 $('#preview').html('');
                 $('#preview').append(canvas);
-                $('#preview-tab').click();
+                 
             });
         });
         
