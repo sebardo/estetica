@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use EditorBundle\Entity\Template;
 
 /**
  * Client
@@ -229,6 +230,13 @@ class Client extends Timestampable implements UserInterface
      */
     private $creativityOrders;
 
+     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="EditorBundle\Entity\Template", mappedBy="client", cascade={"remove"})
+     */
+    private $templates;
+    
     public function __construct()
     {
         parent::__construct();
@@ -239,6 +247,7 @@ class Client extends Timestampable implements UserInterface
         $this->fileDocs = new ArrayCollection();
         $this->pressReleases = new ArrayCollection();
         $this->creativityOrders = new ArrayCollection();
+        $this->templates = new ArrayCollection();
     }
 
     /**
@@ -918,5 +927,44 @@ class Client extends Timestampable implements UserInterface
         $googleLocation = GoogleMapsApi::getGoogleApiLocation($this->getCompleteAddress());
 
         return $googleLocation['longitude'];
+    }
+    
+     /**
+     * Add template
+     *
+     * @param Template $template
+     *
+     * @return Template
+     */
+    public function addChild(Template $template)
+    {
+        $this->templates->add($template);
+
+        return $this;
+    }
+
+    /**
+     * Remove template
+     *
+     * @param Template $template
+     */
+    public function removeChild(Template $template)
+    {
+        $this->templates->removeElement($template);
+    }
+
+    /**
+     * Get templates
+     *
+     * @return ArrayCollection
+     */
+    public function getChilds()
+    {
+        return $this->templates;
+    }
+    
+    public function isGranted($role)
+    {
+        return in_array($role, $this->getRoles());
     }
 }

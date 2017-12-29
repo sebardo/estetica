@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@BackendBundle/Resources/config/services.yml" }
+    - { resource: "@EditorBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -142,6 +143,9 @@ vich_uploader:
         creativity_orders:
             uri_prefix:         "%app.path.creativity_orders%"
             upload_destination: "%kernel.root_dir%/../web/uploads/creativity_orders"
+        templates:
+            uri_prefix:         "%app.path.templates%"
+            upload_destination: "%kernel.root_dir%/../web/uploads/templates"
 
 # Knp Paginator Configuration
 knp_paginator:
@@ -157,3 +161,9 @@ knp_paginator:
         # KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
         #KnpPaginatorBundle:Pagination:twitter_bootstrap_pagination.html.twig
         sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig' # sort link template
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
+            blameable: trueƒ

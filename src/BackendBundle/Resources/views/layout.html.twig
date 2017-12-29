@@ -1,4 +1,4 @@
-{% extends "BackendBundle::backend_base.html.twig" %}
+{% extends "BackendBundle::backend_base_editor.html.twig" %}
 
 {% import "BackendBundle:Default/macros:macro_breadcrumb.html.twig" as  macro_breadcrumb %}
 
@@ -49,6 +49,8 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        
+        {% block content_header %}
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1 class="text-info">
@@ -57,10 +59,11 @@
 
             </h1>
             <ol class="breadcrumb">
-               {{ macro_breadcrumb.RenderBreadCrumbs(breadcrumbs) }}
+               {% if breadcrumbs is defined %}{{ macro_breadcrumb.RenderBreadCrumbs(breadcrumbs) }}{% endif %}
             </ol>
         </section>
-
+        {% endblock %}
+        
         <!-- Main content -->
         <section class="content">
             {% block content %}

@@ -1,0 +1,19 @@
+.clearfix{
+    margin-bottom: 20px;
+}
+
+.draggable { 
+    width: 500px; 
+    height: auto; 
+    padding: 0.5em;
+    border: 5px solid #444; 
+    cursor: pointer;
+}
+[contenteditable] {
+    outline: 1px solid red;
+    padding: .5em;
+    margin: .5em;
+}
+.ui-widget-content{
+    background-color: transparent!important;
+}

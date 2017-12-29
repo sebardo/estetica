@@ -1,0 +1,102 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% form_theme form 'EditorBundle:Form:fields.html.twig' %}
+
+{% block content_header %}{% endblock %}
+{% block content %}
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        {{ 'template.new' | trans }}
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{{ path('editor_editor_index') }}"> <i class="ion-home"></i>  {{ 'home' | trans }}</a></li>
+        <li><a href="{{ path('editor_editor_new') }}">{{ 'new' | trans }}</a></li>
+      </ol>
+    </section>
+      
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-info">
+                <!-- form start -->
+                {{ form_start(form, {
+                        'action': path('editor_editor_new'), 
+                        'method': 'post', 
+                        'attr': {'class': 'form-horizontal form-row-seperated'}
+                    }) }}
+                    <div class="box-body">
+                        {{ form_errors(form) }}
+                        {{ include ('EditorBundle:Editor:_form.html.twig') }}
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary btn-flat"><i class="ion-checkmark"></i> {{ 'save' | trans }}</button>
+                            <a href="{{ path('editor_editor_index') }}" class="btn btn-default btn-flat">{{ 'cancel' | trans }}</a>
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        
+       
+        jQuery(document).ready(function() {
+        });
+
+        //Ajax Subcatefory
+        $(document).on('change', '#template_category', function(){
+            
+            var $this = $(this);
+            var category_id = $this.val();
+            var $subcategory_selector = $('#template_subcategory');
+            var data = {
+                category_id: $this.val()
+            };
+            
+            if(category_id === 'packs') {
+                $subcategory_selector.parent().parent().parent('.form-group').fadeOut(500, function() {
+                    $(this).css({
+                        'display': 'none'
+                    });
+                    $subcategory_selector.html("");
+                });
+            }else {
+                $subcategory_selector.parent().parent().parent('.form-group').fadeOut(500, function() {
+                    $(this).css({
+                        'display': 'block'
+                    });
+                    getCreativeSubcategories($subcategory_selector, data);
+                });
+            }
+        });
+
+        function getCreativeSubcategories(selector, data) {
+            $.ajax({
+                type: 'post',
+                url: '/ajax/creativity-subcategory',
+                data: data,
+                success: function(data) {
+                    selector.html("");
+
+                    for (var i=0, total = data.length; i < total; i++) {
+                        selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                    }
+                }
+            });
+        }
+        
+    </script>
+{% endblock %}

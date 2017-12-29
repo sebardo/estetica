@@ -1,0 +1,12 @@
+edit: Editar
+save: Guardar
+cancel: Cancelar
+add.new: Agregar nuevo
+marketing: Marketing Integral
+templates: Creatividades
+template:
+    singular: Creatividad
+    new: Nueva creatividad
+    clone: Clonar creatividad
+    background1: Imagen de fondo "cara"
+    background2: Imagen de fondo "contra-cara"

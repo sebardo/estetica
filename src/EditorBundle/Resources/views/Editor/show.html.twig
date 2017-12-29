@@ -1,0 +1,80 @@
+{% extends "BackendBundle::layout.html.twig" %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+         {{ 'template.singular' | trans }} #{{ entity.id  }}
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{{ path('editor_editor_index') }}">{{ 'templates' | trans }}</a></li>
+        <li><a href="{{ path('editor_editor_show', {'id': entity.id }) }}">{{ entity.id  }}</a></li>
+      </ol>
+    </section>
+   
+    <section class="content">
+      <div class="row">
+          <div class="col-md-12">
+              
+                            
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#info_tab" data-toggle="tab" aria-expanded="true">{{ 'information' | trans }}</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active show-tables" id="info_tab">
+                   
+                    <table class="table">
+                        <tbody>                            
+                            <tr>
+                                <td>Id</td>                                
+                                <td>{{ entity.id }}</td>                            
+                            </tr>                            
+                            <tr>
+                                <td>Status</td>                                
+                                <td>
+                                        <span class="label label-warning">{{ entity.status }}</span>
+                                    
+                                </td>                            
+                            </tr>
+                            <tr>
+                                <td>Client</td>                                
+                                <td>{% if entity.client.username is defined %}{{ entity.client.username }}{% endif %}</td>                            
+                            </tr>  
+                            <tr>
+                                <td>Creator</td>                                
+                                <td>{{ entity.creator.username }}</td>                            
+                            </tr>  
+                            <tr>
+                                <td>BackgroundImage</td>                                
+                                <td>
+                                    <img src="/uploads/templates/{{entity.backgroundImage}}" />
+                                </td>                           
+                            </tr>                            
+                                                   
+                        </tbody>
+                    </table>
+                    
+                    <div class="box-footer">
+                        <div class="col-sm-12"> 
+                            <a href="{{ path('editor_editor_edit', {'id': entity.id }) }}" class="btn btn-primary btn-flat"><i class="ion-compose"></i> {{ 'edit' | trans }}</a>
+                            
+                            <a href="{{ path('editor_editor_index') }}" class="btn btn-flat btn-default pull-right">{{ 'back' | trans }}</a>
+                            
+                            {#<button type="submit" class="btn btn-danger btn-flat pull-right" id="delete-btn">{{ 'delete' | trans }}</button>    
+                            <form id="delete-entity" action="{{ path('eata_contract_contract_delete', { 'id': contract.id  }) }}" method="post">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                {{ form_widget(delete_form) }}
+                            </form>#}
+                        </div>
+                    </div><!-- /.box-footer -->
+                </div><!-- /.tab-pane -->
+              </div><!-- /.tab-content -->
+            </div><!-- nav-tabs-custom -->
+          </div>
+      </div>
+    </section>
+                                
+{% endblock %}

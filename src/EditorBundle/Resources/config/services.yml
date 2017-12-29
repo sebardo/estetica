@@ -1,0 +1,17 @@
+parameters:
+  json_list.class: "EditorBundle\\Service\\DataTables\\JsonList"
+  editor_manager.class: "EditorBundle\\Service\\EditorManager"
+
+services:
+    json_list:
+        class: %json_list.class%
+        arguments:
+          - "@request"
+        scope: request
+        
+    editor_manager:
+        class: %editor_manager.class%
+        arguments:
+          - "@doctrine.orm.entity_manager"
+          - "@security.token_storage"
+          - "@service_container"

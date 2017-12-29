@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new BackendBundle\BackendBundle(),
             new WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle(),
+            new EditorBundle\EditorBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

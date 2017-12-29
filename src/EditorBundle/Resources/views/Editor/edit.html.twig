@@ -1,0 +1,257 @@
+{% extends "BackendBundle::layout.html.twig" %}
+{% form_theme edit_form 'EditorBundle:Form:fields.html.twig' %}
+{% set active_side_bar = 'templates' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'
+    'bundles/app/css/jquery.ui.rotatable.css'
+    'bundles/editor/css/editor.css'
+    filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block content_header %}{% endblock %}
+{% block content %}
+
+ 
+  
+    <section class="content-header">
+      <h1>
+        {{ 'edit' | trans }}  {{ 'template.singular' | trans  }} #{{ entity.id  }}
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{{ path('editor_editor_index') }}">{{ 'templates' | trans }}</a></li>
+        <li><a href="{{ path('editor_editor_show', {'id': entity.id }) }}">#{{ entity.id  }}</a></li>
+        <li><a href="{{ path('editor_editor_edit', {'id': entity.id }) }}">{{ 'edit' | trans }}</a></li>
+      </ol>
+    </section>
+      
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+            
+            <div class="box box-info">
+                
+                <div>
+                    {{ form_start(edit_form, {
+                                        'action': path('editor_editor_edit', { 'id': entity.id  }), 
+                                        'method': 'post', 
+                                        'attr': {'class': 'form-horizontal form-row-seperated'}
+                                        }) }}
+                    <div class="box-body"  >
+                        {{ include ('EditorBundle:Editor:_form.html.twig', {form: edit_form} ) }}
+                    </div>
+                    
+                    {{ include ('EditorBundle:Editor:editor.html.twig') }}
+                    
+                    <div class="box-footer">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary btn-flat"><i class="icon-ok"></i>  {{ 'save' | trans }}</button>
+                            <a href="{{ path('editor_editor_index') }}" class="btn btn-flat btn-default">{{ 'back' | trans }}</a>
+                            <button type="submit" class="btn btn-danger btn-flat pull-right" id="delete-btn">{{ 'cancel' | trans }}</button>
+                        </div>
+                    </div>
+
+                    {{ form_end(edit_form) }}
+                </div>
+                
+            </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+
+{% block javascripts  %}
+    {{  parent() }}
+
+    {% javascripts 
+        'https://code.jquery.com/ui/1.12.1/jquery-ui.js'
+        'bundles/editor/plugins/ckeditor-4.5/ckeditor-custom.js'
+        'bundles/editor/plugins/ckeditor-4.5/adapters/old.adapter.jquery.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js'
+        'bundles/app/js/html2canvas.js'
+        'bundles/app/js/jquery.ui.rotatable.js'
+         %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+        
+<script type="text/javascript">
+    
+    // Converts from degrees to radians.
+    Math.radians = function(degrees) {
+      return degrees * Math.PI / 180;
+    };
+
+    // Converts from radians to degrees.
+    Math.degrees = function(radians) {
+      return radians * 180 / Math.PI;
+    };
+
+    var name_form = 'appbundle_creativityorder_field';
+    var form = $('form[name="' + name_form + '"]');
+
+    $('#submit-form').click(function () {
+        form.submit();
+    });
+
+    $('#create-pdf').submit(function(e) {
+        var $this = $(this);
+        e.preventDefault();
+
+        //Fill form value
+        form.find('.custom-field-value').each(function(index, el) {
+            var $el = $(el);
+            var name_el = $el.attr('id').split(name_form + '_').pop().replace(/_/g, '-');
+            var value = $el.val();
+            $this.find('#' + name_el).val(value);
+        });
+
+        this.submit();
+    });
+ 
+    var count = 0;
+    function newEditor() {
+        count++;
+        console.log(count);
+        // This HTML could've come from AJAX data.
+        var el = CKEDITOR.dom.element.createFromHtml( '<div id="'+count+'" class="editor" contenteditable="true">Hello world</div>' );
+        CKEDITOR.document.getBody().append( el );
+
+        var div = document.createElement("div");
+        div.id = 'div-'+count;
+        div.className = 'draggable ui-widget-content rotatable';
+        document.getElementById('parent').appendChild(div);
+
+        // Create editor instance on the new element.
+        //CKEDITOR.inline( el, {
+        //    toolbarGroups: [
+        //        { name: 'basicstyles' }
+        //    ]
+        //} );
+        
+        
+        CKEDITOR.replace(el, {
+            allowedContent : true,
+            extraPlugins: 'uploadimage,image2,panelbutton,colorbutton',
+            height: 300,
+
+            // Upload images to a CKFinder connector (note that the response type is set to JSON).
+            uploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+
+            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
+            filebrowserBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html',
+            filebrowserImageBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html?type=Images',
+            filebrowserUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+            filebrowserImageUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+
+            // The following options are not necessary and are used here for presentation purposes only.
+            // They configure the Styles drop-down list and widgets to use classes.
+
+            stylesSet: [
+                    { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+                    { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+            ],
+
+            // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
+            // resizer (because image size is controlled by widget styles or the image takes maximum
+            // 100% of the editor width).
+            image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
+            image2_disableResizer: true
+        });
+        
+        console.log($(document).find('#'+count));
+        console.log($(document).find("#div-"+count));
+        
+        $(document).find('#'+count).appendTo("#div-"+count);
+        $( ".draggable" ).draggable({containment: "parent"}).rotatable();
+         
+        $(".editor").click(function(e) {
+            e.stopPropagation();
+            $( ".draggable" ).draggable( 'disable' )
+        });
+        $(document).click(function(e) {
+            if( e.target.className != 'editor') {
+              $( ".draggable" ).draggable( 'enable' );
+            }
+        });
+    }
+    
+    $( function() {
+        $( ".draggable" ).draggable({
+            containment: "parent"
+        });
+        $(".rotatable").each(function( index ) {
+            var angle = Math.radians(getRotationDegrees($(this)));
+            console.log(angle);
+
+            $(this).rotatable({wheelRotate:false, angle: angle});
+        });
+        //$( ".rotatable" ).rotatable({wheelRotate:false, angle: -3.12598});
+    });
+    
+   
+   function getRotationDegrees(obj) {
+        var matrix = obj.css("-webkit-transform") ||
+        obj.css("-moz-transform")    ||
+        obj.css("-ms-transform")     ||
+        obj.css("-o-transform")      ||
+        obj.css("transform");
+        if(matrix !== 'none') {
+            var values = matrix.split('(')[1].split(')')[0].split(',');
+            var a = values[0];
+            var b = values[1];
+            var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+        } else { var angle = 0; }
+        return (angle < 0) ? angle + 360 : angle;
+    }
+    
+
+    $(document).ready(function(){
+        $(".editor").click(function(e) {
+            e.stopPropagation();
+            $( ".draggable" ).draggable( 'disable' )
+        });
+        $(document).click(function(e) {
+            if( e.target.className != 'editor') {
+              $( ".draggable" ).draggable( 'enable' );
+            }
+        });
+        $('#print').click(function(){
+            var html = $('#parent').html();
+            $('#template_frontPageHtml').html(html);
+            html2canvas(document.getElementById("parent")).then(function(canvas) {
+                $('#preview').html('');
+                $('#preview').append(canvas);
+                $('#preview-tab').click();
+            });
+        });
+        
+        $('#download').click(function(){
+            $('body').find('canvas').attr('id', 'myCanvas')
+            var canvas = document.getElementById('myCanvas');
+            
+            // only jpeg is supported by jsPDF
+           var imgData = canvas.toDataURL("image/jpeg", 1.0);
+           
+           {% if entity.support == 'flyers'  %}
+                var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
+           {% elseif entity.support == 'routers'  %}
+               var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
+           {% elseif entity.support == 'rollup'  %}
+               var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
+           {% endif %}
+               
+           pdf.addImage(imgData, 'JPEG', 0, 0);
+           pdf.save("download.pdf");
+        });
+        
+    });
+</script>
+    
+{% endblock %}

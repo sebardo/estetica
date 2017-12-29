@@ -1,0 +1,79 @@
+
+<ul style="display: none">
+    <li>Flyers -> 793x1121px [594.75, 840.75]</li> 
+    <li>Routers -> 1578x2500px [1183.5, 1875]</li>
+    <li>Rollup -> 1062x2500px [796.5, 1875]</li>
+</ul>
+{% if entity.support == 'flyers'  %}
+    {% set size = 'width: 793px; height: 1121px;' %}
+    {% set bgsize = ' background-size: 793px 1121px; ' %}
+{% elseif entity.support == 'routers'  %}
+     {% set size = 'width:1578px; height: 2500px; ' %}
+     {% set bgsize = ' background-size: 1578px 2500px; ' %}
+{% elseif entity.support == 'rollup'  %}
+     {% set size = 'width: 1062px; height: 2500px; ' %}
+     {% set bgsize = ' background-size: 1062px 2500px; ' %}
+{% endif %}
+
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="pull-left header"><i class="fa fa-th"></i> Diseña tu creatividad </li>
+        <li class="active"><a href="#tab_1" data-toggle="tab">Cara</a></li>
+        <li><a href="#tab_2" data-toggle="tab">Contracara</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1-1" data-toggle="tab">Editor</a></li>
+                    <li><a id="preview-tab" href="#tab_2-1" data-toggle="tab">Preview</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1-1" style="text-align: center">
+                        <button id="print" type="button" >Print</button>
+                        <button type="button" onclick="newEditor()">Create new editor</button>
+                        <i>* Double click to edit a content</i>
+                        <br>
+                        <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); display:inline-block; {{bgsize}}">
+                            {{ entity.frontPageHtml | raw }}
+                            
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_2-1">
+                        <button id="download">download</button>
+                        <div id="preview"></div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+              <!-- /.tab-content -->
+            </div>
+        </div>
+        <div class="tab-pane" id="tab_2">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_3-1" data-toggle="tab">Editor</a></li>
+                    <li><a id="preview-tab2" href="#tab_4-1" data-toggle="tab">Preview</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_3-1"  style="text-align: center">
+                        <button id="print" type="button" >Print</button>
+                        <button type="button" onclick="newEditor()">Create new editor</button>
+                        <i>* Double click to edit a content</i>
+                        <br>
+                        <div id="parent2" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage2 }}');display:inline-block; {{bgsize}}">
+                             {{ entity.backPageHtml | raw }}
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_4-1">
+                        <button id="download">download</button>
+                        <div id="preview"></div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+              <!-- /.tab-content -->
+            </div>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+  <!-- /.tab-content -->
+</div>
