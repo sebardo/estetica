@@ -15,6 +15,7 @@ use EditorBundle\Form\TemplateDeliveryType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Event\OrderEvent;
 use AppBundle\OrderEvents;
+use EditorBundle\Form\TemplatePrintType;
 
 class EditorController extends Controller
 {
@@ -171,8 +172,11 @@ class EditorController extends Controller
             $client = $this->container->get('security.token_storage')->getToken()->getUser();
             if($template->getClient() == $client) {
                 $this->get('session')->getFlashBag()->add('success', 'template.created');
-            
-                return $this->redirectToRoute('editor_editor_complete', array('id' => $template->getId()));
+                if($template->getSupport() === Templating::SUPPORT_FLYERS) {
+                    return $this->redirectToRoute('editor_editor_complete', array('id' => $template->getId()));
+                }else{
+                    return $this->redirectToRoute('editor_editor_print', array('id' => $template->getId()));
+                }
             }
             $this->get('session')->getFlashBag()->add('success', 'template.edited');
             
@@ -260,4 +264,40 @@ class EditorController extends Controller
                 new OrderEvent($template)
         );
     }
+    
+    /**
+    * Printed custom creativity on front.
+    *
+    * @Route("/admin/editor/print/{id}" )
+    * @Method({"GET", "POST"})
+    * @Security("has_role('ROLE_CLIENT')")
+    * @return Response
+    */
+   public function printAction(Request $request, Templating $template)
+   {
+        $form = $this->createForm(new TemplatePrintType(), $template);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            if($template->getPrint()){
+                $this->sendNotification($template);
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.send_notification'));
+            }else{
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.send_notification_fail'));
+            }
+
+            return $this->redirectToRoute('editor_editor_index');
+        }
+
+        return $this->render(
+            'EditorBundle:Editor:print.html.twig',
+            array(
+                'entity' => $template,
+                'form' => $form->createView()
+            )
+        );
+   }
 }

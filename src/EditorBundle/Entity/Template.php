@@ -190,6 +190,13 @@ class Template
     private $pdfPath;
     
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="print", type="boolean")
+     */
+    private $print;
+    
+    /**
      * Constructor
      */
     public function __construct()
@@ -199,6 +206,7 @@ class Template
         $this->delivery = false;
         $this->latitude = self::DEFAULT_LAT;
         $this->longitude = self::DEFAULT_LON;
+        $this->print = false;
     }
     /**
      * @return int
@@ -620,5 +628,27 @@ class Template
     }
     
             
+    /**
+     * Set print
+     *
+     * @param boolean $print
+     * @return Template
+     */
+    public function setPrint($print)
+    {
+        $this->print = $print;
+
+        return $this;
+    }
+
+    /**
+     * Get print
+     *
+     * @return boolean 
+     */
+    public function getPrint()
+    {
+        return $this->print;
+    }
 }
 

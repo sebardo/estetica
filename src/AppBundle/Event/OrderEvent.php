@@ -5,13 +5,13 @@ namespace AppBundle\Event;
 
 
 use Symfony\Component\EventDispatcher\Event;
-use AppBundle\Entity\CreativityOrder;
+use EditorBundle\Entity\Template as Templating;
 
 class OrderEvent extends Event
 {
 	protected $order;
 
-	public function __construct(CreativityOrder $order)
+	public function __construct(Templating $order)
 	{
 		$this->order = $order;
 	}
