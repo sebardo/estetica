@@ -1,0 +1,132 @@
+{% extends "BackendBundle::layout.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h5 class="title-form-print">{{ 'creativity_order.title.form.complete'|trans() }}</h5>
+            {{ form_start(form) }}
+            {{ form_row(form.delivery) }}
+            <div class="row delivery-show delivery-detail-wrapper">
+                <div class="col-xs-12">
+                    {% set error = form_errors(form.deliveryDetail) | trim %}
+                    <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                        {{ form_label(form.deliveryDetail, 'creativity_order.form.send.details' | trans) }}
+                        {{ form_widget(form.deliveryDetail, { 'attr': { 'class': 'form-control', 'placeholder': 'creativity_order.form.send.details_placeholder' | trans } }) }}
+                        <span class="help-block error-message">{{ error | striptags }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row delivery-show lat-long-input-wrapper">
+                <div class="col-sm-6 lat-input-wrapper">
+                    {% set error = form_errors(form.latitude) | trim %}
+                    <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                        {{ form_label(form.latitude, 'creativity_order.form.latitude' | trans) }}
+                        {{ form_widget(form.latitude, { 'attr': { 'class': 'form-control', 'placeholder': 'creativity_order.form.latitude_placeholder' | trans } }) }}
+                        <span class="help-block error-message">{{ error | striptags }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 long-input-wrapper">
+                    {% set error = form_errors(form.longitude) | trim %}
+                    <div class="form-group {% if error | length > 0 %}has-error{% endif %}">
+                        {{ form_label(form.longitude, 'creativity_order.form.longitude' | trans) }}
+                        {{ form_widget(form.longitude, { 'attr': { 'class': 'form-control', 'placeholder': 'creativity_order.form.longitude_placeholder' | trans } }) }}
+                        <span class="help-block error-message">{{ error | striptags }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row delivery-show map-input-wrapper">
+                <div class="col-xs-12">
+                    {% set value_map = entity.latitude ~ '@' ~ entity.longitude %}
+                    {% include 'AppBundle:CreativityProposal:map_show.html.twig' %}
+                </div>
+            </div>
+            {{ form_row(form.submit) }}
+            <div class="hide">
+                {{ form_rest(form) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts  %}
+    {{  parent() }}
+
+    {% javascripts 
+        'https://code.jquery.com/ui/1.12.1/jquery-ui.js'
+        'bundles/editor/plugins/ckeditor-4.5/ckeditor-custom.js'
+        'bundles/editor/plugins/ckeditor-4.5/adapters/old.adapter.jquery.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js'
+        'bundles/app/js/html2canvas.js'
+        'bundles/app/js/jquery.ui.rotatable.js'
+         %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript">
+        //Show local address
+        function deliverDetailsShow(show) {
+            var $delivery_show_wrapper_collection = $('.delivery-show');
+            if(show){
+                $delivery_show_wrapper_collection.fadeIn(500, function() {
+                    var $this = $(this);
+                    $this.css({
+                        'display': 'block'
+                    })
+                });
+            }else {
+                $delivery_show_wrapper_collection.fadeOut(500, function() {
+                    var $this = $(this);
+                    $this.css({
+                        'display': 'none'
+                    })
+                });
+            }
+        }
+
+        $(document).on('ifChanged', '#template_delivery_delivery', function(event) {
+            checkboxIsChecked('#template_delivery_delivery');
+        });
+
+        function checkboxIsChecked(selector){
+            var el = $(selector);
+            if(el.is(':checked')){
+                deliverDetailsShow(true)
+            }else{
+                deliverDetailsShow(false);
+            }
+        }
+
+        setTimeout(function() {
+            deliverDetailsShow(false);
+            checkboxIsChecked('#template_delivery_delivery');
+        }, 300);
+
+        //para mostrar el mapa
+        if ($('#map_show').length > 0) {
+            var value, latLng, url_map;
+            value = $($('#map_show input')[0]);
+            url_map = $($('#map_show input')[1]).val();
+            lat = $('#template_delivery_latitude');
+            lon = $('#template_delivery_longitude');
+            if (value.val() != '') {
+                var aux = value.val().split('@');
+                var latitude = '{{ entity.client.latitude }}' || aux[0];
+                var longitude = '{{ entity.client.longitude }}' || aux[1];
+                latLng = L.latLng(latitude, longitude);
+                var map = L.map('map').setView(latLng, 15);
+                var myLayer = L.tileLayer(url_map, {
+                    mapId: 'mapbox.streets',
+                    token: 'pk.eyJ1IjoidG9tYXNkYXIiLCJhIjoiNjk4MjA5MjA0MDE2YjBmOTNmOTVlYjRjNDQzMzc3Y2UifQ.WGfpevghECXxduCiztMrBw'
+                }).addTo(map);
+                // var marker = L.marker(latLng).addTo(map);
+                var marker = L.marker(latLng, { draggable: true }).addTo(map);
+                var onDragEnd = function () {
+                    lat.val(marker.getLatLng().lat);
+                    lon.val(marker.getLatLng().lng);
+                };
+                marker.on('drag', onDragEnd);
+                onDragEnd();
+            }
+        }
+    </script>
+{% endblock %}

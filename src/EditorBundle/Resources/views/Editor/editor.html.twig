@@ -4,13 +4,15 @@
     <li>Routers -> 1578x2500px [1183.5, 1875]</li>
     <li>Rollup -> 1062x2500px [796.5, 1875]</li>
 </ul>
+
+
 {% if entity.support == 'flyers'  %}
     {% set size = 'width: 793px; height: 1121px;' %}
     {% set bgsize = ' background-size: 793px 1121px; ' %}
 {% elseif entity.support == 'routers'  %}
      {% set size = 'width:1578px; height: 2500px; ' %}
      {% set bgsize = ' background-size: 1578px 2500px; ' %}
-{% elseif entity.support == 'rollup'  %}
+{% elseif entity.support == 'roll-up'  %}
      {% set size = 'width: 1062px; height: 2500px; ' %}
      {% set bgsize = ' background-size: 1062px 2500px; ' %}
 {% endif %}

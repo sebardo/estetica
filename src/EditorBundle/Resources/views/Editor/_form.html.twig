@@ -2,7 +2,14 @@
 {{ form_row(form.category) }}
 {{ form_row(form.subcategory) }}
 
-{{ form_row(form.backgroundImageFile) }}
-{{ form_row(form.backgroundImage2File) }}
 
+{{ form_row(form.backgroundImageFile) }}
+    
+      
+<div class="back-image">
+    {{ form_row(form.backgroundImage2File) }}
+</div>  
+    
+<div {% if editor is not defined %}style="display:none"{% endif %}>
 {{ form_rest(form) }}
+</div>

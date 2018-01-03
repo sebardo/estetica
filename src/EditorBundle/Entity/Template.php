@@ -20,6 +20,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Template 
 {
+    //Support
+    const SUPPORT_FLYERS = 'flyers';
+    const SUPPORT_ROUTERS = 'routers';
+    const SUPPORT_ROLLUP = 'roll-up';
+    
+    //MAP CONSTANTS
+    const DEFAULT_LAT = "41.385239";
+    const DEFAULT_LON = "2.176232";
+    
     const CREATED_STATE = 'Created';
     const PENDING_STATE = 'Pending';
     const APPROVED_STATE = 'Approved';
@@ -146,6 +155,40 @@ class Template
      */
     private $backPageHtml;
     
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="delivery", type="boolean")
+     */
+    private $delivery;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="delivery_detail", type="text", nullable=true)
+     */
+    private $deliveryDetail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="string", length=255, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="string", length=255, nullable=true)
+     */
+    private $longitude;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pdfPath", type="string", length=255, nullable=true)
+     */
+    private $pdfPath;
     
     /**
      * Constructor
@@ -154,6 +197,9 @@ class Template
     {
         $this->childs = new ArrayCollection();
         $this->setStatus(self::CREATED_STATE);
+        $this->delivery = false;
+        $this->latitude = self::DEFAULT_LAT;
+        $this->longitude = self::DEFAULT_LON;
     }
     /**
      * @return int
@@ -459,4 +505,121 @@ class Template
         $this->backPageHtml = $backPageHtml;
     }
     
+    /**
+     * Set delivery
+     *
+     * @param boolean $delivery
+     * @return CreativityOrder
+     */
+    public function setDelivery($delivery)
+    {
+        $this->delivery = $delivery;
+
+        return $this;
+    }
+
+    /**
+     * Get delivery
+     *
+     * @return boolean 
+     */
+    public function getDelivery()
+    {
+        return $this->delivery;
+    }
+
+    /**
+     * Set deliveryDetail
+     *
+     * @param string $deliveryDetail
+     * @return CreativityOrder
+     */
+    public function setDeliveryDetail($deliveryDetail)
+    {
+        $this->deliveryDetail = $deliveryDetail;
+
+        return $this;
+    }
+
+    /**
+     * Get deliveryDetail
+     *
+     * @return string 
+     */
+    public function getDeliveryDetail()
+    {
+        return $this->deliveryDetail;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     * @return CreativityOrder
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string 
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     * @return CreativityOrder
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string 
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+    
+    /**
+     * Set pdfPath
+     *
+     * @param string $pdfPath
+     * @return Template
+     */
+    public function setPdfPath($pdfPath)
+    {
+        $this->pdfPath = $pdfPath;
+
+        return $this;
+    }
+
+    /**
+     * Get pdfPath
+     *
+     * @return string 
+     */
+    public function getPdfPath()
+    {
+        return $this->pdfPath;
+    }
+    
+            
 }
+

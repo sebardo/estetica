@@ -37,7 +37,7 @@ class TemplateType extends AbstractType
                     'mapped' => true,
                     'required' => true,
                     'label' => 'creativity.form.subcategory',
-                    'choices' => $this->getSelectSubcategories('technology')
+                    'choices' => $this->getSelectSubcategories('all')
                 ))
                 ->add('frontPageHtml', TextareaType::class, array('required' => false))
                 ->add('backPageHtml', TextareaType::class, array('required' => false))
@@ -105,6 +105,35 @@ class TemplateType extends AbstractType
                 break;
             case 'campaign':
                 $response = array(
+                    'dia-padre' => 'app.category.campaign.1.name',
+                    'dia-madre' => 'app.category.campaign.2.name',
+                    'san-valentin' => 'app.category.campaign.3.name',
+                    'verano' => 'app.category.campaign.4.name',
+                    'navidad' => 'app.category.campaign.5.name',
+                    'otras' => 'app.category.campaign.6.name'
+                );
+                break;
+            case 'all':
+                $response = array(
+                    'criolopolisis' => 'app.category.technology.1.name',
+                    'ipl-fotodepilacion' => 'app.category.technology.2.name',
+                    'laser-depilacion' => 'app.category.technology.3.name',
+                    'radiofrecuencia' => 'app.category.technology.4.name',
+                    'cavitacion' => 'app.category.technology.5.name',
+                    'hifu' => 'app.category.technology.6.name',
+                    'narl' => 'app.category.technology.7.name',
+                    'enero' => 'app.category.month.1.name',
+                    'febrero' => 'app.category.month.2.name',
+                    'marzo' => 'app.category.month.3.name',
+                    'abril' => 'app.category.month.4.name',
+                    'mayo' => 'app.category.month.5.name',
+                    'junio' => 'app.category.month.6.name',
+                    'julio' => 'app.category.month.7.name',
+                    'agosto' => 'app.category.month.8.name',
+                    'septiembre' => 'app.category.month.9.name',
+                    'octubre' => 'app.category.month.10.name',
+                    'noviembre' => 'app.category.month.11.name',
+                    'diciembre' => 'app.category.month.12.name',
                     'dia-padre' => 'app.category.campaign.1.name',
                     'dia-madre' => 'app.category.campaign.2.name',
                     'san-valentin' => 'app.category.campaign.3.name',

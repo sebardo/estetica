@@ -54,8 +54,19 @@
         
        
         jQuery(document).ready(function() {
+            
+            $('#template_support').change(function(){
+                if($(this).val() != 'flyers') {
+                    $('.back-image').fadeOut('slow');
+                }else{
+                    $('.back-image').fadeIn('slow');
+                }
+            });
+            
         });
 
+
+ 
         //Ajax Subcatefory
         $(document).on('change', '#template_category', function(){
             

@@ -8,8 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use EditorBundle\Entity\Template as Templating;
 use EditorBundle\Form\TemplateType;
+use EditorBundle\Form\TemplateDeliveryType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Event\OrderEvent;
+use AppBundle\OrderEvents;
 
 class EditorController extends Controller
 {
@@ -145,6 +150,7 @@ class EditorController extends Controller
         
         return $templateNew;
     }
+    
     /**
      * Creates a new contract entity.
      *
@@ -162,6 +168,12 @@ class EditorController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             
+            $client = $this->container->get('security.token_storage')->getToken()->getUser();
+            if($template->getClient() == $client) {
+                $this->get('session')->getFlashBag()->add('success', 'template.created');
+            
+                return $this->redirectToRoute('editor_editor_complete', array('id' => $template->getId()));
+            }
             $this->get('session')->getFlashBag()->add('success', 'template.edited');
             
             return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
@@ -170,6 +182,77 @@ class EditorController extends Controller
         return array(
             'entity' => $template,
             'edit_form' => $form->createView(),
+        );
+    }
+    
+    /**
+    * Printed custom creativity on front.
+    *
+    * @Route("/admin/editor/complete/{id}" )
+    * @Method({"GET", "POST"})
+    * @Security("has_role('ROLE_CLIENT')")
+    * @return Response
+    */
+    public function completeAction(Request $request, Templating $template)
+    {
+       
+        if($template->getSupport() === Templating::SUPPORT_FLYERS) {
+            $form = $this->createForm(new TemplateDeliveryType(), $template);
+            $form->add('submit', SubmitType::class, array(
+                        'label' => $this->get('translator')->trans('app.create_btn'),
+                        'attr'=>array('class'=>'btn btn-success'))
+                    );
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($template);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.send_notification'));
+
+                return $this->redirectToRoute('editor_editor_index');
+            }
+        } else {
+            $this->sendNotification($template);
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('creativity_order.send_notification'));
+
+            return $this->redirectToRoute('editor_editor_index');
+        }
+
+        return $this->render(
+                'EditorBundle:Editor:complete.html.twig',
+                array(
+                    'entity' => $template,
+                    'form' => $form->createView()
+                )
+        );
+    }
+    
+    /**
+     * Upload file
+     *
+     * @Route("/admin/editor/upload/{id}")
+     * @Method({"GET", "POST"})
+     */
+    public function uploadAction(Request $request, Templating $template)
+    {
+        $path = null;
+        if($request->request->has('data')){
+            $path = "/uploads/templates/". uniqid().".pdf";
+            $data = base64_decode($request->request->get('data'));
+            file_put_contents( __DIR__."/../../../web".$path, $data);
+            $template->setPdfPath($path);
+        }
+        return new JsonResponse($path);
+    }
+    
+    private function sendNotification(Templating $template)
+    {
+        //Send Email
+        $this->get('event_dispatcher')->dispatch(
+                OrderEvents::ORDER_CREATED,
+                new OrderEvent($template)
         );
     }
 }

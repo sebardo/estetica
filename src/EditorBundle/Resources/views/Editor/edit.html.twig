@@ -41,7 +41,7 @@
                                         'attr': {'class': 'form-horizontal form-row-seperated'}
                                         }) }}
                     <div class="box-body" style="display: none" >
-                        {{ include ('EditorBundle:Editor:_form.html.twig', {form: edit_form} ) }}
+                        {{ include ('EditorBundle:Editor:_form.html.twig', {form: edit_form, editor: true} ) }}
                     </div>
                     
                     {{ include ('EditorBundle:Editor:editor.html.twig') }}
@@ -151,7 +151,7 @@
         var editor = CKEDITOR.inline(el, {
             title : false,
             allowedContent : true,
-            extraPlugins: 'uploadimage,image2,panelbutton,colorbutton',
+            extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font',
             height: 300,
 
             // Upload images to a CKFinder connector (note that the response type is set to JSON).
@@ -225,7 +225,7 @@
             CKEDITOR.inline($(this).attr('id'), {
                 title : false,
                 allowedContent : true,
-                extraPlugins: 'uploadimage,image2,panelbutton,colorbutton',
+                extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font',
                 height: 300,
 
                 // Upload images to a CKFinder connector (note that the response type is set to JSON).
@@ -305,7 +305,7 @@
             });
         });
         
-        $('#download').click(function(){
+        $('#download').click(function(e){
             $('body').find('canvas').attr('id', 'myCanvas')
             var canvas = document.getElementById('myCanvas');
             
@@ -316,12 +316,24 @@
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
            {% elseif entity.support == 'routers'  %}
                var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-           {% elseif entity.support == 'rollup'  %}
+           {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
            {% endif %}
                
            pdf.addImage(imgData, 'JPEG', 0, 0);
-           pdf.save("download.pdf");
+           //pdf.save("download.pdf");
+           
+                      
+           var pdf2 = btoa(pdf.output()); 
+            $.ajax({
+              method: "POST",
+              url: "/admin/editor/upload/{{entity.id}}",
+              data: {data: pdf2},
+            }).done(function(data){
+               console.log(data);
+               pdf.save("download.pdf");
+            });
+            e.preventDefault();
         });
         
     });
