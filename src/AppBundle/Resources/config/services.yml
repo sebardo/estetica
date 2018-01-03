@@ -151,7 +151,7 @@ services:
             mailer: "@mailer"
             sender: "%mail_central%"
             receiver: "%mail_central%"
-            orderPath: "%app.path.creativities%"
+            orderPath: "%app.path.templates%"
         tags:
             - { name: kernel.event_listener, event: order.created, method: onOrderCreated }
     webapp.listener.press_release_created:

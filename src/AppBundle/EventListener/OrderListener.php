@@ -25,12 +25,12 @@ class OrderListener
 	public function onOrderCreated(OrderEvent $event)
 	{
 		/** @var CreativityOrder $order */
-		$order = $event->getOrder();
-		$body = $this->renderTemplate($order);
+		$template = $event->getOrder();
+		$body = $this->renderTemplate($template);
 
 		$message = \Swift_Message::newInstance()
-			->setSubject('Order ' . $order->getId() . ' created')
-			->attach(\Swift_Attachment::fromPath($this->orderPath . '/' . $order->getCreativityOrderPdf()))
+			->setSubject('Order ' . $template->getId() . ' created')
+			->attach(\Swift_Attachment::fromPath($this->orderPath . '/' . $template->getPdfPath()))
 			->setFrom($this->sender)
 			->setTo($this->receiver)
 			->setBody($body)

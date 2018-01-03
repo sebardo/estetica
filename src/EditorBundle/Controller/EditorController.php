@@ -206,6 +206,7 @@ class EditorController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
+                $template->setStatus(Templating::COMPLETED_STATE);
                 $em->persist($template);
                 $em->flush();
 
@@ -241,8 +242,12 @@ class EditorController extends Controller
         if($request->request->has('data')){
             $path = "/uploads/templates/". uniqid().".pdf";
             $data = base64_decode($request->request->get('data'));
+            //store file
             file_put_contents( __DIR__."/../../../web".$path, $data);
+            //update entity
+            $em = $this->getDoctrine()->getManager();
             $template->setPdfPath($path);
+            $em->flush();
         }
         return new JsonResponse($path);
     }

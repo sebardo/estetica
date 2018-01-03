@@ -301,6 +301,28 @@
             html2canvas(document.getElementById("parent")).then(function(canvas) {
                 $('#preview').html('');
                 $('#preview').append(canvas);
+                
+
+                // only jpeg is supported by jsPDF
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                {% if entity.support == 'flyers'  %}
+                     var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
+                {% elseif entity.support == 'routers'  %}
+                    var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
+                {% elseif entity.support == 'roll-up'  %}
+                    var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
+                {% endif %}
+                pdf.addImage(imgData, 'JPEG', 0, 0);
+
+                var pdf2 = btoa(pdf.output()); 
+                 $.ajax({
+                   method: "POST",
+                   url: "/admin/editor/upload/{{entity.id}}",
+                   data: {data: pdf2},
+                 }).done(function(data){
+                    console.log(data);
+                 });
+
                  
             });
         });
@@ -308,31 +330,21 @@
         $('#download').click(function(e){
             $('body').find('canvas').attr('id', 'myCanvas')
             var canvas = document.getElementById('myCanvas');
-            
+
             // only jpeg is supported by jsPDF
-           var imgData = canvas.toDataURL("image/jpeg", 1.0);
-           
-           {% if entity.support == 'flyers'  %}
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+            {% if entity.support == 'flyers'  %}
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-           {% elseif entity.support == 'routers'  %}
+            {% elseif entity.support == 'routers'  %}
                var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-           {% elseif entity.support == 'roll-up'  %}
+            {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-           {% endif %}
-               
-           pdf.addImage(imgData, 'JPEG', 0, 0);
-           //pdf.save("download.pdf");
-           
-                      
-           var pdf2 = btoa(pdf.output()); 
-            $.ajax({
-              method: "POST",
-              url: "/admin/editor/upload/{{entity.id}}",
-              data: {data: pdf2},
-            }).done(function(data){
-               console.log(data);
-               pdf.save("download.pdf");
-            });
+            {% endif %}
+
+            pdf.addImage(imgData, 'JPEG', 0, 0);
+            pdf.save("download.pdf");
+
             e.preventDefault();
         });
         

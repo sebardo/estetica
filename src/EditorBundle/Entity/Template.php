@@ -31,8 +31,7 @@ class Template
     
     const CREATED_STATE = 'Created';
     const PENDING_STATE = 'Pending';
-    const APPROVED_STATE = 'Approved';
-    const CANCELED_STATE = 'Canceled';
+    const COMPLETED_STATE = 'Completed';
     
     /**
      * @var integer
