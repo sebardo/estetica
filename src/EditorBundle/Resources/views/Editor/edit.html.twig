@@ -119,7 +119,7 @@
         var editor = CKEDITOR.inline(el, {
             title : false,
             allowedContent : true,
-            extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font',
+            extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font,lineheight,justify',
             height: 300,
             // Upload images to a CKFinder connector (note that the response type is set to JSON).
             uploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
@@ -139,7 +139,9 @@
             // resizer (because image size is controlled by widget styles or the image takes maximum
             // 100% of the editor width).
             image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
-            image2_disableResizer: false
+            image2_disableResizer: false,
+            forcePasteAsPlainText: true,
+            removePlugins: 'pastefromword, stylescombo, indent, a11yhelp, format,liststyle, tabletools, scayt, menubutton, contextmenu'
         });
         editor.on("mode", function(ev) {
             $(ev.editor.container.$).find("textarea.cke_source").attr({ title: "", "aria-label": "" });
@@ -185,7 +187,7 @@
             CKEDITOR.inline($(this).attr('id'), {
                 title : false,
                 allowedContent : true,
-                extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font',
+                extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font,lineheight,justify',
                 height: 300,
 
                 // Upload images to a CKFinder connector (note that the response type is set to JSON).
@@ -201,15 +203,17 @@
                 // They configure the Styles drop-down list and widgets to use classes.
 
                 stylesSet: [
-                        { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
-                        { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
+                    { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
+                    { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
                 ],
 
                 // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
                 // resizer (because image size is controlled by widget styles or the image takes maximum
                 // 100% of the editor width).
                 image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
-                image2_disableResizer: false
+                image2_disableResizer: false,
+                forcePasteAsPlainText: true,
+                removePlugins: 'pastefromword, stylescombo, indent, a11yhelp, format, liststyle, tabletools, scayt, menubutton, contextmenu'
             });
 
         });

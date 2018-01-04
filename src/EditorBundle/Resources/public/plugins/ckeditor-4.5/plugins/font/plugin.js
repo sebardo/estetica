@@ -336,8 +336,7 @@ CKEDITOR.config.font_style = {
  * @cfg {String} [fontSize_sizes=see source]
  * @member CKEDITOR.config
  */
-CKEDITOR.config.fontSize_sizes = '8/8px;9/9px;10/10px;11/11px;12/12px;14/14px;16/16px;18/18px;20/20px;22/22px;24/24px;26/26px;28/28px;36/36px;48/48px;72/72px';
-
+CKEDITOR.config.fontSize_sizes = '8/8px;9/9px;10/10px;11/11px;12/12px;14/14px;16/16px;18/18px;20/20px;22/22px;24/24px;26/26px;28/28px;32/32px;36/36px;42/42px;48/48px;54/54px;60/60px;72/72px;80/80px;86/86px;94/94px;100/100px;106/106px;114/114px;128/128px;140/140px;152/152px;160/160px;172/172px;180/180px;180/180px;200/200px;220/220px;240/240px;280/280px;360/360px;500/500px;700/700px;800/800px;900/900px;1020/1020px;1280/1280px;1480/1480px;1750/1750px;2000/2000px;2400/2400px;2600/2600px;3000/3000px';
 /**
  * The text to be displayed in the Font Size combo is none of the available
  * values matches the current cursor position or text selection.
