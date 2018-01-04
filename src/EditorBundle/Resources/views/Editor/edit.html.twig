@@ -238,8 +238,22 @@
 
     $(document).ready(function(){
         
-        $(window).bind('beforeunload', function(){
-            return 'Si sale de esta página, perdera todos los cambios que no hayan sido guardados.';
+        var submitted = false;
+
+
+        $(document).ready(function () {
+           window.onbeforeunload = function (e) {
+               if (!submitted) {
+                   var message = "You have not saved your changes.", e = e || window.event;
+                   if (e) {
+                       e.returnValue = message;
+                   }
+                   return message;
+               }
+            }
+            $("form[name='template']").submit(function() {
+                submitted = true;
+            });
         });
 
 

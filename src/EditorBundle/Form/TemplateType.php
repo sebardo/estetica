@@ -19,7 +19,7 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('name', null, array('required' => true,  'label' => 'template.name'))
+                ->add('name', null, array('required' => false,  'label' => 'template.name'))
                 ->add('backgroundImageFile', FileType::class, array('required' => false,  'label' => 'template.background1'))  
                 ->add('backgroundImage2File', FileType::class, array('required' => false,  'label' => 'template.background2'))
                 ->add('support', 'choice', array(
