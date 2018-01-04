@@ -6,7 +6,9 @@ marketing: Marketing Integral
 templates: Creatividades
 template:
     singular: Creatividad
+    name: Nombre
     new: Nueva creatividad
     clone: Clonar creatividad
     background1: Imagen de fondo "cara"
     background2: Imagen de fondo "contra-cara"
+    created: Creatividad creada con exito

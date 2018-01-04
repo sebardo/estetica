@@ -38,38 +38,44 @@ class TemplateRepository extends EntityRepository
     {
         // select
         $qb = $this->getQueryBuilder()
-            ->select('t.id, t.status, t.support, t.category, t.backgroundImage image');
+            ->select('t.id, t.name, t.status, t.support, t.category, t.backgroundImage image');
 
         // join
 //        $qb->leftJoin('c.client', 'cli')
 //           ->leftJoin('c.reviewer', 'r');
 
+        
         // search
         if (!empty($search)) {
-            $qb->where('t.status = :search')
-                ->setParameter('search', $search);
+            $qb->where('t.name LIKE :search')
+                ->orWhere('t.support LIKE :search')
+                ->orWhere('t.category LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
         }
         
         if (!is_null($support) && !is_null($category)) {
-            $qb->where('t.support = :support')
+            $qb->andWhere('t.support = :support')
                ->andWhere('t.category = :category')
                 ->setParameter('support', $support)
                 ->setParameter('category', $category)    
                     ;
         }elseif(!is_null($support)){
-            $qb->where('t.client = :client')
+            $qb->andWhere('t.client = :client')
                 ->setParameter('client', $support);
         }else{
-            $qb->where('t.parentTemplate IS NULL');
+            $qb->andWhere('t.parentTemplate IS NULL');
         }
-        
+
         // sort by column
         switch($sortColumn) {
             case 0:
-                $qb->orderBy('t.id', $sortDirection);
+                $qb->orderBy('t.name', $sortDirection);
                 break;
             case 1:
-                $qb->orderBy('t.status', $sortDirection);
+                $qb->orderBy('t.support', $sortDirection);
+                break;
+            case 2:
+                $qb->orderBy('t.category', $sortDirection);
                 break;
         }
 

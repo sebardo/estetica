@@ -7,18 +7,17 @@
 [contenteditable] {
     padding: .5em;
     margin: .5em;
-    outline: 1px solid transparent;
+    outline: 1px dashed transparent;
 }
 [contenteditable]:hover {
-    outline: 1px solid red!important;
+    outline: 1px dashed red!important;
 }
 [contentresizable] {
     padding: .5em;
     margin: .5em;
-    outline: 1px solid transparent;
-}
-[contentresizable]:hover {
-    outline: 1px solid yellow!important;
+    border: 1px dashed #444!important;
+    outline: 1px dashed yellow!important;
+    min-height: 89px;
 }
 .ui-widget-content{
     background-color: transparent!important;

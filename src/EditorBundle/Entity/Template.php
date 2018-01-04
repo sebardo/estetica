@@ -53,10 +53,16 @@ class Template
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $status;
-
    
     /**
      * @var User
@@ -236,6 +242,26 @@ class Template
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Template
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+    
     /**
      * @return string
      */
