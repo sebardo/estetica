@@ -81,6 +81,7 @@
         
 <script type="text/javascript">
     
+    zindex = 1;
     // Converts from degrees to radians.
     Math.radians = function(degrees) {
       return degrees * Math.PI / 180;
@@ -103,6 +104,8 @@
 
     function newEditor(id) {
         
+        zindex = zindex + 1;
+        
         var counter = makeid();
         console.log(counter);
         // This HTML could've come from AJAX data.
@@ -115,6 +118,8 @@
         document.getElementById(id).appendChild(div);
         $('#'+'div-'+counter).attr('contentresizable', true);
         $('#'+'div-'+counter).css('position', 'absolute');
+        $('#'+'div-'+counter).css('z-index', zindex);
+        
         
         var editor = CKEDITOR.inline(el, {
             title : false,
@@ -159,7 +164,10 @@
               $( ".draggable" ).draggable( 'enable' );
             }
         });
-        
+        $(".draggable" ).mousedown(function(e) {
+            zindex = zindex + 1;
+            $(this).css('z-index', zindex);
+        });
     }
     
     $( function() {
@@ -266,7 +274,10 @@
               $( ".draggable" ).draggable( 'enable' );
             }
         });
-        
+        $(".draggable" ).mousedown(function(e) {
+            zindex = zindex + 1;
+            $(this).css('z-index', zindex);
+        });
         
         $('#print').click(function(){
             
