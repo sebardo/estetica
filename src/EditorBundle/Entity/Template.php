@@ -100,6 +100,11 @@ class Template
      * @var File
      *
      * @Vich\UploadableField(mapping="templates", fileNameProperty="backgroundImage")
+     *
+     * @Assert\File(
+     *     mimeTypes = {"image/jpg", "image/jpeg"},
+     *     mimeTypesMessage = "Por favor selecciona una imagen con extensión JPG"
+     * )
      */
     private $backgroundImageFile;
     
@@ -107,6 +112,7 @@ class Template
      * @var string
      *
      * @ORM\Column(name="backgroundImage", type="string", length=255, nullable=true)
+     *
      */
     private $backgroundImage;
 
@@ -114,6 +120,11 @@ class Template
      * @var File
      *
      * @Vich\UploadableField(mapping="templates", fileNameProperty="backgroundImage2")
+     *
+     * @Assert\File(
+     *     mimeTypes = {"image/jpg", "image/jpeg"},
+     *     mimeTypesMessage = "Por favor selecciona una imagen con extensión JPG"
+     * )
      */
     private $backgroundImage2File;
     
