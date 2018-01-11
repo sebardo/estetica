@@ -321,6 +321,7 @@
                     var imgData = canvas.toDataURL("image/jpeg", 1.0);
                     setTimeout(function(){ 
                         $('#preview-tab2').click();
+                        $('#contra-tab1-content').click();
                         html2canvas(document.getElementById("parent2")).then(function(canvas2) {
                             $('#preview2').html('');
                             $('#preview2').append(canvas2);
@@ -401,6 +402,48 @@
 
             pdf.addImage(imgData, 'JPEG', 0, 0);
             pdf.save("download.pdf");
+
+            e.preventDefault();
+        });
+        
+        
+        
+         $('#create-prev2').click(function(){
+            $('#contra-tab1-content').click();
+            $('#preview2').html('Cargando la prevista ...');
+            html2canvas(document.getElementById("parent2")).then(function(canvas2) {
+                $('#preview2').append(canvas2);
+                $('#preview-tab2-content').click();
+                // only jpeg is supported by jsPDF
+                var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
+                {% if entity.support == 'flyers'  %}
+                    var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
+                {% elseif entity.support == 'routers'  %}
+                   var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
+                {% elseif entity.support == 'roll-up'  %}
+                   var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
+                {% endif %}
+                pdf.addImage(imgData2, 'JPEG', 0, 0);
+            });
+        });                
+                        
+        $('#download2').click(function(e){
+            $('#preview2').find('canvas').attr('id', 'myCanvas2')
+            var canvas = document.getElementById('myCanvas2');
+
+            // only jpeg is supported by jsPDF
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+            {% if entity.support == 'flyers'  %}
+                var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
+            {% elseif entity.support == 'routers'  %}
+               var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
+            {% elseif entity.support == 'roll-up'  %}
+               var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
+            {% endif %}
+
+            pdf.addImage(imgData, 'JPEG', 0, 0);
+            pdf.save("download2.pdf");
 
             e.preventDefault();
         });

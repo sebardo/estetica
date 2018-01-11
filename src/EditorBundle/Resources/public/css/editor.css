@@ -15,8 +15,7 @@
 [contentresizable] {
     padding: .5em;
     margin: .5em;
-    border: 1px dashed #444!important;
-    outline: 1px dashed yellow!important;
+    outline: 1px dashed #ccc!important;
     min-height: 90px;
 }
 .ui-widget-content{
