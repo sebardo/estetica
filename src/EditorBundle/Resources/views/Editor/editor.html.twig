@@ -20,16 +20,15 @@
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="pull-left header"><i class="fa fa-th"></i> Diseña tu creatividad </li>
-        <li class="active"><a href="#tab_1" data-toggle="tab">Cara</a></li>
+        <li class="active"><a id="cara" href="#tab_1" data-toggle="tab">Cara</a></li>
         <li><a href="#tab_2" id="preview-tab2" {% if  entity.support == 'flyers'%}data-toggle="tab"{% endif %} >Contracara</a></li>
-        <li class="pull-right header"> <i class="fa fa-circle text-danger" id="ball"></i> Antes de guardar el formulario debes generar la prevista. </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab_1-1" data-toggle="tab">Editor</a></li>
-                    <li><a id="print" href="#tab_2-1" data-toggle="tab">Prevista <i class="fa fa-circle text-success waitingForConnection"></i></a></li>
+                    <li class="active"><a id="cara-editor" href="#tab_1-1" data-toggle="tab">Editor</a></li>
+                    <li><a id="cara-preview" href="#tab_2-1" data-toggle="tab">Prevista </a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1-1" style="text-align: center">
@@ -53,7 +52,7 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a id="contra-tab1-content" href="#tab_3-1" data-toggle="tab">Editor</a></li>
-                    <li><a id="preview-tab2-content" href="#tab_4-1" data-toggle="tab">Prevista <span class="btn btn-xs btn-success" id="create-prev2">Crear</span></a></li>
+                    <li><a id="contracara-preview"  href="#tab_4-1" data-toggle="tab">Prevista</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_3-1"  style="text-align: center">

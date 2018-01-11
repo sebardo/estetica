@@ -38,7 +38,7 @@
                     {{ form_start(edit_form, {
                                         'action': path('editor_editor_edit', { 'id': entity.id  }), 
                                         'method': 'post', 
-                                        'attr': {'class': 'form-horizontal form-row-seperated'}
+                                        'attr': {'class': 'form-horizontal form-row-seperated', 'id':'editor-form'}
                                         }) }}
                     <div class="box-body" style="display: none" >
                         {{ include ('EditorBundle:Editor:_form.html.twig', {form: edit_form, editor: true} ) }}
@@ -51,7 +51,7 @@
                         <div class="col-sm-10">
                             <button type="button" id="submit" class="btn btn-primary btn-flat"><i class="icon-ok"></i>  {{ 'save' | trans }}</button>
                             <a href="{{ path('editor_editor_index') }}" class="btn btn-flat btn-default">{{ 'back' | trans }}</a>
-                            <button type="submit" class="btn btn-danger btn-flat pull-right" id="delete-btn">{{ 'cancel' | trans }}</button>
+                            <button id="send" type="submit" style="display: none"></button> 
                         </div>
                     </div>
 
@@ -283,8 +283,8 @@
             $(this).css('z-index', zindex);
         });
         
-        $('#print').click(function(){
-            
+        $('#submit').click(function(){
+           
             //PDF build
             {% if entity.support == 'flyers'  %}
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
@@ -293,7 +293,6 @@
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
             {% endif %}
-
             
             {% if  entity.support == 'flyers'%}
                 var html = $('#parent').html();
@@ -313,44 +312,55 @@
                 var result5 = result4.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
                 var last = result5.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
                 $('#template_backPageHtml').html(last);
+                
+                $('#cara').click();
+                
+                $('.tab-content').css('opacity', '0.5');
+                setTimeout(function(){
+                    $('#tab_1-1').addClass('active');
+                    setTimeout(function(){  
+                        $('#preview').html('');
+                        $('#preview').html('Cargando la prevista ...');
+                        html2canvas(document.getElementById("parent")).then(function(canvas) {
+                            
+                            $('#tab_1-1').removeClass('active');
+                            $('#tab_2-1').addClass('active');
 
-                html2canvas(document.getElementById("parent")).then(function(canvas) {
+                            $('#preview').append(canvas);
+                            $('#tab_2-1').addClass('active');
+                            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                            $('#preview-tab2').click();
+                            
+                             setTimeout(function(){ 
+                                $('#preview2').html('');
+                                $('#preview').html('Cargando la prevista ...');
+                                html2canvas(document.getElementById("parent2")).then(function(canvas2) {
+                                    $('#preview2').append(canvas2);
+                                    // only jpeg is supported by jsPDF
+                                    var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
+                                    pdf.addImage(imgData, 'JPEG', 0, 0);
+                                    pdf.addPage();
+                                    pdf.addImage(imgData2, 'JPEG', 0, 0);
+                                    //save file
+                                    var pdf2 = btoa(pdf.output()); 
+                                    $.ajax({
+                                      method: "POST",
+                                      url: "/admin/editor/upload/{{entity.id}}",
+                                      data: {data: pdf2},
+                                    }).done(function(data){
+                                       console.log(data);
+                                       $('.tab-content').css('opacity', '1');
+                                       $('#cara').click();
+                                       $('#tab_1-1').addClass('active');
+                                       $('#tab_2-1').removeClass('active');
+                                       $('#send').click();
+                                    });
+                                });
+                            }, 3000);
 
-                    $('#preview').html('');
-                    $('#preview').append(canvas);
-                    var imgData = canvas.toDataURL("image/jpeg", 1.0);
-                    setTimeout(function(){ 
-                        $('#preview-tab2').click();
-                        $('#contra-tab1-content').click();
-                        html2canvas(document.getElementById("parent2")).then(function(canvas2) {
-                            $('#preview2').html('');
-                            $('#preview2').append(canvas2);
-                            $('#preview-tab2-content').click();
-
-                            // only jpeg is supported by jsPDF
-                            var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
-                            pdf.addImage(imgData, 'JPEG', 0, 0);
-                            pdf.addPage();
-                            pdf.addImage(imgData2, 'JPEG', 0, 0);
-
-                            //save file
-                            var pdf2 = btoa(pdf.output()); 
-                            $.ajax({
-                              method: "POST",
-                              url: "/admin/editor/upload/{{entity.id}}",
-                              data: {data: pdf2},
-                            }).done(function(data){
-                               console.log(data);
-                            });
-
-                            $('#ball').removeClass('text-danger');
-                            $('#ball').addClass('text-success');
-                        });
-
-                    }, 2000);
-
-
-                });
+                        }); 
+                    },300);
+                },300);     
             {% else %}        
                 var html = $('#parent').html();
                 var result = html.replace(/\<div class\=\"ui\-rotatable\-handle ui\-draggable\"\>\<\/div\>/gi, '');
@@ -381,17 +391,45 @@
                 });
             {% endif %} 
             
-            //Enable form submit
-            $('#submit').attr('type', 'submit');
         });
         
+        $('#cara-preview').click(function(){
+            $('.tab-content').css('opacity', '0.5');
+            setTimeout(function(){
+                $('#tab_1-1').addClass('active');
+                setTimeout(function(){                    
+                    $('#preview').html('');
+                    $('#preview').html('Cargando la prevista ...');
+                    html2canvas(document.getElementById("parent")).then(function(canvas) {
+                        $('#preview').append(canvas);
+                        $('#tab_1-1').removeClass('active');
+                        $('.tab-content').css('opacity', '1');
+                    }); 
+                },300);
+            },300);            
+         });
+         
+         $('#contracara-preview').click(function(){
+            $('.tab-content').css('opacity', '0.5');
+            setTimeout(function(){
+                $('#tab_3-1').addClass('active');
+                setTimeout(function(){                    
+                    $('#preview2').html('');
+                    $('#preview2').html('Cargando la prevista ...');
+                    html2canvas(document.getElementById("parent2")).then(function(canvas2) {
+                        $('#preview2').append(canvas2);
+                        $('#tab_3-1').removeClass('active');
+                        $('.tab-content').css('opacity', '1');
+                    }); 
+                },300);
+            },300); 
+        });                
+           
         $('#download').click(function(e){
             $('body').find('canvas').attr('id', 'myCanvas')
             var canvas = document.getElementById('myCanvas');
-
             // only jpeg is supported by jsPDF
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
-
             {% if entity.support == 'flyers'  %}
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
             {% elseif entity.support == 'routers'  %}
@@ -399,41 +437,16 @@
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
             {% endif %}
-
             pdf.addImage(imgData, 'JPEG', 0, 0);
             pdf.save("download.pdf");
-
             e.preventDefault();
         });
         
-        
-        
-         $('#create-prev2').click(function(){
-            $('#contra-tab1-content').click();
-            $('#preview2').html('Cargando la prevista ...');
-            html2canvas(document.getElementById("parent2")).then(function(canvas2) {
-                $('#preview2').append(canvas2);
-                $('#preview-tab2-content').click();
-                // only jpeg is supported by jsPDF
-                var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
-                {% if entity.support == 'flyers'  %}
-                    var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-                {% elseif entity.support == 'routers'  %}
-                   var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-                {% elseif entity.support == 'roll-up'  %}
-                   var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-                {% endif %}
-                pdf.addImage(imgData2, 'JPEG', 0, 0);
-            });
-        });                
-                        
         $('#download2').click(function(e){
             $('#preview2').find('canvas').attr('id', 'myCanvas2')
             var canvas = document.getElementById('myCanvas2');
-
             // only jpeg is supported by jsPDF
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
-
             {% if entity.support == 'flyers'  %}
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
             {% elseif entity.support == 'routers'  %}
@@ -441,10 +454,8 @@
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
             {% endif %}
-
             pdf.addImage(imgData, 'JPEG', 0, 0);
             pdf.save("download2.pdf");
-
             e.preventDefault();
         });
         
