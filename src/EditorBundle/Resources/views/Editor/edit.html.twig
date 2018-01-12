@@ -401,6 +401,7 @@
                     $('#preview').html('');
                     $('#preview').html('Cargando la prevista ...');
                     html2canvas(document.getElementById("parent")).then(function(canvas) {
+                        $('#preview').html('');
                         $('#preview').append(canvas);
                         $('#tab_1-1').removeClass('active');
                         $('.tab-content').css('opacity', '1');
@@ -417,6 +418,7 @@
                     $('#preview2').html('');
                     $('#preview2').html('Cargando la prevista ...');
                     html2canvas(document.getElementById("parent2")).then(function(canvas2) {
+                        $('#preview2').html('');
                         $('#preview2').append(canvas2);
                         $('#tab_3-1').removeClass('active');
                         $('.tab-content').css('opacity', '1');
