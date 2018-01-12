@@ -284,7 +284,9 @@
         });
         
         $('#submit').click(function(){
-           
+            $('#cara').click();
+            $('#cara-editor').click();    
+            $('.tab-content').css('opacity', '0.5');
             //PDF build
             {% if entity.support == 'flyers'  %}
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
@@ -313,9 +315,7 @@
                 var last = result5.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
                 $('#template_backPageHtml').html(last);
                 
-                $('#cara').click();
                 
-                $('.tab-content').css('opacity', '0.5');
                 setTimeout(function(){
                     $('#tab_1-1').addClass('active');
                     setTimeout(function(){  
@@ -325,16 +325,17 @@
                             
                             $('#tab_1-1').removeClass('active');
                             $('#tab_2-1').addClass('active');
-
+                            $('#preview').html('');
                             $('#preview').append(canvas);
                             $('#tab_2-1').addClass('active');
                             var imgData = canvas.toDataURL("image/jpeg", 1.0);
                             $('#preview-tab2').click();
-                            
+                            $('#contra-tab1-content').click();
                              setTimeout(function(){ 
                                 $('#preview2').html('');
                                 $('#preview').html('Cargando la prevista ...');
                                 html2canvas(document.getElementById("parent2")).then(function(canvas2) {
+                                    $('#preview2').html('');
                                     $('#preview2').append(canvas2);
                                     // only jpeg is supported by jsPDF
                                     var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
