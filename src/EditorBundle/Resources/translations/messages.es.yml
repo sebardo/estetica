@@ -11,4 +11,5 @@ template:
     clone: Clonar creatividad
     background1: Imagen de fondo "cara"
     background2: Imagen de fondo "contra-cara"
-    created: Creatividad creada con exito
+    created: Creatividad creada con éxito
+    edited: Creatividad actualizada con éxito
