@@ -48,7 +48,28 @@ class HomeImages
      * @ORM\JoinColumn(onDelete="set null")
      */
     private $image3;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     */
+    private $url;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url2", type="string", length=255, nullable=true)
+     */
+    private $url2;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url3", type="string", length=255, nullable=true)
+     */
+    private $url3;
+    
     /**
      * Get id
      *
@@ -129,5 +150,77 @@ class HomeImages
     public function getImage3()
     {
         return $this->image3;
+    }
+    
+    /**
+     * Set url
+     *
+     * @param string $url
+     *
+     * @return Slider
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+    
+    /**
+     * Set url2
+     *
+     * @param string $url2
+     *
+     * @return Slider
+     */
+    public function setUrl2($url2)
+    {
+        $this->url2 = $url2;
+
+        return $this;
+    }
+
+    /**
+     * Get url2
+     *
+     * @return string 
+     */
+    public function getUrl2()
+    {
+        return $this->url2;
+    }
+    
+    /**
+     * Set url3
+     *
+     * @param string $url3
+     *
+     * @return Slider
+     */
+    public function setUrl3($url3)
+    {
+        $this->url3 = $url3;
+
+        return $this;
+    }
+
+    /**
+     * Get url3
+     *
+     * @return string 
+     */
+    public function getUrl3()
+    {
+        return $this->url3;
     }
 }

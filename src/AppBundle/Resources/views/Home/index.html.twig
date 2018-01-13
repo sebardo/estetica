@@ -9,9 +9,15 @@
     {% set images = get_home_images() %}
     {% if images | length > 0 %}
     <div class="home-images">
-        <img src="{{ images.image.path }}">
-        <img src="{{ images.image2.path }}">
-        <img src="{{ images.image3.path }}">
+        {% if images.url != '' %}<a href="{{ images.url}}" target="_blank">{% endif %}
+            <img src="{{ images.image.path }}">
+        {% if images.url != '' %}</a>{% endif %}
+        {% if images.url2 != '' %}<a href="{{ images.url2}}" target="_blank">>{% endif %}
+            <img src="{{ images.image2.path }}">
+        {% if images.url2 != '' %}</a>{% endif %}
+        {% if images.url3 != '' %}<a href="{{ images.url3}}" target="_blank">>{% endif %}
+            <img src="{{ images.image3.path }}">
+        {% if images.url3 != '' %}</a>{% endif %}
     </div>
     {% endif %}
 

@@ -18,6 +18,7 @@
         </div>
     {% endif %}
     {{ form_row(form.image, {'label': false}) }}
+    {{ form_row(form.url, {'label': 'Url'}) }}
     <hr>
     {% if entity.image2 is not null %}
         <div class="row">
@@ -29,6 +30,7 @@
         </div>
     {% endif %}
     {{ form_row(form.image2, {'label': false}) }}
+    {{ form_row(form.url2, {'label': 'Url'}) }}
     <hr>
     {% if entity.image3 is not null %}
         <div class="row">
@@ -40,6 +42,7 @@
         </div>
     {% endif %}
     {{ form_row(form.image3, {'label': false}) }}
+    {{ form_row(form.url3, {'label': 'Url'}) }}
     <hr>
     
     <div class="form-group">
