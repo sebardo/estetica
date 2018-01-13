@@ -12,20 +12,27 @@ class Mailer
 	private $mailer;
 
 	private $templating;
+        
+        private $adminEmail;
 
-	public function __construct(\Swift_Mailer $mailer, $templating)
+	public function __construct(\Swift_Mailer $mailer, $templating, $adminEmail)
 	{
 		$this->mailer = $mailer;
 		$this->templating = $templating;
+		$this->adminEmail = $adminEmail;
 	}
 
 	public function sendMail(Client $entity, $plainPassword)
 	{
 		$message = \Swift_Message::newInstance()
-			->setSubject('Hello Email')
+			->setSubject('Hello '.$entity->getUsername())
 			->setFrom('send@example.com')
-			->setTo('cargarg7@gmail.com')
-			->setBody($this->templating->render('AppBundle:Mail:welcome.txt.twig', array('username' => $entity->getUsername(), 'plainPassword' => $plainPassword)))
+			->setTo($this->adminEmail)
+			->setBody($this->templating->render('AppBundle:Mail:welcome.txt.twig', array(
+                            'username' => $entity->getUsername(), 
+                            'plainPassword' => $plainPassword,
+                            'tradeName' => $entity->getTradeName()
+                        )))
 		;
 		$this->mailer->send($message);
 	}
