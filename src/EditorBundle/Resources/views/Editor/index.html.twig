@@ -136,7 +136,8 @@
             {
                 "mData": function(source) {
 
-                    var html = '<a href="/admin/editor/edit/' + source.id + '" class="btn btn-primary btn-xs btn-flat ">  {{ 'edit' | trans }}</a> ';
+                    var html = '<a href="/admin/editor/edit/' + source.id + '" class="btn btn-primary btn-xs btn-flat ">  {{ 'edit' | trans }}</a>\n\
+                                <a href="/admin/editor/delete/' + source.id + '" class="btn btn-danger btn-xs btn-flat " onClick="if(confirm(\'¿Estas seguro de eliminar esta creatividad?\')) return true;else return false;">  {{ 'delete' | trans }}</a> ';
                     return html;
                 } 
             }
@@ -160,7 +161,9 @@
                     {% if app.user.isGranted('ROLE_ADMIN') == false %}
                         var html = '<span data="/admin/editor/clone/' + source.id + '" class="btn btn-primary btn-xs btn-flat clone-template">  {{ 'template.clone' | trans }}</span> ';
                     {% else %}
-                        var html = '<a href="/admin/editor/edit/' + source.id + '" class="btn btn-primary btn-xs btn-flat">  {{ 'edit' | trans }}</a> ';
+                        var html = '<a href="/admin/editor/edit/' + source.id + '" class="btn btn-primary btn-xs btn-flat ">  {{ 'edit' | trans }}</a>\n\
+                                <a href="/admin/editor/delete/' + source.id + '" class="btn btn-danger btn-xs btn-flat " onClick="if(confirm(\'¿Estas seguro de eliminar esta creatividad?\')) return true;else return false;">  {{ 'delete' | trans }}</a> ';
+                        return html;
                     {% endif %}
                     return html;
                 } 

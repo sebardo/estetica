@@ -1,6 +1,7 @@
 edit: Editar
 save: Guardar
 cancel: Cancelar
+delete: Eliminar
 add.new: Agregar nuevo
 marketing: Marketing Integral
 templates: Creatividades
@@ -13,3 +14,5 @@ template:
     background2: Imagen de fondo "contra-cara"
     created: Creatividad creada con éxito
     edited: Creatividad actualizada con éxito
+    deleted: Creatividad eliminada con éxito
+    no.deleted: La creatividad no puede ser eliminada porque tiene creatividades creadas a partir de esta.

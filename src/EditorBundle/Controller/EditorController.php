@@ -190,6 +190,28 @@ class EditorController extends Controller
     }
     
     /**
+     * Deletes a event entity.
+     *
+     * @Route("/admin/editor/delete/{id}")
+     * @Method("GET")
+     */
+    public function deleteAction(Request $request,Templating $template)
+    {
+        if(count($template->getChilds())==0){
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($template);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.deleted'));    
+        }else{
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.no.deleted'));    
+        }
+        
+
+        return $this->redirectToRoute('editor_editor_index');
+    }
+    
+    /**
     * Printed custom creativity on front.
     *
     * @Route("/admin/editor/complete/{id}" )
