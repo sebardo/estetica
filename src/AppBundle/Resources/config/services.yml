@@ -97,7 +97,7 @@ services:
         class: AppBundle\Services\RandomString
     webapp.services.mailer:
         class: AppBundle\Services\Mailer
-        arguments: ["@mailer", "@templating"]
+        arguments: ["@mailer", "@templating", "%admin_email%"]
     webapp.services.google_maps_api:
         class: AppBundle\Services\GoogleMapsApi
     webapp.services.client_code_generator:
