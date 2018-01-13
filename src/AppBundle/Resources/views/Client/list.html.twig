@@ -31,7 +31,7 @@
                 <td>{{ entity.code }}</td>
                 <td>{{ entity.createdAt|date('d/m/Y') }}</td>
                 <td>{{ entity.username }}</td>
-                <td><i class="fa fa-circle" style="color: {{ entity.active }}"></i></td>
+                <td><i class="fa fa-circle" style="color: {{ (entity.active) ? 'green' : 'red' }}"></i></td>
                 <td><a class="btn btn-success" href="{{ path('admin_client_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
                 <td>
                     {% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}
