@@ -48,10 +48,12 @@ class EditorController extends Controller
         
         $supportCollection = TemplateType::getSelectSupports();
         $categoryCollection = TemplateType::getSelectCategories();
+        $subcategoryCollection = TemplateType::getSelectSubcategories('all');
                 
         return array(
             'supportCollection' => $supportCollection,
-            'categoryCollection' => $categoryCollection
+            'categoryCollection' => $categoryCollection,
+            'subcategoryCollection' => $subcategoryCollection
         ); 
     }
     
@@ -74,6 +76,7 @@ class EditorController extends Controller
         }else{
             $jsonList->setEntityId($request->query->get('support'));
             $jsonList->setCategory($request->query->get('category'));
+            $jsonList->setSubCategory($request->query->get('subcategory'));
         }
         
         $response = $jsonList->get();

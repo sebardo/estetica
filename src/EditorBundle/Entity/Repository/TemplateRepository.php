@@ -34,17 +34,16 @@ class TemplateRepository extends EntityRepository
      *
      * @return \Doctrine\ORM\Query
      */
-    public function findAllForDataTables($search, $sortColumn, $sortDirection, $support=null, $category=null)
+    public function findAllForDataTables($search, $sortColumn, $sortDirection, $support=null, $category=null, $subcategory=null)
     {
         // select
         $qb = $this->getQueryBuilder()
-            ->select('t.id, t.name, t.status, t.support, t.category, t.backgroundImage image, t.previewImage, t.previewImage2');
+            ->select('t.id, t.name, t.status, t.support, t.category, t.subcategory, t.backgroundImage image, t.previewImage, t.previewImage2');
 
         // join
 //        $qb->leftJoin('c.client', 'cli')
 //           ->leftJoin('c.reviewer', 'r');
 
-        
         // search
         if (!empty($search)) {
             $qb->where('t.name LIKE :search')
@@ -53,16 +52,20 @@ class TemplateRepository extends EntityRepository
                 ->setParameter('search', '%'.$search.'%');
         }
         
-        if (!is_null($support) && !is_null($category)) {
+        if (!is_null($support) && !is_null($category)&& !is_null($subcategory)) {
             $qb->andWhere('t.support = :support')
                ->andWhere('t.category = :category')
+               ->andWhere('t.subcategory = :subcategory')
                 ->setParameter('support', $support)
-                ->setParameter('category', $category)    
+                ->setParameter('category', $category) 
+                ->setParameter('subcategory', $subcategory)    
                     ;
+            $qb->andWhere('t.parentTemplate IS NULL');
         }elseif(!is_null($support)){
             $qb->andWhere('t.client = :client')
                 ->setParameter('client', $support);
         }else{
+            
             $qb->andWhere('t.parentTemplate IS NULL');
         }
 
@@ -76,6 +79,9 @@ class TemplateRepository extends EntityRepository
                 break;
             case 2:
                 $qb->orderBy('t.category', $sortDirection);
+                beak;
+            case 3:
+                $qb->orderBy('t.subcategory', $sortDirection);
                 break;
         }
 

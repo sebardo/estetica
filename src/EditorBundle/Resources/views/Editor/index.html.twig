@@ -46,11 +46,19 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                 <div class="form-group">
                                     <label class="" for="category-selection">{{ 'creativity_order.select.category'|trans() }}</label>
                                     <select class="form-control" name="category" id="category-selection">
                                         {% for key, category in categoryCollection %}
                                             <option value="{{ key }}">{{ category|trans() }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="" for="subcategory-selection">{{ 'creativity_order.select.category.sub'|trans() }}</label>
+                                    <select class="form-control" name="subcategory" id="subcategory-selection">
+                                        {% for key, subcategory in subcategoryCollection %}
+                                            <option value="{{ key }}">{{ subcategory|trans() }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -72,7 +80,8 @@
                                     <th>Nombre</th>
                                     <th>Soporte</th>        
                                     <th>Categoría</th>       
-                                    <th>Previstas</th>        
+                                    <th>Subcategoría</th>       
+                                    <th style="width: 410px">Previstas</th>        
                                     <th style="width: 200px"></th>
                                 </tr>
                             </thead>
@@ -95,7 +104,8 @@
                                         <th>Nombre</th>
                                         <th>Soporte</th>        
                                         <th>Categoría</th>       
-                                        <th>Previstas</th>        
+                                        <th>Subcategoría</th>   
+                                        <th style="width: 410px">Previstas</th>        
                                         <th style="width: 200px"></th>
                                     </tr>
                                 </thead>
@@ -128,6 +138,7 @@
             },
             {"mData": "support"},
             {"mData": "category"},
+            {"mData": "subcategory"},
             {
                 "mData": function (source) {
                     var html = '<img width="200" src="' + source.previewImage + '" />';
@@ -155,6 +166,7 @@
             },
             {"mData": "support"},
             {"mData": "category"},
+            {"mData": "subcategory"},
             {
                 "mData": function (source) {
                     var html = '<img width="200" src="' + source.previewImage + '" />';
@@ -251,21 +263,22 @@
                         function getCreativies(selector, data) {
                             TableManaged.reload(
                                     '#templates-table',
-                                    '{{ url('editor_editor_listjson') }}?support=' + $('#support-selection').val() + '&category=' + $('#category-selection').val(),
+                                    '{{ url('editor_editor_listjson') }}?support=' + $('#support-selection').val() + '&category=' + $('#category-selection').val() + '&subcategory=' + $('#subcategory-selection').val(),
                                     [],
                                     table_columns2,
                                     '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}'
                                     );
                         }
 
-
                         $('#support-selection').on('change', function () {
                             var $this = $(this);
-                            if (checkFields(['#support-selection', '#category-selection'])) {
+                            if (checkFields(['#support-selection', '#category-selection','#subcategory-selection'])) {
+                                var $subcategory = $('#subcategory-selection');
                                 var $category = $('#category-selection');
                                 var data = {
                                     support: $this.val(),
-                                    category: $category.val()
+                                    category: $category.val(),
+                                    subcategory: $subcategory.val()
                                 };
                                 getCreativies('#creativity-selection', data)
                             }
@@ -273,15 +286,58 @@
 
                         $('#category-selection').on('change', function () {
                             var $this = $(this);
-                            if (checkFields(['#support-selection', '#category-selection'])) {
+                            
+                            var category_id = $this.val();
+                            var $subcategory_selector = $('#subcategory-selection');
+                            console.log($subcategory_selector);
+                            var data2 = {
+                                category_id: $this.val()
+                            };
+
+                            if(category_id === 'packs') {
+                                $subcategory_selector.parent('.form-group').fadeOut(500, function() {
+                                    $(this).css({
+                                        'display': 'none'
+                                    });
+                                    $subcategory_selector.html("");
+                                });
+                            }else {
+                                $subcategory_selector.parent('.form-group').fadeOut(500, function() {
+                                    $(this).css({
+                                        'display': 'block'
+                                    });
+                                    getCreativeSubcategories($subcategory_selector, data2);
+                                });
+                            }
+                            
+                            if (checkFields(['#support-selection', '#category-selection','#subcategory-selection'])) {
                                 var $support = $('#support-selection');
+                                var $subcategory = $('#subcategory-selection');
                                 var data = {
                                     support: $support.val(),
-                                    category: $this.val()
+                                    category: $this.val(),
+                                    subcategory: $subcategory.val()
+                                };
+                                getCreativies('#creativity-selection', data)
+                            }
+                            
+                        });
+                        
+                        $('#subcategory-selection').on('change', function () {
+                            var $this = $(this);
+                            
+                            if (checkFields(['#support-selection', '#category-selection','#subcategory-selection'])) {
+                                var $support = $('#support-selection');
+                                var $category = $('#category-selection');
+                                var data = {
+                                    support: $support.val(),
+                                    category: $category.val(),
+                                    subcategory: $this.val()
                                 };
                                 getCreativies('#creativity-selection', data)
                             }
                         });
+                        
 
                         function checkFields(selectors) {
                             var response = true;
@@ -295,6 +351,24 @@
 
                             return response;
                         }
+                        
+           
+
+            function getCreativeSubcategories(selector, data) {
+                $.ajax({
+                    type: 'post',
+                    url: '/ajax/creativity-subcategory',
+                    data: data,
+                    success: function(data) {
+                        selector.html("");
+
+                        for (var i=0, total = data.length; i < total; i++) {
+                            selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                        }
+                    }
+                });
+            }
+        
 
     </script>
 {% endblock %}
