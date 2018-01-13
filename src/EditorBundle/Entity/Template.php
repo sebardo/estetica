@@ -117,6 +117,13 @@ class Template
     private $backgroundImage;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="previewImage", type="text", nullable=true)
+     */
+    private $previewImage;
+    
+    /**
      * @var File
      *
      * @Vich\UploadableField(mapping="templates", fileNameProperty="backgroundImage2")
@@ -134,6 +141,13 @@ class Template
      * @ORM\Column(name="backgroundImage2", type="string", length=255, nullable=true)
      */
     private $backgroundImage2;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="previewImage2", type="text", nullable=true)
+     */
+    private $previewImage2;
     
     /**
      * @var string
@@ -417,6 +431,27 @@ class Template
         return $this;
     }
     
+    /**
+     * Get previewImage
+     *
+     * @return Template
+     */
+    public function getPreviewImage()
+    {
+        return $this->previewImage;
+    }
+    
+    /**
+     * @param string $previewImage
+     *
+     * @return Template
+     */
+    public function setPreviewImage($previewImage)
+    {
+        $this->previewImage = $previewImage;
+
+        return $this;
+    }
     
     /**
      * Get backgroundImage2
@@ -458,6 +493,28 @@ class Template
     public function setBackgroundImage2File($backgroundImage2File)
     {
         $this->backgroundImage2File = $backgroundImage2File;
+
+        return $this;
+    }
+    
+    /**
+     * Get previewImage2
+     *
+     * @return Template
+     */
+    public function getPreviewImage2()
+    {
+        return $this->previewImage2;
+    }
+    
+    /**
+     * @param string $previewImage2
+     *
+     * @return Template
+     */
+    public function setPreviewImage2($previewImage2)
+    {
+        $this->previewImage2 = $previewImage2;
 
         return $this;
     }

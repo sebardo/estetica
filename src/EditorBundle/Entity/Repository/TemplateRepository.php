@@ -38,7 +38,7 @@ class TemplateRepository extends EntityRepository
     {
         // select
         $qb = $this->getQueryBuilder()
-            ->select('t.id, t.name, t.status, t.support, t.category, t.backgroundImage image');
+            ->select('t.id, t.name, t.status, t.support, t.category, t.backgroundImage image, t.previewImage, t.previewImage2');
 
         // join
 //        $qb->leftJoin('c.client', 'cli')

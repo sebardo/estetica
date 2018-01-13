@@ -329,6 +329,7 @@
                             $('#preview').append(canvas);
                             $('#tab_2-1').addClass('active');
                             var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                            console.log(imgData);
                             $('#preview-tab2').click();
                             $('#contra-tab1-content').click();
                              setTimeout(function(){ 
@@ -347,7 +348,7 @@
                                     $.ajax({
                                       method: "POST",
                                       url: "/admin/editor/upload/{{entity.id}}",
-                                      data: {data: pdf2},
+                                      data: {data: pdf2, img1: imgData, img2: imgData2 },
                                     }).done(function(data){
                                        console.log(data);
                                        $('.tab-content').css('opacity', '1');
@@ -371,25 +372,40 @@
                 var last = result3.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
                 $('#template_frontPageHtml').html(last);
 
-                html2canvas(document.getElementById("parent")).then(function(canvas) {
-                    $('#preview').html('');
-                    $('#preview').append(canvas);
-                    var imgData = canvas.toDataURL("image/jpeg", 1.0);
-                    pdf.addImage(imgData, 'JPEG', 0, 0);
-                    //save file
-                    var pdf2 = btoa(pdf.output()); 
-                    $.ajax({
-                      method: "POST",
-                      url: "/admin/editor/upload/{{entity.id}}",
-                      data: {data: pdf2},
-                    }).done(function(data){
-                       console.log(data);
-                    });
+                 setTimeout(function(){
+                    $('#tab_1-1').addClass('active');
+                    setTimeout(function(){  
+                        $('#preview').html('');
+                        $('#preview').html('Cargando la prevista ...');
+                        html2canvas(document.getElementById("parent")).then(function(canvas) {
+                            
+                            $('#tab_1-1').removeClass('active');
+                            $('#tab_2-1').addClass('active');
+                            $('#preview').html('');
+                            $('#preview').append(canvas);
+                            $('#tab_2-1').addClass('active');
+                            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                            
+                            setTimeout(function(){ 
+                                    pdf.addImage(imgData, 'JPEG', 0, 0);
+                                    //save file
+                                    var pdf2 = btoa(pdf.output()); 
+                                    $.ajax({
+                                      method: "POST",
+                                      url: "/admin/editor/upload/{{entity.id}}",
+                                      data: {data: pdf2, img1: imgData },
+                                    }).done(function(data){
+                                       $('.tab-content').css('opacity', '1');
+                                       $('#cara').click();
+                                       $('#tab_1-1').addClass('active');
+                                       $('#tab_2-1').removeClass('active');
+                                       $('#send').click();
+                                    });
+                            }, 3000);
 
-                    $('#ball').removeClass('text-danger');
-                    $('#ball').addClass('text-success');
-                      
-                });
+                        }); 
+                    },300);
+                },300);   
             {% endif %} 
             
         });

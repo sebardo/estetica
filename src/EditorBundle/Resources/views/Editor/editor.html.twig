@@ -33,6 +33,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1-1" style="text-align: center">
                         <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear nuevo contenido</button>
+                        <img class="pull-right" style="position: absolute;right: 20px;top: 155px;" src="{{entity.previewImage}}" width="200">
                         <i>* Doble click para editar un contenido</i>
                         <br>
                         <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position;relative;display:inline-block; {{bgsize}}">
@@ -57,6 +58,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_3-1"  style="text-align: center">
                         <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent2')">Crear nuevo contenido</button>
+                        <img class="pull-right" style="position: absolute;right: 20px;top: 155px;" src="{{entity.previewImage2}}" width="200">
                         <i>* Doble click para editar un contenido</i>
                         <br>
                         <div id="parent2" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage2 }}'); position;relative;display:inline-block; {{bgsize}}">
