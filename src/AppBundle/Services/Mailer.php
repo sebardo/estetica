@@ -26,7 +26,7 @@ class Mailer
 	{
 		$message = \Swift_Message::newInstance()
 			->setSubject('Hello '.$entity->getUsername())
-			->setFrom('send@example.com')
+			->setFrom($this->adminEmail)
 			->setTo($this->adminEmail)
 			->setBody($this->templating->render('AppBundle:Mail:welcome.txt.twig', array(
                             'username' => $entity->getUsername(), 
