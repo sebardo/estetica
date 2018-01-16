@@ -37,6 +37,9 @@ class JsonList
     /** @var Category entity */
     protected $category=null;
     
+    /** @var SubCategory entity */
+    protected $subcategory=null;
+    
     /** @var EntityId entity */
     protected $entityId=null;
     
@@ -89,6 +92,16 @@ class JsonList
     {
         $this->category = $category;
     }
+    
+     /**
+     * Set the subcategory  
+     *
+     * @param Category $subcategory
+     */
+    public function setSubCategory($subcategory)
+    {
+        $this->subcategory = $subcategory;
+    }
 
     /**
      * Get the list
@@ -99,8 +112,8 @@ class JsonList
     {
         $totalEntities = $this->repository->countTotal();
 
-        if(!is_null($this->entityId) && !is_null($this->category)){
-            $entities = $this->repository->findAllForDataTables($this->search, $this->sortColumn, $this->sortDirection, $this->entityId, $this->category);
+        if(!is_null($this->entityId) && !is_null($this->category)&& !is_null($this->subcategory)){
+            $entities = $this->repository->findAllForDataTables($this->search, $this->sortColumn, $this->sortDirection, $this->entityId, $this->category, $this->subcategory);
         }elseif(!is_null($this->entityId)){
             $entities = $this->repository->findAllForDataTables($this->search, $this->sortColumn, $this->sortDirection, $this->entityId);
         }else{

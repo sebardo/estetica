@@ -45,22 +45,18 @@
                 <a href="#"><i class="fa fa-calendar"></i> <span>{{ 'app.sidebar.manage_cites.title_nav'|trans|title }}</span>
                 </a>
             </li>
-            <li id="video" class="treeview">
-                <a href="">
-                    <i class="fa fa-graduation-cap"></i> <span>{{ 'app.sidebar.video.title_nav'|trans|title }}</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+           
+            <li id="" class="treeview">
+                <a id="video-link" href="{{ ticket_link }}" target="_blank"><i class="fa fa-user-md "></i> 
+                    <span>Asesoría</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li id="admin">
-                        <a id="video-link" href="{{ ticket_link }}" target="_blank"><i class="fa fa-user-md "></i> <span>{{ 'app.sidebar.video.children'|trans|title }}</span>
-                        </a>
-                        <a id="video-list" href="{{ path('admin_multimedia_list') }}"><i class="fa fa-refresh"></i>{{ 'app.sidebar.video.list'|trans|title }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            </li>    
+            <li id="" class="treeview">
+                <a id="video-list" href="{{ path('admin_multimedia_list') }}"><i class="fa fa-refresh"></i>
+                    Formación
+                </a>
+            </li>    
+
             <li id="buying-central" class="treeview">
                 <a href="http://materialparaestetica.com/" target="_blank"><i class="fa fa-shopping-cart"></i> <span>{{ 'app.sidebar.buying_central.title_nav'|trans|title }}</span>
                 </a>
@@ -117,7 +113,7 @@
                         </a>
                     </li>
                     <li id="creativity-order" class="treeview">
-                        <a href="{{ path('editor_editor_index') }}"><i class="fa fa-download"></i> <span>{{ 'app.download'|trans|title }}</span>
+                        <a href="{{ path('editor_editor_index') }}"><i class="fa fa-download"></i> <span>{{ 'app.sidebar.creativity.title_nav'|trans|title }}</span>
                         </a>
                     </li>
                     <li id="creativity-proposal" class="treeview">
@@ -130,21 +126,16 @@
                 <a href="#"><i class="fa fa-calendar "></i> <span>{{ 'app.sidebar.manage_cites.title_nav'|trans|title }}</span>
                 </a>
             </li>
-            <li id="video" class="treeview">
-                <a href=""><i class="fa fa-graduation-cap "></i> <span>{{ 'app.sidebar.video.title_nav'|trans|title }}</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
+             <li id="" class="treeview">
+                <a id="video-link" href="{{ ticket_link }}" target="_blank"><i class="fa fa-user-md "></i> 
+                    <span>Asesoría</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li id="admin">
-                        <a id="video-link" href="{{ ticket_link }}" target="_blank"><i class="fa fa-user-md"></i> <span>{{ 'app.sidebar.video.children'|trans|title }}</span>
-                        </a>
-                        <a id="video-list" href="{{ path('admin_multimedia_list') }}"><i class="fa fa-refresh"></i>{{ 'app.sidebar.video.list'|trans|title }}
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            </li>    
+            <li id="" class="treeview">
+                <a id="video-list" href="{{ path('admin_multimedia_list') }}"><i class="fa fa-refresh"></i>
+                    Formación
+                </a>
+            </li> 
             <li id="buying-central" class="treeview">
                 <a href="http://materialparaestetica.com/" target="_blank"><i class="fa fa-shopping-cart"></i> <span>{{ 'app.sidebar.buying_central.title_nav'|trans|title }}</span>
                 </a>

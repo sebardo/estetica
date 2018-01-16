@@ -48,10 +48,12 @@ class EditorController extends Controller
         
         $supportCollection = TemplateType::getSelectSupports();
         $categoryCollection = TemplateType::getSelectCategories();
+        $subcategoryCollection = TemplateType::getSelectSubcategories('all');
                 
         return array(
             'supportCollection' => $supportCollection,
-            'categoryCollection' => $categoryCollection
+            'categoryCollection' => $categoryCollection,
+            'subcategoryCollection' => $subcategoryCollection
         ); 
     }
     
@@ -74,6 +76,7 @@ class EditorController extends Controller
         }else{
             $jsonList->setEntityId($request->query->get('support'));
             $jsonList->setCategory($request->query->get('category'));
+            $jsonList->setSubCategory($request->query->get('subcategory'));
         }
         
         $response = $jsonList->get();
@@ -101,7 +104,7 @@ class EditorController extends Controller
             $em->persist($template);
             $em->flush();
             
-            $this->get('session')->getFlashBag()->add('success', 'template.created');
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.created'));
             
             return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
         }
@@ -178,7 +181,7 @@ class EditorController extends Controller
                     return $this->redirectToRoute('editor_editor_print', array('id' => $template->getId()));
                 }
             }
-            $this->get('session')->getFlashBag()->add('success', 'template.edited');
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.edited'));
             
             return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
         }
@@ -187,6 +190,28 @@ class EditorController extends Controller
             'entity' => $template,
             'edit_form' => $form->createView(),
         );
+    }
+    
+    /**
+     * Deletes a event entity.
+     *
+     * @Route("/admin/editor/delete/{id}")
+     * @Method("GET")
+     */
+    public function deleteAction(Request $request,Templating $template)
+    {
+        if(count($template->getChilds())==0){
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($template);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.deleted'));    
+        }else{
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.no.deleted'));    
+        }
+        
+
+        return $this->redirectToRoute('editor_editor_index');
     }
     
     /**
@@ -242,6 +267,7 @@ class EditorController extends Controller
      */
     public function uploadAction(Request $request, Templating $template)
     {
+        $em = $this->getDoctrine()->getManager();
         $path = null;
         if($request->request->has('data')){
             $path = "/uploads/templates/". uniqid().".pdf";
@@ -249,10 +275,19 @@ class EditorController extends Controller
             //store file
             file_put_contents( __DIR__."/../../../web".$path, $data);
             //update entity
-            $em = $this->getDoctrine()->getManager();
             $template->setPdfPath($path);
             $em->flush();
         }
+        
+        if($request->request->has('img1')){
+            $template->setPreviewImage($request->request->get('img1'));
+            $em->flush();
+        }
+        if($request->request->has('img2')){
+            $template->setPreviewImage2($request->request->get('img2'));
+            $em->flush();
+        }
+        
         return new JsonResponse($path);
     }
     

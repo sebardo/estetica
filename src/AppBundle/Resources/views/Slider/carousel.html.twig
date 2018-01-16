@@ -26,7 +26,9 @@
                     </div>
                 </div>
             {% endif%#}
+            {% if item.url != '' %}<a href="{{ item.url}}" target="_blank">>{% endif %}
             <img width="100%" src="{{item.image}}" alt="">
+            {% if item.url != '' %}</a>{% endif %}
         </div>
         {% endfor %}
     </div>
