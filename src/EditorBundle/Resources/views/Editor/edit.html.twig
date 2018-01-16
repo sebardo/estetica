@@ -180,6 +180,8 @@
             $(this).draggable({
                 containment: parent
             });
+            
+            $('#'+$(this).attr('id')).append('<i class="fa fa-times" aria-hidden="true"></i>');        
         });
         $('.resizable').each(function( index ) {
             var parent = $(this).attr('data-parent');
@@ -228,6 +230,10 @@
                 removePlugins: 'pastefromword, stylescombo, a11yhelp, format, liststyle, tabletools, scayt, menubutton, contextmenu'
             });
 
+        });
+        
+        $(".fa-times" ).click(function(){
+            $(this).parent().remove();
         });
     });
     
