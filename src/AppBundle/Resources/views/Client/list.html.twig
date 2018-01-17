@@ -9,36 +9,101 @@
 {% block list_title 'client.list'|trans%}
 
 {% block list_body %}
-    <table id="datatable" class="table table-bordered table-hover dataTable">
+    
+    <table class="table table-striped table-bordered table-hover" id="clients-table">
         <thead>
-        {% block thead %}
-            <tr>
+            <tr>             
                 <th>{{ '#' }}</th>
-                <th>{{ 'app.list.table.created'|trans|title }}</th>
                 <th>{{ 'app.list.table.username'|trans|title }}</th>
-                <th>{{ 'app.list.table.active'|trans|title }}</th>
-                <th>{{ 'app.edit'|trans|title }}</th>
-                <th>{{ 'app.delete'|trans|title }}</th>
+                <th>Nombre del centro</th>
+                <th>{{ 'app.list.table.created'|trans|title }}</th>        
+                <th>{{ 'app.list.table.active'|trans|title }}</th> 
+                <th style="width: 200px"></th>
             </tr>
-        {% endblock %}
         </thead>
-        <tfoot>
-        {{ block('thead') }}
-        </tfoot>
-        <tbody>
-        {% for entity in clientCollection %}
-            <tr>
-                <td>{{ entity.code }}</td>
-                <td>{{ entity.createdAt|date('d/m/Y') }}</td>
-                <td>{{ entity.username }}</td>
-                <td><i class="fa fa-circle" style="color: {{ (entity.active) ? 'green' : 'red' }}"></i></td>
-                <td><a class="btn btn-success" href="{{ path('admin_client_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
-                <td>
-                    {% form_theme deleteFormCollection[entity.id] "BackendBundle:CRUD:delete.html.twig" %}
-                    {{ form(deleteFormCollection[entity.id]) }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
+        <tbody></tbody>
     </table>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts 
+            'bundles/editor/js/table-managed.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        
+        function activate(id, path){
+            $.ajax({
+                url: path,
+                method: "POST",
+                data: { id: id }
+            }).done(function(response) {
+                if(response.active){
+                    $('#'+response.id).removeClass('fa-circle-o');
+                    $('#'+response.id).addClass('fa-check-circle-o');
+                    $('#'+response.id).css('color', '#00a65a');
+                }else{
+                    $('#'+response.id).removeClass('fa-check-circle-o');
+                    $('#'+response.id).addClass('fa-circle-o');
+                    $('#'+response.id).css('color', '#dd4b39');
+                }
+            });
+        }
+
+        var table_columns = [
+            {"mData": "code"},
+            {
+                "mData": function (source) {
+                    return source.username;
+                }
+            },
+            {"mData": "tradeName"},
+            {
+                "mData": function (source) {
+                    var arr = source.created.date.split(' ');
+                    var datePart = arr[0].split('-');
+                    return datePart[0]+'/'+datePart[1]+'/'+datePart[2];
+                }
+            },
+            {        
+               "mData": function(source) {
+                    var code = '';
+                    if (true == source.active) {
+                        code = '<i id="' + source.id + '" onclick="activate(' + source.id + ', \'/admin/client/' + source.id + '/enable\')" style="font-size:25px;cursor:pointer;color:#00a65a" class="disable fa fa-check-circle-o" aria-hidden="true"></i>';
+                    } else {
+                        code = '<i id="' + source.id + '" onclick="activate(' + source.id + ', \'/admin/client/' + source.id + '/enable\')" style="font-size:25px;cursor:pointer;color:#dd4b39" class="enable fa fa-circle-o" aria-hidden="true"></i>';
+                    }
+                    return code;
+                }
+            },   
+            {
+                "mData": function (source) {
+
+                    var html = '<a href="' + source.id + '/edit" class="btn btn-primary btn-xs btn-flat ">  {{ 'edit' | trans }}</a>\n\
+                                <a href="' + source.id + '/delete" class="btn btn-danger btn-xs btn-flat " onClick="if(confirm(\'¿Estas seguro de eliminar este cliente?\')) return true;else return false;">  {{ 'delete' | trans }}</a> ';
+                    return html;
+                }
+            }
+        ];
+
+        jQuery(document).ready(function () {
+            TableManaged.init(
+                '#clients-table',
+                '{{ url('admin_client_listjson') }}',
+                [],
+                table_columns,
+                '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}',
+                function () {
+                    //callback
+                }
+            );
+        });
+
+    </script>
 {% endblock %}

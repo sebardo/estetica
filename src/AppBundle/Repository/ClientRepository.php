@@ -68,4 +68,75 @@ class ClientRepository extends EntityRepository  implements UserLoaderInterface
             || is_subclass_of($class, $this->getEntityName());
     }
     
+    /**
+     * Find all rows filtered for DataTables
+     *
+     * @param string $search        The search string
+     * @param int    $sortColumn    The column to sort by
+     * @param string $sortDirection The direction to sort the column
+     * @param int    $entityId      The id related 
+     *
+     * @return \Doctrine\ORM\Query
+     */
+    public function findAllForDataTables($search, $sortColumn, $sortDirection, $support=null, $category=null, $subcategory=null)
+    {
+        // select
+        $qb = $this->getQueryBuilder()
+            ->select('c.id, c.username, c.tradeName, c.code, c.createdAt created, c.active');
+
+        // join
+//        $qb->leftJoin('c.client', 'cli')
+//           ->leftJoin('c.reviewer', 'r');
+
+        // search
+        if (!empty($search)) {
+            $qb->where('c.username LIKE :search')
+                ->orWhere('c.tradeName LIKE :search')
+                ->orWhere('c.societyName LIKE :search')
+                ->orWhere('c.nif LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+
+        // sort by column
+        switch($sortColumn) {
+            case 0:
+                $qb->orderBy('c.username', $sortDirection);
+                break;
+            case 1:
+                $qb->orderBy('c.createdAt', $sortDirection);
+                break;
+            case 2:
+                $qb->orderBy('c.active', $sortDirection);
+                beak;
+        }
+
+        // group by
+        $qb->groupBy('c.id');
+
+        return $qb->getQuery();
+    }
+
+    /**
+     * Count the total of rows
+     *
+     * @return int
+     */
+    public function countTotal()
+    {
+        $qb = $this->getQueryBuilder()
+            ->select('COUNT(c)');
+
+        return $qb->getQuery()
+            ->getSingleScalarResult();
+    }
+    
+    private function getQueryBuilder()
+    {
+        $em = $this->getEntityManager();
+
+        $qb = $em->getRepository('AppBundle:Client')
+            ->createQueryBuilder('c');
+
+        return $qb;
+    }
 }

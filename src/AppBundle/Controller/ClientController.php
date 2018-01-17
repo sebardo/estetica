@@ -43,7 +43,7 @@ class ClientController extends BackendBundleController
 	/**
 	 * List client entities
 	 *
-	 * @Route("/list", name="admin_client_list")
+	 * @Route("/", name="admin_client_list")
 	 * @Method({"GET","POST"})
 	 * @Security("has_role('ROLE_ADMIN')")
 	 * @return Response
@@ -71,6 +71,28 @@ class ClientController extends BackendBundleController
 			)
 		);
 	}
+
+         /**
+        * Lists all entities.
+        *
+        * @Route("/list.{_format}", name="admin_client_listjson", requirements={ "_format" = "json" }, defaults={ "_format" = "json" })
+        * @Method("GET")  
+        * @return Response   
+        */
+       public function listJsonAction(Request $request)
+       {
+           $em = $this->getDoctrine()->getManager();
+
+
+           /** @var \AdminBundle\Services\DataTables\JsonList $jsonList */
+           $jsonList = $this->get('json_list');
+           $jsonList->setRepository($em->getRepository('AppBundle:Client'));
+
+           $response = $jsonList->get();
+
+
+           return new JsonResponse($response);
+       }
 
 	/**
 	 * Create client entity.
@@ -179,6 +201,28 @@ class ClientController extends BackendBundleController
 
 		return $this->redirectToRoute('admin_client_list');
 	}
+        
+        /**
+	 * Deletes a client entity.
+	 *
+	 * @param Request $request
+	 * @param Client  $entity
+	 *
+	 * @Route("/{id}/delete", name="admin_client_delete2")
+	 * @Method("GET")
+	 * @Security("has_role('ROLE_ADMIN')")
+	 *
+	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+	 */
+	public function deleteIdClientAction(Request $request, Client $entity)
+	{
+
+                $this->get('webapp.manager.client_manager')->remove($entity);
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('client.delete_succesfull'));
+
+
+		return $this->redirectToRoute('admin_client_list');
+	}
 
 	/**
 	 * Creates a form to delete a client entity.
@@ -196,4 +240,30 @@ class ClientController extends BackendBundleController
 			->getForm()
 			;
 	}
+        
+    /**
+     * Enable/Disable  a page entity.
+     *
+     * @Route("/{id}/enable")
+     * @Method("POST")
+     */
+    public function enableAction(Request $request, Client $entity)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        if($entity->isActive()){
+            $entity->setActive(false);
+        }else{
+            $entity->setActive(true);
+        }
+        
+        $em->flush($entity);
+
+        $sub = new \stdClass();
+        $sub->status = 'success';
+        $sub->id = $entity->getId();
+        $sub->active = $entity->isActive();
+        return new JsonResponse($sub);
+
+    }
 }
