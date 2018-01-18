@@ -17,7 +17,11 @@
               </span>
                         <!-- logo for regular state and mobile devices -->
               <span class="logo-lg">
-                  <img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center">
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a href="{{ path('admin_client_list') }}"><img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center"></a>
+                {% elseif is_granted("ROLE_CLIENT") %}
+                    <a href="/"><img src="{{ asset('bundles/backend/img/logo.png') }}" class="img-responsive center"></a>
+                {% endif %}
               </span>
         </span>
 
