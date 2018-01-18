@@ -4,7 +4,7 @@
      {{ form_start(form) }}
      {{ form_row(form.title) }}
      {{ form_row(form.urlVideo) }}
-     {{ form_row(form.fileVich, {'label': 'multimedia.form.file'|trans(), 'required': false}) }}
+     {{ form_row(form.fileVich, {'label': 'multimedia.form.file'|trans()}) }}
      {% if form.vars.errors is not null %}
          {% for error in form.vars.errors %}
              {% if error.messageTemplate == 'multimedia.file' %}
@@ -30,7 +30,13 @@
          </div>
      {% endif %}
      {{ form_row(form.category) }}
-     {{ form_row(form.submit) }}
+     <div style="display: none">
+        {{ form_row(form.submit) }}
+     </div>
+     <div class="form-group">
+         <a href="#" id="submit_button" class="btn btn-success btn">Crear</a>
+     </div>
+     
      <div class="hide">
          {{ form_rest(form) }}
      </div>
@@ -50,26 +56,33 @@
                     // Do anything for being valid
                     // if need to change the url to embed url then use below line
                     //$('#ytplayerSide').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=0');
-                    $('form[name="appbundle_multimedia"]').submit();
+                    return true;
                 }
                 else {
                     //alert('Por favor seleccione una url de youtube valida.');
                     $('#appbundle_multimedia_urlVideo').parent().addClass('has-error');
-                    
+                    $('#appbundle_multimedia_urlVideo').parent().find('.help-block').remove();
                     var html ='<span class="help-block">    <ul class="list-unstyled"><li><span class="glyphicon glyphicon-exclamation-sign"></span> Url debe ser de youtube</li></ul></span>';
                     $('#appbundle_multimedia_urlVideo').parent().append(html);
+                    return false;
                 }
             }
         }
         
         $(document).ready(function(){
-            $('#appbundle_multimedia_submit').click(function(e){
+            $('#submit_button').click(function(e){
                 e.preventDefault();
-                validateYouTubeUrl(); 
+                if($('#appbundle_multimedia_urlVideo').val() != ''){
+                    if(validateYouTubeUrl()) $('#appbundle_multimedia_submit').click();
+                }else{
+                    $('#appbundle_multimedia_submit').click();
+                }
             });
+            
             {% if (edit is defined and edit) %}
                     $('#appbundle_multimedia_imageVich_file').removeAttr('required');
             {% endif %}
+          
         });
         
     </script>
