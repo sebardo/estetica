@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Multimedia extends Timestampable
 {
-    const YOUTUBE_URL = 'https://www.youtube.com/embed/';
+    const YOUTUBE_URL = 'https://www.youtube.com/watch';
 
     /**
      * @var int

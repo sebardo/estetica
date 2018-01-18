@@ -5,7 +5,7 @@ Please upload an image with max size: Debes subir una imagen de máximo 5Mb
 Please upload a file with max size: Debes subir un archivo de máximo 5Mb
 multimedia:
   url_or_file: UrlVideo or File no puede estar vacío
-  url: Url debe ser de tipo embed youtube url
+  url: Url debe ser de youtube
   file: Archivo debe ser pdf
 registration:
   min_one: Al menos debes seleccionar un campo

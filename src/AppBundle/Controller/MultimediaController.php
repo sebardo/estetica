@@ -188,7 +188,7 @@ class MultimediaController extends BackendBundleController
 
 			$this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('multimedia.edit_succesfull'));
 
-			return $this->redirectToRoute('admin_multimedia_edit', array('id' => $entity->getId()));
+			return $this->redirectToRoute('admin_multimedia_list');
 		}
 
 		return $this->render('AppBundle:Multimedia:edit.html.twig', array(

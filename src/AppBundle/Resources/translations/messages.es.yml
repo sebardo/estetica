@@ -21,6 +21,7 @@ app:
   upload-cv: Sube tu curriculum
   upload-photo: Sube tu foto
   show: 'Ver'
+  show_video: 'Ver vídeo'
   close: 'Cerrar'
   edit: 'Editar'
   delete: 'Borrar'
@@ -30,7 +31,7 @@ app:
   next_btn: 'Siguiente'
   search_btn: 'Buscar'
   preview: 'Previsualizar'
-  download: 'Descargar'
+  download: 'Descargar PDF/ Información'
   return: 'Volver'
   list:
     table:
@@ -263,7 +264,7 @@ multimedia:
     category_default: 'Selecciona una categoría'
     file: 'Archivo PDF'
     image: 'Imagen'
-    url_video_placeholder: 'https://www.youtube.com/embed/gJ4DAV7KVyQ'
+    url_video_placeholder: 'https://www.youtube.com/watch?v=gJ4DAV7KVyQ'
 
 academic:
   title_page: 'Estudios académicos'

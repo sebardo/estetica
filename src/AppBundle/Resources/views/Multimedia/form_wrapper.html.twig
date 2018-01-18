@@ -40,6 +40,37 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-
+        function validateYouTubeUrl()
+        {
+            var url = $('#appbundle_multimedia_urlVideo').val();
+            if (url != undefined || url != '') {
+                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+                var match = url.match(regExp);
+                if (match && match[2].length == 11) {
+                    // Do anything for being valid
+                    // if need to change the url to embed url then use below line
+                    //$('#ytplayerSide').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=0');
+                    $('form[name="appbundle_multimedia"]').submit();
+                }
+                else {
+                    //alert('Por favor seleccione una url de youtube valida.');
+                    $('#appbundle_multimedia_urlVideo').parent().addClass('has-error');
+                    
+                    var html ='<span class="help-block">    <ul class="list-unstyled"><li><span class="glyphicon glyphicon-exclamation-sign"></span> Url debe ser de youtube</li></ul></span>';
+                    $('#appbundle_multimedia_urlVideo').parent().append(html);
+                }
+            }
+        }
+        
+        $(document).ready(function(){
+            $('#appbundle_multimedia_submit').click(function(e){
+                e.preventDefault();
+                validateYouTubeUrl(); 
+            });
+            {% if (edit is defined and edit) %}
+                    $('#appbundle_multimedia_imageVich_file').removeAttr('required');
+            {% endif %}
+        });
+        
     </script>
 {% endblock %}

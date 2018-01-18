@@ -107,6 +107,11 @@
         var fileDocCount = '{{ form.fileDocs|length }}';
 
         jQuery(document).ready(function() {
+            
+            $('input[required="required"]').each(function(){
+                $(this).parent().find('label').append(' *');
+            });
+            
             jQuery('#add-another-filedoc').click(function(e) {
                 e.preventDefault();
                 var objectList = jQuery('#filedoc-fields-list');

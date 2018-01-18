@@ -30,7 +30,7 @@
                                     {% endif %}
                                     <p class="pull-right text-right">
                                         {% if article.urlVideo is not null %}
-                                            <button data-toggle="modal" data-target="#article-{{ loop.index }}" class="btn btn-primary" role="button"  data-backdrop="static" data-keyboard="false" >{{ 'app.show'|trans() }}</button>
+                                            <button data-toggle="modal" data-target="#article-{{ loop.index }}" class="btn btn-primary" role="button"  data-backdrop="static" data-keyboard="false" >{{ 'app.show_video'|trans() }}</button>
                                         {% endif %}
                                          {% if article.file is not null %}
                                             <a href="{{ files_path ~ '/' ~ article.file }}" class="btn btn-primary" target="_blank">{{ 'app.download'|trans() }}</a>
