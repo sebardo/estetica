@@ -55,7 +55,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="" for="subcategory-selection">{{ 'creativity_order.select.category.sub'|trans() }}</label>
+                                    <label class="" for="subcategory-selection">{{ 'creativity_order.select.subcategory'|trans() }}</label>
                                     <select class="form-control" name="subcategory" id="subcategory-selection">
                                         {% for key, subcategory in subcategoryCollection %}
                                             <option value="{{ key }}">{{ subcategory|trans() }}</option>
@@ -81,7 +81,7 @@
                                     <th>Soporte</th>        
                                     <th>Categoría</th>       
                                     <th>Subcategoría</th>       
-                                    <th style="width: 410px">Previstas</th>        
+                                    <th style="width: 410px">Arte final</th>        
                                     <th style="width: 200px"></th>
                                 </tr>
                             </thead>
@@ -310,16 +310,7 @@
                                 });
                             }
                             
-                            if (checkFields(['#support-selection', '#category-selection','#subcategory-selection'])) {
-                                var $support = $('#support-selection');
-                                var $subcategory = $('#subcategory-selection');
-                                var data = {
-                                    support: $support.val(),
-                                    category: $this.val(),
-                                    subcategory: $subcategory.val()
-                                };
-                                getCreativies('#creativity-selection', data)
-                            }
+                            
                             
                         });
                         
@@ -365,6 +356,8 @@
                         for (var i=0, total = data.length; i < total; i++) {
                             selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
                         }
+                        
+                        $('#subcategory-selection').change();
                     }
                 });
             }

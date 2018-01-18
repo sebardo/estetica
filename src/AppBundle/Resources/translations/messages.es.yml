@@ -597,6 +597,7 @@ creativity_order:
   select:
     support: 'Selecciona soporte de la creatividad'
     category: 'Selecciona la categoría de la creatividad'
+    subcategory: 'Selecciona la subcategoría de la creatividad'
   title:
     header: 'Personalización de la creatividad seleccionada'
     preview: 'Propuesta creatividad club'
