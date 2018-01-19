@@ -321,7 +321,6 @@
                 var last = result5.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
                 $('#template_backPageHtml').html(last);
                 
-                
                 setTimeout(function(){
                     $('#tab_1-1').addClass('active');
                     setTimeout(function(){  
@@ -346,7 +345,7 @@
                                     $('#preview2').append(canvas2);
                                     // only jpeg is supported by jsPDF
                                     var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
-                                    pdf.addImage(imgData, 'JPEG', 0, 0);
+                                    pdf.addImage(imgData, 'JPEG', 0, 0, 100, 100);
                                     pdf.addPage();
                                     pdf.addImage(imgData2, 'JPEG', 0, 0);
                                     //save file
