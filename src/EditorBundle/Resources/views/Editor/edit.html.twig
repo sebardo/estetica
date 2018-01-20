@@ -402,7 +402,7 @@
                             var imgData = canvas.toDataURL("image/jpeg", 1.0);
                             
                             setTimeout(function(){ 
-                                    pdf.addImage(imgData, 'JPEG', 0, 0);
+                                    pdf.addImage(imgData, 'JPEG', -11, 0);
                                     //save file
                                     var pdf2 = btoa(pdf.output()); 
                                     $.ajax({
@@ -479,7 +479,7 @@
                pdf.addImage(imgData, 'JPEG', 0, -2);
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-               pdf.addImage(imgData, 'JPEG', 0, -2);
+               pdf.addImage(imgData, 'JPEG', -11, 0);
             {% endif %}
             
             pdf.save("download.pdf");
