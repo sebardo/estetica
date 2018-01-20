@@ -467,7 +467,7 @@
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
             {% endif %}
-            pdf.addImage(imgData, 'JPEG', -150, -2);
+            pdf.addImage(imgData, 'JPEG', -135, -2);
             pdf.save("download.pdf");
             e.preventDefault();
         });
