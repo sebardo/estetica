@@ -31,9 +31,7 @@
                     <li><a id="cara-preview" href="#tab_2-1" data-toggle="tab">Prevista </a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1-1">
-                        <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear nuevo contenido</button>
-                        <img class="pull-right" style="position: absolute;right: 20px;top: 155px;" src="{{entity.previewImage}}" width="200">
+                    <div class="tab-pane active" id="tab_1-1" style="text-align: right">
                         <i>* Doble click para editar un contenido</i>
                         <br>
                         <div id="parent-container" class="parent-containers"> 
@@ -41,8 +39,13 @@
                                 {{ entity.frontPageHtml | raw }}
                             </div>
                         </div>
+                            
+                        <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear nuevo contenido</button>
+                        <img class="pull-right" style="position: absolute;left: 20px;top: 155px;" src="{{entity.previewImage}}" width="200">
+                        
+                        
                     </div>
-                    <div class="tab-pane" id="tab_2-1">
+                    <div class="tab-pane" id="tab_2-1" style="text-align: right">
                         <button class="pull-right btn btn-primary btn-flat" id="download">Descargar PDF de la prevista</button>
                         <div id="preview">Cargando prevista ...</div>
                     </div>
