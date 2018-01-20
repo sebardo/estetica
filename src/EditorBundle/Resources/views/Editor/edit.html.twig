@@ -260,6 +260,8 @@
 
 
         $(document).ready(function () {
+            $('.sidebar-toggle').click();
+            
            window.onbeforeunload = function (e) {
                if (!submitted) {
                    var message = "You have not saved your changes.", e = e || window.event;
