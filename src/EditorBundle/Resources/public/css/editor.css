@@ -53,7 +53,8 @@ div>.fa-times{
 div:hover>.fa-times{
     display: block;
 }
-.parent-containers{
-    background-color: #fff;
+.parent-containers{    
+    background-color: red;
     display: inline-block;
+    padding: 20px;
 }
