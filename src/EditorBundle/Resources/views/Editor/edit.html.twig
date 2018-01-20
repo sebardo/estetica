@@ -468,7 +468,7 @@
                pdf.addImage(imgData, 'JPEG', 0, -2);
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [638, 1500]);
-               pdf.addImage(imgData, 'JPEG', -181, -2);
+               pdf.addImage(imgData, 'JPEG', -182, -2);
             {% endif %}
             
             pdf.save("download.pdf");
