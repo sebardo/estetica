@@ -326,7 +326,7 @@
                     setTimeout(function(){  
                         $('#preview').html('');
                         $('#preview').html('Cargando la prevista ...');
-                        html2canvas(document.getElementById("parent")).then(function(canvas) {
+                        html2canvas(document.getElementById("parent-container")).then(function(canvas) {
                             
                             $('#tab_1-1').removeClass('active');
                             $('#tab_2-1').addClass('active');
@@ -340,12 +340,12 @@
                              setTimeout(function(){ 
                                 $('#preview2').html('');
                                 $('#preview').html('Cargando la prevista ...');
-                                html2canvas(document.getElementById("parent2")).then(function(canvas2) {
+                                html2canvas(document.getElementById("parent2-container")).then(function(canvas2) {
                                     $('#preview2').html('');
                                     $('#preview2').append(canvas2);
                                     // only jpeg is supported by jsPDF
                                     var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
-                                    pdf.addImage(imgData, 'JPEG', 0, 0, 100, 100);
+                                    pdf.addImage(imgData, 'JPEG', 0, 0);
                                     pdf.addPage();
                                     pdf.addImage(imgData2, 'JPEG', 0, 0);
                                     //save file
@@ -382,8 +382,7 @@
                     setTimeout(function(){  
                         $('#preview').html('');
                         $('#preview').html('Cargando la prevista ...');
-                        html2canvas(document.getElementById("parent")).then(function(canvas) {
-                            
+                        html2canvas(document.getElementById("parent-container")).then(function(canvas) {
                             $('#tab_1-1').removeClass('active');
                             $('#tab_2-1').addClass('active');
                             $('#preview').html('');
@@ -422,7 +421,16 @@
                 setTimeout(function(){                    
                     $('#preview').html('');
                     $('#preview').html('Cargando la prevista ...');
-                    html2canvas(document.getElementById("parent")).then(function(canvas) {
+                    html2canvas(document.getElementById("parent-container")).then(function(canvas) {
+                        
+                        var context = canvas.getContext('2d');
+
+
+                        /*var ctx = canvas.getContext('2d');
+                        console.log(canvas.width);
+                        console.log(canvas.height);
+                        ctx.fillStyle = "white";
+                        ctx.fillRect(0, 0, 100, canvas.height);*/
                         $('#preview').html('');
                         $('#preview').append(canvas);
                         $('#tab_1-1').removeClass('active');
@@ -439,7 +447,7 @@
                 setTimeout(function(){                    
                     $('#preview2').html('');
                     $('#preview2').html('Cargando la prevista ...');
-                    html2canvas(document.getElementById("parent2")).then(function(canvas2) {
+                    html2canvas(document.getElementById("parent2-container")).then(function(canvas2) {
                         $('#preview2').html('');
                         $('#preview2').append(canvas2);
                         $('#tab_3-1').removeClass('active');
@@ -452,6 +460,7 @@
         $('#download').click(function(e){
             $('body').find('canvas').attr('id', 'myCanvas')
             var canvas = document.getElementById('myCanvas');
+            canvas.backgroundColor = null;
             // only jpeg is supported by jsPDF
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
             {% if entity.support == 'flyers'  %}
@@ -461,7 +470,7 @@
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
             {% endif %}
-            pdf.addImage(imgData, 'JPEG', 0, 0);
+            pdf.addImage(imgData, 'JPEG', -7, -2);
             pdf.save("download.pdf");
             e.preventDefault();
         });

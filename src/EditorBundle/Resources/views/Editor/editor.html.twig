@@ -36,8 +36,10 @@
                         <img class="pull-right" style="position: absolute;right: 20px;top: 155px;" src="{{entity.previewImage}}" width="200">
                         <i>* Doble click para editar un contenido</i>
                         <br>
-                        <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position;relative;display:inline-block; {{bgsize}}">
-                            {{ entity.frontPageHtml | raw }}
+                        <div id="parent-container" class="parent-containers"> 
+                            <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position:relative;display:inline-block; {{bgsize}}">
+                                {{ entity.frontPageHtml | raw }}
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_2-1" style="text-align: center">
@@ -61,8 +63,10 @@
                         <img class="pull-right" style="position: absolute;right: 20px;top: 155px;" src="{{entity.previewImage2}}" width="200">
                         <i>* Doble click para editar un contenido</i>
                         <br>
-                        <div id="parent2" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage2 }}'); position;relative;display:inline-block; {{bgsize}}">
-                            {{ entity.backPageHtml | raw }}
+                        <div id="parent2-container" class="parent-containers"> 
+                            <div id="parent2" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage2 }}'); position:relative;display:inline-block; {{bgsize}}">
+                                {{ entity.backPageHtml | raw }}
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_4-1" style="text-align: center">
