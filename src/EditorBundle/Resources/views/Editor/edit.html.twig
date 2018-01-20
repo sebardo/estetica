@@ -347,7 +347,7 @@
                                     // only jpeg is supported by jsPDF
                                     var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
                                     {% if entity.support == 'flyers'  %}
-                                        pdf.addImage(imgData, 'JPEG', -155, -2);
+                                        pdf.addImage(imgData, 'JPEG', -11, 0);
                                     {% elseif entity.support == 'routers'  %}
                                         pdf.addImage(imgData, 'JPEG', 0, -2);
                                     {% elseif entity.support == 'roll-up'  %}
@@ -356,7 +356,7 @@
 
                                     pdf.addPage();
                                     {% if entity.support == 'flyers'  %}
-                                        pdf.addImage(imgData2, 'JPEG', -155, -2);
+                                        pdf.addImage(imgData2, 'JPEG', -11, 0);
                                     {% elseif entity.support == 'routers'  %}
                                         pdf.addImage(imgData2, 'JPEG', 0, -2);
                                     {% elseif entity.support == 'roll-up'  %}
