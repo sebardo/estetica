@@ -33,20 +33,21 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1-1" style="text-align: right">
                         <i>* Doble click para editar un contenido</i>
-                        <br>
+                        
                         <div id="parent-container" class="parent-containers"> 
                             <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position:relative;display:inline-block; {{bgsize}}">
                                 {{ entity.frontPageHtml | raw }}
                             </div>
                         </div>
                             
-                        <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear nuevo contenido</button>
+                        <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear nuevo contenido</button>
+                        <br>
                         <img class="pull-right" style="position: absolute;left: 20px;top: 155px;" src="{{entity.previewImage}}" width="200">
                         
                         
                     </div>
                     <div class="tab-pane" id="tab_2-1" style="text-align: right">
-                        <button class="pull-right btn btn-primary btn-flat" id="download">Descargar PDF de la prevista</button>
+                        <button class="pull-left btn btn-primary btn-flat" id="download">Descargar PDF de la prevista</button>
                         <div id="preview">Cargando prevista ...</div>
                     </div>
                     <!-- /.tab-pane -->
