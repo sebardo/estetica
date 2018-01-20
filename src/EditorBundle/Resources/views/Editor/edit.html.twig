@@ -477,7 +477,7 @@
             var imgData = canvas.toDataURL("image/jpeg", 1.0);
             {% if entity.support == 'flyers'  %}
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-                pdf.addImage(imgData, 'JPEG', 0, -2);
+                pdf.addImage(imgData, 'JPEG', 5, -2);
             {% elseif entity.support == 'routers'  %}
                var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
                pdf.addImage(imgData, 'JPEG', 0, -2);
