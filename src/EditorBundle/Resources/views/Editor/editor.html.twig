@@ -37,7 +37,7 @@
                     <div class="tab-pane active" id="tab_1-1" style="text-align: right">
                         <i>* Doble click para editar un contenido</i>
                         
-                        <div id="parent-container" class="parent-containers" {% if entity.support == 'routers'  %}style="padding:0 20px 0 20px;"{% endif %}> 
+                        <div id="parent-container" class="parent-containers" > 
                             <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position:relative;display:inline-block; {{bgsize}}">
                                 {{ entity.frontPageHtml | raw }}
                             </div>
