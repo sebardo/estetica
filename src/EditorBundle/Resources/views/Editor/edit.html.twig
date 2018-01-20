@@ -483,7 +483,7 @@
                pdf.addImage(imgData, 'JPEG', 0, -2);
             {% elseif entity.support == 'roll-up'  %}
                var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-               pdf.addImage(imgData, 'JPEG', -182, -2);
+               pdf.addImage(imgData, 'JPEG', -102, -2);
             {% endif %}
             
             pdf.save("download.pdf");
@@ -498,12 +498,6 @@
             {% if entity.support == 'flyers'  %}
                 var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
                 pdf.addImage(imgData, 'JPEG', -155, -2);
-            {% elseif entity.support == 'routers'  %}
-               var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-               pdf.addImage(imgData, 'JPEG', 0, -2);
-            {% elseif entity.support == 'roll-up'  %}
-               var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-               pdf.addImage(imgData, 'JPEG', -182, -2);
             {% endif %}
             pdf.save("download2.pdf");
             e.preventDefault();
