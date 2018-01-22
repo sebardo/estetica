@@ -16,3 +16,4 @@ template:
     edited: Creatividad actualizada con éxito
     deleted: Creatividad eliminada con éxito
     no.deleted: La creatividad no puede ser eliminada porque tiene creatividades creadas a partir de esta.
+    download: Descargar

@@ -174,7 +174,7 @@ class EditorController extends Controller
             
             $client = $this->container->get('security.token_storage')->getToken()->getUser();
             if($template->getClient() == $client) {
-                $this->get('session')->getFlashBag()->add('success', 'template.created');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.created'));
                 if($template->getSupport() === Templating::SUPPORT_FLYERS) {
                     return $this->redirectToRoute('editor_editor_complete', array('id' => $template->getId()));
                 }else{
