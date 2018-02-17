@@ -98,21 +98,21 @@ class Client extends Timestampable implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="short_description", type="text")
+     * @ORM\Column(name="short_description", type="text", nullable=true)
      */
     private $shortDescription;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="technology", type="text")
+     * @ORM\Column(name="technology", type="text", nullable=true)
      */
     private $technology;
 

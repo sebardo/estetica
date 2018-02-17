@@ -7,9 +7,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SecurityController extends Controller
 {
+     /**
+     * @Route("/flash_bag", name="flash_bag_anon", defaults={"_format"="json"})
+     */
+    public function flashBagAction()
+    {
+        return new JsonResponse($this->get('session')->getFlashBag()->all());
+    }
 	/**
 	 * @param Request $request
 	 *
