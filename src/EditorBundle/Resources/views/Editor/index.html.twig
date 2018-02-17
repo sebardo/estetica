@@ -35,35 +35,62 @@
                 <div class="box">
                     <div class="box-body">
 
-
                         {% if app.user.isGranted('ROLE_ADMIN') == false %}
                             <form action="#" method="GET">
-                                <div class="form-group">
-                                    <label class="" for="support-selection">{{ 'creativity_order.select.support'|trans() }}</label>
-                                    <select class="form-control" name="support" id="support-selection">
+                                <div class="form-group">                                    
+                                    <fieldset id="group1">
+                                        <legend>Material para marketing</legend>
                                         {% for key, support in supportCollection %}
-                                            <option value="{{ key }}">{{ support|trans() }}</option>
+                                            <div style="width: 200px;display: inline-block">
+                                                {{ support|trans() }} <br>
+                                                <label>
+                                                    <i class="fa fa-file-image-o" style="font-size: 80px;"></i>
+                                                    <input type="radio" value="{{ key }}" {% if loop.first%}checked="checked"{%endif%} name="support"> 
+                                                </label>
+                                            </div>
                                         {% endfor %}
-                                    </select>
-                                </div>
-                                 <div class="form-group">
-                                    <label class="" for="category-selection">{{ 'creativity_order.select.category'|trans() }}</label>
-                                    <select class="form-control" name="category" id="category-selection">
-                                        {% for key, category in categoryCollection %}
-                                            <option value="{{ key }}">{{ category|trans() }}</option>
+                                    </fieldset>
+
+                                    <fieldset id="group1" style="margin-top: 20px;">
+                                        <legend>Material para publicaciones en redes</legend>
+                                        {% for key, support in supportCollectionPost %}
+                                            <div style="width: 200px;display: inline-block">
+                                                {{ support|trans() }} <br>
+                                                <label>
+                                                    <i class="fa fa-file-image-o" style="font-size: 80px;"></i>
+                                                    <input type="radio" value="{{ key }}"  name="support"> 
+                                                </label>
+                                            </div>
                                         {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="" for="subcategory-selection">{{ 'creativity_order.select.subcategory'|trans() }}</label>
-                                    <select class="form-control" name="subcategory" id="subcategory-selection">
-                                        {% for key, subcategory in subcategoryCollection %}
-                                            <option value="{{ key }}">{{ subcategory|trans() }}</option>
-                                        {% endfor %}
-                                    </select>
+                                    </fieldset>
+
+
+                                    <fieldset id="group1" style="margin-top: 20px;">
+                                        <legend>Elije el concepto del diseño</legend>
+                                        <div class="form-group">
+                                            {% for key, category in categoryCollection %}
+                                                <label  class="label label-primary category-selection {% if loop.first%}first-category{%endif%}" value="{{ key }}">
+                                                    {{ category|trans() }} 
+                                                    <input type="radio" value="{{ key }}" {% if loop.first%}checked="checked"{%endif%} name="category-selection"> 
+                                                </label>
+                                            {% endfor %}
+
+                                            <hr>
+
+                                            <div id="subcategory-selection" style="display: none">
+                                                {% for key, subcategory in subcategoryCollection %}
+                                                    <label  class="label label-warning subcategory-selection" value="{{ key }}">{{ subcategory|trans() }} <input type="radio" value="{{ key }}" name="subcategory-selection"> </label>
+                                                    {% endfor %}
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
                                 </div>
                             </form>
                             <div class="row" id="creativity-selection"></div>
+
+
                         {% else %}
                             <div class="clearfix">
                                 <div class="btn-group">
@@ -72,26 +99,38 @@
                                     </a>
                                 </div>
                             </div>            
-                        {% endif %}        
 
-                        <table class="table table-striped table-bordered table-hover" id="templates-table">
-                            <thead>
-                                <tr>             
-                                    <th>Nombre</th>
-                                    <th>Soporte</th>        
-                                    <th>Categoría</th>       
-                                    <th>Subcategoría</th>       
-                                    <th style="width: 410px">Arte final</th>        
-                                    <th style="width: 200px"></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                            <table class="table table-striped table-bordered table-hover" id="templates-table">
+                                <thead>
+                                    <tr>             
+                                        <th>Nombre</th>
+                                        <th>Soporte</th>        
+                                        <th>Categoría</th>       
+                                        <th>Subcategoría</th>       
+                                        <th style="width: 410px">Arte final</th>        
+                                        <th style="width: 200px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        {% endif %} 
                     </div>
                 </div>
 
+                <div class="clearfix">
+                    <div class="">
+                        <a href="" class="btn btn-lg btn-warning btn-flat">
+                            {{ 'template.create' | trans }} 
+                        </a>
+                        <a href="{{ path('editor_editor_history') }}" class="btn btn-lg btn-success btn-flat pull-right">
+                            {{ 'template.history.see' | trans }}
+                        </a>
+                    </div>
+                </div>     
 
-                {% if app.user.isGranted('ROLE_ADMIN') == false %}
+
+                {#% if app.user.isGranted('ROLE_ADMIN') == false %}
                     <h3>
                         Historial de creatividades del cliente "{{ app.user.tradeName }}"
                         <small></small>
@@ -113,7 +152,7 @@
                             </table>
                         </div>
                     </div>  
-                {% endif %} 
+                {% endif %#} 
             </div>
         </div>
     </section>     
@@ -142,8 +181,8 @@
             {
                 "mData": function (source) {
                     var html = '<img width="200" src="' + source.previewImage + '" />';
-                    if(source.previewImage2 != '' && source.previewImage2 != null){
-                        var html = html+'<img width="200" src="' + source.previewImage2 + '" />';
+                    if (source.previewImage2 != '' && source.previewImage2 != null) {
+                        var html = html + '<img width="200" src="' + source.previewImage2 + '" />';
                     }
                     return html;
                 }
@@ -170,8 +209,8 @@
             {
                 "mData": function (source) {
                     var html = '<img width="200" src="' + source.previewImage + '" />';
-                    if(source.previewImage2 != '' && source.previewImage2 != null){
-                        var html = html+'<img width="200" src="' + source.previewImage2 + '" />';
+                    if (source.previewImage2 != '' && source.previewImage2 != null) {
+                        var html = html + '<img width="200" src="' + source.previewImage2 + '" />';
                     }
                     return html;
                 }
@@ -179,62 +218,26 @@
             {
                 "mData": function (source) {
         {% if app.user.isGranted('ROLE_ADMIN') == false %}
-                                    var html = '<span data="/admin/editor/clone/' + source.id + '" class="btn btn-primary btn-xs btn-flat clone-template">  {{ 'template.clone' | trans }}</span> ';
+                        var html = '<span data="/admin/editor/clone/' + source.id + '" class="btn btn-primary btn-xs btn-flat clone-template">  {{ 'template.clone' | trans }}</span> ';
         {% else %}
-                                    var html = '<a href="/admin/editor/edit/' + source.id + '" class="btn btn-primary btn-xs btn-flat ">  {{ 'edit' | trans }}</a>\n\
+                        var html = '<a href="/admin/editor/edit/' + source.id + '" class="btn btn-primary btn-xs btn-flat ">  {{ 'edit' | trans }}</a>\n\
                                 <a href="/admin/editor/delete/' + source.id + '" class="btn btn-danger btn-xs btn-flat " onClick="if(confirm(\'¿Estas seguro de eliminar esta creatividad?\')) return true;else return false;">  {{ 'delete' | trans }}</a> ';
-                                    return html;
+                        return html;
         {% endif %}
-                                    return html;
-                                }
-                            }
-                        ];
+                        return html;
+                    }
+                }
+            ];
 
-                        jQuery(document).ready(function () {
+            jQuery(document).ready(function () {
 
-                            TableManaged.init(
-                                    '#templates-table',
-                                    '{{ url('editor_editor_listjson') }}',
-                                    [],
-                                    table_columns2,
-                                    '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}',
-                                    function () {
-                                        $('.clone-template').click(function () {
-                                            $.ajax({
-                                                url: $(this).attr('data'),
-                                                type: "GET",
-                                                dataType: "json",
-                                                async: true,
-                                                success: function (data) {
-                                                    console.log(data)
-                                                    if (parseInt(data) > 0) {
-                                                        TableManaged.reload(
-                                                                '#templates-client-table',
-                                                                '{{ url('editor_editor_listjson') }}?client={{app.user.id}}',
-                                                                [],
-                                                                table_columns,
-                                                                '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}'
-                                                                );
-                                                    }
-
-                                                }
-                                            });
-
-                                        });
-                                    }
-                            );
-
-                            TableManaged.init(
-                                    '#templates-client-table',
-                                    '{{ url('editor_editor_listjson') }}?client={{app.user.id}}',
-                                    [],
-                                    table_columns,
-                                    '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}',
-                                    function () {
-                                        //callback
-                                    }
-                            );
-
+                TableManaged.init(
+                        '#templates-table',
+                        '{{ url('editor_editor_listjson') }}',
+                        [],
+                        table_columns2,
+                        '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}',
+                        function () {
                             $('.clone-template').click(function () {
                                 $.ajax({
                                     url: $(this).attr('data'),
@@ -257,111 +260,222 @@
                                 });
 
                             });
-
-                        });
-
-                        function getCreativies(selector, data) {
-                            TableManaged.reload(
-                                    '#templates-table',
-                                    '{{ url('editor_editor_listjson') }}?support=' + $('#support-selection').val() + '&category=' + $('#category-selection').val() + '&subcategory=' + $('#subcategory-selection').val(),
-                                    [],
-                                    table_columns2,
-                                    '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}'
-                                    );
                         }
+                );
 
-                        $('#support-selection').on('change', function () {
-                            var $this = $(this);
-                            if (checkFields(['#support-selection', '#category-selection','#subcategory-selection'])) {
-                                var $subcategory = $('#subcategory-selection');
-                                var $category = $('#category-selection');
-                                var data = {
-                                    support: $this.val(),
-                                    category: $category.val(),
-                                    subcategory: $subcategory.val()
-                                };
-                                getCreativies('#creativity-selection', data)
-                            }
-                        });
-
-                        $('#category-selection').on('change', function () {
-                            var $this = $(this);
-                            
-                            var category_id = $this.val();
-                            var $subcategory_selector = $('#subcategory-selection');
-                            console.log($subcategory_selector);
-                            var data2 = {
-                                category_id: $this.val()
-                            };
-
-                            if(category_id === 'packs') {
-                                $subcategory_selector.parent('.form-group').fadeOut(500, function() {
-                                    $(this).css({
-                                        'display': 'none'
-                                    });
-                                    $subcategory_selector.html("");
-                                });
-                            }else {
-                                $subcategory_selector.parent('.form-group').fadeOut(500, function() {
-                                    $(this).css({
-                                        'display': 'block'
-                                    });
-                                    getCreativeSubcategories($subcategory_selector, data2);
-                                });
-                            }
-                            
-                            
-                            
-                        });
-                        
-                        $('#subcategory-selection').on('change', function () {
-                            var $this = $(this);
-                            
-                            if (checkFields(['#support-selection', '#category-selection','#subcategory-selection'])) {
-                                var $support = $('#support-selection');
-                                var $category = $('#category-selection');
-                                var data = {
-                                    support: $support.val(),
-                                    category: $category.val(),
-                                    subcategory: $this.val()
-                                };
-                                getCreativies('#creativity-selection', data)
-                            }
-                        });
-                        
-
-                        function checkFields(selectors) {
-                            var response = true;
-                            selectors = Array.isArray(selectors) ? selectors : [selectors];
-                            selectors.forEach(function (item, index) {
-                                var value = $(item).val();
-                                if (value === 'undefined') {
-                                    response = false;
-                                }
-                            });
-
-                            return response;
+                TableManaged.init(
+                        '#templates-client-table',
+                        '{{ url('editor_editor_listjson') }}?client={{app.user.id}}',
+                        [],
+                        table_columns,
+                        '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}',
+                        function () {
+                            //callback
                         }
-                        
-           
+                );
+
+                $('.clone-template').click(function () {
+                    $.ajax({
+                        url: $(this).attr('data'),
+                        type: "GET",
+                        dataType: "json",
+                        async: true,
+                        success: function (data) {
+                            console.log(data)
+                            if (parseInt(data) > 0) {
+                                TableManaged.reload(
+                                        '#templates-client-table',
+                                        '{{ url('editor_editor_listjson') }}?client={{app.user.id}}',
+                                        [],
+                                        table_columns,
+                                        '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}'
+                                        );
+                            }
+
+                        }
+                    });
+
+                });
+
+
+                var category_id = $('.first-category').find('input').val();
+                var $subcategory_selector = $('#subcategory-selection');
+
+                var data2 = {
+                    category_id: category_id
+                };
+
+                if (category_id === 'packs') {
+                    $subcategory_selector.parent('.form-group').fadeOut(500, function () {
+                        $(this).css({
+                            'display': 'none'
+                        });
+                        $subcategory_selector.html("");
+                    });
+                } else {
+
+                    getCreativeSubcategories($subcategory_selector, data2);
+
+                }
+
+
+            });
+
+            function getCreativies(selector, data) {
+                TableManaged.reload(
+                        '#templates-table',
+                        '{{ url('editor_editor_listjson') }}?support=' + $('#support-selection').val() + '&category=' + $('#category-selection').val() + '&subcategory=' + $('#subcategory-selection').val(),
+                        [],
+                        table_columns2,
+                        '{{ url('editor_editor_getdatatablesi18n', { language: app.request.locale }) }}'
+                        );
+            }
+
+            $('#support-selection').on('change', function () {
+                var $this = $(this);
+                if (checkFields(['#support-selection', '#category-selection', '#subcategory-selection'])) {
+                    var $subcategory = $('#subcategory-selection');
+                    var $category = $('#category-selection');
+                    var data = {
+                        support: $this.val(),
+                        category: $category.val(),
+                        subcategory: $subcategory.val()
+                    };
+                    getCreativies('#creativity-selection', data)
+                }
+            });
+
+
+            $('.category-selection input').on('ifChecked', function (event) {
+                var $this = $(this);
+                var category_id = $this.val();
+                var $subcategory_selector = $('#subcategory-selection');
+                var data2 = {
+                    category_id: $this.val()
+                };
+
+                if (category_id === 'packs') {
+                    $subcategory_selector.parent('.form-group').fadeOut(500, function () {
+                        $(this).css({
+                            'display': 'none'
+                        });
+                        $subcategory_selector.html("");
+                    });
+                } else {
+                    getCreativeSubcategories($subcategory_selector, data2);
+                }
+            });
+
+
+
+            $('.category-selection').on('click', function () {
+
+
+
+                var $this = $(this).find('input');
+
+                var category_id = $this.val();
+                var $subcategory_selector = $('#subcategory-selection');
+                console.log($subcategory_selector);
+                var data2 = {
+                    category_id: $this.val()
+                };
+
+                if (category_id === 'packs') {
+                    $subcategory_selector.parent('.form-group').fadeOut(500, function () {
+                        $(this).css({
+                            'display': 'none'
+                        });
+                        $subcategory_selector.html("");
+                    });
+                } else {
+
+                    getCreativeSubcategories($subcategory_selector, data2);
+
+                }
+
+
+
+            });
+
+            $('#subcategory-selection').on('change', function () {
+                var $this = $(this);
+
+                if (checkFields(['#support-selection', '#category-selection', '#subcategory-selection'])) {
+                    var $support = $('#support-selection');
+                    var $category = $('#category-selection');
+                    var data = {
+                        support: $support.val(),
+                        category: $category.val(),
+                        subcategory: $this.val()
+                    };
+                    getCreativies('#creativity-selection', data)
+                }
+            });
+
+
+            function checkFields(selectors) {
+                var response = true;
+                selectors = Array.isArray(selectors) ? selectors : [selectors];
+                selectors.forEach(function (item, index) {
+                    var value = $(item).val();
+                    if (value === 'undefined') {
+                        response = false;
+                    }
+                });
+
+                return response;
+            }
+
+
 
             function getCreativeSubcategories(selector, data) {
                 $.ajax({
                     type: 'post',
                     url: '/ajax/creativity-subcategory',
                     data: data,
-                    success: function(data) {
+                    success: function (data) {
+
+
                         selector.html("");
 
-                        for (var i=0, total = data.length; i < total; i++) {
-                            selector.append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                        for (var i = 0, total = data.length; i < total; i++) {
+                            var checked = '';
+                            if(i==0)var checked = 'checked="checked"';
+                            selector.append('<label class="label label-warning subcategory-selection"  value="' + data[i].id + '">' + data[i].name + ' <input type="radio" '+checked+' value="' + data[i].id + '" name="subcategory-selection"> </label>');
+
                         }
                         
-                        $('#subcategory-selection').change();
+                        selector.fadeIn('slow');
+                        //enable iCheck form
+                        $('input[type=checkbox],input[type=radio]').iCheck({
+                            checkboxClass: 'icheckbox_square-blue',
+                            radioClass: 'iradio_square-blue'
+                        });
+
+                        $('.category-selection input').on('ifChecked', function (event) {
+                            var $this = $(this);
+                            var category_id = $this.val();
+                            var $subcategory_selector = $('#subcategory-selection');
+                            var data2 = {
+                                category_id: $this.val()
+                            };
+
+                            if (category_id === 'packs') {
+                                $subcategory_selector.parent('.form-group').fadeOut(500, function () {
+                                    $(this).css({
+                                        'display': 'none'
+                                    });
+                                    $subcategory_selector.html("");
+                                });
+                            } else {
+                                getCreativeSubcategories($subcategory_selector, data2);
+                            }
+                        });
                     }
                 });
             }
-        
+
 
     </script>
 {% endblock %}

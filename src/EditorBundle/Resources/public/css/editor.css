@@ -58,3 +58,16 @@ div:hover>.fa-times{
     display: inline-block;
     padding: 0 20px 0 0;
 }
+.category-selection{
+    font-size: 125%;
+    margin-right: 10px; 
+    display: inline-block;
+    line-height: 33px;
+}
+.subcategory-selection{
+    font-size: 125%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    line-height: 33px;
+    display: inline-block;
+}

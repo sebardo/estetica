@@ -26,7 +26,7 @@ class TemplateType extends AbstractType
                     'mapped' => true,
                     'required' => true,
                     'label' => 'creativity.form.support',
-                    'choices' => $this->getSelectSupports(),
+                    'choices' => array_merge($this->getSelectSupports(),$this->getSelectSupportsPost()),
                 ))
                 ->add('category', 'choice', array(
                     'mapped' => true,
@@ -61,6 +61,18 @@ class TemplateType extends AbstractType
             'flyers' => 'app.support.flyers',
             'routers' => 'app.support.routers',
             'roll-up' => 'app.support.rollup',
+        );
+    }
+    
+    public static function getSelectSupportsPost()
+    {
+        return array(
+            'facebook_1' => 'app.support.post.facebook_1',
+            'facebook_2' => 'app.support.post.facebook_2',
+            'facebook_3' => 'app.support.post.facebook_3',
+            'social' => 'app.support.post.social',
+            'instagram' => 'app.support.post.instagram',
+            'pinterest' => 'app.support.post.pinterest',
         );
     }
     

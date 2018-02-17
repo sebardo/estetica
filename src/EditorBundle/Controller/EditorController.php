@@ -47,6 +47,26 @@ class EditorController extends Controller
     {
         
         $supportCollection = TemplateType::getSelectSupports();
+        $supportCollectionPost = TemplateType::getSelectSupportsPost();
+        $categoryCollection = TemplateType::getSelectCategories();
+        $subcategoryCollection = TemplateType::getSelectSubcategories('all');
+                
+        return array(
+            'supportCollection' => $supportCollection,
+            'supportCollectionPost' => $supportCollectionPost,
+            'categoryCollection' => $categoryCollection,
+            'subcategoryCollection' => $subcategoryCollection
+        ); 
+    }
+    
+    /**
+     * @Route("/admin/history")
+     * @Template()
+     */
+    public function historyAction()
+    {
+        
+        $supportCollection = TemplateType::getSelectSupports();
         $categoryCollection = TemplateType::getSelectCategories();
         $subcategoryCollection = TemplateType::getSelectSubcategories('all');
                 
