@@ -120,7 +120,7 @@
 
                 <div class="clearfix">
                     <div class="">
-                        <a href="" class="btn btn-lg btn-warning btn-flat">
+                        <a href="#" class="btn btn-lg btn-warning btn-flat template-create">
                             {{ 'template.create' | trans }} 
                         </a>
                         <a href="{{ path('editor_editor_history') }}" class="btn btn-lg btn-success btn-flat pull-right">
@@ -317,7 +317,20 @@
                     getCreativeSubcategories($subcategory_selector, data2);
 
                 }
-
+                
+                $('.template-create').click(function(e){
+                
+                    $('input[name="support"]').each(function( index ) {
+                        console.log( index + ": " + $( this ).text() );
+                    });
+                    e.preventDefault();
+                    var support = $('input[name=support]:checked').val();
+                    var category = $('input[name=category-selection]:checked').val();
+                    var subcategory = $('input[name=subcategory-selection]:checked').val();;
+                    
+                    location.href = '/admin/editor/new-user?support='+support+'&category='+category+'&subcategory='+subcategory;
+                    
+                });
 
             });
 

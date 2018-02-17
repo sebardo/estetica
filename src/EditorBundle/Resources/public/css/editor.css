@@ -71,3 +71,30 @@ div:hover>.fa-times{
     line-height: 33px;
     display: inline-block;
 }
+
+.tabs-below > .nav-tabs {
+  border-top: 1px solid #ddd!important;
+}
+
+.tabs-below > .nav-tabs > li {
+  margin-top: -1px!important;
+  margin-bottom: 0!important;
+}
+
+.tabs-below > .nav-tabs > li > a {
+  -webkit-border-radius: 0 0 4px 4px!important;
+     -moz-border-radius: 0 0 4px 4px!important;
+          border-radius: 0 0 4px 4px!important;
+}
+
+.tabs-below > .nav-tabs > li > a:hover,
+.tabs-below > .nav-tabs > li > a:focus {
+  border-top-color: #ddd!important;
+  border-bottom-color: transparent!important;
+}
+
+.tabs-below > .nav-tabs > .active > a,
+.tabs-below > .nav-tabs > .active > a:hover,
+.tabs-below > .nav-tabs > .active > a:focus {
+  border-color: transparent #ddd #ddd #ddd!important;
+}

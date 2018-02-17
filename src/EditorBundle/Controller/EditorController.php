@@ -136,6 +136,58 @@ class EditorController extends Controller
     }
     
     /**
+     * Creates a new contract entity.
+     *
+     * @Route("/admin/editor/new-user")
+     * @Method({"GET", "POST"})
+     * @Template("EditorBundle:Editor:new.user.html.twig")
+     */
+    public function newUserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $support = $request->query->get('support');
+        $category = $request->query->get('category');
+        $subcategory = $request->query->get('subcategory');
+        
+        $selectedEntities = $em->getRepository('EditorBundle:Template')->findBy(array(
+            'support' => $support,
+            'category' => $category,
+            'subcategory' => $subcategory,
+            'parentTemplate' => null
+        ));
+        
+        if($request->query->has('id') && $request->query->get('id') != ''){
+            $id = $request->query->get('id');
+            $template = $em->getRepository('EditorBundle:Template')->find($id);
+        }else{
+            $template = $em->getRepository('EditorBundle:Template')->find($selectedEntities[0]);
+        }
+        
+        
+       // $template = new Templating();
+        $form = $this->createForm('EditorBundle\Form\TemplateType', $template);
+        $form->handleRequest($request);
+       
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            
+            $em->persist($template);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.created'));
+            
+            return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
+        }
+
+        return array(
+            'entity' => $template,
+            'form' => $form->createView(),
+            'selectedEntities' => $selectedEntities
+        );
+    }
+    
+    /**
      * @Route("/admin/editor/show/{id}")
      * @Template()
      */
@@ -157,6 +209,36 @@ class EditorController extends Controller
             $templateNew = $this->cloneTemplate($template);
 
             return new JsonResponse($templateNew->getId());
+        }else{
+            $em = $this->getDoctrine()->getManager();
+            $temp = $em->getRepository('EditorBundle:Template')->findOneBy(array(
+                'parentTemplate' => $template->getId(),
+                'client' => $this->getUser()->getId()
+            ));
+        
+            if($temp instanceof Templating){
+                
+                $path = parse_url($request->query->get('referer'), PHP_URL_PATH);
+                $query = parse_url($request->query->get('referer'), PHP_URL_QUERY);
+                $qArr = explode('&', $query);
+                
+                $returnValues = array();
+                foreach ($qArr as $value) {
+                    $arr = explode('=', $value);
+                    $returnValues[$arr[0]] = $arr[1];
+                }
+                unset($returnValues['id']);
+                
+                $returnValues2 = array();
+                foreach ($returnValues as $key => $value) {
+                    $returnValues2[] = $key.'='.$value;
+                }
+                
+                $newUrlReferer = $path.'?'. implode('&', $returnValues2);
+                return $this->redirect($newUrlReferer.'&id='.$temp->getId());
+            }
+            $templateNew = $this->cloneTemplate($template);
+            
         }
         
         return new JsonResponse(null);

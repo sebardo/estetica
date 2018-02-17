@@ -60,7 +60,7 @@ class TemplateType extends AbstractType
         return array(
             'flyers' => 'app.support.flyers',
             'routers' => 'app.support.routers',
-            'roll-up' => 'app.support.rollup',
+//            'roll-up' => 'app.support.rollup',
         );
     }
     

@@ -1,15 +1,11 @@
-
-<ul >                            
-    <li>Flyers: 793x1122px - 210mm x 297mm  vertical/horizontal (una o doble cara)</li>
-    <li>Poster: 1587x2245px [420mm, 594mm]</li>
-     <li>Post para Facebook: 940 px x 788 px</li>
-    <li>Portada para Facebook: 820 px x 312 px</li>
-    <li>App para facebook: 810 px x 450 px </li>
-    <li>Post Instagram: 1080 px x 1080 px</li>
-    <li>Imagen para redes sociales: 800 px x 800 px</li>
-    <li>Imagen para pinterest: 735 px  x 1102 px</li>
-</ul>
-
+{{ form_start(form, {
+                    'action': path('editor_editor_edit', { 'id': entity.id  }), 
+                    'method': 'post', 
+                    'attr': {'class': 'form-horizontal form-row-seperated', 'id':'editor-form'}
+                    }) }}
+<div class="box-body" style="display: none" >
+    {{ include ('EditorBundle:Editor:_form.html.twig', {form: form, editor: true} ) }}
+</div>
 
 {% if entity.support == 'flyers'  %}
     {% set size = 'width: 793px; height: 1121px;' %}
@@ -22,44 +18,50 @@
      {% set bgsize = ' background-size: 1062px 2500px; ' %}
 {% elseif entity.support == 'instagram'  %}
      {% set size = 'width: 1080px; height: 1080px; ' %}
-     {% set bgsize = ' background-size: 1080px 1080px; ' %}
+     {% set bgsize = ' background-size: 1080px 1080px;' %}
 {% endif %}
 
 
-
-
-<div class="nav-tabs-custom">
-    <ul class="nav nav-tabs">
-        <li class="pull-left header"><i class="fa fa-th"></i> Diseña tu creatividad </li>
-        <li class="active"><a id="cara" href="#tab_1" data-toggle="tab">Cara</a></li>
-        <li><a href="#tab_2" id="preview-tab2" {% if  entity.support == 'flyers'%}data-toggle="tab"{% endif %} >Contracara</a></li>
-    </ul>
+<div class="tabbable tabs-below">
+    
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
+                    <li class="pull-right header">
+                        <button type="button" id="submit" class="btn btn-primary btn-flat"><i class="icon-ok"></i>  {{ 'save' | trans }}</button>
+                    </li>    
+                    <li class="pull-right header">
+                        <a href="{{ path('editor_editor_index') }}" class="btn btn-flat btn-default">{{ 'back' | trans }}</a>
+                    </li>
                     <li class="active"><a id="cara-editor" href="#tab_1-1" data-toggle="tab">Editor</a></li>
                     <li><a id="cara-preview" href="#tab_2-1" data-toggle="tab">Prevista </a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1-1" style="text-align: right">
-                        <i>* Doble click para editar un contenido</i>
+                    <i>* Doble click para editar un contenido</i>
+                    <div class="tab-pane active" id="tab_1-1" style="text-align: left">
                         
-                        <div id="parent-container" class="parent-containers" > 
+
+                        <div id="parent-container" class="parent-containers" style="width: 800px;background-color: #dadada"> 
                             <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position:relative;display:inline-block; {{bgsize}}">
                                 {{ entity.frontPageHtml | raw }}
                             </div>
                         </div>
                             
-                        <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear nuevo contenido</button>
-                        <br>
-                        <img class="pull-right" style="position: absolute;left: 20px;top: 155px;" src="{{entity.previewImage}}" width="200">
+                        <div style=" width: 150px;float: right;">
+                           <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear contenido</button> 
+                            <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent')">Crear imagen</button>
+                        </div>  
                         
                         
+
                     </div>
-                    <div class="tab-pane" id="tab_2-1" style="text-align: right">
-                        <button class="pull-left btn btn-primary btn-flat" id="download">Descargar PDF de la prevista</button>
+                    <div class="tab-pane" id="tab_2-1" style="text-align: left">
                         <div id="preview">Cargando prevista ...</div>
+                        
+                        <div style=" width: 150px;float: right;">
+                            <button class="pull-left btn btn-primary btn-flat" id="download">Descargar PDF de la prevista</button>
+                        </div>
                     </div>
                     <!-- /.tab-pane -->
                 </div>
@@ -80,11 +82,11 @@
                                 {{ entity.backPageHtml | raw }}
                             </div>
                         </div>
-                            
+
                         <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditor('parent2')">Crear nuevo contenido</button>
-                        <br>
-                        <img class="pull-right" style="position: absolute;left: 20px;top: 155px;" src="{{entity.previewImage2}}" width="200">
-                        
+                        <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent2')">Crear nueva imagen</button>
+                         
+
                     </div>
                     <div class="tab-pane" id="tab_4-1" style="text-align: right">
                         <button class="pull-left btn btn-primary btn-flat" id="download2">Descargar PDF de la prevista</button>
@@ -97,5 +99,11 @@
         </div>
         <!-- /.tab-pane -->
     </div>
-  <!-- /.tab-content -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a id="cara" href="#tab_1" data-toggle="tab">Cara</a></li>
+        <li><a href="#tab_2" id="preview-tab2" {% if  entity.support == 'flyers'%}data-toggle="tab"{% endif %} >Contracara</a></li>
+    </ul>
 </div>
+ 
+
+{{ form_end(form) }}
