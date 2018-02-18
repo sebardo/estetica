@@ -297,10 +297,10 @@ $(document).ready(function(){
         $('#submit').addClass('btn-danger');
     });
 
-    $('#submit, #submit_print, #submit_delivery').click(function(){
+    $('#submit, #submit_admin, #submit_print, #submit_delivery').click(function(){
         
         var buttonId = $(this).attr('id');
-        
+
         $('#submit').removeClass('btn-danger');
         $('#submit').addClass('btn-primary');
         
@@ -396,7 +396,7 @@ $(document).ready(function(){
                                     $('#tab_1-1').addClass('active');
                                     $('#tab_2-1').removeClass('active');
                                    
-                                    if(buttonId == 'submit_print' || buttonId == 'submit_delivery'){
+                                    if(buttonId == 'submit_admin' || buttonId == 'submit_print' || buttonId == 'submit_delivery'){
                                           $('#send').click();
                                     } 
                                 });
@@ -441,7 +441,7 @@ $(document).ready(function(){
                                     $('#cara').click();
                                     $('#tab_1-1').addClass('active');
                                     $('#tab_2-1').removeClass('active');
-                                    if(buttonId == 'submit_delivery' || buttonId == 'submit_delivery'){
+                                    if(buttonId == 'submit_admin' || buttonId == 'submit_print' || buttonId == 'submit_delivery'){
                                           $('#send').click();
                                     } 
                                 });

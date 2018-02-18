@@ -307,6 +307,21 @@ class EditorController extends Controller
         return new JsonResponse(null);
     }
     
+    
+    /**
+     * @Route("/admin/editor/clone-user/{id}")
+     * @Template()
+     */
+    public function cloneUserAction(Request $request, Templating $template)
+    {
+        
+        $templateNew = $this->cloneTemplate($template);
+
+         
+        return $this->redirect('/admin/editor/new-user?id='.$templateNew->getId());
+
+    }
+    
     public function cloneTemplate(Templating $template) 
     {
         $templateNew = clone $template;

@@ -52,20 +52,26 @@
         <div class="tab-pane active" id="tab_1">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    {% if entity.support == 'flayer' %}
-                    <li class="pull-right header">
-                        <button type="button" id="submit_complete"  class="btn btn-primary btn-flat">{{ 'Buzoneo' | trans }}</button>
-                    </li>
-                    {% else %}
-                    <li class="pull-right header">
-                        <button type="button" id="submit_print"  class="btn btn-primary btn-flat">{{ 'Encargar impresión' | trans }}</button>
-                    </li>
-                    {% endif %}
-                  
-                    <li class="pull-right header">
-                        <button type="button" id="submit" class="btn btn-primary btn-flat"><i class="icon-ok"></i>  {{ 'save' | trans }}</button>
-                    </li>    
                     
+                    {% if app.user.isGranted('ROLE_ADMIN') == false %}
+                        {% if entity.support == 'flayer' %}
+                        <li class="pull-right header">
+                            <button type="button" id="submit_complete"  class="btn btn-primary btn-flat">{{ 'Buzoneo' | trans }}</button>
+                        </li>
+                        {% else %}
+                        <li class="pull-right header">
+                            <button type="button" id="submit_print"  class="btn btn-primary btn-flat">{{ 'Encargar impresión' | trans }}</button>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                    
+                    {% if history == false %}
+                    <li class="pull-right header">
+                        <button type="button" id="{% if app.user.isGranted('ROLE_ADMIN') == false %}submit{% else %}submit_admin{% endif %}" class="btn btn-primary btn-flat">
+                            <i class="icon-ok"></i>  {{ 'save' | trans }}
+                        </button>
+                    </li>    
+                    {% endif %}
                     
                     
                     <li class="active"><a id="cara-editor" href="#tab_1-1" data-toggle="tab">Editor</a></li>
@@ -79,14 +85,14 @@
                                 {{ entity.frontPageHtml | raw }}
                             </div>
                         </div>
-                        <div style=" width: 150px;float: right;">
+                        <div style=" width: 150px;float: right; text-align: right">
                             {% if history == false %}
-                                <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear contenido</button> 
-                                <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent')">Crear imagen</button>
+                                <button class="btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear contenido</button> <br><br>
+                                <button class="btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent')">Crear imagen</button>
                             {% else %}
-                                <button class="pull-right btn btn-warning btn-flat" type="button">Editar</button>
-                                <button class="pull-right btn btn-warning btn-flat" type="button">Duplicar</button>
-                                <a href="{{ path('editor_editor_delete', {id: entity.id} ) }}?referer={{app.request.getRequestUri|url_encode}}" class="pull-right btn btn-danger btn-flat" type="button">Borrar</a>
+                                <a class="btn btn-warning btn-flat" href="{{ path('editor_editor_newuser', {id: entity.id}) }}">Editar</a><br><br>
+                                <a class="btn btn-warning btn-flat" href="{{ path('editor_editor_cloneuser', {'id': entity.id })}}">Duplicar</a>
+                                <a href="{{ path('editor_editor_delete', {id: entity.id} ) }}?referer={{app.request.getRequestUri|url_encode}}" class="btn btn-danger btn-flat" type="button">Borrar</a>
                             {% endif %}
                         </div>  
                     </div>
