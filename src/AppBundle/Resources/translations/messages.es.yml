@@ -49,9 +49,10 @@ app:
     ticket:
       title_nav: 'Sat'
     flowwwer:
-      title_nav: 'Flowwwer'
+      title_nav: 'Koibox'
     manage_cites:
-      title_nav: 'Gestión de citas'
+      title_admin_nav: 'Promoción citas online'
+      title_nav: 'Promociona tus citas online'
     video:
       title_nav: 'Formación y Asesoría'
       children: 'Consulta clínica'
@@ -61,6 +62,7 @@ app:
     client:
       title_nav: 'Centro'
       list: 'Centros'
+      admin_nav: 'Gestión centros'
     academic:
       title_nav: 'Formaciones no regladas'
       list: 'Listado de formaciones no regladas'
@@ -68,15 +70,16 @@ app:
       title_nav: 'Bolsa de Empleo'
       list: 'Listado de bolsa de empleo'
     press_release:
-      title_nav: 'Nota Prensa'
+      title_nav: 'Notas de Prensa'
       list: 'Listado de notas prensa'
     creativity:
-      title_nav: 'Creatividad'
+      title_admin_nav: 'Gestión de diseños'
+      title_nav: 'Crea diseños'
       list: 'Listado de creatividades'
     creativity_proposal:
-      title_nav: 'Marketing Integral'
-      title_nav_other: 'Propuesta creatividad'
-      list: 'Listado de propuestas'
+      title_nav: 'Marketing'
+      title_nav_other: 'Solicita el diseño'
+      list: 'Solicitudes de diseño'
       create: 'Crear propuesta creatividad'
     creativity_order:
       title_nav: 'Personalización Creatividad'

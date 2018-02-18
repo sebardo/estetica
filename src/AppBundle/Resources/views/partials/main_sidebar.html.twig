@@ -28,21 +28,21 @@
                 </a>
                 <ul class="treeview-menu">
                     <li id="press_release" class="treeview">
-                        <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-file-text-o"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans|title }}</span>
+                        <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-file-text-o"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans  }}</span>
                         </a>
                     </li>
                     <li id="creativity" class="treeview">
-                        <a href="{{ path('editor_editor_index') }}"><i class="fa fa-file-image-o"></i> <span>{{ 'app.sidebar.creativity.title_nav'|trans|title }}</span>
+                        <a href="{{ path('editor_editor_index') }}"><i class="fa fa-file-image-o"></i> <span>{{ 'app.sidebar.creativity.title_admin_nav'|trans }}</span>
                         </a>
                     </li>
                     <li id="admin" class="treeview">
-                        <a id="press-release-create" href="{{ path('admin_creativity_proposal_list') }}"><i class="fa fa-list-alt"></i> <span>{{ 'app.sidebar.creativity_proposal.list'|trans|title }}</span>
+                        <a id="press-release-create" href="{{ path('admin_creativity_proposal_list') }}"><i class="fa fa-list-alt"></i> <span>{{ 'app.sidebar.creativity_proposal.list'|trans  }}</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li id="manage-cites" class="treeview">
-                <a href="#"><i class="fa fa-calendar"></i> <span>{{ 'app.sidebar.manage_cites.title_nav'|trans|title }}</span>
+                <a href="#"><i class="fa fa-calendar"></i> <span>{{ 'app.sidebar.manage_cites.title_admin_nav'|trans }}</span>
                 </a>
             </li>
            
@@ -80,7 +80,7 @@
                 </a>
             </li>
             <li id="client" class="treeview">
-                <a id="client-create" href="{{ path('admin_client_list') }}"><i class="fa fa-user"></i> <span>{{ 'app.sidebar.client.list'|trans|title }}</span></a>
+                <a id="client-create" href="{{ path('admin_client_list') }}"><i class="fa fa-user"></i> <span>{{ 'app.sidebar.client.admin_nav'|trans  }}</span></a>
             </li>
             <li id="home" class="treeview">
                 <a href="">
@@ -109,31 +109,31 @@
                 </a>
                 <ul class="treeview-menu">
                     <li id="press_release" class="treeview">
-                        <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-file-text-o"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans|title }}</span>
+                        <a href="{{ path('admin_press_release_list') }}"><i class="fa fa-file-text-o"></i> <span>{{ 'app.sidebar.press_release.title_nav'|trans }}</span>
                         </a>
                     </li>
                     <li id="creativity-order" class="treeview">
-                        <a href="{{ path('editor_editor_index') }}"><i class="fa fa-download"></i> <span>{{ 'app.sidebar.creativity.title_nav'|trans|title }}</span>
+                        <a href="{{ path('editor_editor_index') }}"><i class="fa fa-download"></i> <span>{{ 'app.sidebar.creativity.title_nav'|trans  }}</span>
                         </a>
                     </li>
                     <li id="creativity-proposal" class="treeview">
-                        <a href="{{ path('admin_creativity_proposal_create') }}"><i class="fa fa-list-alt"></i> <span>{{ 'app.sidebar.creativity_proposal.title_nav_other'|trans|title }}</span>
+                        <a href="{{ path('admin_creativity_proposal_create') }}"><i class="fa fa-list-alt"></i> <span>{{ 'app.sidebar.creativity_proposal.title_nav_other'|trans }}</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li id="manage-cites" class="treeview">
-                <a href="#"><i class="fa fa-calendar "></i> <span>{{ 'app.sidebar.manage_cites.title_nav'|trans|title }}</span>
+                <a href="#"><i class="fa fa-calendar "></i> <span>{{ 'app.sidebar.manage_cites.title_nav'|trans  }}</span>
                 </a>
             </li>
              <li id="" class="treeview">
                 <a id="video-link" href="{{ ticket_link }}" target="_blank"><i class="fa fa-user-md "></i> 
-                    <span>Asesoría</span>
+                    <span>Asesoría Médico-Estética</span>
                 </a>
             </li>    
             <li id="" class="treeview">
                 <a id="video-list" href="{{ path('admin_multimedia_list') }}"><i class="fa fa-refresh"></i>
-                    <span>Formación</span>
+                    <span>Formación Médico-Estética</span>
                 </a>
             </li> 
             <li id="buying-central" class="treeview">
@@ -149,7 +149,7 @@
                 </a>
             </li>
             <li id="flowwwer" class="treeview">
-                <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>{{ 'app.sidebar.flowwwer.title_nav'|trans|title }}</span>
+                <a href="{{ flowww_link }}" target="_blank"><i class="fa fa-external-link"></i> <span>Gestión centro</span>
                 </a>
             </li>
         {% endif %}
