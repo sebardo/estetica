@@ -82,7 +82,7 @@ class ClientRepository extends EntityRepository  implements UserLoaderInterface
     {
         // select
         $qb = $this->getQueryBuilder()
-            ->select('c.id, c.username, c.tradeName, c.code, c.createdAt created, c.active');
+            ->select("c.id, c.username, c.tradeName, c.code, c.nif, c.createdAt created, c.active, dateformat(c.createdAt, '%d/%m/%Y') created2");
 
         // join
 //        $qb->leftJoin('c.client', 'cli')
@@ -90,24 +90,38 @@ class ClientRepository extends EntityRepository  implements UserLoaderInterface
 
         // search
         if (!empty($search)) {
-            $qb->where('c.username LIKE :search')
+            $qb->where('c.code LIKE :search')
+                ->orWhere('c.username LIKE :search')
                 ->orWhere('c.tradeName LIKE :search')
                 ->orWhere('c.societyName LIKE :search')
                 ->orWhere('c.nif LIKE :search')
-                ->setParameter('search', '%'.$search.'%');
+                ->orWhere("dateformat(c.createdAt, '%d/%m/%Y') LIKE :search")    
+                ->setParameter('search', '%'.$search.'%')  
+                    ;
         }
 
         // sort by column
         switch($sortColumn) {
             case 0:
-                $qb->orderBy('c.username', $sortDirection);
+                $qb->orderBy('c.code', $sortDirection);
                 break;
             case 1:
                 $qb->orderBy('c.createdAt', $sortDirection);
                 break;
             case 2:
+                $qb->orderBy('c.username', $sortDirection);
+                 break;
+            case 3:
+                $qb->orderBy('c.tradeName', $sortDirection);
+                 break;
+            case 4:
+                $qb->orderBy('c.nif', $sortDirection);
+                break;
+            case 5:
                 $qb->orderBy('c.active', $sortDirection);
-                beak;
+                break;
+            default:
+                 break;
         }
 
         // group by

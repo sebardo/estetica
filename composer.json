@@ -12,22 +12,23 @@
     },
     "require": {
         "php": ">=5.3.9",
+        "beberlei/DoctrineExtensions": "^1.0",
         "doctrine/doctrine-bundle": "~1.4",
         "doctrine/orm": "^2.4.8",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/knp-paginator-bundle": "^2.6",
-        "whiteoctober/tcpdf-bundle": "^1.0.3",
         "royopa/fpdf-symfony2": "^2.0",
         "sensio/distribution-bundle": "~4.0",
         "sensio/framework-extra-bundle": "^3.0.2",
+        "stof/doctrine-extensions-bundle": "~1.2.2",
         "symfony/assetic-bundle": "^2.8",
         "symfony/monolog-bundle": "^3.0.2",
         "symfony/swiftmailer-bundle": "~2.3,>=2.3.10",
         "symfony/symfony": "2.8.*",
         "twig/twig": "^1.0||^2.0",
         "vich/uploader-bundle": "^0.14.0",
-        "stof/doctrine-extensions-bundle": "~1.2.2"
+        "whiteoctober/tcpdf-bundle": "^1.0.3"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.3",
