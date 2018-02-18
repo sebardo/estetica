@@ -59,7 +59,7 @@ class Address extends Timestampable
     /**
      * @var string
      *
-     * @ORM\Column(name="postal_code", type="string", length=5)
+     * @ORM\Column(name="postal_code", type="string", length=5, nullable=true)
      */
     private $postalCode;
 
@@ -73,6 +73,13 @@ class Address extends Timestampable
      * @ORM\OneToOne(targetEntity="Client", mappedBy="billingAddress", cascade={"persist"})
      */
     private $client;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="whatsapp", type="string", length=255, nullable=true)
+     */
+    private $whatsapp;
 
     public function __construct()
     {
@@ -249,5 +256,21 @@ class Address extends Timestampable
     public function __toString()
     {
         return $this->postalCode;
+    }
+            
+    /**
+     * @return string
+     */
+    public function getWhatsapp()
+    {
+            return $this->whatsapp;
+    }
+
+    /**
+     * @param string $whatsapp
+     */
+    public function setWhatsapp($whatsapp)
+    {
+            $this->whatsapp = $whatsapp;
     }
 }

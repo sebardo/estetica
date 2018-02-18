@@ -606,5 +606,25 @@ class EditorController extends Controller
         return new JsonResponse($results);
 
     }
+    
+    
+    public function maianCreateUser() 
+    {
+//        {
+//        "api" : "YOUR KEY",
+//        "op" : "account",
+//        "accounts" : { 
+//            "account" : {
+//                "name" : "Name or alias",
+//                "email" : "Email address",
+//                "password" : "Password in raw format",
+//                "timezone" : "Supported timezone",
+//                "ip" : "IP address",
+//                "language" : "Supported language",
+//                "notes" : "Optional notes"
+//              }
+//            }
+//        }
+    }
      
 }

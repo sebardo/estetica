@@ -91,7 +91,7 @@ class Client extends Timestampable implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="tag_line", type="string", length=255)
+     * @ORM\Column(name="tag_line", type="string", length=255, nullable=true)
      */
     private $tagLine;
 
@@ -126,7 +126,7 @@ class Client extends Timestampable implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="social_number", type="string", length=255)
+     * @ORM\Column(name="social_number", type="string", length=255, nullable=true)
      */
     private $socialNumber;
 
@@ -237,6 +237,28 @@ class Client extends Timestampable implements UserInterface
      */
     private $templates;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cabinas", type="string", length=255, nullable=true)
+     */
+    private $cabinas;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profesionales_cabinas", type="string", length=255, nullable=true)
+     */
+    private $profesionalesCabinas;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="recepcionista", type="boolean", nullable=true)
+     */
+    private $recepcionista;
+
+
     public function __construct()
     {
         parent::__construct();
@@ -967,4 +989,54 @@ class Client extends Timestampable implements UserInterface
     {
         return in_array($role, $this->getRoles());
     }
+    
+    
+        /**
+	 * @return string
+	 */
+	public function getCabinas()
+	{
+		return $this->cabinas;
+	}
+
+	/**
+	 * @param string $cabinas
+	 */
+	public function setCabinas($cabinas)
+	{
+		$this->cabinas = $cabinas;
+	}
+        
+        /**
+	 * @return string
+	 */
+	public function getProfesionalesCabinas()
+	{
+		return $this->profesionalesCabinas;
+	}
+
+	/**
+	 * @param string $profesionalesCabinas
+	 */
+	public function setProfesionalesCabinas($profesionalesCabinas)
+	{
+		$this->profesionalesCabinas = $profesionalesCabinas;
+	}
+        
+        /**
+	 * @return string
+	 */
+	public function getRecepcionista()
+	{
+		return $this->recepcionista;
+	}
+
+	/**
+	 * @param string $recepcionista
+	 */
+	public function setRecepcionista($recepcionista)
+	{
+		$this->recepcionista = $recepcionista;
+	}
+        
 }

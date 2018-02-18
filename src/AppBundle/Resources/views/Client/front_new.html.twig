@@ -22,27 +22,12 @@
                     <div class="box box-primary">
                         <div class="box-body">
                             {% block create_body %}
+                                
                                 {{ form_start(form) }}
-                                {% if entity.logo is not null %}
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <img class="logo-image-preview img-responsive" src="{{ image_path ~ '/' ~ entity.logo }}">
-                                        </div>
-                                    </div>
-                                {% endif %}
-                                {{ form_row(form.logoFile) }}
-                                {{ form_row(form.plan) }}
+                                
                                 {{ form_row(form.tradeName) }}
                                 {{ form_row(form.tagLine) }}
                                 {{ form_row(form.shortDescription) }}
-                                {{ form_row(form.description) }}
-                                {{ form_row(form.technology) }}
-                                {{ form_row(form.societyName) }}
-                                {{ form_row(form.socialNumber) }}
-                                {{ form_row(form.nif) }}
-                                {% if form.children.password is defined %}
-                                    {{ form_row(form.password) }}
-                                {% endif %}
                                 {# Start #}
                                 {{ form_label(form.fileDocs) }}
                                 <div class="form-group">
@@ -64,8 +49,26 @@
                                     <a href="#" id="add-another-filedoc">{{ 'client.form.file_doc_add_file_doc'|trans() }}</a>
                                 </div>
                                 {# END #}
+                                
+                                
+                                {{ form_row(form.technology) }}
+                                {{ form_row(form.cabinas) }}
+                                {{ form_row(form.profesionalesCabinas) }}
+                                {{ form_row(form.recepcionista) }}
+                                {{ form_row(form.societyName) }}
+                                {{ form_row(form.nif) }}
+                                
                                 {# Start #}
-                                {{ form_row(form.billingAddress) }}
+                                 {{ form_row(form.billingAddress.address) }}
+                                {{ form_row(form.billingAddress.addressInfo) }}
+                                {{ form_row(form.billingAddress.country) }}
+                                {{ form_row(form.billingAddress.province) }}
+                                {{ form_row(form.billingAddress.city, { attr: {required: 'required'} }) }}
+                                {{ form_row(form.billingAddress.phone) }}
+                                {{ form_row(form.billingAddress.whatsapp) }}
+                                {{ form_row(form.billingAddress.email) }}
+
+                                 
                                 {% if entity.localAddress is null %}
                                     <div class="checkbox">
                                         <label><input class="checkbox-show-local-address" id="is-local-address" type="checkbox" value=""> {{ 'client.form.local_address_checkbox'|trans() }}</label>
@@ -76,10 +79,34 @@
                                 {% else %}
                                     {{ form_row(form.localAddress) }}
                                 {% endif %}
+
+                                
                                 {{ form_row(form.urlWeb) }}
                                 {{ form_row(form.facebook) }}
                                 {{ form_row(form.instagram) }}
                                 {{ form_row(form.blog) }}
+                                {{ form_row(form.billingAddress.contact) }}
+                                 
+                                {% if entity.logo is not null %}
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <img class="logo-image-preview img-responsive" src="{{ image_path ~ '/' ~ entity.logo }}">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {{ form_row(form.logoFile) }}
+                                
+                                
+                                
+                                {#{ form_row(form.plan) }}
+                                {{ form_row(form.description) }}
+                                {{ form_row(form.socialNumber) }#}
+                                
+                                
+                                {% if form.children.password is defined %}
+                                    {{ form_row(form.password) }}
+                                {% endif %}
+                                 
                                 <div class="row">
                                     <div class="col-xs-12 text-center">
                                         {{ form_row(form.submit, {'attr': {'class': 'btn btn-primary btn-lg'}}) }}

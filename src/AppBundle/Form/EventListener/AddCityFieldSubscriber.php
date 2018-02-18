@@ -54,7 +54,7 @@ class AddCityFieldSubscriber implements EventSubscriberInterface
 				return $qb;
 			},
 			'attr' => array('class' => 'city_selector'),
-			'label' => 'city.form.name',
+			'label' => 'Ciudad *',
 			'label_attr' => array('class' => ''),
 			'required' => false,
 		)));

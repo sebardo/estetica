@@ -220,6 +220,8 @@ class Registration extends Timestampable
 	 */
 	private $academicStudies; //@Assert\Count(min = 1, minMessage = "registration.min_one")
 
+        
+        
 	public function __construct()
 	{
 		parent::__construct();
@@ -852,4 +854,5 @@ class Registration extends Timestampable
 	{
 		return (string)$this->id;
 	}
+        
 }

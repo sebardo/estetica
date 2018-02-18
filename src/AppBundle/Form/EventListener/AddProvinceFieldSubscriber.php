@@ -54,7 +54,7 @@ class AddProvinceFieldSubscriber implements EventSubscriberInterface
 				return $qb;
 			},
 			'attr' => array('class' => 'province_selector'),
-			'label' => 'province.form.name',
+			'label' => 'Provincia *',
 			'label_attr' => array('class' => ''),
 			'required' => false,
 		)));

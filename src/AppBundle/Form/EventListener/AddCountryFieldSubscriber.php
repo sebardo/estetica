@@ -43,7 +43,7 @@ class AddCountryFieldSubscriber implements EventSubscriberInterface
 				return $qb;
 			},
 			'attr' => array('class' => 'country_selector'),
-			'label' => 'country.form.name',
+			'label' => 'Pais *',
 			'label_attr' => array('class' => ''),
 			'required' => false,
 		)));

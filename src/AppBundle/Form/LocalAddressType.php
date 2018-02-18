@@ -31,36 +31,43 @@ class LocalAddressType extends AbstractType
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
-            ->add('addressInfo', null, array(
-                'required' => $options['required_form'],
-                'label' => 'address.form.addressinfo',
-                'label_attr' => array('class' => ''),
-                'attr' => array('class' => '')
-            ))
-			->add('phone', null, array(
-				'required' => $options['required_form'],
-				'label' => 'address.form.phone',
-				'label_attr' => array('class' => ''),
-				'attr' => array('class' => '')
-			))
-			->add('email', null, array(
-				'required' => $options['required_form'],
-				'label' => 'address.form.email',
-				'label_attr' => array('class' => ''),
-				'attr' => array('class' => '')
-			))
-			->add('contact', null, array(
-				'required' => $options['required_form'],
-				'label' => 'address.form.contact',
-				'label_attr' => array('class' => ''),
-				'attr' => array('class' => '')
-			))
-			->add('postalCode', null, array(
-				'required' => $options['required_form'],
-				'label' => 'address.form.postal_code',
-				'label_attr' => array('class' => ''),
-				'attr' => array('class' => '')
-			))
+//            ->add('addressInfo', null, array(
+//                'required' => $options['required_form'],
+//                'label' => 'address.form.addressinfo',
+//                'label_attr' => array('class' => ''),
+//                'attr' => array('class' => '')
+//            ))
+//			->add('phone', null, array(
+//				'required' => $options['required_form'],
+//				'label' => 'address.form.phone',
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => '')
+//			))
+//			->add('email', null, array(
+//				'required' => $options['required_form'],
+//				'label' => 'address.form.email',
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => '')
+//			))
+//			->add('contact', null, array(
+//				'required' => $options['required_form'],
+//				'label' => 'address.form.contact',
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => '')
+//			))
+//			->add('postalCode', null, array(
+//				'required' => $options['required_form'],
+//				'label' => 'address.form.postal_code',
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => '')
+//			))
+                        
+                        ->add('whatsapp', null, array(
+                            'label' => 'Whatsapp',
+                            'required' => true,
+                            'label_attr' => array('class' => ''),
+                            'attr' => array('class' => '')
+                        ))  
 		;
 	}
 

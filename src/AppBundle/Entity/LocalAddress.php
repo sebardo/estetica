@@ -31,35 +31,35 @@ class LocalAddress extends Timestampable
     /**
 	 * @var string
 	 *
-	 * @ORM\Column(name="address_info", type="string", length=255, nullable=true)
+	 * @ORM\Column(name="address_info", type="string", length=255, nullable=true, nullable=true)
 	 */
 	private $addressInfo;
     
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="phone", type="string", length=255)
+	 * @ORM\Column(name="phone", type="string", length=255, nullable=true)
 	 */
 	private $phone;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="email", type="string", length=255)
+	 * @ORM\Column(name="email", type="string", length=255, nullable=true)
 	 */
 	private $email;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="contact", type="string", length=255)
+	 * @ORM\Column(name="contact", type="string", length=255, nullable=true)
 	 */
 	private $contact;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="postal_code", type="string", length=5)
+	 * @ORM\Column(name="postal_code", type="string", length=5, nullable=true)
 	 */
 	private $postalCode;
 
@@ -74,6 +74,13 @@ class LocalAddress extends Timestampable
 	 */
 	private $client;
 
+        /**
+         * @var string
+         *
+         * @ORM\Column(name="whatsapp", type="string", length=255, nullable=true)
+         */
+        private $whatsapp;
+        
 	public function __construct()
 	{
 		parent::__construct();
@@ -248,5 +255,22 @@ class LocalAddress extends Timestampable
 	public function __toString()
 	{
 		return $this->postalCode;
+	}
+        
+        
+        /**
+	 * @return string
+	 */
+	public function getWhatsapp()
+	{
+		return $this->whatsapp;
+	}
+
+	/**
+	 * @param string $whatsapp
+	 */
+	public function setWhatsapp($whatsapp)
+	{
+		$this->whatsapp = $whatsapp;
 	}
 }

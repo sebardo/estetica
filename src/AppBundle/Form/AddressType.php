@@ -38,29 +38,36 @@ class AddressType extends AbstractType
                 'attr' => array('class' => '')
             ))
             ->add('phone', null, array(
-                'required' => $options['required_form'],
+                'required' => true,
                 'label' => 'address.form.phone',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             ->add('email', null, array(
-                'required' => $options['required_form'],
+                'required' => true,
                 'label' => 'address.form.email',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             ->add('contact', null, array(
-                'required' => $options['required_form'],
+                'required' => true,
                 'label' => 'address.form.contact',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
             ->add('postalCode', null, array(
-                'required' => $options['required_form'],
+                'required' => false,
                 'label' => 'address.form.postal_code',
                 'label_attr' => array('class' => ''),
                 'attr' => array('class' => '')
             ))
+            ->add('whatsapp', null, array(
+                'label' => 'Whatsapp',
+                'required' => false,
+                'label_attr' => array('class' => ''),
+                'attr' => array('class' => '')
+            ))  
+
         ;
     }
     

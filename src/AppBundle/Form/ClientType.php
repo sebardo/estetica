@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use AppBundle\Form\Types\BooleanType;
 
 class ClientType extends AbstractType
 {
@@ -19,6 +20,26 @@ class ClientType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
+                        ->add('cabinas', null, array(
+                            'label' => 'Cuántas cabinas tiene el centro',
+                            'required' => false,
+                            'label_attr' => array('class' => ''),
+                            'attr' => array('class' => '')
+                        ))   
+                        ->add('profesionalesCabinas', null, array(
+                            'label' => 'Número de profesionales de cabina',
+                            'required' => false,
+                            'label_attr' => array('class' => ''),
+                            'attr' => array('class' => '')
+                        ))   
+                        //recepcionista
+                        ->add('recepcionista', BooleanType::class, array(
+                            'label' => 'Tiene recepcionista',
+                            'required' => false,
+                            'label_attr' => array('class' => ''),
+                            'attr' => array('class' => '')
+                        ))
+
 			->add('tradeName', null, array(
 				'label' => 'client.form.trade_name',
 				'required' => true,
@@ -27,7 +48,7 @@ class ClientType extends AbstractType
 			))
 			->add('tagLine', null, array(
 				'label' => 'client.form.tag_line',
-				'required' => true,
+				'required' => false,
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
@@ -37,12 +58,12 @@ class ClientType extends AbstractType
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
-			->add('description', 'BackendBundle\Form\Type\CKeditorType', array(
-				'label' => 'client.form.description',
-				'required' => true,
-				'label_attr' => array('class' => ''),
-				'attr' => array('class' => '')
-			))
+//			->add('description', 'BackendBundle\Form\Type\CKeditorType', array(
+//				'label' => 'client.form.description',
+//				'required' => true,
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => '')
+//			))
 			->add('technology', 'BackendBundle\Form\Type\CKeditorType', array(
 				'label' => 'client.form.technology',
 				'required' => true,
@@ -55,12 +76,12 @@ class ClientType extends AbstractType
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => '')
 			))
-			->add('socialNumber', null, array(
-				'label' => 'client.form.social_number',
-				'required' => true,
-				'label_attr' => array('class' => ''),
-				'attr' => array('class' => '')
-			))
+//			->add('socialNumber', null, array(
+//				'label' => 'client.form.social_number',
+//				'required' => true,
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => '')
+//			))
 			->add('nif', null, array(
 				'label' => 'client.form.nif',
 				'required' => true,
@@ -107,13 +128,13 @@ class ClientType extends AbstractType
 				'label_attr' => array('class' => ''),
 				'attr' => array('class' => 'collection row required-label')
 			))
-			->add('plan', null, array(
-				'label' => 'client.form.plan',
-				'required' => true,
-				'label_attr' => array('class' => ''),
-				'attr' => array('class' => ''),
-				'disabled' => ($options['admin_user']) ? false : 'disabled'
-			))
+//			->add('plan', null, array(
+//				'label' => 'client.form.plan',
+//				'required' => true,
+//				'label_attr' => array('class' => ''),
+//				'attr' => array('class' => ''),
+//				'disabled' => ($options['admin_user']) ? false : 'disabled'
+//			))
 			->add('billingAddress', new AddressType(), array(
 				'label' => 'client.form.billing_address',
 				'required' => true,
@@ -128,6 +149,7 @@ class ClientType extends AbstractType
 				'attr' => array('class' => ''),
 				'required_form' => false
 			))
+                        
 		;
 
 		if($options['edit_form'] === true){
