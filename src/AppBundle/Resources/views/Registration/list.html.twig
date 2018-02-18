@@ -107,10 +107,12 @@
                 <thead>
                 {% block thead %}
                     <tr>
-                        <th>{{ '#' }}</th>
-                        <th>{{ 'app.list.table.name'|trans|title }}</th>
-                        <th>{{ 'app.list.table.firstname'|trans|title }}</th>
-                        <th>{{ 'app.list.table.secondname'|trans|title }}</th>
+                        <th>Referencia</th>
+                        <th>Apellidos y Nombre</th>
+                        <th>Edad</th>
+                        <th>Disponibilidad</th>
+                        <th>Años de experiencia</th>
+                        <th>Teléfono</th>
                         <th>{{ 'app.edit'|trans|title }}</th>
                         <th>{{ 'app.delete'|trans|title }}</th>
                     </tr>
@@ -122,10 +124,12 @@
                 <tbody>
                 {% for entity in pagination %}
                     <tr>
-                        <td>{{ loop.index }}</td>
-                        <td>{{ entity.name }}</td>
-                        <td>{{ entity.firstLastname }}</td>
-                        <td>{{ entity.secondLastname }}</td>
+                        <td>{{ entity.id }}</td>
+                        <td>{{ entity.firstLastname }} {{ entity.secondLastname }}, {{ entity.name }}</td>
+                        <td>{{ 'now' | date('Y') -  entity.birthday | date('Y')}}</td>
+                        <td>-</td>
+                        <td>{{ entity.experience.name }}</td>
+                        <td>{{ entity.phone }}</td>
                         <td>
                             {% if is_granted("ROLE_ADMIN") %}
                                 <a class="btn btn-success" href="{{ path('admin_registration_edit',{'id':entity.id}) }}">{{ 'app.edit'|trans|title }}</a></td>
