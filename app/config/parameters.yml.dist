@@ -22,7 +22,7 @@ parameters:
     currency: €
     postal_code_csv.path: '/postal_code_mod-1.csv'
     site_title: "Club de Estética"
-    ticket_link: "https://clubdeestetica.freshdesk.com/helpdesk"
+    ticket_link: "http://panel.clubdeestetica.com/sat"
     flowww_link: "https://login.flowww.net/es/"
     mail_central: "creatividades@clubsdeestetica.com"
     mail_press_central: "prensa@clubdeestetica.com"
