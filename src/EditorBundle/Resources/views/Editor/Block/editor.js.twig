@@ -148,7 +148,10 @@ function newEditorImage(id) {
         image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
         image2_disableResizer: false,
         forcePasteAsPlainText: true,
-        removePlugins: 'pastefromword, stylescombo, a11yhelp, format,liststyle, tabletools, scayt, menubutton, contextmenu'
+        removePlugins: 'pastefromword, stylescombo, a11yhelp, format,liststyle, tabletools, scayt, menubutton, contextmenu',
+        toolbar : [
+            { name: 'basicstyles', items: [ 'Image' ] }
+        ],
     });
     editor.on("mode", function(ev) {
         $(ev.editor.container.$).find("textarea.cke_source").attr({ title: "", "aria-label": "" });
