@@ -23,6 +23,8 @@ function makeid() {
 
 function newEditor(id) {
 
+    $('#submit').removeClass('btn-primary');
+    $('#submit').addClass('btn-danger');
     zindex = zindex + 1;
 
     var counter = makeid();
@@ -87,6 +89,10 @@ function newEditor(id) {
     $(".draggable" ).mousedown(function(e) {
         zindex = zindex + 1;
         $(this).css('z-index', zindex);
+         
+        $('#submit').removeClass('btn-primary');
+        $('#submit').addClass('btn-danger');
+             
     });
     $(".fa-times" ).click(function(){
         $(this).parent().remove();
@@ -95,6 +101,9 @@ function newEditor(id) {
 
 
 function newEditorImage(id) {
+
+    $('#submit').removeClass('btn-primary');
+    $('#submit').addClass('btn-danger');
 
     zindex = zindex + 1;
 
@@ -273,17 +282,28 @@ $(document).ready(function(){
         e.stopPropagation();
         $( ".draggable" ).draggable( 'disable' )
     });
+    
+    var first = true;
     $(document).click(function(e) {
         if( e.target.className != 'editor') {
-          $( ".draggable" ).draggable( 'enable' );
+            $( ".draggable" ).draggable( 'enable' );
         }
     });
     $(".draggable" ).mousedown(function(e) {
         zindex = zindex + 1;
         $(this).css('z-index', zindex);
+        
+         $('#submit').removeClass('btn-primary');
+        $('#submit').addClass('btn-danger');
     });
 
-    $('#submit').click(function(){
+    $('#submit, #submit_print, #submit_delivery').click(function(){
+        
+        var buttonId = $(this).attr('id');
+        
+        $('#submit').removeClass('btn-danger');
+        $('#submit').addClass('btn-primary');
+        
         $('#cara').click();
         $('#cara-editor').click();    
         $('.tab-content').css('opacity', '0.5');
@@ -292,10 +312,18 @@ $(document).ready(function(){
             var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
         {% elseif entity.support == 'routers'  %}
            var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-        {% elseif entity.support == 'roll-up'  %}
-           var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
         {% elseif entity.support == 'instagram'  %}
            var pdf =  new jsPDF('p', 'pt', [810, 810]);
+        {% elseif entity.support == 'facebook_1'  %}
+           var pdf =  new jsPDF('p', 'pt', [705, 591]);
+        {% elseif entity.support == 'facebook_2'  %}
+           var pdf =  new jsPDF('p', 'pt', [615, 234]);
+        {% elseif entity.support == 'facebook_3'  %}
+           var pdf =  new jsPDF('p', 'pt', [607.5, 337.5]);
+        {% elseif entity.support == 'social'  %}
+           var pdf =  new jsPDF('p', 'pt', [600, 600]);
+        {% elseif entity.support == 'pinterest'  %}
+           var pdf =  new jsPDF('p', 'pt', [551.25, 826.5]);
         {% endif %}
 
 
@@ -346,7 +374,7 @@ $(document).ready(function(){
                                     pdf.addImage(imgData, 'JPEG', -11, 0);
                                 {% elseif entity.support == 'routers'  %}
                                     pdf.addImage(imgData, 'JPEG', -11, 0);
-                                {% elseif entity.support == 'roll-up'  %}
+                                {% else %}
                                     pdf.addImage(imgData, 'JPEG', -11, 0);
                                 {% endif %}
 
@@ -358,16 +386,19 @@ $(document).ready(function(){
                                 //save file
                                 var pdf2 = btoa(pdf.output()); 
                                 $.ajax({
-                                  method: "POST",
-                                  url: "/admin/editor/upload/{{entity.id}}",
-                                  data: {data: pdf2, img1: imgData, img2: imgData2 },
+                                    method: "POST",
+                                    url: "/admin/editor/upload/{{entity.id}}",
+                                    data: {data: pdf2, img1: imgData, img2: imgData2 },
                                 }).done(function(data){
-                                   console.log(data);
-                                   $('.tab-content').css('opacity', '1');
-                                   $('#cara').click();
-                                   $('#tab_1-1').addClass('active');
-                                   $('#tab_2-1').removeClass('active');
-                                   $('#send').click();
+                                    console.log(data);
+                                    $('.tab-content').css('opacity', '1');
+                                    $('#cara').click();
+                                    $('#tab_1-1').addClass('active');
+                                    $('#tab_2-1').removeClass('active');
+                                   
+                                    if(buttonId == 'submit_print' || buttonId == 'submit_delivery'){
+                                          $('#send').click();
+                                    } 
                                 });
                             });
                         }, 3000);
@@ -406,11 +437,13 @@ $(document).ready(function(){
                                   url: "/admin/editor/upload/{{entity.id}}",
                                   data: {data: pdf2, img1: imgData },
                                 }).done(function(data){
-                                   $('.tab-content').css('opacity', '1');
-                                   $('#cara').click();
-                                   $('#tab_1-1').addClass('active');
-                                   $('#tab_2-1').removeClass('active');
-                                   $('#send').click();
+                                    $('.tab-content').css('opacity', '1');
+                                    $('#cara').click();
+                                    $('#tab_1-1').addClass('active');
+                                    $('#tab_2-1').removeClass('active');
+                                    if(buttonId == 'submit_delivery' || buttonId == 'submit_delivery'){
+                                          $('#send').click();
+                                    } 
                                 });
                         }, 3000);
 
@@ -432,9 +465,6 @@ $(document).ready(function(){
                     var context = canvas.getContext('2d');
                     console.log(canvas.width);
                     console.log(canvas.height);
-                    /*var ctx = canvas.getContext('2d');
-                    ctx.fillStyle = "white";
-                    ctx.fillRect(0, 0, 100, canvas.height);*/
                     $('#preview').html('');
                     $('#preview').append(canvas);
                     $('#tab_1-1').removeClass('active');
@@ -462,6 +492,7 @@ $(document).ready(function(){
     });                
 
     $('#download').click(function(e){
+        e.preventDefault();
         $('body').find('canvas').attr('id', 'myCanvas')
         var canvas = document.getElementById('myCanvas');
         canvas.backgroundColor = null;
@@ -469,17 +500,26 @@ $(document).ready(function(){
         var imgData = canvas.toDataURL("image/jpeg", 1.0);
         {% if entity.support == 'flyers'  %}
             var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-            pdf.addImage(imgData, 'JPEG', -11, 0);
         {% elseif entity.support == 'routers'  %}
            var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-           pdf.addImage(imgData, 'JPEG', -11, 0);
-        {% elseif entity.support == 'roll-up'  %}
-           var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-           pdf.addImage(imgData, 'JPEG', -11, 0);
-        {% endif %}
+        {% elseif entity.support == 'instagram'  %}
+           var pdf =  new jsPDF('p', 'pt', [810, 810]);
+        {% elseif entity.support == 'facebook_1'  %}
+           var pdf =  new jsPDF('p', 'pt', [705, 591]);
+        {% elseif entity.support == 'facebook_2'  %}
+           var pdf =  new jsPDF('p', 'pt', [615, 234]);
+        {% elseif entity.support == 'facebook_3'  %}
+           var pdf =  new jsPDF('p', 'pt', [607.5, 337.5]);
+        {% elseif entity.support == 'social'  %}
+           var pdf =  new jsPDF('p', 'pt', [600, 600]);
+        {% elseif entity.support == 'pinterest'  %}
+           var pdf =  new jsPDF('p', 'pt', [551.25, 826.5]);
+        {% endif %} 
+        pdf.addImage(imgData, 'JPEG', -11, 0);
+            
 
         pdf.save("download.pdf");
-        e.preventDefault();
+        
     });
 
     $('#download2').click(function(e){
@@ -489,10 +529,46 @@ $(document).ready(function(){
         var imgData = canvas.toDataURL("image/jpeg", 1.0);
         {% if entity.support == 'flyers'  %}
             var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-            pdf.addImage(imgData, 'JPEG', -11, 0);
-        {% endif %}
+        {% elseif entity.support == 'routers'  %}
+           var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
+        {% elseif entity.support == 'instagram'  %}
+           var pdf =  new jsPDF('p', 'pt', [810, 810]);
+        {% elseif entity.support == 'facebook_1'  %}
+           var pdf =  new jsPDF('p', 'pt', [705, 591]);
+        {% elseif entity.support == 'facebook_2'  %}
+           var pdf =  new jsPDF('p', 'pt', [615, 234]);
+        {% elseif entity.support == 'facebook_3'  %}
+           var pdf =  new jsPDF('p', 'pt', [607.5, 337.5]);
+        {% elseif entity.support == 'social'  %}
+           var pdf =  new jsPDF('p', 'pt', [600, 600]);
+        {% elseif entity.support == 'pinterest'  %}
+           var pdf =  new jsPDF('p', 'pt', [551.25, 826.5]);
+        {% endif %} 
+        pdf.addImage(imgData, 'JPEG', -11, 0);
         pdf.save("download2.pdf");
         e.preventDefault();
+    });
+    
+    $('#download3').click(function(e){
+        e.preventDefault();
+         $('body').find('canvas').attr('id', 'myCanvas')
+        var canvas = document.getElementById('myCanvas');
+        canvas.backgroundColor = null;
+        // only jpeg is supported by jsPDF
+        var imgData = canvas.toDataURL("image/jpeg", 1.0);
+        var url = imgData.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+        window.open(url);
+    });
+    
+    $('#download4').click(function(e){
+        e.preventDefault();
+        $('#preview2').find('canvas').attr('id', 'myCanvas2')
+        var canvas = document.getElementById('myCanvas2');
+        canvas.backgroundColor = null;
+        // only jpeg is supported by jsPDF
+        var imgData = canvas.toDataURL("image/jpeg", 1.0);
+        var url = imgData.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+        window.open(url);
     });
 
     $('#search_submit').click(function(e){

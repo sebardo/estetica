@@ -7,18 +7,42 @@
     {{ include ('EditorBundle:Editor:_form.html.twig', {form: form, editor: true} ) }}
 </div>
 
+                      
+<ul style="display: none">                            
+  <li>Flyers: 793x1122px - 210mm x 297mm  vertical/horizontal (una o doble cara)</li>
+  <li>Poster: 1587x2245px [420mm, 594mm]</li>
+  <li>Post para Facebook: 940 px x 788 px</li>
+  <li>Portada para Facebook: 820 px x 312 px</li>
+  <li>App para facebook: 810 px x 450 px </li>
+  <li>Post Instagram: 1080 px x 1080 px</li>
+  <li>Imagen para redes sociales: 800 px x 800 px</li>
+  <li>Imagen para pinterest: 735 px  x 1102 px</li>
+</ul>
+
 {% if entity.support == 'flyers'  %}
     {% set size = 'width: 793px; height: 1121px;' %}
     {% set bgsize = ' background-size: 793px 1121px; ' %}
 {% elseif entity.support == 'routers'  %}
-     {% set size = 'width:1578px; height: 2500px; ' %}
-     {% set bgsize = ' background-size: 1578px 2500px; ' %}
-{% elseif entity.support == 'roll-up'  %}
-     {% set size = 'width: 1062px; height: 2500px; ' %}
-     {% set bgsize = ' background-size: 1062px 2500px; ' %}
+    {% set size = 'width:1578px; height: 2500px; ' %}
+    {% set bgsize = ' background-size: 1578px 2500px; ' %}
 {% elseif entity.support == 'instagram'  %}
-     {% set size = 'width: 1080px; height: 1080px; ' %}
-     {% set bgsize = ' background-size: 1080px 1080px;' %}
+    {% set size = 'width: 1080px; height: 1080px; ' %}
+    {% set bgsize = ' background-size: 1080px 1080px;' %}
+{% elseif entity.support == 'facebook_1'  %}
+    {% set size = 'width: 940px; height: 788px; ' %}
+    {% set bgsize = ' background-size: 940px 788px;' %}
+{% elseif entity.support == 'facebook_2'  %}
+    {% set size = 'width: 820px; height: 312px; ' %}
+    {% set bgsize = ' background-size: 820px 312px;' %}
+{% elseif entity.support == 'facebook_3'  %}
+    {% set size = 'width: 810px; height: 450px; ' %}
+    {% set bgsize = ' background-size: 810px 450px;' %}
+{% elseif entity.support == 'social'  %}
+    {% set size = 'width: 800px; height: 800px; ' %}
+    {% set bgsize = ' background-size: 800px 800px;' %}
+{% elseif entity.support == 'pinterest'  %}
+    {% set size = 'width: 735px; height: 1102px; ' %}
+    {% set bgsize = ' background-size: 735px 1102px;' %}
 {% endif %}
 
 
@@ -28,19 +52,29 @@
         <div class="tab-pane active" id="tab_1">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
+                    {% if entity.support == 'flayer' %}
+                    <li class="pull-right header">
+                        <button type="button" id="submit_complete"  class="btn btn-primary btn-flat">{{ 'Buzoneo' | trans }}</button>
+                    </li>
+                    {% else %}
+                    <li class="pull-right header">
+                        <button type="button" id="submit_print"  class="btn btn-primary btn-flat">{{ 'Encargar impresión' | trans }}</button>
+                    </li>
+                    {% endif %}
+                  
                     <li class="pull-right header">
                         <button type="button" id="submit" class="btn btn-primary btn-flat"><i class="icon-ok"></i>  {{ 'save' | trans }}</button>
                     </li>    
-                    <li class="pull-right header">
-                        <a href="{{ path('editor_editor_index') }}" class="btn btn-flat btn-default">{{ 'back' | trans }}</a>
-                    </li>
+                    
+                    
+                    
                     <li class="active"><a id="cara-editor" href="#tab_1-1" data-toggle="tab">Editor</a></li>
                     <li><a id="cara-preview" href="#tab_2-1" data-toggle="tab">Prevista </a></li>
                 </ul>
                 <div class="tab-content">
                     <i>* Doble click para editar un contenido</i>
                     <div class="tab-pane active" id="tab_1-1" style="text-align: left">
-                        <div id="parent-container" class="parent-containers" style="width: 800px;background-color: #dadada"> 
+                        <div id="parent-container" class="parent-containers"> 
                             <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position:relative;display:inline-block; {{bgsize}}">
                                 {{ entity.frontPageHtml | raw }}
                             </div>
@@ -57,10 +91,14 @@
                         </div>  
                     </div>
                     <div class="tab-pane" id="tab_2-1" style="text-align: left">
-                        <div id="preview">Cargando prevista ...</div>
+                        <div id="preview"  style="display: inline-block">Cargando prevista ...</div>
                         
                         <div style=" width: 150px;float: right;">
-                            <button class="pull-left btn btn-primary btn-flat" id="download">Descargar PDF</button>
+                            {% if entity.support == 'flyers'  %}
+                                <button class="pull-right btn btn-primary btn-flat" id="download">Descargar</button>
+                            {% else  %}
+                                <button class="pull-right btn btn-primary btn-flat" id="download3">Descargar</button>
+                            {% endif  %}
                         </div>
                     </div>
                 </div>
@@ -92,9 +130,13 @@
                         </div> 
                     </div>
                     <div class="tab-pane" id="tab_4-1" style="text-align: left">
-                        <div id="preview2">Cargando prevista ...</div>
-                        <div style=" width: 150px;float: right;">
-                            <button class="pull-left btn btn-primary btn-flat" id="download2">Descargar PDF</button>
+                        <div id="preview2" style="display: inline-block">Cargando prevista ...</div>
+                        <div style=" width: 150px;float: right; ">
+                            {% if entity.support == 'flyers'  %}
+                                <button class="pull-right btn btn-primary btn-flat" id="download2">Descargar</button>
+                            {% else  %}
+                                <button class="pull-right btn btn-primary btn-flat" id="download4">Descargar</button>
+                            {% endif  %}
                         </div>
                     </div>
                 </div>
@@ -105,7 +147,8 @@
         <li class="active"><a id="cara" href="#tab_1" data-toggle="tab">Cara</a></li>
         <li><a href="#tab_2" id="preview-tab2" {% if  entity.support == 'flyers'%}data-toggle="tab"{% endif %} >Contracara</a></li>
     </ul>
+    <a href="{{ path('editor_editor_index') }}" class="btn btn-flat btn-default">{{ 'back' | trans }}</a>
 </div>
  
-
+<button id="send" type="submit" style="display: none" ></button> 
 {{ form_end(form) }}

@@ -16,26 +16,20 @@
 {% block content_header %}{% endblock %}
 {% block content %}
 
- 
-  
     <section class="content-header">
       <h1>
         {{ 'template.editor' | trans }}  
         <small></small>
       </h1>
       <ol class="breadcrumb">
+        <li><a href="#"> <i class="ion-home"></i>  {{ 'marketing' | trans }}</a></li>
         <li><a href="{{ path('editor_editor_index') }}">{{ 'templates' | trans }}</a></li>
-        <li><a href="{{ path('editor_editor_historyuser') }}"> <i class="ion-image"></i>  {{ 'template.history' | trans }}</a></li>
         <li><a href="{{ path('editor_editor_newuser') }}">{{ 'template.editor' | trans }}</a></li>
       </ol>
     </section>
       
     <section class="content">
       <div class="row">
-          
-                    
-        
-
         <div class="col-md-3">
             <div class="box box-warning direct-chat direct-chat-warning">
               <div class="box-header with-border">
@@ -63,17 +57,7 @@
                         </li>
                     {% endfor %}
                   </div>
-                  
-                  <ul >                            
-                    <li>Flyers: 793x1122px - 210mm x 297mm  vertical/horizontal (una o doble cara)</li>
-                    <li>Poster: 1587x2245px [420mm, 594mm]</li>
-                    <li>Post para Facebook: 940 px x 788 px</li>
-                    <li>Portada para Facebook: 820 px x 312 px</li>
-                    <li>App para facebook: 810 px x 450 px </li>
-                    <li>Post Instagram: 1080 px x 1080 px</li>
-                    <li>Imagen para redes sociales: 800 px x 800 px</li>
-                    <li>Imagen para pinterest: 735 px  x 1102 px</li>
-                </ul>
+
               </div>
             </div>
           </div>
@@ -88,7 +72,7 @@
                 </div> 
             </div>
           </div>
- 
+
       </div>
     </section>
 {% endblock %}
