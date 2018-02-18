@@ -40,30 +40,32 @@
                 <div class="tab-content">
                     <i>* Doble click para editar un contenido</i>
                     <div class="tab-pane active" id="tab_1-1" style="text-align: left">
+                        
+
                         <div id="parent-container" class="parent-containers" style="width: 800px;background-color: #dadada"> 
                             <div id="parent" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage }}'); position:relative;display:inline-block; {{bgsize}}">
                                 {{ entity.frontPageHtml | raw }}
                             </div>
                         </div>
+                            
                         <div style=" width: 150px;float: right;">
-                            {% if history == false %}
-                                <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear contenido</button> 
-                                <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent')">Crear imagen</button>
-                            {% else %}
-                                <button class="pull-right btn btn-warning btn-flat" type="button">Editar</button>
-                                <button class="pull-right btn btn-warning btn-flat" type="button">Duplicar</button>
-                                <a href="{{ path('editor_editor_delete', {id: entity.id} ) }}?referer={{app.request.getRequestUri|url_encode}}" class="pull-right btn btn-danger btn-flat" type="button">Borrar</a>
-                            {% endif %}
+                           <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear contenido</button> 
+                            <button class="pull-right btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent')">Crear imagen</button>
                         </div>  
+                        
+                        
+
                     </div>
                     <div class="tab-pane" id="tab_2-1" style="text-align: left">
                         <div id="preview">Cargando prevista ...</div>
                         
                         <div style=" width: 150px;float: right;">
-                            <button class="pull-left btn btn-primary btn-flat" id="download">Descargar PDF</button>
+                            <button class="pull-left btn btn-primary btn-flat" id="download">Descargar PDF de la prevista</button>
                         </div>
                     </div>
+                    <!-- /.tab-pane -->
                 </div>
+              <!-- /.tab-content -->
             </div>
         </div>
         <div class="tab-pane" id="tab_2">
@@ -73,33 +75,29 @@
                     <li><a id="contracara-preview"  href="#tab_4-1" data-toggle="tab">Prevista</a></li>
                 </ul>
                 <div class="tab-content">
-                    <i>* Doble click para editar un contenido</i>
-                    <div class="tab-pane active" id="tab_3-1"  style="text-align: left">
+                    <div class="tab-pane active" id="tab_3-1"  style="text-align: right">
+                        <i>* Doble click para editar un contenido</i>
                         <div id="parent2-container" class="parent-containers"> 
                             <div id="parent2" class="parent" style="{{size}}background: #FFFFFF url('/uploads/templates/{{ entity.backgroundImage2 }}'); position:relative;display:inline-block; {{bgsize}}">
                                 {{ entity.backPageHtml | raw }}
                             </div>
                         </div>
-                        <div style=" width: 150px;float: right;">
-                            {% if history == false %}
-                                <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditor('parent2')">Crear contenido</button>
-                                <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent2')">Crear imagen</button>
-                            {% else %}
-                                <button class="pull-right btn btn-warning btn-flat" type="button">Editar</button>
-                                <button class="pull-right btn btn-warning btn-flat" type="button">Duplicar</button>
-                                <a href="{{ path('editor_editor_delete', {id: entity.id} ) }}?referer={{app.request.getRequestUri|url_encode}}" class="pull-right btn btn-danger btn-flat" type="button">Borrar</a>
-                            {% endif %}
-                        </div> 
+
+                        <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditor('parent2')">Crear nuevo contenido</button>
+                        <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent2')">Crear nueva imagen</button>
+                         
+
                     </div>
-                    <div class="tab-pane" id="tab_4-1" style="text-align: left">
+                    <div class="tab-pane" id="tab_4-1" style="text-align: right">
+                        <button class="pull-left btn btn-primary btn-flat" id="download2">Descargar PDF de la prevista</button>
                         <div id="preview2">Cargando prevista ...</div>
-                        <div style=" width: 150px;float: right;">
-                            <button class="pull-left btn btn-primary btn-flat" id="download2">Descargar PDF</button>
-                        </div>
                     </div>
+                    <!-- /.tab-pane -->
                 </div>
+              <!-- /.tab-content -->
             </div>
         </div>
+        <!-- /.tab-pane -->
     </div>
     <ul class="nav nav-tabs">
         <li class="active"><a id="cara" href="#tab_1" data-toggle="tab">Cara</a></li>

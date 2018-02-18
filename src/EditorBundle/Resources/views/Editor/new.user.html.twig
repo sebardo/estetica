@@ -1,5 +1,5 @@
 {% extends "BackendBundle::layout_editor.html.twig" %}
-{% form_theme form 'EditorBundle:Form:fields.html.twig' %}
+{% if form is not null %}{% form_theme form 'EditorBundle:Form:fields.html.twig' %}{% endif %}
 {% set active_side_bar = 'templates' %}
 
 {% block stylesheets %}
@@ -20,13 +20,13 @@
   
     <section class="content-header">
       <h1>
-        {{ 'edit' | trans }}  {{ 'template.singular' | trans  }} #{{ entity.id  }}
+        {{ 'template.editor' | trans }}  
         <small></small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{ path('editor_editor_index') }}">{{ 'templates' | trans }}</a></li>
-        <li><a href="{{ path('editor_editor_show', {'id': entity.id }) }}">#{{ entity.id  }}</a></li>
-        <li><a href="{{ path('editor_editor_edit', {'id': entity.id }) }}">{{ 'edit' | trans }}</a></li>
+        <li><a href="{{ path('editor_editor_historyuser') }}"> <i class="ion-image"></i>  {{ 'template.history' | trans }}</a></li>
+        <li><a href="{{ path('editor_editor_newuser') }}">{{ 'template.editor' | trans }}</a></li>
       </ol>
     </section>
       
@@ -41,19 +41,29 @@
               <div class="box-header with-border">
                 <form action="#" method="post">
                   <div class="input-group">
-                    <input type="text" name="message" placeholder="Buscar por nombre" class="form-control">
+                    <input type="text" name="message" placeholder="Buscar por nombre" class="form-control" id="search">
+                    <input type="hidden" name="referer" value="{{app.request.getRequestUri|url_encode}}" id="referer">
+                    <input type="hidden" name="type" value="nouser" id="type">
+                    
+                    <input type="hidden" name="support" value="{{ app.request.query.get('support') }}" id="support">
+                    <input type="hidden" name="category" value="{{ app.request.query.get('category') }}" id="category">
+                    <input type="hidden" name="subcategory" value="{{ app.request.query.get('subcategory') }}" id="subcategory">
+                    
                     <span class="input-group-btn">
-                          <button type="button" class="btn btn-warning btn-flat">Buscar</button>
-                        </span>
+                        <button id="search_submit" type="button" class="btn btn-warning btn-flat">Buscar</button>
+                    </span>
                   </div>
                 </form>
               </div>
               <div class="box-body">
-                  {% for entity in selectedEntities %}
-                      <li style="display: inline-block;width: 32%;padding: 10px;">
-                          <a href="{{ path('editor_editor_clone', {'id': entity.id })}}?referer={{app.request.getRequestUri|url_encode}}">{{ entity.name }}<br><img src="{{ entity.previewImage }}" width="100%"></a>
-                      </li>
-                  {% endfor %}
+                  <div class="container-items">
+                    {% for entity in selectedEntities %}
+                        <li class="items-editor">
+                            <a href="{{ path('editor_editor_clone', {'id': entity.id })}}?referer={{app.request.getRequestUri|url_encode}}">{{ entity.name }}<br><img src="{{ entity.previewImage }}" width="100%"></a>
+                        </li>
+                    {% endfor %}
+                  </div>
+                  
                   <ul >                            
                     <li>Flyers: 793x1122px - 210mm x 297mm  vertical/horizontal (una o doble cara)</li>
                     <li>Poster: 1587x2245px [420mm, 594mm]</li>
@@ -70,7 +80,11 @@
           <div class="col-md-9">
             <div class="box box-info">
                 <div id="container-editor">
-                    {{ include('EditorBundle:Editor/Block:editor.html.twig', { form: form, entity: entity} ) }}
+                    {% if form is not null %}
+                        {{ include('EditorBundle:Editor/Block:editor.html.twig', { form: form, entity: entity, history: false} ) }}
+                    {% else %}
+                        <p style="padding: 10px;">Selecciona un diseño paera poder visualizarlo</p>
+                    {% endif %}
                 </div> 
             </div>
           </div>
@@ -93,505 +107,7 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-        
-<script type="text/javascript">
-    
-    zindex = 1;
-    // Converts from degrees to radians.
-    Math.radians = function(degrees) {
-      return degrees * Math.PI / 180;
-    };
-
-    // Converts from radians to degrees.
-    Math.degrees = function(radians) {
-      return radians * 180 / Math.PI;
-    };
-
-    function makeid() {
-      var text = "";
-      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-      for (var i = 0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-      return text;
-    }
-
-    function newEditor(id) {
-        
-        zindex = zindex + 1;
-        
-        var counter = makeid();
-        console.log(counter);
-        // This HTML could've come from AJAX data.
-        var el = CKEDITOR.dom.element.createFromHtml( '<div id="'+counter+'" data-parent="'+id+'" class="editor" contenteditable="true" >Contenido de ejemplo</div>' );
-        CKEDITOR.document.getBody().append( el );
-
-        var div = document.createElement("div");
-        div.id = 'div-'+counter;
-        div.className = 'draggable ui-widget-content rotatable resizable';
-        document.getElementById(id).appendChild(div);
-       
-        $('#'+'div-'+counter).attr('contentresizable', true);
-        $('#'+'div-'+counter).css('position', 'absolute');
-        $('#'+'div-'+counter).css('z-index', zindex);
-        $('#'+'div-'+counter).append('<i class="fa fa-times" aria-hidden="true"></i>');
-        
-        var editor = CKEDITOR.inline(el, {
-            title : false,
-            allowedContent : true,
-            extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font,lineheight,justify',
-            height: 300,
-            // Upload images to a CKFinder connector (note that the response type is set to JSON).
-            uploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
-            filebrowserBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html',
-            filebrowserImageBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html?type=Images',
-            filebrowserUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-            filebrowserImageUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-            // The following options are not necessary and are used here for presentation purposes only.
-            // They configure the Styles drop-down list and widgets to use classes.
-
-            stylesSet: [
-                    { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
-                    { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
-            ],
-            // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
-            // resizer (because image size is controlled by widget styles or the image takes maximum
-            // 100% of the editor width).
-            image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
-            image2_disableResizer: false,
-            forcePasteAsPlainText: true,
-            removePlugins: 'pastefromword, stylescombo, a11yhelp, format,liststyle, tabletools, scayt, menubutton, contextmenu'
-        });
-        editor.on("mode", function(ev) {
-            $(ev.editor.container.$).find("textarea.cke_source").attr({ title: "", "aria-label": "" });
-        });
-        
-        $(document).find('#'+counter).appendTo("#div-"+counter);
-        $( ".draggable" ).draggable({containment: id}).rotatable({wheelRotate:false}).resizable({containment: id});
-        console.log(id);
-        $(".editor").click(function(e) {
-            e.stopPropagation();
-            $( ".draggable" ).draggable( 'disable' )
-        });
-        $(document).click(function(e) {
-            if( e.target.className != 'editor') {
-              $( ".draggable" ).draggable( 'enable' );
-            }
-        });
-        $(".draggable" ).mousedown(function(e) {
-            zindex = zindex + 1;
-            $(this).css('z-index', zindex);
-        });
-        $(".fa-times" ).click(function(){
-            $(this).parent().remove();
-        });
-    }
-    
-    
-    function newEditorImage(id) {
-        
-        zindex = zindex + 1;
-        
-        var counter = makeid();
-        console.log(counter);
-        // This HTML could've come from AJAX data.
-        var el = CKEDITOR.dom.element.createFromHtml( '<div id="'+counter+'" data-parent="'+id+'" class="editor" contenteditable="true" >Contenido de ejemplo</div>' );
-        CKEDITOR.document.getBody().append( el );
-
-        var div = document.createElement("div");
-        div.id = 'div-'+counter;
-        div.className = 'draggable ui-widget-content rotatable resizable';
-        document.getElementById(id).appendChild(div);
-       
-        $('#'+'div-'+counter).attr('contentresizable', true);
-        $('#'+'div-'+counter).css('position', 'absolute');
-        $('#'+'div-'+counter).css('z-index', zindex);
-        $('#'+'div-'+counter).append('<i class="fa fa-times" aria-hidden="true"></i>');
-        
-        var editor = CKEDITOR.inline(el, {
-            title : false,
-            allowedContent : true,
-            extraPlugins: 'uploadimage,image2,justify',
-            height: 300,
-            // Upload images to a CKFinder connector (note that the response type is set to JSON).
-            uploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-            // Configure your file manager integration. This example uses CKFinder 3 for PHP.
-            filebrowserBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html',
-            filebrowserImageBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html?type=Images',
-            filebrowserUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-            filebrowserImageUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-            // The following options are not necessary and are used here for presentation purposes only.
-            // They configure the Styles drop-down list and widgets to use classes.
-
-            stylesSet: [
-                    { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
-                    { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
-            ],
-            // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
-            // resizer (because image size is controlled by widget styles or the image takes maximum
-            // 100% of the editor width).
-            image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
-            image2_disableResizer: false,
-            forcePasteAsPlainText: true,
-            removePlugins: 'pastefromword, stylescombo, a11yhelp, format,liststyle, tabletools, scayt, menubutton, contextmenu'
-        });
-        editor.on("mode", function(ev) {
-            $(ev.editor.container.$).find("textarea.cke_source").attr({ title: "", "aria-label": "" });
-        });
-        
-        $(document).find('#'+counter).appendTo("#div-"+counter);
-        $( ".draggable" ).draggable({containment: id}).rotatable({wheelRotate:false}).resizable({containment: id});
-        console.log(id);
-        $(".editor").click(function(e) {
-            e.stopPropagation();
-            $( ".draggable" ).draggable( 'disable' )
-        });
-        $(document).click(function(e) {
-            if( e.target.className != 'editor') {
-              $( ".draggable" ).draggable( 'enable' );
-            }
-        });
-        $(".draggable" ).mousedown(function(e) {
-            zindex = zindex + 1;
-            $(this).css('z-index', zindex);
-        });
-        $(".fa-times" ).click(function(){
-            $(this).parent().remove();
-        });
-    }
-    
-    $( function() {
-        $('.draggable').each(function( index ) {
-            var parent = $(this).attr('data-parent');
-            $(this).draggable({
-                containment: parent
-            });
-            
-            $('#'+$(this).attr('id')).append('<i class="fa fa-times" aria-hidden="true"></i>');        
-        });
-        $('.resizable').each(function( index ) {
-            var parent = $(this).attr('data-parent');
-            $(this).resizable({
-                containment: parent
-            });
-        });
-        $(".rotatable").each(function( index ) {
-            var angle = Math.radians(getRotationDegrees($(this)));
-            console.log(angle);
-            $(this).rotatable({
-                wheelRotate:false, 
-                angle: angle
-            });
-        });
-        $(".editor").each(function( index ) {
-            CKEDITOR.inline($(this).attr('id'), {
-                title : false,
-                allowedContent : true,
-                extraPlugins: 'uploadimage,image2,panelbutton,colorbutton,font,lineheight,justify',
-                height: 300,
-
-                // Upload images to a CKFinder connector (note that the response type is set to JSON).
-                uploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-
-                // Configure your file manager integration. This example uses CKFinder 3 for PHP.
-                filebrowserBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html',
-                filebrowserImageBrowseUrl: '/bundles/editor/plugins/ckfinder/ckfinder.html?type=Images',
-                filebrowserUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-                filebrowserImageUploadUrl: '/bundles/editor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-
-                // The following options are not necessary and are used here for presentation purposes only.
-                // They configure the Styles drop-down list and widgets to use classes.
-
-                stylesSet: [
-                    { name: 'Narrow image', type: 'widget', widget: 'image', attributes: { 'class': 'image-narrow' } },
-                    { name: 'Wide image', type: 'widget', widget: 'image', attributes: { 'class': 'image-wide' } }
-                ],
-
-                // Configure the Enhanced Image plugin to use classes instead of styles and to disable the
-                // resizer (because image size is controlled by widget styles or the image takes maximum
-                // 100% of the editor width).
-                image2_alignClasses: [ 'image-align-left', 'image-align-center', 'image-align-right' ],
-                image2_disableResizer: false,
-                forcePasteAsPlainText: true,
-                removePlugins: 'pastefromword, stylescombo, a11yhelp, format, liststyle, tabletools, scayt, menubutton, contextmenu'
-            });
-
-        });
-        
-        $(".fa-times" ).click(function(){
-            $(this).parent().remove();
-        });
-    });
-    
-   
-   function getRotationDegrees(obj) {
-        var matrix = obj.css("-webkit-transform") ||
-        obj.css("-moz-transform")    ||
-        obj.css("-ms-transform")     ||
-        obj.css("-o-transform")      ||
-        obj.css("transform");
-        if(matrix !== 'none') {
-            var values = matrix.split('(')[1].split(')')[0].split(',');
-            var a = values[0];
-            var b = values[1];
-            var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
-        } else { var angle = 0; }
-        return (angle < 0) ? angle + 360 : angle;
-    }
-    
-
-    $(document).ready(function(){
-        
-        var submitted = false;
-
-
-        $(document).ready(function () {
-            $('.sidebar-toggle').click();
-            
-           window.onbeforeunload = function (e) {
-               if (!submitted) {
-                   var message = "You have not saved your changes.", e = e || window.event;
-                   if (e) {
-                       e.returnValue = message;
-                   }
-                   return message;
-               }
-            }
-            $("form[name='template']").submit(function() {
-                submitted = true;
-            });
-        });
-
-
-        $(".editor").click(function(e) {
-            e.stopPropagation();
-            $( ".draggable" ).draggable( 'disable' )
-        });
-        $(document).click(function(e) {
-            if( e.target.className != 'editor') {
-              $( ".draggable" ).draggable( 'enable' );
-            }
-        });
-        $(".draggable" ).mousedown(function(e) {
-            zindex = zindex + 1;
-            $(this).css('z-index', zindex);
-        });
-        
-        $('#submit').click(function(){
-            $('#cara').click();
-            $('#cara-editor').click();    
-            $('.tab-content').css('opacity', '0.5');
-            //PDF build
-            {% if entity.support == 'flyers'  %}
-                var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-            {% elseif entity.support == 'routers'  %}
-               var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-            {% elseif entity.support == 'roll-up'  %}
-               var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-            {% elseif entity.support == 'instagram'  %}
-               var pdf =  new jsPDF('p', 'pt', [810, 810]);
-            {% endif %}
-            
-            
-            {% if  entity.support == 'flyers'%}
-                var html = $('#parent').html();
-                var result = html.replace(/\<div class\=\"ui\-rotatable\-handle ui\-draggable\"\>\<\/div\>/gi, '');
-                var result2 = result.replace(/\<i class\=\"fa fa-times\" aria\-hidden\=\"true\"\>\<\/i\>/gi, '');
-                var result3 = result2.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var result4 = result3.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-e\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var result5 = result4.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var last = result5.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                $('#template_frontPageHtml').html(last);
-
-                var html = $('#parent2').html();
-                var result = html.replace(/\<div class\=\"ui\-rotatable\-handle ui\-draggable\"\>\<\/div\>/gi, '');
-                var result2 = result.replace(/\<i class\=\"fa fa-times\" aria\-hidden\=\"true\"\>\<\/i\>/gi, '');
-                var result3 = result2.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var result4 = result3.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-e\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var result5 = result4.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var last = result5.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                $('#template_backPageHtml').html(last);
-                
-                setTimeout(function(){
-                    $('#tab_1-1').addClass('active');
-                    setTimeout(function(){  
-                        $('#preview').html('');
-                        $('#preview').html('Cargando la prevista ...');
-                        html2canvas(document.getElementById("parent-container")).then(function(canvas) {
-                            
-                            $('#tab_1-1').removeClass('active');
-                            $('#tab_2-1').addClass('active');
-                            $('#preview').html('');
-                            $('#preview').append(canvas);
-                            $('#tab_2-1').addClass('active');
-                            var imgData = canvas.toDataURL("image/jpeg", 1.0);
-                            console.log(imgData);
-                            $('#preview-tab2').click();
-                            $('#contra-tab1-content').click();
-                             setTimeout(function(){ 
-                                $('#preview2').html('');
-                                $('#preview').html('Cargando la prevista ...');
-                                html2canvas(document.getElementById("parent2-container")).then(function(canvas2) {
-                                    $('#preview2').html('');
-                                    $('#preview2').append(canvas2);
-                                    // only jpeg is supported by jsPDF
-                                    var imgData2 = canvas2.toDataURL("image/jpeg", 1.0);
-                                    {% if entity.support == 'flyers'  %}
-                                        pdf.addImage(imgData, 'JPEG', -11, 0);
-                                    {% elseif entity.support == 'routers'  %}
-                                        pdf.addImage(imgData, 'JPEG', -11, 0);
-                                    {% elseif entity.support == 'roll-up'  %}
-                                        pdf.addImage(imgData, 'JPEG', -11, 0);
-                                    {% endif %}
-
-                                    pdf.addPage();
-                                    {% if entity.support == 'flyers'  %}
-                                        pdf.addImage(imgData2, 'JPEG', -11, 0);
-                                    {% endif %}
-
-                                    //save file
-                                    var pdf2 = btoa(pdf.output()); 
-                                    $.ajax({
-                                      method: "POST",
-                                      url: "/admin/editor/upload/{{entity.id}}",
-                                      data: {data: pdf2, img1: imgData, img2: imgData2 },
-                                    }).done(function(data){
-                                       console.log(data);
-                                       $('.tab-content').css('opacity', '1');
-                                       $('#cara').click();
-                                       $('#tab_1-1').addClass('active');
-                                       $('#tab_2-1').removeClass('active');
-                                       $('#send').click();
-                                    });
-                                });
-                            }, 3000);
-
-                        }); 
-                    },300);
-                },300);     
-            {% else %}        
-                var html = $('#parent').html();
-                var result = html.replace(/\<div class\=\"ui\-rotatable\-handle ui\-draggable\"\>\<\/div\>/gi, '');
-                var result1 = result.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var result2 = result1.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-e\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var result3 = result2.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-s\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                var last = result3.replace(/\<div class\=\"ui\-resizable\-handle ui\-resizable\-se ui\-icon ui\-icon\-gripsmall\-diagonal\-se\" style\=\"z\-index\: 90\;\"\>\<\/div\>/gi, '');
-                $('#template_frontPageHtml').html(last);
-
-                 setTimeout(function(){
-                    $('#tab_1-1').addClass('active');
-                    setTimeout(function(){  
-                        $('#preview').html('');
-                        $('#preview').html('Cargando la prevista ...');
-                        html2canvas(document.getElementById("parent-container")).then(function(canvas) {
-                            $('#tab_1-1').removeClass('active');
-                            $('#tab_2-1').addClass('active');
-                            $('#preview').html('');
-                            $('#preview').append(canvas);
-                            $('#tab_2-1').addClass('active');
-                            var imgData = canvas.toDataURL("image/jpeg", 1.0);
-                            
-                            setTimeout(function(){ 
-                                    pdf.addImage(imgData, 'JPEG', -11, 0);
-                                    //save file
-                                    var pdf2 = btoa(pdf.output()); 
-                                    $.ajax({
-                                      method: "POST",
-                                      url: "/admin/editor/upload/{{entity.id}}",
-                                      data: {data: pdf2, img1: imgData },
-                                    }).done(function(data){
-                                       $('.tab-content').css('opacity', '1');
-                                       $('#cara').click();
-                                       $('#tab_1-1').addClass('active');
-                                       $('#tab_2-1').removeClass('active');
-                                       $('#send').click();
-                                    });
-                            }, 3000);
-
-                        }); 
-                    },300);
-                },300);   
-            {% endif %} 
-            
-        });
-        
-        $('#cara-preview').click(function(){
-            $('.tab-content').css('opacity', '0.5');
-            setTimeout(function(){
-                $('#tab_1-1').addClass('active');
-                setTimeout(function(){                    
-                    $('#preview').html('');
-                    $('#preview').html('Cargando la prevista ...');
-                    html2canvas(document.getElementById("parent-container")).then(function(canvas) {
-                        var context = canvas.getContext('2d');
-                        console.log(canvas.width);
-                        console.log(canvas.height);
-                        /*var ctx = canvas.getContext('2d');
-                        ctx.fillStyle = "white";
-                        ctx.fillRect(0, 0, 100, canvas.height);*/
-                        $('#preview').html('');
-                        $('#preview').append(canvas);
-                        $('#tab_1-1').removeClass('active');
-                        $('.tab-content').css('opacity', '1');
-                    }); 
-                },300);
-            },300);            
-         });
-         
-         $('#contracara-preview').click(function(){
-            $('.tab-content').css('opacity', '0.5');
-            setTimeout(function(){
-                $('#tab_3-1').addClass('active');
-                setTimeout(function(){                    
-                    $('#preview2').html('');
-                    $('#preview2').html('Cargando la prevista ...');
-                    html2canvas(document.getElementById("parent2-container")).then(function(canvas2) {
-                        $('#preview2').html('');
-                        $('#preview2').append(canvas2);
-                        $('#tab_3-1').removeClass('active');
-                        $('.tab-content').css('opacity', '1');
-                    }); 
-                },300);
-            },300); 
-        });                
-           
-        $('#download').click(function(e){
-            $('body').find('canvas').attr('id', 'myCanvas')
-            var canvas = document.getElementById('myCanvas');
-            canvas.backgroundColor = null;
-            // only jpeg is supported by jsPDF
-            var imgData = canvas.toDataURL("image/jpeg", 1.0);
-            {% if entity.support == 'flyers'  %}
-                var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-                pdf.addImage(imgData, 'JPEG', -11, 0);
-            {% elseif entity.support == 'routers'  %}
-               var pdf =  new jsPDF('p', 'pt', [1183.5, 1875]);
-               pdf.addImage(imgData, 'JPEG', -11, 0);
-            {% elseif entity.support == 'roll-up'  %}
-               var pdf =  new jsPDF('p', 'pt', [796.5, 1875]);
-               pdf.addImage(imgData, 'JPEG', -11, 0);
-            {% endif %}
-            
-            pdf.save("download.pdf");
-            e.preventDefault();
-        });
-        
-        $('#download2').click(function(e){
-            $('#preview2').find('canvas').attr('id', 'myCanvas2')
-            var canvas = document.getElementById('myCanvas2');
-            // only jpeg is supported by jsPDF
-            var imgData = canvas.toDataURL("image/jpeg", 1.0);
-            {% if entity.support == 'flyers'  %}
-                var pdf =  new jsPDF('p', 'pt', [594.75, 840.75]);
-                pdf.addImage(imgData, 'JPEG', -11, 0);
-            {% endif %}
-            pdf.save("download2.pdf");
-            e.preventDefault();
-        });
-        
-    });
-</script>
-    
+    {% if form is not null %}                
+    {{ include('EditorBundle:Editor/Block:editor.js.twig', { form: form, entity: entity} ) }}
+    {% endif %}
 {% endblock %}

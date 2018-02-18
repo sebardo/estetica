@@ -98,3 +98,8 @@ div:hover>.fa-times{
 .tabs-below > .nav-tabs > .active > a:focus {
   border-color: transparent #ddd #ddd #ddd!important;
 }
+.items-editor{
+    display: inline-block;
+    width: 32%;
+    padding: 10px;
+}

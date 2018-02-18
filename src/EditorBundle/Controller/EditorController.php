@@ -59,24 +59,6 @@ class EditorController extends Controller
         ); 
     }
     
-    /**
-     * @Route("/admin/history")
-     * @Template()
-     */
-    public function historyAction()
-    {
-        
-        $supportCollection = TemplateType::getSelectSupports();
-        $categoryCollection = TemplateType::getSelectCategories();
-        $subcategoryCollection = TemplateType::getSelectSubcategories('all');
-                
-        return array(
-            'supportCollection' => $supportCollection,
-            'categoryCollection' => $categoryCollection,
-            'subcategoryCollection' => $subcategoryCollection
-        ); 
-    }
-    
      /**
      * Lists all ticket entities.
      *
@@ -150,42 +132,120 @@ class EditorController extends Controller
         $category = $request->query->get('category');
         $subcategory = $request->query->get('subcategory');
         
-        $selectedEntities = $em->getRepository('EditorBundle:Template')->findBy(array(
-            'support' => $support,
-            'category' => $category,
-            'subcategory' => $subcategory,
-            'parentTemplate' => null
-        ));
+        // select
+        $qb = $em->getRepository('EditorBundle:Template')
+                 ->createQueryBuilder('t')
+                 ->select('t.id, t.name, t.previewImage') 
+                 ->where('t.support LIKE :support')
+                 ->andWhere('t.category LIKE :category')
+                 ->andWhere('t.subcategory LIKE :subcategory')
+                ->andWhere('t.parentTemplate IS NULL')
+                 ->setParameter('support', $support)
+                ->setParameter('category', $category)
+                ->setParameter('subcategory', $subcategory)
+                ->groupBy('t.id');
+
+        $selectedEntities = $qb->getQuery()->getResult();
         
+        
+//        $selectedEntities = $em->getRepository('EditorBundle:Template')->findBy(array(
+//            'support' => $support,
+//            'category' => $category,
+//            'subcategory' => $subcategory,
+//            'parentTemplate' => null
+//        ));
+        
+        $template = null;
         if($request->query->has('id') && $request->query->get('id') != ''){
             $id = $request->query->get('id');
             $template = $em->getRepository('EditorBundle:Template')->find($id);
-        }else{
-            $template = $em->getRepository('EditorBundle:Template')->find($selectedEntities[0]);
-        }
+            
+        } 
         
         
-       // $template = new Templating();
-        $form = $this->createForm('EditorBundle\Form\TemplateType', $template);
-        $form->handleRequest($request);
-       
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            
-            $em->persist($template);
-            $em->flush();
-            
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.created'));
-            
-            return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
+        
+        $formView = null;
+        if(!is_null($template)){
+            $form = $this->createForm('EditorBundle\Form\TemplateType', $template);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+
+                $em->persist($template);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.created'));
+
+                return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
+            } 
+            $formView = $form->createView();
         }
 
         return array(
             'entity' => $template,
-            'form' => $form->createView(),
+            'form' => $formView,
             'selectedEntities' => $selectedEntities
         );
     }
+    
+    
+    /**
+     * @Route("/admin/editor/history")
+     * @Template("EditorBundle:Editor:history.html.twig")
+     */
+    public function historyUserAction(Request $request)
+    {
+        
+         $em = $this->getDoctrine()->getManager();
+        
+        
+         // select
+        $qb = $em->getRepository('EditorBundle:Template')
+                 ->createQueryBuilder('t')
+                 ->select('t.id, t.name, t.previewImage') 
+                 ->where('t.client = :user')
+                 ->andWhere('t.parentTemplate IS NOT NULL')
+                 ->setParameter('user', $this->getUser())
+                ->groupBy('t.id');
+
+        $selectedEntities = $qb->getQuery()->getResult();
+        
+        $template = null;
+        if($request->query->has('id') && $request->query->get('id') != ''){
+            $id = $request->query->get('id');
+            $template = $em->getRepository('EditorBundle:Template')->find($id);
+            
+        }else{
+            if(count($selectedEntities) > 0 ){
+                $template = $em->getRepository('EditorBundle:Template')->find($selectedEntities[0]);
+            } 
+        }
+        
+        $formView = null;
+        if(!is_null($template)){
+            $form = $this->createForm('EditorBundle\Form\TemplateType', $template);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+
+                $em->persist($template);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.created'));
+
+                return $this->redirectToRoute('editor_editor_edit', array('id' => $template->getId()));
+            }
+            $formView = $form->createView();
+        }
+        return array(
+            'entity' => $template,
+            'form' => $formView,
+            'selectedEntities' => $selectedEntities
+        );
+    }
+    
     
     /**
      * @Route("/admin/editor/show/{id}")
@@ -215,29 +275,32 @@ class EditorController extends Controller
                 'parentTemplate' => $template->getId(),
                 'client' => $this->getUser()->getId()
             ));
-        
-            if($temp instanceof Templating){
-                
-                $path = parse_url($request->query->get('referer'), PHP_URL_PATH);
-                $query = parse_url($request->query->get('referer'), PHP_URL_QUERY);
-                $qArr = explode('&', $query);
-                
-                $returnValues = array();
-                foreach ($qArr as $value) {
-                    $arr = explode('=', $value);
-                    $returnValues[$arr[0]] = $arr[1];
-                }
-                unset($returnValues['id']);
-                
-                $returnValues2 = array();
-                foreach ($returnValues as $key => $value) {
-                    $returnValues2[] = $key.'='.$value;
-                }
-                
-                $newUrlReferer = $path.'?'. implode('&', $returnValues2);
-                return $this->redirect($newUrlReferer.'&id='.$temp->getId());
+            
+            $path = parse_url($request->query->get('referer'), PHP_URL_PATH);
+            $query = parse_url($request->query->get('referer'), PHP_URL_QUERY);
+            $qArr = explode('&', $query);
+
+            $returnValues = array();
+            foreach ($qArr as $value) {
+                $arr = explode('=', $value);
+                $returnValues[$arr[0]] = $arr[1];
             }
-            $templateNew = $this->cloneTemplate($template);
+            unset($returnValues['id']);
+
+            $returnValues2 = array();
+            foreach ($returnValues as $key => $value) {
+                $returnValues2[] = $key.'='.$value;
+            }
+
+            $newUrlReferer = $path.'?'. implode('&', $returnValues2);
+
+            if($temp instanceof Templating){
+                return $this->redirect($newUrlReferer.'&id='.$temp->getId());
+            }else{
+                $templateNew = $this->cloneTemplate($template);
+                return $this->redirect($newUrlReferer.'&id='.$templateNew->getId());
+            }
+            
             
         }
         
@@ -312,8 +375,12 @@ class EditorController extends Controller
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('template.no.deleted'));    
         }
         
-
+        if($request->query->has('referer')){
+            return $this->redirectToRoute('editor_editor_historyuser');
+        }
+        
         return $this->redirectToRoute('editor_editor_index');
+        
     }
     
     /**
@@ -437,4 +504,92 @@ class EditorController extends Controller
             )
         );
    }
+   
+    /**
+     * @Route("/admin/editor/search/{search}", defaults={"search" = ""})
+     * @Template()
+     */
+    public function searchAction(Request $request, $search)
+    {
+     
+        $em = $this->getDoctrine()->getManager();
+
+        // select
+        $qb = $em->getRepository('EditorBundle:Template')
+                 ->createQueryBuilder('t')
+                 ->select('t.id, t.name, t.previewImage');
+        // join
+        //$qb->leftJoin('c.client', 'cli');
+        // search
+       
+        
+        $query = parse_url($request->query->get('referer'), PHP_URL_QUERY);
+        $qArr = explode('&', $query);
+        $returnValues = array();
+        foreach ($qArr as $value) {
+            $arr = explode('=', $value);
+            $returnValues[$arr[0]] = $arr[1];
+        }
+
+        $qb->where('t.support LIKE :support')
+            ->andWhere('t.category LIKE :category')
+            ->andWhere('t.subcategory LIKE :subcategory') 
+            ->andWhere('t.parentTemplate IS NULL')
+            ->setParameter('support', $returnValues['support'])
+            ->setParameter('category', $returnValues['category'])
+            ->setParameter('subcategory', $returnValues['subcategory'])
+            ;
+                 
+        if (!empty($search)) {
+            $qb->andWhere('t.name LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+        
+        // group by
+        $qb->groupBy('t.id');
+
+        $results = $qb->getQuery()->getResult();
+
+
+        return new JsonResponse($results);
+
+    }
+    
+    /**
+     * @Route("/admin/editor/search-user/{search}", defaults={"search" = ""})
+     * @Template()
+     */
+    public function searchUserAction(Request $request, $search)
+    {
+     
+        $em = $this->getDoctrine()->getManager();
+
+        // select
+        $qb = $em->getRepository('EditorBundle:Template')
+                 ->createQueryBuilder('t')
+                 ->select('t.id, t.name, t.previewImage');
+        // join
+        //$qb->leftJoin('c.client', 'cli')
+        //   ->leftJoin('c.reviewer', 'r');
+        // search
+        if (!empty($search)) {
+            $qb->where('t.name LIKE :search')
+                ->setParameter('search', '%'.$search.'%')
+                ;
+        }
+        
+        
+        $qb->andWhere('t.parentTemplate IS NOT NULL')
+            ->andWhere('t.client = :user')
+            ->setParameter('user', $this->getUser()->getId());
+        // group by
+        $qb->groupBy('t.id');
+
+        $results = $qb->getQuery()->getResult();
+
+
+        return new JsonResponse($results);
+
+    }
+     
 }

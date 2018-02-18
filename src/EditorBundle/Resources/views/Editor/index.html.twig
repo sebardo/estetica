@@ -117,18 +117,18 @@
                         {% endif %} 
                     </div>
                 </div>
-
+                {% if app.user.isGranted('ROLE_ADMIN') == false %}
                 <div class="clearfix">
                     <div class="">
                         <a href="#" class="btn btn-lg btn-warning btn-flat template-create">
                             {{ 'template.create' | trans }} 
                         </a>
-                        <a href="{{ path('editor_editor_history') }}" class="btn btn-lg btn-success btn-flat pull-right">
+                        <a href="{{ path('editor_editor_historyuser') }}" class="btn btn-lg btn-success btn-flat pull-right">
                             {{ 'template.history.see' | trans }}
                         </a>
                     </div>
                 </div>     
-
+                {% endif %} 
 
                 {#% if app.user.isGranted('ROLE_ADMIN') == false %}
                     <h3>

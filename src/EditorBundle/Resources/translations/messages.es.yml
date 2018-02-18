@@ -20,6 +20,7 @@ template:
     create: Crear un diseño
     history: Historial de creatividad
     history.see: Ver historial
+    editor: Editor 
 app.support.post.facebook_1: Post para Facebook
 app.support.post.facebook_2: Portada para Facebook
 app.support.post.facebook_3: App para facebook
