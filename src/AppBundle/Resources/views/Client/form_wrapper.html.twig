@@ -10,14 +10,14 @@
         </div>
     {% endif %}
     {{ form_row(form.logoFile) }}
-    {{ form_row(form.plan) }}
+    {% if form.plan is defined %} {{ form_row(form.plan) }}{% endif %}
     {{ form_row(form.tradeName) }}
     {{ form_row(form.tagLine) }}
     {{ form_row(form.shortDescription) }}
-    {{ form_row(form.description) }}
+    {% if form.description is defined %}{{ form_row(form.description) }}{% endif %}
     {{ form_row(form.technology) }}
     {{ form_row(form.societyName) }}
-    {{ form_row(form.socialNumber) }}
+    {% if form.socialNumber is defined %}{{ form_row(form.socialNumber) }}{% endif %}
     {{ form_row(form.nif) }}
     {% if form.children.password is defined %}
         {{ form_row(form.password) }}
