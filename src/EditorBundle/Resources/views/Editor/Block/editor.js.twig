@@ -560,7 +560,22 @@ $(document).ready(function(){
         // only jpeg is supported by jsPDF
         var imgData = canvas.toDataURL("image/jpeg", 1.0);
         var url = imgData.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-        window.open(url);
+        
+        
+        $.ajax({
+            method: "POST",
+            url: "/download",
+            data: { data: imgData}
+        })
+        .done(function( msg ) {
+
+            window.open(
+                msg,
+                '_blank' // <- This is what makes it open in a new window.
+            );
+        });
+
+        //window.open(url);
     });
     
     $('#download4').click(function(e){
@@ -571,7 +586,18 @@ $(document).ready(function(){
         // only jpeg is supported by jsPDF
         var imgData = canvas.toDataURL("image/jpeg", 1.0);
         var url = imgData.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-        window.open(url);
+        $.ajax({
+            method: "POST",
+            url: "/download",
+            data: { data: imgData}
+        })
+        .done(function( msg ) {
+
+            window.open(
+                msg,
+                '_blank' // <- This is what makes it open in a new window.
+            );
+        });
     });
 
     $('#search_submit').click(function(e){

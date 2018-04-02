@@ -16,7 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Event\OrderEvent;
 use AppBundle\OrderEvents;
 use EditorBundle\Form\TemplatePrintType;
-
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+        
 class EditorController extends Controller
 {
     
@@ -605,6 +607,26 @@ class EditorController extends Controller
 
         return new JsonResponse($results);
 
+    }
+    
+    
+    /**
+     * @Route("/download")
+     * @Method({"POST"})
+     * @Template()
+     */
+    public function downloadAction(Request $request)
+    {
+
+        $image_parts = explode(";base64,", $request->request->get('data'));
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $absolutePath = __DIR__."/../../../web";
+        $file = "/uploads/templates/images/" . uniqid() . '.jpg';
+        file_put_contents($absolutePath.$file, $image_base64);
+
+        return new JsonResponse($file);
     }
     
     
