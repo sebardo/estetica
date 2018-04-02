@@ -85,10 +85,10 @@
                                 {{ entity.frontPageHtml | raw }}
                             </div>
                         </div>
-                        <div style=" width: 150px;float: right; text-align: right">
+                        <div style=" width: 90px;float: right; text-align: right">
                             {% if history == false %}
-                                <button class="btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Crear contenido</button> <br><br>
-                                <button class="btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent')">Crear imagen</button>
+                                <button class="btn btn-primary btn-flat" type="button" onclick="newEditor('parent')">Contenido</button> <br><br>
+                                <button class="btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent')">Imagen</button>
                             {% else %}
                                 <a class="btn btn-warning btn-flat" href="{{ path('editor_editor_newuser', {id: entity.id}) }}">Editar</a><br><br>
                                 <a class="btn btn-warning btn-flat" href="{{ path('editor_editor_cloneuser', {'id': entity.id })}}">Duplicar</a><br><br>
@@ -124,10 +124,10 @@
                                 {{ entity.backPageHtml | raw }}
                             </div>
                         </div>
-                        <div style=" width: 150px;float: right;">
+                        <div style=" width: 90px;float: right;">
                             {% if history == false %}
-                                <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditor('parent2')">Crear contenido</button>
-                                <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent2')">Crear imagen</button>
+                                <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditor('parent2')">Contenido</button>
+                                <button class="pull-left btn btn-primary btn-flat" type="button" onclick="newEditorImage('parent2')">Imagen</button>
                             {% else %}
                                 <button class="pull-right btn btn-warning btn-flat" type="button">Editar</button>
                                 <button class="pull-right btn btn-warning btn-flat" type="button">Duplicar</button>
@@ -151,9 +151,8 @@
     </div>
     <ul class="nav nav-tabs">
         <li class="active"><a id="cara" href="#tab_1" data-toggle="tab">Cara</a></li>
-        <li><a href="#tab_2" id="preview-tab2" {% if  entity.support == 'flyers'%}data-toggle="tab"{% endif %} >Contracara</a></li>
+        {% if  entity.support == 'flyers'%}<li><a href="#tab_2" id="preview-tab2" data-toggle="tab" >Contracara</a></li>{% endif %}
     </ul>
-    <a href="{{ path('editor_editor_index') }}" class="btn btn-flat btn-default">{{ 'back' | trans }}</a>
 </div>
  
 <button id="send" type="submit" style="display: none" ></button> 
